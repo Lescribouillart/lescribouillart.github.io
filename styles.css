@@ -133,6 +133,7 @@ body {
 /* Articles Grid */
 .articles {
     display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
 }
 
@@ -310,5 +311,15 @@ body {
     .container,
     .container-narrow {
         padding: 0 1rem;
+    }
+
+    .articles {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+    .articles {
+        grid-template-columns: repeat(2, 1fr);
     }
 }

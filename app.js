@@ -78,16 +78,13 @@ async function displaySingleArticle() {
 
 // Initialisation selon la page
 document.addEventListener('DOMContentLoaded', () => {
-    const currentPage = window.location.pathname.split('/').pop();
-    
-    if (currentPage === 'index.html' || currentPage === '') {
-        // Page d'accueil : afficher les 3 derniers articles
-        displayArticlesList(3);
-    } else if (currentPage === 'articles.html') {
+    // Vérifier si on est sur la page article
+    if (document.getElementById('article-container')) {
+        displaySingleArticle();
+    }
+    // Vérifier si on est sur la page liste d'articles
+    else if (document.getElementById('articles-list')) {
         // Page articles : afficher tous les articles
         displayArticlesList();
-    } else if (currentPage === 'article.html') {
-        // Page article individuel
-        displaySingleArticle();
     }
 });
