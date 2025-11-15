@@ -42,10 +42,10 @@ body {
 
 .logo {
     font-family: 'Rozha One', serif;
-    font-size: 3rem;
+    font-size: 3.5rem;
     font-weight: 400;
     color: var(--primary-color);
-    margin-bottom: 0.5rem;
+    margin-bottom: -0.5rem;
 }
 
 .tagline {
@@ -282,6 +282,26 @@ body {
     border-radius: 8px;
     background-color: var(--bg-light);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.presentation::-webkit-scrollbar {
+    width: 8px;
+}
+
+.presentation::-webkit-scrollbar-track {
+    background: var(--bg-color);
+    border-radius: 4px;
+}
+
+.presentation::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+
+.presentation::-webkit-scrollbar-thumb:hover {
+    background: var(--text-light);
 }
 
 .presentation p {
