@@ -12,8 +12,8 @@
             <h1 class="logo">Le Scribouill'art</h1>
             <p class="tagline">Le journal fictif aux articles bien réels</p>
             <nav class="nav">
-                <a href="#" class="nav-link active">Accueil</a>
-                <a href="#" class="nav-link">Articles</a>
+                <a href="index.html" class="nav-link active">Accueil</a>
+                <a href="articles.html" class="nav-link">Articles</a>
                 <a href="#" class="nav-link">À propos</a>
                 <a href="#" class="nav-link">Contact</a>
             </nav>
@@ -22,23 +22,8 @@
 
     <main class="main">
         <div class="container">
-            <section class="hero">
-            </section>
-
-            <section class="articles">
-                <article class="article-card">
-                    <div class="article-meta">
-                        <span class="article-date">14 Janvier 2025</span>
-                        <span class="article-category">Minimalisme</span>
-                    </div>
-                    <h3 class="article-title">
-                        <a href="article.html">L'art de la simplicité dans l'écriture</a>
-                    </h3>
-                    <p class="article-excerpt">
-                        Découvrez comment le minimalisme peut transformer votre façon d'écrire et de communiquer vos idées avec clarté et impact.
-                    </p>
-                    <a href="article.html" class="article-link">Lire la suite →</a>
-                </article>
+            <section class="articles" id="articles-list">
+                <!-- Les articles seront chargés ici par JavaScript -->
             </section>
         </div>
     </main>
@@ -48,5 +33,7 @@
             <p></p>
         </div>
     </footer>
+
+    <script src="app.js"></script>
 </body>
 </html>
