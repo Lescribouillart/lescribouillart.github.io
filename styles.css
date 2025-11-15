@@ -28,11 +28,7 @@ body {
 .header {
     background: var(--bg-color);
     border-bottom: 1px solid var(--border-color);
-    position: sticky;
-    top: 0;
     z-index: 1000;
-    backdrop-filter: blur(10px);
-    background-color: rgba(47, 46, 58, 0.95);
 }
 
 .header .container {
@@ -111,6 +107,7 @@ body {
 .main {
     min-height: calc(100vh - 200px);
     padding: 3rem 0;
+    background-color: #596d87;
 }
 
 /* Hero */
@@ -284,27 +281,7 @@ body {
     border: 2px solid var(--border-color);
     border-radius: 8px;
     background-color: var(--bg-light);
-    max-height: 387px;
-    overflow-y: auto;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.presentation::-webkit-scrollbar {
-    width: 8px;
-}
-
-.presentation::-webkit-scrollbar-track {
-    background: var(--bg-color);
-    border-radius: 4px;
-}
-
-.presentation::-webkit-scrollbar-thumb {
-    background: var(--border-color);
-    border-radius: 4px;
-}
-
-.presentation::-webkit-scrollbar-thumb:hover {
-    background: var(--text-light);
 }
 
 .presentation p {
@@ -337,12 +314,29 @@ body {
 
 /* Footer */
 .footer {
-    background: var(--bg-light);
-    border-top: 1px solid var(--border-color);
     padding: 2rem 0;
     text-align: center;
     color: var(--text-light);
-    margin-top: 4rem;
+}
+
+.footer-nav {
+    margin-bottom: 1rem;
+}
+
+.footer-link {
+    color: var(--text-light);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.footer-link:hover {
+    color: var(--secondary-color);
+}
+
+.footer-separator {
+    margin: 0 1rem;
+    color: var(--text-light);
 }
 
 /* Responsive */
