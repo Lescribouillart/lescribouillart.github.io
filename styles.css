@@ -281,6 +281,30 @@ body {
     line-height: 1.8;
     font-size: 1.1rem;
     text-align: justify;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--bg-light);
+    max-height: 387px;
+    overflow-y: auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.presentation::-webkit-scrollbar {
+    width: 8px;
+}
+
+.presentation::-webkit-scrollbar-track {
+    background: var(--bg-color);
+    border-radius: 4px;
+}
+
+.presentation::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+
+.presentation::-webkit-scrollbar-thumb:hover {
+    background: var(--text-light);
 }
 
 .presentation p {
