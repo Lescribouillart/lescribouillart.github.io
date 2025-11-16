@@ -1,0 +1,32 @@
+backend:
+  name: git-gateway
+  branch: main # ou master, selon le nom de votre branche principale
+
+media_folder: "images/uploads" # Dossier où seront stockées les images
+public_folder: "/images/uploads"
+
+locale: fr
+
+collections:
+  - name: "articles"
+    label: "Articles"
+    folder: "articles"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Titre", name: "title", widget: "string" }
+      - { label: "Date de publication", name: "date", widget: "datetime" }
+      - { label: "Catégorie", name: "category", widget: "select", options: ["Ésotérisme", "Paranormal", "Fantastique"] }
+      - { label: "Image de couverture", name: "image", widget: "image", required: false }
+      - { label: "Résumé", name: "summary", widget: "text" }
+      - { label: "Contenu", name: "body", widget: "markdown" }
+      - { label: "Brouillon", name: "draft", widget: "boolean", default: true }
+
+  - name: "pages"
+    label: "Pages"
+    files:
+      - label: "Présentation"
+        name: "presentation"
+        file: "presentation.md"
+        fields:
+          - { label: "Contenu", name: "body", widget: "markdown" }
