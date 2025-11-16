@@ -3,30 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="page-title">Article - Le Scribouill'art</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Articles - Le Scribouill'art</title>
+    <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
     <header class="header">
         <div class="container">
-            <a href="index.html" style="text-decoration: none; color: inherit;">
+            <a href="../index.html" style="text-decoration: none; color: inherit;">
                 <h1 class="logo">Le Scribouill'art</h1>
             </a>
             <p class="tagline">Le journal fictif aux articles bien réels</p>
             <nav class="nav">
-                <a href="index.html" class="nav-link">Accueil</a>
-                <a href="articles.html" class="nav-link">Articles</a>
+                <a href="../index.html" class="nav-link">Accueil</a>
+                <a href="listage-articles.html" class="nav-link active">Articles</a>
             </nav>
         </div>
     </header>
 
     <main class="main">
         <div class="container">
-            <article id="article-content">
-                <p>Chargement de l'article...</p>
-            </article>
-            <div class="article-footer">
-                <a href="articles.html" class="back-link">← Retour aux articles</a>
+            <h2>Tous les articles</h2>
+            <div id="articles-list" class="articles-grid">
+                <p>Chargement des articles...</p>
             </div>
         </div>
     </main>
@@ -41,6 +39,6 @@
         </div>
     </footer>
 
-    <script src="article-loader.js"></script>
+    <script src="../articles-loader.js"></script>
 </body>
 </html>

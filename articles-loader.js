@@ -1,7 +1,7 @@
 // Charger et afficher tous les articles
 async function loadArticles() {
     try {
-        const response = await fetch('articles.json');
+        const response = await fetch('../articles.json');
         const articles = await response.json();
         
         displayArticles(articles);
@@ -22,7 +22,7 @@ function displayArticles(articles) {
     }
     
     container.innerHTML = articles.map(article => `
-        <a href="accueil.html?id=${article.id}" class="article-card">
+        <a href="affichage-article.html?id=${article.id}" class="article-card">
             <div class="article-content">
                 <span class="article-category">${article.category}</span>
                 <h3 class="article-title">${article.title}</h3>

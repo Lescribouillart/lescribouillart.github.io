@@ -14,7 +14,7 @@ async function loadArticle() {
     }
     
     try {
-        const response = await fetch('articles.json');
+        const response = await fetch('../articles.json');
         const articles = await response.json();
         
         const article = articles.find(a => a.id === articleId);
