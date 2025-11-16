@@ -1,7 +1,7 @@
 // Charger et afficher tous les articles
 async function loadArticles() {
     try {
-        const response = await fetch('../articles.json');
+        const response = await fetch('../publication-articles.json');
         const articles = await response.json();
         
         displayArticles(articles);
