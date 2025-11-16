@@ -1,6 +1,7 @@
-// Configuration - REMPLACEZ par votre username et repo GitHub
-const GITHUB_USER = 'votre-username-github'; // Exemple: 'jacq'
-const GITHUB_REPO = 'votre-repo'; // Exemple: 'Blog'
+// Configuration - À MODIFIER avec vos vraies informations
+const GITHUB_USER = 'jacqthefreak'; // Remplacez par votre username GitHub
+const GITHUB_REPO = 'Blog'; // Remplacez par le nom exact de votre repo
+const GITHUB_BRANCH = 'main'; // ou 'master' selon votre branche
 const ARTICLES_FOLDER = 'articles';
 
 // Fonction pour récupérer la liste des articles depuis GitHub
