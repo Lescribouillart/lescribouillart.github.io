@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Rozha+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap');
 
 * {
     margin: 0;
@@ -106,11 +107,12 @@ body {
 
 /* Presentation Section */
 .presentation {
-    max-width: 800px;
+    max-width: 700px;
     margin: 3rem auto;
     padding: 2rem;
     line-height: 1.8;
-    font-size: 1.1rem;
+    font-size: 18px;
+    font-family: Georgia, 'Merriweather', serif;
     text-align: justify;
     border: 2px solid var(--border-color);
     border-radius: 8px;
@@ -118,6 +120,14 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     max-height: 400px;
     overflow-y: auto;
+}
+
+.presentation p {
+    margin-bottom: 1.2rem;
+}
+
+.presentation p:last-child {
+    margin-bottom: 0;
 }
 
 .presentation::-webkit-scrollbar {
