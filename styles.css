@@ -130,6 +130,12 @@ body {
     margin-bottom: 0;
 }
 
+/* Citation de Mulder en italique avec couleur différente */
+.presentation .quote-mulder {
+    font-style: italic;
+    color: #7ba3d8;
+}
+
 .presentation::-webkit-scrollbar {
     width: 8px;
 }
