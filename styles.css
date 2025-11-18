@@ -136,6 +136,13 @@ body {
     color: #7ba3d8;
 }
 
+/* Paragraphe d'introduction à la lecture alternative */
+.presentation .alternative-intro {
+    font-style: italic;
+    margin-top: 1.5rem;
+    margin-bottom: 1.2rem;
+}
+
 /* Points clés avec style discret */
 .presentation .key-point {
     padding-left: 1.5rem;
