@@ -136,6 +136,13 @@ body {
     color: #7ba3d8;
 }
 
+/* Points clés avec style discret */
+.presentation .key-point {
+    padding-left: 1.5rem;
+    color: #7ba3d8;
+    margin-bottom: 1rem;
+}
+
 .presentation::-webkit-scrollbar {
     width: 8px;
 }
