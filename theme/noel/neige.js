@@ -32,7 +32,7 @@
             const snowflake = document.createElement('div');
             const size = Math.random() * 5 + 2; // Entre 2px et 7px
             const startX = Math.random() * 100; // Position horizontale en %
-            const duration = Math.random() * 3 + 2; // Entre 2s et 5s
+            const duration = Math.random() * 5 + 4; // Entre 4s et 9s (plus lent)
             const delay = Math.random() * 2; // Délai initial
             const opacity = Math.random() * 0.6 + 0.4; // Entre 0.4 et 1
             
