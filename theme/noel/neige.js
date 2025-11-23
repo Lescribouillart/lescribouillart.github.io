@@ -36,17 +36,17 @@
             const delay = Math.random() * 2; // Délai initial
             const opacity = Math.random() * 0.6 + 0.4; // Entre 0.4 et 1
             
+            snowflake.textContent = '❆';
             snowflake.style.cssText = `
                 position: absolute;
-                top: -10px;
+                top: -30px;
                 left: ${startX}%;
-                width: ${size}px;
-                height: ${size}px;
-                background: white;
-                border-radius: 50%;
+                font-size: ${size * 2}px;
+                color: white;
                 opacity: ${opacity};
                 animation: snowfall ${duration}s linear ${delay}s;
                 pointer-events: none;
+                user-select: none;
             `;
 
             snowContainer.appendChild(snowflake);
