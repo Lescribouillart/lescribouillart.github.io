@@ -16,7 +16,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            overflow: hidden;
+            overflow: visible;
             pointer-events: none;
             z-index: 1000;
         `;
@@ -32,7 +32,7 @@
             const snowflake = document.createElement('div');
             const size = Math.random() * 5 + 2; // Entre 2px et 7px
             const startX = Math.random() * 100; // Position horizontale en %
-            const duration = Math.random() * 5 + 4; // Entre 4s et 9s (plus lent)
+            const duration = Math.random() * 10 + 8; // Entre 8s et 18s (beaucoup plus lent)
             const delay = Math.random() * 2; // Délai initial
             const opacity = Math.random() * 0.6 + 0.4; // Entre 0.4 et 1
             
@@ -61,8 +61,16 @@
         const style = document.createElement('style');
         style.textContent = `
             @keyframes snowfall {
-                to {
-                    transform: translateY(${header.offsetHeight + 10}px) translateX(${Math.random() * 50 - 25}px);
+                0% {
+                    transform: translateY(0) translateX(0);
+                    opacity: 1;
+                }
+                70% {
+                    opacity: 1;
+                }
+                100% {
+                    transform: translateY(${header.offsetHeight + 200}px) translateX(${Math.random() * 50 - 25}px);
+                    opacity: 0;
                 }
             }
         `;
