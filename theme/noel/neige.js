@@ -1,75 +1,86 @@
-// Animation de neige pour Noël
 (function() {
-    // Créer le conteneur de neige
-    const snowContainer = document.createElement('div');
-    snowContainer.className = 'snow-container';
-    snowContainer.style.cssText = `
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        overflow: hidden;
-        z-index: 10;
-    `;
+    'use strict';
 
-    // Ajouter le conteneur au header
-    const header = document.querySelector('.header');
-    if (header) {
-        header.style.position = 'relative';
-        header.appendChild(snowContainer);
-    }
+    function createSnowEffect() {
+        const header = document.querySelector('header');
+        if (!header) {
+            console.warn('Header non trouvé');
+            return;
+        }
 
-    // Fonction pour créer un flocon
-    function createSnowflake() {
-        const snowflake = document.createElement('div');
-        snowflake.className = 'snowflake';
-        snowflake.innerHTML = '❄';
-        
-        // Position de départ aléatoire
-        const startPositionX = Math.random() * 100;
-        const startPositionY = Math.random() * -100; // Démarrer plus haut et varié
-        const fontSize = Math.random() * 10 + 10; // 10-20px
-        const duration = Math.random() * 5 + 8; // 8-13 secondes (plus lent)
-        const opacity = Math.random() * 0.6 + 0.4; // 0.4-1
-        
-        snowflake.style.cssText = `
+        // Style pour le conteneur de neige
+        const snowContainer = document.createElement('div');
+        snowContainer.style.cssText = `
             position: absolute;
-            left: ${startPositionX}%;
-            top: ${startPositionY}px;
-            font-size: ${fontSize}px;
-            color: white;
-            opacity: ${opacity};
-            animation: snowfall ${duration}s linear infinite;
-            user-select: none;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 1000;
         `;
         
-        snowContainer.appendChild(snowflake);
+        // S'assurer que le header a position relative
+        if (getComputedStyle(header).position === 'static') {
+            header.style.position = 'relative';
+        }
         
-        // Repositionner le flocon après l'animation
-        snowflake.addEventListener('animationiteration', () => {
-            snowflake.style.left = Math.random() * 100 + '%';
-        });
+        header.appendChild(snowContainer);
+
+        function createSnowflake() {
+            const snowflake = document.createElement('div');
+            const size = Math.random() * 5 + 2; // Entre 2px et 7px
+            const startX = Math.random() * 100; // Position horizontale en %
+            const duration = Math.random() * 3 + 2; // Entre 2s et 5s
+            const delay = Math.random() * 2; // Délai initial
+            const opacity = Math.random() * 0.6 + 0.4; // Entre 0.4 et 1
+            
+            snowflake.style.cssText = `
+                position: absolute;
+                top: -10px;
+                left: ${startX}%;
+                width: ${size}px;
+                height: ${size}px;
+                background: white;
+                border-radius: 50%;
+                opacity: ${opacity};
+                animation: snowfall ${duration}s linear ${delay}s;
+                pointer-events: none;
+            `;
+
+            snowContainer.appendChild(snowflake);
+
+            // Supprimer le flocon après l'animation
+            setTimeout(() => {
+                snowflake.remove();
+            }, (duration + delay) * 1000);
+        }
+
+        // Ajouter les keyframes pour l'animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes snowfall {
+                to {
+                    transform: translateY(${header.offsetHeight + 10}px) translateX(${Math.random() * 50 - 25}px);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Créer des flocons régulièrement
+        setInterval(createSnowflake, 200);
+
+        // Créer quelques flocons initiaux
+        for (let i = 0; i < 10; i++) {
+            setTimeout(createSnowflake, i * 100);
+        }
     }
 
-    // Ajouter les styles d'animation
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes snowfall {
-            0% {
-                transform: translateY(-20px) rotate(0deg);
-            }
-            100% {
-                transform: translateY(100vh) rotate(360deg);
-            }
-        }
-    `;
-    document.head.appendChild(style);
-
-    // Créer plusieurs flocons
-    const numberOfSnowflakes = 50;
-    for (let i = 0; i < numberOfSnowflakes; i++) {
-        createSnowflake();
+    // Lancer l'effet quand le DOM est chargé
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', createSnowEffect);
+    } else {
+        createSnowEffect();
     }
 })();
