@@ -177,6 +177,10 @@ body {
 
 .footer-nav {
     margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
 }
 
 .footer-link {
@@ -184,6 +188,7 @@ body {
     text-decoration: none;
     transition: color 0.3s ease;
     font-size: 0.9rem;
+    text-transform: uppercase;
 }
 
 .footer-link:hover {
@@ -193,6 +198,7 @@ body {
 .footer-separator {
     margin: 0 1rem;
     color: var(--text-light);
+    display: none;
 }
 
 /* Articles Grid - Style Korben */
