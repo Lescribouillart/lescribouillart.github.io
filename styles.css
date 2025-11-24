@@ -359,6 +359,19 @@ body {
     color: var(--primary-color);
 }
 
+/* Texte en bleu */
+.highlight-blue {
+    color: #7ba3d8;
+}
+
+a.highlight-blue {
+    text-decoration: none;
+}
+
+a.highlight-blue:hover {
+    text-decoration: underline;
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
     .articles-grid {
