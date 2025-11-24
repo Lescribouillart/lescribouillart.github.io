@@ -369,7 +369,7 @@ a.highlight-blue {
 }
 
 a.highlight-blue:hover {
-    text-decoration: underline;
+    text-decoration: none;
 }
 
 /* Responsive */
