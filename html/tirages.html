@@ -5,605 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Éditeur d'articles - Le Scribouill'art</title>
     <link rel="stylesheet" href="../styles.css">
-    <style>
-        /* Reset et variables */
-        :root {
-            --bg-primary: #f0f0f1;
-            --bg-secondary: #fff;
-            --bg-tertiary: #f6f7f7;
-            --text-primary: #1d2327;
-            --text-secondary: #50575e;
-            --text-muted: #757575;
-            --border-color: #dcdcde;
-            --accent-color: #2271b1;
-            --accent-hover: #135e96;
-        }
-
-        body.dark-mode {
-            --bg-primary: #1a1a1a;
-            --bg-secondary: #2d2d2d;
-            --bg-tertiary: #3a3a3a;
-            --text-primary: #e0e0e0;
-            --text-secondary: #b0b0b0;
-            --text-muted: #888888;
-            --border-color: #444444;
-            --accent-color: #5b9dd9;
-            --accent-hover: #4a8ec2;
-        }
-
-        body {
-            background: var(--bg-primary);
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, sans-serif;
-        }
-
-        .main {
-            background: var(--bg-primary);
-            padding: 0;
-            min-height: 100vh;
-        }
-
-        /* En-tête style WordPress */
-        .header {
-            background: #1d2327;
-            border-bottom: none;
-            padding: 0;
-        }
-
-        .header .container {
-            padding: 0 1rem;
-        }
-
-        .logo {
-            color: #f0f0f1;
-        }
-
-        .tagline {
-            color: #a7aaad;
-        }
-
-        /* Barre supérieure style WordPress */
-        .top-bar {
-            background: var(--bg-secondary);
-            border-bottom: 1px solid var(--border-color);
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-        }
-
-        .top-bar-left {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-
-        .editor-mode-title {
-            font-size: 0.9rem;
-            color: var(--text-primary);
-            font-weight: 400;
-        }
-
-        /* Bouton mode nuit style Korben */
-        .dark-mode-toggle {
-            background: transparent;
-            border: none;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-            margin-right: 1rem;
-        }
-
-        .dark-mode-toggle:hover {
-            background: var(--bg-tertiary);
-            transform: rotate(20deg);
-        }
-
-        .top-bar-actions {
-            display: flex;
-            gap: 0.75rem;
-            align-items: center;
-        }
-
-        /* Boutons style WordPress */
-        .wp-button {
-            background: var(--bg-secondary);
-            border: 1px solid var(--accent-color);
-            color: var(--accent-color);
-            padding: 0.5rem 1rem;
-            border-radius: 2px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 400;
-            transition: all 0.1s ease;
-            height: 36px;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .wp-button:hover {
-            background: var(--bg-tertiary);
-            border-color: var(--accent-hover);
-            color: var(--accent-hover);
-        }
-
-        .wp-button.primary {
-            background: var(--accent-color);
-            border-color: var(--accent-color);
-            color: #fff;
-        }
-
-        .wp-button.primary:hover {
-            background: var(--accent-hover);
-            border-color: var(--accent-hover);
-        }
-
-        .wp-button.danger {
-            border-color: #d63638;
-            color: #d63638;
-        }
-
-        .wp-button.danger:hover {
-            background: #d63638;
-            color: #fff;
-        }
-
-        /* Container principal */
-        .editor-container {
-            max-width: 100%;
-            margin: 0;
-            padding: 0;
-            background: transparent;
-            border: none;
-            border-radius: 0;
-            display: flex;
-            gap: 0;
-            min-height: calc(100vh - 200px);
-        }
-
-        /* Sidebar style WordPress */
-        .sidebar {
-            width: 280px;
-            background: var(--bg-secondary);
-            border-right: 1px solid var(--border-color);
-            padding: 1.5rem 1rem;
-            flex-shrink: 0;
-            overflow-y: auto;
-        }
-
-        .sidebar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid #dcdcde;
-        }
-
-        .sidebar-title {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text-primary);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin: 0;
-        }
-
-        .new-article-btn {
-            background: var(--accent-color);
-            color: #fff;
-            border: none;
-            width: 30px;
-            height: 30px;
-            border-radius: 2px;
-            cursor: pointer;
-            font-size: 1.3rem;
-            font-weight: 400;
-            transition: all 0.1s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            line-height: 1;
-        }
-
-        .new-article-btn:hover {
-            background: var(--accent-hover);
-        }
-
-        .articles-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            max-height: none;
-            padding-right: 0;
-        }
-
-        .articles-list::-webkit-scrollbar {
-            display: none;
-        }
-
-        .article-card-item {
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border-color);
-            border-radius: 2px;
-            padding: 0.75rem;
-            cursor: pointer;
-            transition: all 0.1s ease;
-        }
-
-        .article-card-item:hover {
-            background: var(--bg-secondary);
-            border-color: var(--accent-color);
-        }
-
-        .article-card-item.active {
-            background: var(--bg-secondary);
-            border-color: var(--accent-color);
-            box-shadow: 0 0 0 1px var(--accent-color);
-        }
-
-        .article-card-subject {
-            color: var(--text-primary);
-            font-weight: 600;
-            font-size: 13px;
-            margin-bottom: 0.4rem;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .article-card-preview {
-            color: var(--text-secondary);
-            font-size: 12px;
-            line-height: 1.4;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .article-card-date {
-            color: var(--text-muted);
-            font-size: 11px;
-            margin-top: 0.4rem;
-        }
-
-        .article-card-delete {
-            background: transparent;
-            color: #d63638;
-            border: 1px solid #d63638;
-            padding: 0.25rem 0.5rem;
-            border-radius: 2px;
-            cursor: pointer;
-            font-size: 11px;
-            margin-top: 0.5rem;
-            transition: all 0.1s ease;
-        }
-
-        .article-card-delete:hover {
-            background: #d63638;
-            color: #fff;
-        }
-
-        .no-articles {
-            color: var(--text-muted);
-            text-align: center;
-            padding: 2rem 1rem;
-            font-size: 13px;
-        }
-
-        /* Zone principale */
-        .editor-main {
-            flex: 1;
-            background: var(--bg-secondary);
-            padding: 0;
-            min-width: 0;
-        }
-
-        .editor-title {
-            display: none;
-        }
-
-        /* Zone d'édition style WordPress */
-        .editor-wrapper {
-            max-width: 840px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .article-info {
-            margin-bottom: 1rem;
-            padding: 0;
-            background: transparent;
-            border: none;
-        }
-
-        .article-info label {
-            display: none;
-        }
-
-        .article-subject {
-            width: 100%;
-            padding: 0;
-            background: transparent;
-            color: var(--text-primary);
-            border: none;
-            border-radius: 0;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, sans-serif;
-            font-size: 2.5rem;
-            font-weight: 700;
-            outline: none;
-            line-height: 1.2;
-            margin-bottom: 1rem;
-        }
-
-        .article-subject::placeholder {
-            color: var(--text-muted);
-        }
-
-        .toolbar {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.25rem;
-            padding: 0.5rem;
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border-color);
-            border-radius: 2px;
-            margin-bottom: 1rem;
-        }
-
-        .toolbar-btn {
-            background: transparent;
-            color: var(--text-primary);
-            border: 1px solid transparent;
-            padding: 0.4rem 0.6rem;
-            border-radius: 2px;
-            cursor: pointer;
-            font-weight: 500;
-            font-size: 14px;
-            transition: all 0.1s ease;
-            min-width: 36px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .toolbar-btn:hover {
-            background: var(--bg-secondary);
-            border-color: var(--text-primary);
-        }
-
-        .toolbar-btn:active {
-            background: var(--bg-primary);
-        }
-
-        .toolbar-separator {
-            width: 1px;
-            background: var(--border-color);
-            margin: 0.25rem 0.5rem;
-        }
-
-        .editor-area {
-            min-height: 500px;
-            padding: 1.5rem;
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-            border-radius: 2px;
-            font-family: Georgia, 'Times New Roman', serif;
-            font-size: 1.125rem;
-            line-height: 1.8;
-            outline: none;
-            margin-bottom: 2rem;
-        }
-
-        .editor-area:focus {
-            border-color: var(--accent-color);
-            box-shadow: 0 0 0 1px var(--accent-color);
-        }
-
-        .editor-area h2 {
-            font-size: 2rem;
-            color: var(--text-primary);
-            margin: 2rem 0 1rem;
-            font-weight: 700;
-            line-height: 1.3;
-        }
-
-        .editor-area h3 {
-            font-size: 1.5rem;
-            color: var(--text-primary);
-            margin: 1.5rem 0 0.75rem;
-            font-weight: 600;
-        }
-
-        .editor-area p {
-            margin-bottom: 1rem;
-        }
-
-        .editor-area ul, .editor-area ol {
-            margin: 1rem 0;
-            padding-left: 2rem;
-        }
-
-        .editor-area li {
-            margin-bottom: 0.5rem;
-        }
-
-        .editor-area blockquote {
-            margin: 1.5rem 0;
-            padding: 1rem 1.5rem;
-            background: var(--bg-tertiary);
-            border-left: 4px solid var(--accent-color);
-            font-style: italic;
-        }
-
-        .editor-area a {
-            color: var(--accent-color);
-            text-decoration: underline;
-        }
-
-        /* Contrôles de conversion */
-        .conversion-controls {
-            display: flex;
-            gap: 0.75rem;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            padding: 1rem;
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border-color);
-            border-radius: 2px;
-        }
-
-        .conversion-controls label {
-            color: var(--text-primary);
-            font-weight: 600;
-            font-size: 13px;
-        }
-
-        .format-selector {
-            padding: 0.5rem;
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-            border-radius: 2px;
-            font-size: 13px;
-            cursor: pointer;
-            height: 36px;
-        }
-
-        .format-selector:focus {
-            border-color: var(--accent-color);
-            outline: none;
-            box-shadow: 0 0 0 1px var(--accent-color);
-        }
-
-        .convert-btn, .copy-btn {
-            background: var(--accent-color);
-            border: 1px solid var(--accent-color);
-            color: #fff;
-            padding: 0.5rem 1rem;
-            border-radius: 2px;
-            cursor: pointer;
-            font-weight: 400;
-            font-size: 13px;
-            transition: all 0.1s ease;
-            height: 36px;
-        }
-
-        .convert-btn:hover, .copy-btn:hover {
-            background: var(--accent-hover);
-            border-color: var(--accent-hover);
-        }
-
-        .copy-btn {
-            background: #00a32a;
-            border-color: #00a32a;
-        }
-
-        .copy-btn:hover {
-            background: #008a20;
-            border-color: #008a20;
-        }
-
-        .output-area {
-            min-height: 200px;
-            max-height: 400px;
-            overflow-y: auto;
-            padding: 1rem;
-            background: #1d2327;
-            color: #f0f0f1;
-            border: 1px solid #1d2327;
-            border-radius: 2px;
-            font-family: 'Courier New', Consolas, Monaco, monospace;
-            font-size: 12px;
-            line-height: 1.6;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-        }
-
-        .output-area::-webkit-scrollbar {
-            width: 12px;
-        }
-
-        .output-area::-webkit-scrollbar-track {
-            background: #2c3338;
-        }
-
-        .output-area::-webkit-scrollbar-thumb {
-            background: #50575e;
-            border-radius: 6px;
-        }
-
-        .status-message {
-            margin-top: 1rem;
-            padding: 0.75rem 1rem;
-            border-radius: 2px;
-            font-size: 13px;
-            display: none;
-            border-left: 4px solid;
-        }
-
-        .status-message.success {
-            background: #edfaef;
-            border-color: #00a32a;
-            color: #1d2327;
-            display: block;
-        }
-
-        .status-message.error {
-            background: #fcf0f1;
-            border-color: #d63638;
-            color: #1d2327;
-            display: block;
-        }
-
-        /* Footer */
-        .footer {
-            background: #1d2327;
-            border-top: 1px solid #3c434a;
-        }
-
-        .footer-link {
-            color: #a7aaad;
-        }
-
-        .footer-link:hover {
-            color: #2271b1;
-        }
-
-        /* Responsive */
-        @media (max-width: 782px) {
-            .sidebar {
-                display: none;
-            }
-
-            .top-bar {
-                padding: 0.75rem 1rem;
-            }
-
-            .editor-wrapper {
-                padding: 1rem;
-            }
-
-            .article-subject {
-                font-size: 1.75rem;
-            }
-        }
-    </style>
 </head>
-<body>
+<body class="editor-page">
     <header class="header">
         <div class="container">
             <a href="../index.html" style="text-decoration: none; color: inherit;">
@@ -655,8 +58,26 @@
                         >
                     </div>
 
-                    <!-- Barre d'outils -->
+                    <!-- Barre d'outils enrichie -->
                     <div class="toolbar">
+                        <!-- Sélecteur de paragraphe -->
+                        <div class="toolbar-dropdown">
+                            <select class="toolbar-select" id="formatSelect">
+                                <option value="p">Paragraphe</option>
+                                <option value="h1">Titre 1</option>
+                                <option value="h2">Titre 2</option>
+                                <option value="h3">Titre 3</option>
+                                <option value="h4">Titre 4</option>
+                                <option value="h5">Titre 5</option>
+                                <option value="h6">Titre 6</option>
+                                <option value="blockquote">Citation</option>
+                                <option value="pre">Code</option>
+                            </select>
+                        </div>
+
+                        <div class="toolbar-separator"></div>
+
+                        <!-- Formatage de texte -->
                         <button class="toolbar-btn" data-command="bold" title="Gras (Ctrl+B)">
                             <strong>B</strong>
                         </button>
@@ -666,29 +87,86 @@
                         <button class="toolbar-btn" data-command="underline" title="Souligné (Ctrl+U)">
                             <u>U</u>
                         </button>
+                        <button class="toolbar-btn" data-command="strikeThrough" title="Barré">
+                            <s>S</s>
+                        </button>
 
                         <div class="toolbar-separator"></div>
 
-                        <button class="toolbar-btn" data-command="formatBlock" data-value="h2" title="Titre 2">H2</button>
-                        <button class="toolbar-btn" data-command="formatBlock" data-value="h3" title="Titre 3">H3</button>
-                        <button class="toolbar-btn" data-command="formatBlock" data-value="p" title="Paragraphe">P</button>
+                        <!-- Couleurs -->
+                        <div class="color-picker-wrapper">
+                            <button class="toolbar-btn" title="Couleur du texte" onclick="document.getElementById('textColor').click()">
+                                A
+                            </button>
+                            <input type="color" id="textColor" class="color-input">
+                        </div>
+                        <div class="color-picker-wrapper">
+                            <button class="toolbar-btn" title="Couleur de fond" onclick="document.getElementById('bgColor').click()">
+                                🎨
+                            </button>
+                            <input type="color" id="bgColor" class="color-input">
+                        </div>
 
                         <div class="toolbar-separator"></div>
 
-                        <button class="toolbar-btn" data-command="insertUnorderedList" title="Liste à puces">•</button>
-                        <button class="toolbar-btn" data-command="insertOrderedList" title="Liste numérotée">1.</button>
-                        <button class="toolbar-btn" data-command="formatBlock" data-value="blockquote" title="Citation">"</button>
+                        <!-- Listes -->
+                        <button class="toolbar-btn" data-command="insertUnorderedList" title="Liste à puces">
+                            •
+                        </button>
+                        <button class="toolbar-btn" data-command="insertOrderedList" title="Liste numérotée">
+                            1.
+                        </button>
+                        <button class="toolbar-btn" data-command="outdent" title="Réduire le retrait">
+                            ◁
+                        </button>
+                        <button class="toolbar-btn" data-command="indent" title="Augmenter le retrait">
+                            ▷
+                        </button>
 
                         <div class="toolbar-separator"></div>
 
-                        <button class="toolbar-btn" id="linkBtn" title="Insérer un lien">🔗</button>
+                        <!-- Alignement -->
+                        <button class="toolbar-btn" data-command="justifyLeft" title="Aligner à gauche">
+                            ⬅
+                        </button>
+                        <button class="toolbar-btn" data-command="justifyCenter" title="Centrer">
+                            ↔
+                        </button>
+                        <button class="toolbar-btn" data-command="justifyRight" title="Aligner à droite">
+                            ➡
+                        </button>
+                        <button class="toolbar-btn" data-command="justifyFull" title="Justifier">
+                            ⬌
+                        </button>
 
                         <div class="toolbar-separator"></div>
 
-                        <button class="toolbar-btn" data-command="justifyLeft" title="Aligner à gauche">⬅</button>
-                        <button class="toolbar-btn" data-command="justifyCenter" title="Centrer">↔</button>
-                        <button class="toolbar-btn" data-command="justifyRight" title="Aligner à droite">➡</button>
-                        <button class="toolbar-btn" data-command="justifyFull" title="Justifier">⬌</button>
+                        <!-- Liens et médias -->
+                        <button class="toolbar-btn" id="linkBtn" title="Insérer un lien">
+                            🔗
+                        </button>
+                        <button class="toolbar-btn" id="unlinkBtn" data-command="unlink" title="Supprimer le lien">
+                            🔓
+                        </button>
+                        <button class="toolbar-btn" id="imageBtn" title="Insérer une image">
+                            🖼️
+                        </button>
+
+                        <div class="toolbar-separator"></div>
+
+                        <!-- Actions -->
+                        <button class="toolbar-btn" data-command="undo" title="Annuler (Ctrl+Z)">
+                            ↶
+                        </button>
+                        <button class="toolbar-btn" data-command="redo" title="Rétablir (Ctrl+Y)">
+                            ↷
+                        </button>
+                        <button class="toolbar-btn" data-command="removeFormat" title="Supprimer le formatage">
+                            ✖
+                        </button>
+                        <button class="toolbar-btn" id="sourceBtn" title="Voir le code HTML">
+                            &lt;/&gt;
+                        </button>
                     </div>
 
                     <!-- Zone d'édition -->

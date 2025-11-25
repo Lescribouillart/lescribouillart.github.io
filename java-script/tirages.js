@@ -26,14 +26,21 @@ function initEditor() {
     const copyBtn = document.getElementById('copyBtn');
     const statusMessage = document.getElementById('statusMessage');
     const linkBtn = document.getElementById('linkBtn');
+    const unlinkBtn = document.getElementById('unlinkBtn');
+    const imageBtn = document.getElementById('imageBtn');
+    const sourceBtn = document.getElementById('sourceBtn');
     const saveBtn = document.getElementById('saveBtn');
     const loadBtn = document.getElementById('loadBtn');
     const clearBtn = document.getElementById('clearBtn');
     const newArticleBtn = document.getElementById('newArticleBtn');
     const articlesList = document.getElementById('articlesList');
     const darkModeToggle = document.getElementById('darkModeToggle');
+    const formatSelect = document.getElementById('formatSelect');
+    const textColor = document.getElementById('textColor');
+    const bgColor = document.getElementById('bgColor');
 
     let currentArticleId = null;
+    let isSourceMode = false;
 
     // Charger le contenu sauvegardé au démarrage (localStorage)
     loadFromLocalStorage();
@@ -49,6 +56,25 @@ function initEditor() {
         toggleDarkMode();
     });
 
+    // Sélecteur de format de paragraphe
+    formatSelect.addEventListener('change', (e) => {
+        const format = e.target.value;
+        document.execCommand('formatBlock', false, format);
+        editor.focus();
+    });
+
+    // Couleur du texte
+    textColor.addEventListener('change', (e) => {
+        document.execCommand('foreColor', false, e.target.value);
+        editor.focus();
+    });
+
+    // Couleur de fond
+    bgColor.addEventListener('change', (e) => {
+        document.execCommand('backColor', false, e.target.value);
+        editor.focus();
+    });
+
     // Gestion des boutons de la barre d'outils
     document.querySelectorAll('.toolbar-btn[data-command]').forEach(btn => {
         btn.addEventListener('click', (e) => {
@@ -57,18 +83,149 @@ function initEditor() {
             const value = btn.dataset.value || null;
             
             document.execCommand(command, false, value);
+            updateToolbarState();
             editor.focus();
         });
     });
 
-    // Bouton lien personnalisé
+    // Bouton lien amélioré
     linkBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        const url = prompt('Entrez l\'URL du lien :');
-        if (url) {
-            document.execCommand('createLink', false, url);
+        const selection = window.getSelection().toString();
+        const url = prompt('Entrez l\'URL du lien :', selection ? '' : 'https://');
+        const text = selection || prompt('Texte du lien :');
+        
+        if (url && text) {
+            if (selection) {
+                document.execCommand('createLink', false, url);
+            } else {
+                document.execCommand('insertHTML', false, `<a href="${url}">${text}</a>`);
+            }
         }
         editor.focus();
+    });
+
+    // Bouton supprimer le lien
+    unlinkBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.execCommand('unlink', false, null);
+        editor.focus();
+    });
+
+    // Bouton image
+    imageBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const url = prompt('Entrez l\'URL de l\'image :');
+        const alt = prompt('Texte alternatif (description) :');
+        
+        if (url) {
+            const imgHTML = `<img src="${url}" alt="${alt || ''}" style="max-width: 100%; height: auto;">`;
+            document.execCommand('insertHTML', false, imgHTML);
+        }
+        editor.focus();
+    });
+
+    // Bouton code source
+    sourceBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        toggleSourceMode();
+    });
+
+    // Mettre à jour l'état de la barre d'outils
+    editor.addEventListener('mouseup', updateToolbarState);
+    editor.addEventListener('keyup', updateToolbarState);
+
+    /**
+     * Met à jour l'état actif des boutons de la barre d'outils
+     */
+    function updateToolbarState() {
+        // Mettre à jour les boutons actifs
+        document.querySelectorAll('.toolbar-btn[data-command]').forEach(btn => {
+            const command = btn.dataset.command;
+            if (document.queryCommandState(command)) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+
+        // Mettre à jour le sélecteur de format
+        const parentElement = window.getSelection().anchorNode?.parentElement;
+        if (parentElement) {
+            const tagName = parentElement.tagName?.toLowerCase();
+            if (formatSelect.querySelector(`option[value="${tagName}"]`)) {
+                formatSelect.value = tagName;
+            }
+        }
+    }
+
+    /**
+     * Bascule entre le mode visuel et le mode code source
+     */
+    function toggleSourceMode() {
+        isSourceMode = !isSourceMode;
+        
+        if (isSourceMode) {
+            // Mode source : afficher le HTML brut
+            const html = editor.innerHTML;
+            editor.contentEditable = 'false';
+            editor.style.fontFamily = 'monospace';
+            editor.style.whiteSpace = 'pre-wrap';
+            editor.textContent = formatHTMLForDisplay(html);
+            sourceBtn.classList.add('active');
+        } else {
+            // Mode visuel : restaurer l'édition WYSIWYG
+            const html = editor.textContent;
+            editor.innerHTML = html;
+            editor.contentEditable = 'true';
+            editor.style.fontFamily = 'Georgia, "Times New Roman", serif';
+            editor.style.whiteSpace = 'normal';
+            sourceBtn.classList.remove('active');
+        }
+        editor.focus();
+    }
+
+    /**
+     * Formate le HTML pour l'affichage dans le mode source
+     */
+    function formatHTMLForDisplay(html) {
+        return html
+            .replace(/></g, '>\n<')
+            .split('\n')
+            .map(line => line.trim())
+            .filter(line => line)
+            .join('\n');
+    }
+
+    // Raccourcis clavier
+    editor.addEventListener('keydown', (e) => {
+        if (e.ctrlKey || e.metaKey) {
+            switch(e.key.toLowerCase()) {
+                case 'b':
+                    e.preventDefault();
+                    document.execCommand('bold');
+                    updateToolbarState();
+                    break;
+                case 'i':
+                    e.preventDefault();
+                    document.execCommand('italic');
+                    updateToolbarState();
+                    break;
+                case 'u':
+                    e.preventDefault();
+                    document.execCommand('underline');
+                    updateToolbarState();
+                    break;
+                case 'z':
+                    e.preventDefault();
+                    document.execCommand('undo');
+                    break;
+                case 'y':
+                    e.preventDefault();
+                    document.execCommand('redo');
+                    break;
+            }
+        }
     });
 
     // Conversion
