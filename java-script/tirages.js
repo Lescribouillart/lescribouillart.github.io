@@ -29,9 +29,16 @@ function initEditor() {
     const saveBtn = document.getElementById('saveBtn');
     const loadBtn = document.getElementById('loadBtn');
     const clearBtn = document.getElementById('clearBtn');
+    const newArticleBtn = document.getElementById('newArticleBtn');
+    const articlesList = document.getElementById('articlesList');
+
+    let currentArticleId = null;
 
     // Charger le contenu sauvegardé au démarrage (localStorage)
     loadFromLocalStorage();
+    
+    // Afficher la liste des articles
+    refreshArticlesList();
 
     // Gestion des boutons de la barre d'outils
     document.querySelectorAll('.toolbar-btn[data-command]').forEach(btn => {
@@ -106,9 +113,14 @@ function initEditor() {
         saveToLocalStorage(true);
     }, 30000);
 
-    // Bouton Enregistrer - Télécharger le fichier
+    // Bouton Publier - Télécharger ET sauvegarder dans la liste
     saveBtn.addEventListener('click', () => {
-        downloadFile();
+        publishArticle();
+    });
+
+    // Bouton Nouvel Article
+    newArticleBtn.addEventListener('click', () => {
+        createNewArticle();
     });
 
     // Bouton Charger - Charger depuis un fichier
@@ -122,7 +134,18 @@ function initEditor() {
             if (file) {
                 const reader = new FileReader();
                 reader.onload = (event) => {
-                    editor.innerHTML = event.target.result;
+                    const content = event.target.result;
+                    
+                    // Extraire l'objet depuis les commentaires si présent
+                    const subjectMatch = content.match(/<!-- Objet: (.+?) -->/);
+                    if (subjectMatch) {
+                        articleSubject.value = subjectMatch[1];
+                        // Retirer les métadonnées du contenu
+                        editor.innerHTML = content.replace(/<!-- .+? -->\n*/g, '').trim();
+                    } else {
+                        editor.innerHTML = content;
+                    }
+                    
                     showStatus('✓ Fichier chargé !', 'success');
                 };
                 reader.readAsText(file);
@@ -143,37 +166,57 @@ function initEditor() {
     });
 
     /**
-     * Télécharge le contenu de l'éditeur dans un fichier HTML
+     * Crée un nouvel article vierge
      */
-    function downloadFile() {
-        const content = editor.innerHTML;
+    function createNewArticle() {
+        if (confirm('Voulez-vous créer un nouvel article ? Les modifications non enregistrées seront perdues.')) {
+            currentArticleId = null;
+            articleSubject.value = '';
+            editor.innerHTML = '<h2>Titre de votre article</h2><p>Commencez à écrire votre article ici...</p>';
+            output.textContent = '';
+            
+            refreshArticlesList();
+            showStatus('✓ Nouvel article créé !', 'success');
+        }
+    }
+
+    /**
+     * Publie l'article : télécharge le fichier ET l'ajoute à la liste
+     */
+    function publishArticle() {
         const subject = articleSubject.value.trim();
-        const timestamp = new Date().toISOString().slice(0, 10);
+        const content = editor.innerHTML;
         
-        // Générer un nom de fichier basé sur l'objet ou la date
-        let filename;
-        if (subject) {
-            // Nettoyer l'objet pour le nom de fichier
-            const cleanSubject = subject
-                .toLowerCase()
-                .replace(/[àáâãäå]/g, 'a')
-                .replace(/[èéêë]/g, 'e')
-                .replace(/[ìíîï]/g, 'i')
-                .replace(/[òóôõö]/g, 'o')
-                .replace(/[ùúûü]/g, 'u')
-                .replace(/[ç]/g, 'c')
-                .replace(/[^a-z0-9]+/g, '-')
-                .replace(/^-+|-+$/g, '')
-                .substring(0, 50);
-            filename = `${cleanSubject}-${timestamp}.html`;
-        } else {
-            filename = `article-${timestamp}.html`;
+        if (!subject) {
+            showStatus('⚠️ Veuillez saisir un objet pour l\'article', 'error');
+            return;
         }
         
+        // 1. Télécharger le fichier
+        downloadFile(subject, content);
+        
+        // 2. Sauvegarder dans la liste
+        saveArticleToList(subject, content);
+    }
+
+    /**
+     * Télécharge le contenu de l'éditeur dans un fichier HTML
+     */
+    function downloadFile(subject, content) {
+        const timestamp = new Date().toISOString().slice(0, 10);
+        
+        // Générer un nom de fichier basé sur l'objet
+        const cleanSubject = subject
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-+|-+$/g, '')
+            .substring(0, 50);
+        const filename = `${cleanSubject}-${timestamp}.html`;
+        
         // Créer le contenu complet avec métadonnées
-        const fullContent = subject 
-            ? `<!-- Objet: ${subject} -->\n<!-- Date: ${timestamp} -->\n\n${content}`
-            : content;
+        const fullContent = `<!-- Objet: ${subject} -->\n<!-- Date: ${timestamp} -->\n\n${content}`;
         
         // Créer un blob avec le contenu
         const blob = new Blob([fullContent], { type: 'text/html;charset=utf-8' });
@@ -190,8 +233,146 @@ function initEditor() {
         
         // Libérer la mémoire
         URL.revokeObjectURL(link.href);
+    }
+
+    /**
+     * Sauvegarde l'article dans la liste
+     */
+    function saveArticleToList(subject, content) {
+        // Récupérer la liste des articles
+        const articles = getArticlesList();
         
-        showStatus(`✓ Fichier "${filename}" téléchargé !`, 'success');
+        // Créer ou mettre à jour l'article
+        const article = {
+            id: currentArticleId || Date.now(),
+            subject: subject,
+            content: content,
+            preview: getTextPreview(content),
+            date: new Date().toLocaleString('fr-FR')
+        };
+        
+        // Vérifier si l'article existe déjà
+        const existingIndex = articles.findIndex(a => a.id === article.id);
+        
+        if (existingIndex >= 0) {
+            articles[existingIndex] = article;
+        } else {
+            articles.unshift(article);
+        }
+        
+        // Sauvegarder dans localStorage
+        localStorage.setItem('scribouillart_articles', JSON.stringify(articles));
+        
+        currentArticleId = article.id;
+        
+        // Rafraîchir la liste
+        refreshArticlesList();
+        
+        showStatus(`✓ Article "${subject}" publié et sauvegardé !`, 'success');
+    }
+
+    /**
+     * Récupère la liste des articles depuis localStorage
+     */
+    function getArticlesList() {
+        const stored = localStorage.getItem('scribouillart_articles');
+        return stored ? JSON.parse(stored) : [];
+    }
+
+    /**
+     * Extrait un aperçu textuel du contenu HTML
+     */
+    function getTextPreview(html) {
+        const temp = document.createElement('div');
+        temp.innerHTML = html;
+        const text = temp.textContent || temp.innerText || '';
+        return text.substring(0, 100);
+    }
+
+    /**
+     * Rafraîchit l'affichage de la liste des articles
+     */
+    function refreshArticlesList() {
+        const articles = getArticlesList();
+        
+        if (articles.length === 0) {
+            articlesList.innerHTML = '<div class="no-articles">Aucun article sauvegardé</div>';
+            return;
+        }
+        
+        articlesList.innerHTML = articles.map(article => `
+            <div class="article-card-item ${article.id === currentArticleId ? 'active' : ''}" data-id="${article.id}">
+                <div class="article-card-subject">${escapeHtml(article.subject)}</div>
+                <div class="article-card-preview">${escapeHtml(article.preview)}</div>
+                <div class="article-card-date">${article.date}</div>
+                <button class="article-card-delete" data-id="${article.id}" onclick="event.stopPropagation()">
+                    🗑️ Supprimer
+                </button>
+            </div>
+        `).join('');
+        
+        // Ajouter les événements de clic
+        articlesList.querySelectorAll('.article-card-item').forEach(card => {
+            card.addEventListener('click', () => {
+                const id = parseInt(card.dataset.id);
+                loadArticleFromList(id);
+            });
+        });
+        
+        // Ajouter les événements de suppression
+        articlesList.querySelectorAll('.article-card-delete').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const id = parseInt(btn.dataset.id);
+                deleteArticleFromList(id);
+            });
+        });
+    }
+
+    /**
+     * Charge un article depuis la liste
+     */
+    function loadArticleFromList(id) {
+        const articles = getArticlesList();
+        const article = articles.find(a => a.id === id);
+        
+        if (article) {
+            articleSubject.value = article.subject;
+            editor.innerHTML = article.content;
+            currentArticleId = article.id;
+            
+            refreshArticlesList();
+            showStatus(`✓ Article "${article.subject}" chargé !`, 'success');
+        }
+    }
+
+    /**
+     * Supprime un article de la liste
+     */
+    function deleteArticleFromList(id) {
+        if (!confirm('Êtes-vous sûr de vouloir supprimer cet article ?')) {
+            return;
+        }
+        
+        const articles = getArticlesList();
+        const filteredArticles = articles.filter(a => a.id !== id);
+        
+        localStorage.setItem('scribouillart_articles', JSON.stringify(filteredArticles));
+        
+        if (currentArticleId === id) {
+            currentArticleId = null;
+        }
+        
+        refreshArticlesList();
+        showStatus('✓ Article supprimé !', 'success');
+    }
+
+    /**
+     * Échappe le HTML pour l'affichage
+     */
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
     }
 
     /**

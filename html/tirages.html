@@ -8,12 +8,153 @@
     <style>
         /* Styles spécifiques à l'éditeur */
         .editor-container {
-            max-width: 900px;
+            max-width: 1400px;
             margin: 2rem auto;
             padding: 2rem;
             background: var(--bg-light);
             border-radius: 8px;
             border: 1px solid var(--border-color);
+            display: flex;
+            gap: 2rem;
+        }
+
+        .sidebar {
+            width: 300px;
+            flex-shrink: 0;
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .sidebar-title {
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            margin: 0;
+        }
+
+        .new-article-btn {
+            background: var(--secondary-color);
+            color: var(--bg-color);
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .new-article-btn:hover {
+            background: var(--primary-color);
+            transform: scale(1.1);
+        }
+
+        .articles-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            max-height: 600px;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+
+        .articles-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .articles-list::-webkit-scrollbar-track {
+            background: var(--bg-color);
+            border-radius: 3px;
+        }
+
+        .articles-list::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 3px;
+        }
+
+        .article-card-item {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .article-card-item:hover {
+            border-color: var(--secondary-color);
+            transform: translateX(5px);
+        }
+
+        .article-card-item.active {
+            border-color: var(--secondary-color);
+            background: rgba(123, 163, 216, 0.1);
+        }
+
+        .article-card-subject {
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .article-card-preview {
+            color: var(--text-light);
+            font-size: 0.85rem;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .article-card-date {
+            color: var(--text-light);
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        .article-card-delete {
+            background: #f44336;
+            color: white;
+            border: none;
+            padding: 0.3rem 0.6rem;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .article-card-delete:hover {
+            background: #d32f2f;
+        }
+
+        .editor-main {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .no-articles {
+            color: var(--text-light);
+            text-align: center;
+            padding: 2rem;
+            font-style: italic;
         }
 
         .editor-title {
@@ -315,107 +456,121 @@
 
     <main class="main">
         <div class="editor-container" id="editorContainer">
-            <h2 class="editor-title">✍️ Éditeur d'articles</h2>
+            <!-- Barre latérale des articles -->
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <h3 class="sidebar-title">📚 Mes articles</h3>
+                    <button class="new-article-btn" id="newArticleBtn" title="Nouvel article">+</button>
+                </div>
+                <div class="articles-list" id="articlesList">
+                    <div class="no-articles">Aucun article sauvegardé</div>
+                </div>
+            </aside>
 
-            <!-- Contrôles de sauvegarde -->
-            <div class="save-controls">
-                <button class="save-btn" id="saveBtn">💾 Enregistrer</button>
-                <button class="load-btn" id="loadBtn">📂 Charger</button>
-                <button class="clear-btn" id="clearBtn">🗑️ Effacer</button>
+            <!-- Zone principale de l'éditeur -->
+            <div class="editor-main">
+                <h2 class="editor-title">✍️ Éditeur d'articles</h2>
+
+                <!-- Contrôles de sauvegarde -->
+                <div class="save-controls">
+                    <button class="save-btn" id="saveBtn">📤 Publier</button>
+                    <button class="load-btn" id="loadBtn">📂 Charger</button>
+                    <button class="clear-btn" id="clearBtn">🗑️ Effacer</button>
+                </div>
+
+                <!-- Informations de l'article -->
+                <div class="article-info">
+                    <label for="articleSubject">Objet de l'article :</label>
+                    <input 
+                        type="text" 
+                        id="articleSubject" 
+                        class="article-subject" 
+                        placeholder="Ex: Les mystères de l'Atlantide"
+                        maxlength="100"
+                    >
+                </div>
+
+                <!-- Barre d'outils -->
+                <div class="toolbar">
+                    <button class="toolbar-btn" data-command="bold" title="Gras (Ctrl+B)">
+                        <strong>B</strong>
+                    </button>
+                    <button class="toolbar-btn" data-command="italic" title="Italique (Ctrl+I)">
+                        <em>I</em>
+                    </button>
+                    <button class="toolbar-btn" data-command="underline" title="Souligné (Ctrl+U)">
+                        <u>U</u>
+                    </button>
+
+                    <div class="toolbar-separator"></div>
+
+                    <button class="toolbar-btn" data-command="formatBlock" data-value="h2" title="Titre 2">
+                        H2
+                    </button>
+                    <button class="toolbar-btn" data-command="formatBlock" data-value="h3" title="Titre 3">
+                        H3
+                    </button>
+                    <button class="toolbar-btn" data-command="formatBlock" data-value="p" title="Paragraphe">
+                        P
+                    </button>
+
+                    <div class="toolbar-separator"></div>
+
+                    <button class="toolbar-btn" data-command="insertUnorderedList" title="Liste à puces">
+                        • Liste
+                    </button>
+                    <button class="toolbar-btn" data-command="insertOrderedList" title="Liste numérotée">
+                        1. Liste
+                    </button>
+                    <button class="toolbar-btn" data-command="formatBlock" data-value="blockquote" title="Citation">
+                        " Citation
+                    </button>
+
+                    <div class="toolbar-separator"></div>
+
+                    <button class="toolbar-btn" id="linkBtn" title="Insérer un lien">
+                        🔗 Lien
+                    </button>
+
+                    <div class="toolbar-separator"></div>
+
+                    <button class="toolbar-btn" data-command="justifyLeft" title="Aligner à gauche">
+                        ⬅
+                    </button>
+                    <button class="toolbar-btn" data-command="justifyCenter" title="Centrer">
+                        ↔
+                    </button>
+                    <button class="toolbar-btn" data-command="justifyRight" title="Aligner à droite">
+                        ➡
+                    </button>
+                    <button class="toolbar-btn" data-command="justifyFull" title="Justifier">
+                        ⬌
+                    </button>
+                </div>
+
+                <!-- Zone d'édition -->
+                <div class="editor-area" id="editor" contenteditable="true">
+                    <h2>Titre de votre article</h2>
+                    <p>Commencez à écrire votre article ici...</p>
+                </div>
+
+                <!-- Contrôles de conversion -->
+                <div class="conversion-controls">
+                    <label for="formatSelector" style="color: var(--text-color); font-weight: 600;">
+                        Format de conversion :
+                    </label>
+                    <select id="formatSelector" class="format-selector">
+                        <option value="html">HTML</option>
+                        <option value="javascript">JavaScript</option>
+                    </select>
+                    <button class="convert-btn" id="convertBtn">Convertir</button>
+                    <button class="copy-btn" id="copyBtn">📋 Copier</button>
+                </div>
+
+                <!-- Zone de sortie -->
+                <div class="output-area" id="output"></div>
+                <div class="status-message" id="statusMessage"></div>
             </div>
-
-            <!-- Informations de l'article -->
-            <div class="article-info">
-                <label for="articleSubject">Objet de l'article :</label>
-                <input 
-                    type="text" 
-                    id="articleSubject" 
-                    class="article-subject" 
-                    placeholder="Ex: Les mystères de l'Atlantide"
-                    maxlength="100"
-                >
-            </div>
-
-            <!-- Barre d'outils -->
-            <div class="toolbar">
-                <button class="toolbar-btn" data-command="bold" title="Gras (Ctrl+B)">
-                    <strong>B</strong>
-                </button>
-                <button class="toolbar-btn" data-command="italic" title="Italique (Ctrl+I)">
-                    <em>I</em>
-                </button>
-                <button class="toolbar-btn" data-command="underline" title="Souligné (Ctrl+U)">
-                    <u>U</u>
-                </button>
-
-                <div class="toolbar-separator"></div>
-
-                <button class="toolbar-btn" data-command="formatBlock" data-value="h2" title="Titre 2">
-                    H2
-                </button>
-                <button class="toolbar-btn" data-command="formatBlock" data-value="h3" title="Titre 3">
-                    H3
-                </button>
-                <button class="toolbar-btn" data-command="formatBlock" data-value="p" title="Paragraphe">
-                    P
-                </button>
-
-                <div class="toolbar-separator"></div>
-
-                <button class="toolbar-btn" data-command="insertUnorderedList" title="Liste à puces">
-                    • Liste
-                </button>
-                <button class="toolbar-btn" data-command="insertOrderedList" title="Liste numérotée">
-                    1. Liste
-                </button>
-                <button class="toolbar-btn" data-command="formatBlock" data-value="blockquote" title="Citation">
-                    " Citation
-                </button>
-
-                <div class="toolbar-separator"></div>
-
-                <button class="toolbar-btn" id="linkBtn" title="Insérer un lien">
-                    🔗 Lien
-                </button>
-
-                <div class="toolbar-separator"></div>
-
-                <button class="toolbar-btn" data-command="justifyLeft" title="Aligner à gauche">
-                    ⬅
-                </button>
-                <button class="toolbar-btn" data-command="justifyCenter" title="Centrer">
-                    ↔
-                </button>
-                <button class="toolbar-btn" data-command="justifyRight" title="Aligner à droite">
-                    ➡
-                </button>
-                <button class="toolbar-btn" data-command="justifyFull" title="Justifier">
-                    ⬌
-                </button>
-            </div>
-
-            <!-- Zone d'édition -->
-            <div class="editor-area" id="editor" contenteditable="true">
-                <h2>Titre de votre article</h2>
-                <p>Commencez à écrire votre article ici...</p>
-            </div>
-
-            <!-- Contrôles de conversion -->
-            <div class="conversion-controls">
-                <label for="formatSelector" style="color: var(--text-color); font-weight: 600;">
-                    Format de conversion :
-                </label>
-                <select id="formatSelector" class="format-selector">
-                    <option value="html">HTML</option>
-                    <option value="javascript">JavaScript</option>
-                </select>
-                <button class="convert-btn" id="convertBtn">Convertir</button>
-                <button class="copy-btn" id="copyBtn">📋 Copier</button>
-            </div>
-
-            <!-- Zone de sortie -->
-            <div class="output-area" id="output"></div>
-            <div class="status-message" id="statusMessage"></div>
         </div>
     </main>
 
