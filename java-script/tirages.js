@@ -405,7 +405,7 @@ function initEditor() {
     /**
      * Télécharge le contenu en fichier TXT
      */
-    function downloadTextFile(subject, htmlContent) {
+    async function downloadTextFile(subject, htmlContent) {
         const timestamp = new Date().toISOString().slice(0, 10);
         
         const cleanSubject = subject
@@ -425,18 +425,66 @@ DATE: ${new Date().toLocaleDateString('fr-FR')}
 
 ${textContent}`;
         
-        const blob = new Blob([fullContent], { type: 'text/plain;charset=utf-8' });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = filename;
+        // Diagnostic : vérifier la disponibilité de l'API
+        console.log('Navigateur:', navigator.userAgent);
+        console.log('API showSaveFilePicker disponible:', 'showSaveFilePicker' in window);
         
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        
-        URL.revokeObjectURL(link.href);
-        
-        showStatus(`✓ Fichier "${filename}" téléchargé !`, 'success');
+        // Vérifier si l'API File System Access est disponible
+        if ('showSaveFilePicker' in window) {
+            try {
+                console.log('Tentative d\'ouverture du dialogue de sauvegarde...');
+                
+                // Ouvrir le dialogue de sauvegarde
+                const handle = await window.showSaveFilePicker({
+                    suggestedName: filename,
+                    types: [{
+                        description: 'Fichier texte',
+                        accept: { 'text/plain': ['.txt'] }
+                    }],
+                    excludeAcceptAllOption: false
+                });
+                
+                console.log('Dialogue accepté, écriture du fichier...');
+                
+                // Créer un flux d'écriture
+                const writable = await handle.createWritable();
+                
+                // Écrire le contenu
+                await writable.write(fullContent);
+                
+                // Fermer le fichier
+                await writable.close();
+                
+                console.log('Fichier enregistré avec succès');
+                showStatus(`✓ Fichier "${filename}" enregistré avec succès !`, 'success');
+            } catch (err) {
+                // L'utilisateur a annulé ou une erreur s'est produite
+                if (err.name === 'AbortError') {
+                    console.log('Sauvegarde annulée par l\'utilisateur');
+                    showStatus('Sauvegarde annulée', 'error');
+                } else {
+                    console.error('Erreur lors de la sauvegarde:', err);
+                    showStatus(`❌ Erreur: ${err.message}`, 'error');
+                }
+            }
+        } else {
+            // Fallback : téléchargement classique
+            console.warn('API showSaveFilePicker non disponible, utilisation du téléchargement classique');
+            alert('⚠️ Votre navigateur ne supporte pas le choix d\'emplacement.\n\nRecommandation :\n- Utilisez Chrome ou Edge (version récente)\n- Ou le fichier sera téléchargé dans votre dossier Téléchargements');
+            
+            const blob = new Blob([fullContent], { type: 'text/plain;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
+            
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            URL.revokeObjectURL(link.href);
+            
+            showStatus(`✓ Fichier téléchargé dans Téléchargements`, 'success');
+        }
     }
 
     /**
