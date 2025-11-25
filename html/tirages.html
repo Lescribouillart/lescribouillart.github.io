@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Éditeur d'articles - Le Scribouill'art</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        /* Styles spécifiques à l'éditeur */
+        .editor-container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: var(--bg-light);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .editor-title {
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: var(--bg-color);
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .toolbar-btn {
+            background: var(--secondary-color);
+            color: var(--bg-color);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .toolbar-btn:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .toolbar-btn:active {
+            transform: translateY(0);
+        }
+
+        .toolbar-separator {
+            width: 1px;
+            background: var(--border-color);
+            margin: 0 0.25rem;
+        }
+
+        .editor-area {
+            min-height: 400px;
+            padding: 1.5rem;
+            background: #c9b896;
+            color: #333;
+            border: 2px solid var(--border-color);
+            border-radius: 4px;
+            font-family: Georgia, 'Merriweather', serif;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            outline: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .editor-area:focus {
+            border-color: var(--secondary-color);
+        }
+
+        .editor-area h2 {
+            font-size: 1.8rem;
+            color: #2f2e3a;
+            margin: 2rem 0 1rem;
+        }
+
+        .editor-area h3 {
+            font-size: 1.4rem;
+            color: #2f2e3a;
+            margin: 1.5rem 0 0.75rem;
+        }
+
+        .editor-area p {
+            margin-bottom: 1rem;
+        }
+
+        .editor-area ul, .editor-area ol {
+            margin: 1rem 0;
+            padding-left: 2rem;
+        }
+
+        .editor-area li {
+            margin-bottom: 0.5rem;
+        }
+
+        .editor-area blockquote {
+            margin: 1.5rem 0;
+            padding: 1rem 1.5rem;
+            background: #b8a882;
+            border-left: 4px solid var(--secondary-color);
+            font-style: italic;
+        }
+
+        .editor-area a {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+
+        .conversion-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .format-selector {
+            padding: 0.5rem 1rem;
+            background: var(--bg-color);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .convert-btn, .copy-btn {
+            background: var(--secondary-color);
+            color: var(--bg-color);
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+
+        .convert-btn:hover, .copy-btn:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .copy-btn {
+            background: #4caf50;
+        }
+
+        .copy-btn:hover {
+            background: #45a049;
+        }
+
+        .output-area {
+            min-height: 200px;
+            max-height: 500px;
+            overflow-y: auto;
+            padding: 1.5rem;
+            background: var(--bg-color);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .output-area::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .output-area::-webkit-scrollbar-track {
+            background: var(--bg-light);
+            border-radius: 4px;
+        }
+
+        .output-area::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+
+        .status-message {
+            margin-top: 0.5rem;
+            padding: 0.5rem;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .status-message.success {
+            background: #4caf50;
+            color: white;
+            display: block;
+        }
+
+        .status-message.error {
+            background: #f44336;
+            color: white;
+            display: block;
+        }
+
+        #localOnlyWarning {
+            background: #ff9800;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+
+        .save-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: var(--bg-color);
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+
+        .save-btn, .load-btn, .clear-btn {
+            background: var(--secondary-color);
+            color: var(--bg-color);
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+
+        .save-btn:hover, .load-btn:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .clear-btn {
+            background: var(--secondary-color);
+            margin-left: auto;
+        }
+
+        .clear-btn:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .article-info {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: var(--bg-color);
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+
+        .article-info label {
+            display: block;
+            color: var(--text-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .article-subject {
+            width: 100%;
+            padding: 0.75rem;
+            background: #c9b896;
+            color: #333;
+            border: 2px solid var(--border-color);
+            border-radius: 4px;
+            font-family: Georgia, 'Merriweather', serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            outline: none;
+        }
+
+        .article-subject:focus {
+            border-color: var(--secondary-color);
+        }
+
+        .article-subject::placeholder {
+            color: #666;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div id="localOnlyWarning">
+        ⚠️ Cette page n'est pas disponible en production
+    </div>
+
+    <header class="header">
+        <div class="container">
+            <a href="../index.html" style="text-decoration: none; color: inherit;">
+                <h1 class="logo">Le Scribouill'art</h1>
+            </a>
+            <p class="tagline">Éditeur d'articles</p>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="editor-container" id="editorContainer">
+            <h2 class="editor-title">✍️ Éditeur d'articles</h2>
+
+            <!-- Contrôles de sauvegarde -->
+            <div class="save-controls">
+                <button class="save-btn" id="saveBtn">💾 Enregistrer</button>
+                <button class="load-btn" id="loadBtn">📂 Charger</button>
+                <button class="clear-btn" id="clearBtn">🗑️ Effacer</button>
+            </div>
+
+            <!-- Informations de l'article -->
+            <div class="article-info">
+                <label for="articleSubject">Objet de l'article :</label>
+                <input 
+                    type="text" 
+                    id="articleSubject" 
+                    class="article-subject" 
+                    placeholder="Ex: Les mystères de l'Atlantide"
+                    maxlength="100"
+                >
+            </div>
+
+            <!-- Barre d'outils -->
+            <div class="toolbar">
+                <button class="toolbar-btn" data-command="bold" title="Gras (Ctrl+B)">
+                    <strong>B</strong>
+                </button>
+                <button class="toolbar-btn" data-command="italic" title="Italique (Ctrl+I)">
+                    <em>I</em>
+                </button>
+                <button class="toolbar-btn" data-command="underline" title="Souligné (Ctrl+U)">
+                    <u>U</u>
+                </button>
+
+                <div class="toolbar-separator"></div>
+
+                <button class="toolbar-btn" data-command="formatBlock" data-value="h2" title="Titre 2">
+                    H2
+                </button>
+                <button class="toolbar-btn" data-command="formatBlock" data-value="h3" title="Titre 3">
+                    H3
+                </button>
+                <button class="toolbar-btn" data-command="formatBlock" data-value="p" title="Paragraphe">
+                    P
+                </button>
+
+                <div class="toolbar-separator"></div>
+
+                <button class="toolbar-btn" data-command="insertUnorderedList" title="Liste à puces">
+                    • Liste
+                </button>
+                <button class="toolbar-btn" data-command="insertOrderedList" title="Liste numérotée">
+                    1. Liste
+                </button>
+                <button class="toolbar-btn" data-command="formatBlock" data-value="blockquote" title="Citation">
+                    " Citation
+                </button>
+
+                <div class="toolbar-separator"></div>
+
+                <button class="toolbar-btn" id="linkBtn" title="Insérer un lien">
+                    🔗 Lien
+                </button>
+
+                <div class="toolbar-separator"></div>
+
+                <button class="toolbar-btn" data-command="justifyLeft" title="Aligner à gauche">
+                    ⬅
+                </button>
+                <button class="toolbar-btn" data-command="justifyCenter" title="Centrer">
+                    ↔
+                </button>
+                <button class="toolbar-btn" data-command="justifyRight" title="Aligner à droite">
+                    ➡
+                </button>
+                <button class="toolbar-btn" data-command="justifyFull" title="Justifier">
+                    ⬌
+                </button>
+            </div>
+
+            <!-- Zone d'édition -->
+            <div class="editor-area" id="editor" contenteditable="true">
+                <h2>Titre de votre article</h2>
+                <p>Commencez à écrire votre article ici...</p>
+            </div>
+
+            <!-- Contrôles de conversion -->
+            <div class="conversion-controls">
+                <label for="formatSelector" style="color: var(--text-color); font-weight: 600;">
+                    Format de conversion :
+                </label>
+                <select id="formatSelector" class="format-selector">
+                    <option value="html">HTML</option>
+                    <option value="javascript">JavaScript</option>
+                </select>
+                <button class="convert-btn" id="convertBtn">Convertir</button>
+                <button class="copy-btn" id="copyBtn">📋 Copier</button>
+            </div>
+
+            <!-- Zone de sortie -->
+            <div class="output-area" id="output"></div>
+            <div class="status-message" id="statusMessage"></div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <nav class="footer-nav">
+                <a href="../index.html" class="footer-link">Accueil</a>
+                <a href="listage-articles.html" class="footer-link">Articles</a>
+            </nav>
+        </div>
+    </footer>
+
+    <script src="../java-script/tirages.js"></script>
+</body>
+</html>
