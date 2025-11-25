@@ -31,6 +31,7 @@ function initEditor() {
     const clearBtn = document.getElementById('clearBtn');
     const newArticleBtn = document.getElementById('newArticleBtn');
     const articlesList = document.getElementById('articlesList');
+    const darkModeToggle = document.getElementById('darkModeToggle');
 
     let currentArticleId = null;
 
@@ -39,6 +40,14 @@ function initEditor() {
     
     // Afficher la liste des articles
     refreshArticlesList();
+
+    // Charger la préférence du mode nuit
+    loadDarkModePreference();
+
+    // Bouton Mode Nuit
+    darkModeToggle.addEventListener('click', () => {
+        toggleDarkMode();
+    });
 
     // Gestion des boutons de la barre d'outils
     document.querySelectorAll('.toolbar-btn[data-command]').forEach(btn => {
@@ -414,6 +423,32 @@ function initEditor() {
         
         if (timestamp) {
             console.log(`Contenu restauré (dernier enregistrement : ${timestamp})`);
+        }
+    }
+
+    /**
+     * Bascule entre le mode clair et le mode nuit
+     */
+    function toggleDarkMode() {
+        const body = document.body;
+        const isDarkMode = body.classList.toggle('dark-mode');
+        
+        // Changer l'icône
+        darkModeToggle.textContent = isDarkMode ? '☀️' : '🌙';
+        
+        // Sauvegarder la préférence
+        localStorage.setItem('scribouillart_dark_mode', isDarkMode ? 'true' : 'false');
+    }
+
+    /**
+     * Charge la préférence du mode nuit
+     */
+    function loadDarkModePreference() {
+        const isDarkMode = localStorage.getItem('scribouillart_dark_mode') === 'true';
+        
+        if (isDarkMode) {
+            document.body.classList.add('dark-mode');
+            darkModeToggle.textContent = '☀️';
         }
     }
 

@@ -6,230 +6,426 @@
     <title>Éditeur d'articles - Le Scribouill'art</title>
     <link rel="stylesheet" href="../styles.css">
     <style>
-        /* Styles spécifiques à l'éditeur */
-        .editor-container {
-            max-width: 1400px;
-            margin: 2rem auto;
-            padding: 2rem;
-            background: var(--bg-light);
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            display: flex;
-            gap: 2rem;
+        /* Reset et variables */
+        :root {
+            --bg-primary: #f0f0f1;
+            --bg-secondary: #fff;
+            --bg-tertiary: #f6f7f7;
+            --text-primary: #1d2327;
+            --text-secondary: #50575e;
+            --text-muted: #757575;
+            --border-color: #dcdcde;
+            --accent-color: #2271b1;
+            --accent-hover: #135e96;
         }
 
+        body.dark-mode {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --bg-tertiary: #3a3a3a;
+            --text-primary: #e0e0e0;
+            --text-secondary: #b0b0b0;
+            --text-muted: #888888;
+            --border-color: #444444;
+            --accent-color: #5b9dd9;
+            --accent-hover: #4a8ec2;
+        }
+
+        body {
+            background: var(--bg-primary);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, sans-serif;
+        }
+
+        .main {
+            background: var(--bg-primary);
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        /* En-tête style WordPress */
+        .header {
+            background: #1d2327;
+            border-bottom: none;
+            padding: 0;
+        }
+
+        .header .container {
+            padding: 0 1rem;
+        }
+
+        .logo {
+            color: #f0f0f1;
+        }
+
+        .tagline {
+            color: #a7aaad;
+        }
+
+        /* Barre supérieure style WordPress */
+        .top-bar {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .top-bar-left {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .editor-mode-title {
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            font-weight: 400;
+        }
+
+        /* Bouton mode nuit style Korben */
+        .dark-mode-toggle {
+            background: transparent;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            margin-right: 1rem;
+        }
+
+        .dark-mode-toggle:hover {
+            background: var(--bg-tertiary);
+            transform: rotate(20deg);
+        }
+
+        .top-bar-actions {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        /* Boutons style WordPress */
+        .wp-button {
+            background: var(--bg-secondary);
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            padding: 0.5rem 1rem;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 400;
+            transition: all 0.1s ease;
+            height: 36px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .wp-button:hover {
+            background: var(--bg-tertiary);
+            border-color: var(--accent-hover);
+            color: var(--accent-hover);
+        }
+
+        .wp-button.primary {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+            color: #fff;
+        }
+
+        .wp-button.primary:hover {
+            background: var(--accent-hover);
+            border-color: var(--accent-hover);
+        }
+
+        .wp-button.danger {
+            border-color: #d63638;
+            color: #d63638;
+        }
+
+        .wp-button.danger:hover {
+            background: #d63638;
+            color: #fff;
+        }
+
+        /* Container principal */
+        .editor-container {
+            max-width: 100%;
+            margin: 0;
+            padding: 0;
+            background: transparent;
+            border: none;
+            border-radius: 0;
+            display: flex;
+            gap: 0;
+            min-height: calc(100vh - 200px);
+        }
+
+        /* Sidebar style WordPress */
         .sidebar {
-            width: 300px;
+            width: 280px;
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border-color);
+            padding: 1.5rem 1rem;
             flex-shrink: 0;
+            overflow-y: auto;
         }
 
         .sidebar-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #dcdcde;
         }
 
         .sidebar-title {
-            color: var(--primary-color);
-            font-size: 1.3rem;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             margin: 0;
         }
 
         .new-article-btn {
-            background: var(--secondary-color);
-            color: var(--bg-color);
+            background: var(--accent-color);
+            color: #fff;
             border: none;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            border-radius: 2px;
             cursor: pointer;
-            font-size: 1.5rem;
-            font-weight: 700;
-            transition: all 0.3s ease;
+            font-size: 1.3rem;
+            font-weight: 400;
+            transition: all 0.1s ease;
             display: flex;
             align-items: center;
             justify-content: center;
+            line-height: 1;
         }
 
         .new-article-btn:hover {
-            background: var(--primary-color);
-            transform: scale(1.1);
+            background: var(--accent-hover);
         }
 
         .articles-list {
             display: flex;
             flex-direction: column;
-            gap: 0.75rem;
-            max-height: 600px;
-            overflow-y: auto;
-            padding-right: 0.5rem;
+            gap: 0.5rem;
+            max-height: none;
+            padding-right: 0;
         }
 
         .articles-list::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .articles-list::-webkit-scrollbar-track {
-            background: var(--bg-color);
-            border-radius: 3px;
-        }
-
-        .articles-list::-webkit-scrollbar-thumb {
-            background: var(--border-color);
-            border-radius: 3px;
+            display: none;
         }
 
         .article-card-item {
-            background: var(--bg-color);
+            background: var(--bg-tertiary);
             border: 1px solid var(--border-color);
-            border-radius: 4px;
-            padding: 1rem;
+            border-radius: 2px;
+            padding: 0.75rem;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.1s ease;
         }
 
         .article-card-item:hover {
-            border-color: var(--secondary-color);
-            transform: translateX(5px);
+            background: var(--bg-secondary);
+            border-color: var(--accent-color);
         }
 
         .article-card-item.active {
-            border-color: var(--secondary-color);
-            background: rgba(123, 163, 216, 0.1);
+            background: var(--bg-secondary);
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 1px var(--accent-color);
         }
 
         .article-card-subject {
-            color: var(--primary-color);
-            font-weight: 700;
-            font-size: 1rem;
-            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 13px;
+            margin-bottom: 0.4rem;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
 
         .article-card-preview {
-            color: var(--text-light);
-            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-size: 12px;
             line-height: 1.4;
             display: -webkit-box;
             -webkit-line-clamp: 2;
-            line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
 
         .article-card-date {
-            color: var(--text-light);
-            font-size: 0.75rem;
-            margin-top: 0.5rem;
-            font-style: italic;
+            color: var(--text-muted);
+            font-size: 11px;
+            margin-top: 0.4rem;
         }
 
         .article-card-delete {
-            background: #f44336;
-            color: white;
-            border: none;
-            padding: 0.3rem 0.6rem;
-            border-radius: 3px;
+            background: transparent;
+            color: #d63638;
+            border: 1px solid #d63638;
+            padding: 0.25rem 0.5rem;
+            border-radius: 2px;
             cursor: pointer;
-            font-size: 0.75rem;
+            font-size: 11px;
             margin-top: 0.5rem;
-            transition: all 0.3s ease;
+            transition: all 0.1s ease;
         }
 
         .article-card-delete:hover {
-            background: #d32f2f;
-        }
-
-        .editor-main {
-            flex: 1;
-            min-width: 0;
+            background: #d63638;
+            color: #fff;
         }
 
         .no-articles {
-            color: var(--text-light);
+            color: var(--text-muted);
             text-align: center;
-            padding: 2rem;
-            font-style: italic;
+            padding: 2rem 1rem;
+            font-size: 13px;
+        }
+
+        /* Zone principale */
+        .editor-main {
+            flex: 1;
+            background: var(--bg-secondary);
+            padding: 0;
+            min-width: 0;
         }
 
         .editor-title {
-            color: var(--primary-color);
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            text-align: center;
+            display: none;
+        }
+
+        /* Zone d'édition style WordPress */
+        .editor-wrapper {
+            max-width: 840px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .article-info {
+            margin-bottom: 1rem;
+            padding: 0;
+            background: transparent;
+            border: none;
+        }
+
+        .article-info label {
+            display: none;
+        }
+
+        .article-subject {
+            width: 100%;
+            padding: 0;
+            background: transparent;
+            color: var(--text-primary);
+            border: none;
+            border-radius: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            outline: none;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .article-subject::placeholder {
+            color: var(--text-muted);
         }
 
         .toolbar {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.5rem;
-            padding: 1rem;
-            background: var(--bg-color);
-            border-radius: 4px;
-            margin-bottom: 1rem;
+            gap: 0.25rem;
+            padding: 0.5rem;
+            background: var(--bg-tertiary);
             border: 1px solid var(--border-color);
+            border-radius: 2px;
+            margin-bottom: 1rem;
         }
 
         .toolbar-btn {
-            background: var(--secondary-color);
-            color: var(--bg-color);
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid transparent;
+            padding: 0.4rem 0.6rem;
+            border-radius: 2px;
             cursor: pointer;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.1s ease;
+            min-width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .toolbar-btn:hover {
-            background: var(--primary-color);
-            transform: translateY(-2px);
+            background: var(--bg-secondary);
+            border-color: var(--text-primary);
         }
 
         .toolbar-btn:active {
-            transform: translateY(0);
+            background: var(--bg-primary);
         }
 
         .toolbar-separator {
             width: 1px;
             background: var(--border-color);
-            margin: 0 0.25rem;
+            margin: 0.25rem 0.5rem;
         }
 
         .editor-area {
-            min-height: 400px;
+            min-height: 500px;
             padding: 1.5rem;
-            background: #c9b896;
-            color: #333;
-            border: 2px solid var(--border-color);
-            border-radius: 4px;
-            font-family: Georgia, 'Merriweather', serif;
-            font-size: 1.1rem;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 2px;
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 1.125rem;
             line-height: 1.8;
             outline: none;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         .editor-area:focus {
-            border-color: var(--secondary-color);
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 1px var(--accent-color);
         }
 
         .editor-area h2 {
-            font-size: 1.8rem;
-            color: #2f2e3a;
+            font-size: 2rem;
+            color: var(--text-primary);
             margin: 2rem 0 1rem;
+            font-weight: 700;
+            line-height: 1.3;
         }
 
         .editor-area h3 {
-            font-size: 1.4rem;
-            color: #2f2e3a;
+            font-size: 1.5rem;
+            color: var(--text-primary);
             margin: 1.5rem 0 0.75rem;
+            font-weight: 600;
         }
 
         .editor-area p {
@@ -248,203 +444,166 @@
         .editor-area blockquote {
             margin: 1.5rem 0;
             padding: 1rem 1.5rem;
-            background: #b8a882;
-            border-left: 4px solid var(--secondary-color);
+            background: var(--bg-tertiary);
+            border-left: 4px solid var(--accent-color);
             font-style: italic;
         }
 
         .editor-area a {
-            color: var(--secondary-color);
+            color: var(--accent-color);
             text-decoration: underline;
         }
 
+        /* Contrôles de conversion */
         .conversion-controls {
             display: flex;
-            gap: 1rem;
+            gap: 0.75rem;
             align-items: center;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 2px;
+        }
+
+        .conversion-controls label {
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 13px;
         }
 
         .format-selector {
-            padding: 0.5rem 1rem;
-            background: var(--bg-color);
-            color: var(--text-color);
+            padding: 0.5rem;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
             border: 1px solid var(--border-color);
-            border-radius: 4px;
-            font-size: 0.9rem;
+            border-radius: 2px;
+            font-size: 13px;
             cursor: pointer;
+            height: 36px;
+        }
+
+        .format-selector:focus {
+            border-color: var(--accent-color);
+            outline: none;
+            box-shadow: 0 0 0 1px var(--accent-color);
         }
 
         .convert-btn, .copy-btn {
-            background: var(--secondary-color);
-            color: var(--bg-color);
-            border: none;
-            padding: 0.6rem 1.5rem;
-            border-radius: 4px;
+            background: var(--accent-color);
+            border: 1px solid var(--accent-color);
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 2px;
             cursor: pointer;
-            font-weight: 700;
-            font-size: 0.95rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            transition: all 0.3s ease;
+            font-weight: 400;
+            font-size: 13px;
+            transition: all 0.1s ease;
+            height: 36px;
         }
 
         .convert-btn:hover, .copy-btn:hover {
-            background: var(--primary-color);
-            transform: translateY(-2px);
+            background: var(--accent-hover);
+            border-color: var(--accent-hover);
         }
 
         .copy-btn {
-            background: #4caf50;
+            background: #00a32a;
+            border-color: #00a32a;
         }
 
         .copy-btn:hover {
-            background: #45a049;
+            background: #008a20;
+            border-color: #008a20;
         }
 
         .output-area {
             min-height: 200px;
-            max-height: 500px;
+            max-height: 400px;
             overflow-y: auto;
-            padding: 1.5rem;
-            background: var(--bg-color);
-            color: var(--text-color);
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
+            padding: 1rem;
+            background: #1d2327;
+            color: #f0f0f1;
+            border: 1px solid #1d2327;
+            border-radius: 2px;
+            font-family: 'Courier New', Consolas, Monaco, monospace;
+            font-size: 12px;
             line-height: 1.6;
             white-space: pre-wrap;
             word-wrap: break-word;
         }
 
         .output-area::-webkit-scrollbar {
-            width: 8px;
+            width: 12px;
         }
 
         .output-area::-webkit-scrollbar-track {
-            background: var(--bg-light);
-            border-radius: 4px;
+            background: #2c3338;
         }
 
         .output-area::-webkit-scrollbar-thumb {
-            background: var(--border-color);
-            border-radius: 4px;
+            background: #50575e;
+            border-radius: 6px;
         }
 
         .status-message {
-            margin-top: 0.5rem;
-            padding: 0.5rem;
-            border-radius: 4px;
-            text-align: center;
-            font-size: 0.9rem;
+            margin-top: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 2px;
+            font-size: 13px;
             display: none;
+            border-left: 4px solid;
         }
 
         .status-message.success {
-            background: #4caf50;
-            color: white;
+            background: #edfaef;
+            border-color: #00a32a;
+            color: #1d2327;
             display: block;
         }
 
         .status-message.error {
-            background: #f44336;
-            color: white;
+            background: #fcf0f1;
+            border-color: #d63638;
+            color: #1d2327;
             display: block;
         }
 
-        #localOnlyWarning {
-            background: #ff9800;
-            color: white;
-            padding: 1rem;
-            text-align: center;
-            font-weight: 600;
-            display: none;
+        /* Footer */
+        .footer {
+            background: #1d2327;
+            border-top: 1px solid #3c434a;
         }
 
-        .save-controls {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-            margin-bottom: 1rem;
-            padding: 1rem;
-            background: var(--bg-color);
-            border-radius: 4px;
-            border: 1px solid var(--border-color);
+        .footer-link {
+            color: #a7aaad;
         }
 
-        .save-btn, .load-btn, .clear-btn {
-            background: var(--secondary-color);
-            color: var(--bg-color);
-            border: none;
-            padding: 0.6rem 1.5rem;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 700;
-            font-size: 0.95rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            transition: all 0.3s ease;
+        .footer-link:hover {
+            color: #2271b1;
         }
 
-        .save-btn:hover, .load-btn:hover {
-            background: var(--primary-color);
-            transform: translateY(-2px);
-        }
+        /* Responsive */
+        @media (max-width: 782px) {
+            .sidebar {
+                display: none;
+            }
 
-        .clear-btn {
-            background: var(--secondary-color);
-            margin-left: auto;
-        }
+            .top-bar {
+                padding: 0.75rem 1rem;
+            }
 
-        .clear-btn:hover {
-            background: var(--primary-color);
-            transform: translateY(-2px);
-        }
+            .editor-wrapper {
+                padding: 1rem;
+            }
 
-        .article-info {
-            margin-bottom: 1.5rem;
-            padding: 1rem;
-            background: var(--bg-color);
-            border-radius: 4px;
-            border: 1px solid var(--border-color);
-        }
-
-        .article-info label {
-            display: block;
-            color: var(--text-color);
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .article-subject {
-            width: 100%;
-            padding: 0.75rem;
-            background: #c9b896;
-            color: #333;
-            border: 2px solid var(--border-color);
-            border-radius: 4px;
-            font-family: Georgia, 'Merriweather', serif;
-            font-size: 1.2rem;
-            font-weight: 600;
-            outline: none;
-        }
-
-        .article-subject:focus {
-            border-color: var(--secondary-color);
-        }
-
-        .article-subject::placeholder {
-            color: #666;
-            font-style: italic;
+            .article-subject {
+                font-size: 1.75rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div id="localOnlyWarning">
-        ⚠️ Cette page n'est pas disponible en production
-    </div>
-
     <header class="header">
         <div class="container">
             <a href="../index.html" style="text-decoration: none; color: inherit;">
@@ -455,11 +614,26 @@
     </header>
 
     <main class="main">
+        <!-- Barre supérieure -->
+        <div class="top-bar">
+            <div class="top-bar-left">
+                <span class="editor-mode-title">✍️ Éditeur d'articles</span>
+            </div>
+            <div class="top-bar-actions">
+                <button class="dark-mode-toggle" id="darkModeToggle" title="Basculer en mode nuit">
+                    🌙
+                </button>
+                <button class="wp-button" id="loadBtn">📂 Charger</button>
+                <button class="wp-button danger" id="clearBtn">🗑️ Effacer</button>
+                <button class="wp-button primary" id="saveBtn">📤 Publier</button>
+            </div>
+        </div>
+
         <div class="editor-container" id="editorContainer">
             <!-- Barre latérale des articles -->
             <aside class="sidebar">
                 <div class="sidebar-header">
-                    <h3 class="sidebar-title">📚 Mes articles</h3>
+                    <h3 class="sidebar-title">Mes articles</h3>
                     <button class="new-article-btn" id="newArticleBtn" title="Nouvel article">+</button>
                 </div>
                 <div class="articles-list" id="articlesList">
@@ -469,107 +643,74 @@
 
             <!-- Zone principale de l'éditeur -->
             <div class="editor-main">
-                <h2 class="editor-title">✍️ Éditeur d'articles</h2>
+                <div class="editor-wrapper">
+                    <!-- Informations de l'article -->
+                    <div class="article-info">
+                        <input 
+                            type="text" 
+                            id="articleSubject" 
+                            class="article-subject" 
+                            placeholder="Ajouter un titre"
+                            maxlength="100"
+                        >
+                    </div>
 
-                <!-- Contrôles de sauvegarde -->
-                <div class="save-controls">
-                    <button class="save-btn" id="saveBtn">📤 Publier</button>
-                    <button class="load-btn" id="loadBtn">📂 Charger</button>
-                    <button class="clear-btn" id="clearBtn">🗑️ Effacer</button>
+                    <!-- Barre d'outils -->
+                    <div class="toolbar">
+                        <button class="toolbar-btn" data-command="bold" title="Gras (Ctrl+B)">
+                            <strong>B</strong>
+                        </button>
+                        <button class="toolbar-btn" data-command="italic" title="Italique (Ctrl+I)">
+                            <em>I</em>
+                        </button>
+                        <button class="toolbar-btn" data-command="underline" title="Souligné (Ctrl+U)">
+                            <u>U</u>
+                        </button>
+
+                        <div class="toolbar-separator"></div>
+
+                        <button class="toolbar-btn" data-command="formatBlock" data-value="h2" title="Titre 2">H2</button>
+                        <button class="toolbar-btn" data-command="formatBlock" data-value="h3" title="Titre 3">H3</button>
+                        <button class="toolbar-btn" data-command="formatBlock" data-value="p" title="Paragraphe">P</button>
+
+                        <div class="toolbar-separator"></div>
+
+                        <button class="toolbar-btn" data-command="insertUnorderedList" title="Liste à puces">•</button>
+                        <button class="toolbar-btn" data-command="insertOrderedList" title="Liste numérotée">1.</button>
+                        <button class="toolbar-btn" data-command="formatBlock" data-value="blockquote" title="Citation">"</button>
+
+                        <div class="toolbar-separator"></div>
+
+                        <button class="toolbar-btn" id="linkBtn" title="Insérer un lien">🔗</button>
+
+                        <div class="toolbar-separator"></div>
+
+                        <button class="toolbar-btn" data-command="justifyLeft" title="Aligner à gauche">⬅</button>
+                        <button class="toolbar-btn" data-command="justifyCenter" title="Centrer">↔</button>
+                        <button class="toolbar-btn" data-command="justifyRight" title="Aligner à droite">➡</button>
+                        <button class="toolbar-btn" data-command="justifyFull" title="Justifier">⬌</button>
+                    </div>
+
+                    <!-- Zone d'édition -->
+                    <div class="editor-area" id="editor" contenteditable="true">
+                        <p>Commencez à écrire ou tapez / pour choisir un bloc</p>
+                    </div>
+
+                    <!-- Contrôles de conversion -->
+                    <div class="conversion-controls">
+                        <label for="formatSelector">Format de conversion :</label>
+                        <select id="formatSelector" class="format-selector">
+                            <option value="html">HTML</option>
+                            <option value="javascript">JavaScript</option>
+                        </select>
+                        <button class="convert-btn wp-button" id="convertBtn">Convertir</button>
+                        <button class="copy-btn wp-button" id="copyBtn">📋 Copier</button>
+                    </div>
+
+                    <!-- Zone de sortie -->
+                    <div class="output-area" id="output"></div>
+                    <div class="status-message" id="statusMessage"></div>
                 </div>
-
-                <!-- Informations de l'article -->
-                <div class="article-info">
-                    <label for="articleSubject">Objet de l'article :</label>
-                    <input 
-                        type="text" 
-                        id="articleSubject" 
-                        class="article-subject" 
-                        placeholder="Ex: Les mystères de l'Atlantide"
-                        maxlength="100"
-                    >
-                </div>
-
-                <!-- Barre d'outils -->
-                <div class="toolbar">
-                    <button class="toolbar-btn" data-command="bold" title="Gras (Ctrl+B)">
-                        <strong>B</strong>
-                    </button>
-                    <button class="toolbar-btn" data-command="italic" title="Italique (Ctrl+I)">
-                        <em>I</em>
-                    </button>
-                    <button class="toolbar-btn" data-command="underline" title="Souligné (Ctrl+U)">
-                        <u>U</u>
-                    </button>
-
-                    <div class="toolbar-separator"></div>
-
-                    <button class="toolbar-btn" data-command="formatBlock" data-value="h2" title="Titre 2">
-                        H2
-                    </button>
-                    <button class="toolbar-btn" data-command="formatBlock" data-value="h3" title="Titre 3">
-                        H3
-                    </button>
-                    <button class="toolbar-btn" data-command="formatBlock" data-value="p" title="Paragraphe">
-                        P
-                    </button>
-
-                    <div class="toolbar-separator"></div>
-
-                    <button class="toolbar-btn" data-command="insertUnorderedList" title="Liste à puces">
-                        • Liste
-                    </button>
-                    <button class="toolbar-btn" data-command="insertOrderedList" title="Liste numérotée">
-                        1. Liste
-                    </button>
-                    <button class="toolbar-btn" data-command="formatBlock" data-value="blockquote" title="Citation">
-                        " Citation
-                    </button>
-
-                    <div class="toolbar-separator"></div>
-
-                    <button class="toolbar-btn" id="linkBtn" title="Insérer un lien">
-                        🔗 Lien
-                    </button>
-
-                    <div class="toolbar-separator"></div>
-
-                    <button class="toolbar-btn" data-command="justifyLeft" title="Aligner à gauche">
-                        ⬅
-                    </button>
-                    <button class="toolbar-btn" data-command="justifyCenter" title="Centrer">
-                        ↔
-                    </button>
-                    <button class="toolbar-btn" data-command="justifyRight" title="Aligner à droite">
-                        ➡
-                    </button>
-                    <button class="toolbar-btn" data-command="justifyFull" title="Justifier">
-                        ⬌
-                    </button>
-                </div>
-
-                <!-- Zone d'édition -->
-                <div class="editor-area" id="editor" contenteditable="true">
-                    <h2>Titre de votre article</h2>
-                    <p>Commencez à écrire votre article ici...</p>
-                </div>
-
-                <!-- Contrôles de conversion -->
-                <div class="conversion-controls">
-                    <label for="formatSelector" style="color: var(--text-color); font-weight: 600;">
-                        Format de conversion :
-                    </label>
-                    <select id="formatSelector" class="format-selector">
-                        <option value="html">HTML</option>
-                        <option value="javascript">JavaScript</option>
-                    </select>
-                    <button class="convert-btn" id="convertBtn">Convertir</button>
-                    <button class="copy-btn" id="copyBtn">📋 Copier</button>
-                </div>
-
-                <!-- Zone de sortie -->
-                <div class="output-area" id="output"></div>
-                <div class="status-message" id="statusMessage"></div>
             </div>
         </div>
     </main>
