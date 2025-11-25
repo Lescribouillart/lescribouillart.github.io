@@ -9,12 +9,11 @@ function isLocalHost() {
            hostname.endsWith('.local');
 }
 
-// Bloquer l'accès en production
-if (!isLocalHost()) {
-    document.getElementById('localOnlyWarning').style.display = 'block';
-    document.getElementById('editorContainer').style.display = 'none';
-} else {
+// Initialiser l'éditeur
+if (isLocalHost()) {
     initEditor();
+} else {
+    document.getElementById('editorContainer').innerHTML = '<div style="padding: 2rem; text-align: center; color: #d63638;">Cette page n\'est disponible qu\'en local</div>';
 }
 
 function initEditor() {
@@ -41,8 +40,9 @@ function initEditor() {
 
     let currentArticleId = null;
     let isSourceMode = false;
+    let hasUnsavedChanges = false;
 
-    // Charger le contenu sauvegardé au démarrage (localStorage)
+    // Charger le contenu sauvegardé au démarrage
     loadFromLocalStorage();
     
     // Afficher la liste des articles
@@ -50,6 +50,17 @@ function initEditor() {
 
     // Charger la préférence du mode nuit
     loadDarkModePreference();
+
+    // Détecter les modifications
+    editor.addEventListener('input', () => {
+        hasUnsavedChanges = true;
+        markAsModified();
+    });
+
+    articleSubject.addEventListener('input', () => {
+        hasUnsavedChanges = true;
+        markAsModified();
+    });
 
     // Bouton Mode Nuit
     darkModeToggle.addEventListener('click', () => {
@@ -135,67 +146,102 @@ function initEditor() {
     editor.addEventListener('mouseup', updateToolbarState);
     editor.addEventListener('keyup', updateToolbarState);
 
-    /**
-     * Met à jour l'état actif des boutons de la barre d'outils
-     */
-    function updateToolbarState() {
-        // Mettre à jour les boutons actifs
-        document.querySelectorAll('.toolbar-btn[data-command]').forEach(btn => {
-            const command = btn.dataset.command;
-            if (document.queryCommandState(command)) {
-                btn.classList.add('active');
-            } else {
-                btn.classList.remove('active');
-            }
-        });
+    // Bouton Publier
+    saveBtn.addEventListener('click', () => {
+        publishArticle();
+    });
 
-        // Mettre à jour le sélecteur de format
-        const parentElement = window.getSelection().anchorNode?.parentElement;
-        if (parentElement) {
-            const tagName = parentElement.tagName?.toLowerCase();
-            if (formatSelect.querySelector(`option[value="${tagName}"]`)) {
-                formatSelect.value = tagName;
-            }
-        }
-    }
+    // Bouton Nouvel Article
+    newArticleBtn.addEventListener('click', () => {
+        createNewArticle();
+    });
 
-    /**
-     * Bascule entre le mode visuel et le mode code source
-     */
-    function toggleSourceMode() {
-        isSourceMode = !isSourceMode;
+    // Bouton Charger
+    loadBtn.addEventListener('click', () => {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.html,.txt';
         
-        if (isSourceMode) {
-            // Mode source : afficher le HTML brut
-            const html = editor.innerHTML;
-            editor.contentEditable = 'false';
-            editor.style.fontFamily = 'monospace';
-            editor.style.whiteSpace = 'pre-wrap';
-            editor.textContent = formatHTMLForDisplay(html);
-            sourceBtn.classList.add('active');
-        } else {
-            // Mode visuel : restaurer l'édition WYSIWYG
-            const html = editor.textContent;
-            editor.innerHTML = html;
-            editor.contentEditable = 'true';
-            editor.style.fontFamily = 'Georgia, "Times New Roman", serif';
-            editor.style.whiteSpace = 'normal';
-            sourceBtn.classList.remove('active');
-        }
-        editor.focus();
-    }
+        input.onchange = (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    const content = event.target.result;
+                    
+                    const subjectMatch = content.match(/<!-- Objet: (.+?) -->/);
+                    if (subjectMatch) {
+                        articleSubject.value = subjectMatch[1];
+                        editor.innerHTML = content.replace(/<!-- .+? -->\n*/g, '').trim();
+                    } else {
+                        editor.innerHTML = content;
+                    }
+                    
+                    showStatus('✓ Fichier chargé !', 'success');
+                };
+                reader.readAsText(file);
+            }
+        };
+        
+        input.click();
+    });
 
-    /**
-     * Formate le HTML pour l'affichage dans le mode source
-     */
-    function formatHTMLForDisplay(html) {
-        return html
-            .replace(/></g, '>\n<')
-            .split('\n')
-            .map(line => line.trim())
-            .filter(line => line)
-            .join('\n');
-    }
+    // Bouton Effacer
+    clearBtn.addEventListener('click', () => {
+        if (confirm('Êtes-vous sûr de vouloir effacer tout le contenu ? Cette action est irréversible.')) {
+            articleSubject.value = '';
+            editor.innerHTML = '<p>Commencez à écrire ou tapez / pour choisir un bloc</p>';
+            output.textContent = '';
+            hasUnsavedChanges = false;
+            markAsSaved();
+            showStatus('✓ Contenu effacé !', 'success');
+        }
+    });
+
+    // Conversion
+    convertBtn.addEventListener('click', () => {
+        const format = formatSelector.value;
+        const content = editor.innerHTML;
+
+        if (format === 'html') {
+            output.textContent = cleanHTML(content);
+        } else if (format === 'javascript') {
+            output.textContent = convertToJavaScript(content);
+        }
+
+        hideStatus();
+    });
+
+    // Copie dans le presse-papiers
+    copyBtn.addEventListener('click', async () => {
+        const text = output.textContent;
+        
+        if (!text) {
+            showStatus('Aucun contenu à copier', 'error');
+            return;
+        }
+
+        try {
+            await navigator.clipboard.writeText(text);
+            showStatus('✓ Copié dans le presse-papiers !', 'success');
+        } catch (err) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            
+            try {
+                document.execCommand('copy');
+                showStatus('✓ Copié dans le presse-papiers !', 'success');
+            } catch (e) {
+                showStatus('Erreur lors de la copie', 'error');
+            }
+            
+            document.body.removeChild(textarea);
+        }
+    });
 
     // Raccourcis clavier
     editor.addEventListener('keydown', (e) => {
@@ -228,126 +274,119 @@ function initEditor() {
         }
     });
 
-    // Conversion
-    convertBtn.addEventListener('click', () => {
-        const format = formatSelector.value;
-        const content = editor.innerHTML;
-
-        if (format === 'html') {
-            output.textContent = cleanHTML(content);
-        } else if (format === 'javascript') {
-            output.textContent = convertToJavaScript(content);
-        }
-
-        hideStatus();
-    });
-
-    // Copie dans le presse-papiers
-    copyBtn.addEventListener('click', async () => {
-        const text = output.textContent;
-        
-        if (!text) {
-            showStatus('Aucun contenu à copier', 'error');
-            return;
-        }
-
-        try {
-            await navigator.clipboard.writeText(text);
-            showStatus('✓ Copié dans le presse-papiers !', 'success');
-        } catch (err) {
-            // Fallback pour les navigateurs plus anciens
-            const textarea = document.createElement('textarea');
-            textarea.value = text;
-            textarea.style.position = 'fixed';
-            textarea.style.opacity = '0';
-            document.body.appendChild(textarea);
-            textarea.select();
-            
-            try {
-                document.execCommand('copy');
-                showStatus('✓ Copié dans le presse-papiers !', 'success');
-            } catch (e) {
-                showStatus('Erreur lors de la copie', 'error');
-            }
-            
-            document.body.removeChild(textarea);
-        }
-    });
-
-    // Sauvegarde automatique dans localStorage toutes les 30 secondes
-    let autoSaveInterval = setInterval(() => {
+    // Avertir avant de quitter si des modifications ne sont pas enregistrées
+    window.addEventListener('beforeunload', (e) => {
         saveToLocalStorage(true);
-    }, 30000);
-
-    // Bouton Publier - Télécharger ET sauvegarder dans la liste
-    saveBtn.addEventListener('click', () => {
-        publishArticle();
-    });
-
-    // Bouton Nouvel Article
-    newArticleBtn.addEventListener('click', () => {
-        createNewArticle();
-    });
-
-    // Bouton Charger - Charger depuis un fichier
-    loadBtn.addEventListener('click', () => {
-        const input = document.createElement('input');
-        input.type = 'file';
-        input.accept = '.html';
         
-        input.onchange = (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (event) => {
-                    const content = event.target.result;
-                    
-                    // Extraire l'objet depuis les commentaires si présent
-                    const subjectMatch = content.match(/<!-- Objet: (.+?) -->/);
-                    if (subjectMatch) {
-                        articleSubject.value = subjectMatch[1];
-                        // Retirer les métadonnées du contenu
-                        editor.innerHTML = content.replace(/<!-- .+? -->\n*/g, '').trim();
-                    } else {
-                        editor.innerHTML = content;
-                    }
-                    
-                    showStatus('✓ Fichier chargé !', 'success');
-                };
-                reader.readAsText(file);
-            }
-        };
-        
-        input.click();
-    });
-
-    // Bouton Effacer
-    clearBtn.addEventListener('click', () => {
-        if (confirm('Êtes-vous sûr de vouloir effacer tout le contenu ? Cette action est irréversible.')) {
-            articleSubject.value = '';
-            editor.innerHTML = '<h2>Titre de votre article</h2><p>Commencez à écrire votre article ici...</p>';
-            output.textContent = '';
-            showStatus('✓ Contenu effacé !', 'success');
+        if (hasUnsavedChanges) {
+            e.preventDefault();
+            e.returnValue = 'Vous avez des modifications non enregistrées. Voulez-vous vraiment quitter ?';
+            return e.returnValue;
         }
     });
 
     /**
-     * Crée un nouvel article vierge
+     * Marque l'article comme modifié
      */
-    function createNewArticle() {
-        if (confirm('Voulez-vous créer un nouvel article ? Les modifications non enregistrées seront perdues.')) {
-            currentArticleId = null;
-            articleSubject.value = '';
-            editor.innerHTML = '<h2>Titre de votre article</h2><p>Commencez à écrire votre article ici...</p>';
-            output.textContent = '';
-            
-            refreshArticlesList();
-            showStatus('✓ Nouvel article créé !', 'success');
+    function markAsModified() {
+        if (!saveBtn.textContent.includes('*')) {
+            saveBtn.textContent = '📤 Publier *';
+            saveBtn.title = 'Des modifications non enregistrées';
         }
     }
 
     /**
-     * Publie l'article : télécharge le fichier ET l'ajoute à la liste
+     * Marque l'article comme sauvegardé
+     */
+    function markAsSaved() {
+        hasUnsavedChanges = false;
+        saveBtn.textContent = '📤 Publier';
+        saveBtn.title = 'Publier l\'article';
+    }
+
+    /**
+     * Bascule entre le mode clair et le mode nuit
+     */
+    function toggleDarkMode() {
+        const body = document.body;
+        const isDarkMode = body.classList.toggle('dark-mode');
+        
+        darkModeToggle.textContent = isDarkMode ? '☀️' : '🌙';
+        localStorage.setItem('scribouillart_dark_mode', isDarkMode ? 'true' : 'false');
+    }
+
+    /**
+     * Charge la préférence du mode nuit
+     */
+    function loadDarkModePreference() {
+        const isDarkMode = localStorage.getItem('scribouillart_dark_mode') === 'true';
+        
+        if (isDarkMode) {
+            document.body.classList.add('dark-mode');
+            darkModeToggle.textContent = '☀️';
+        }
+    }
+
+    /**
+     * Met à jour l'état actif des boutons de la barre d'outils
+     */
+    function updateToolbarState() {
+        document.querySelectorAll('.toolbar-btn[data-command]').forEach(btn => {
+            const command = btn.dataset.command;
+            if (document.queryCommandState(command)) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+
+        const parentElement = window.getSelection().anchorNode?.parentElement;
+        if (parentElement) {
+            const tagName = parentElement.tagName?.toLowerCase();
+            if (formatSelect.querySelector(`option[value="${tagName}"]`)) {
+                formatSelect.value = tagName;
+            }
+        }
+    }
+
+    /**
+     * Bascule entre le mode visuel et le mode code source
+     */
+    function toggleSourceMode() {
+        isSourceMode = !isSourceMode;
+        
+        if (isSourceMode) {
+            const html = editor.innerHTML;
+            editor.contentEditable = 'false';
+            editor.style.fontFamily = 'monospace';
+            editor.style.whiteSpace = 'pre-wrap';
+            editor.textContent = formatHTMLForDisplay(html);
+            sourceBtn.classList.add('active');
+        } else {
+            const html = editor.textContent;
+            editor.innerHTML = html;
+            editor.contentEditable = 'true';
+            editor.style.fontFamily = 'Georgia, "Times New Roman", serif';
+            editor.style.whiteSpace = 'normal';
+            sourceBtn.classList.remove('active');
+        }
+        editor.focus();
+    }
+
+    /**
+     * Formate le HTML pour l'affichage dans le mode source
+     */
+    function formatHTMLForDisplay(html) {
+        return html
+            .replace(/></g, '>\n<')
+            .split('\n')
+            .map(line => line.trim())
+            .filter(line => line)
+            .join('\n');
+    }
+
+    /**
+     * Publie l'article
      */
     function publishArticle() {
         const subject = articleSubject.value.trim();
@@ -358,20 +397,17 @@ function initEditor() {
             return;
         }
         
-        // 1. Télécharger le fichier
-        downloadFile(subject, content);
-        
-        // 2. Sauvegarder dans la liste
+        downloadTextFile(subject, content);
         saveArticleToList(subject, content);
+        markAsSaved();
     }
 
     /**
-     * Télécharge le contenu de l'éditeur dans un fichier HTML
+     * Télécharge le contenu en fichier TXT
      */
-    function downloadFile(subject, content) {
+    function downloadTextFile(subject, htmlContent) {
         const timestamp = new Date().toISOString().slice(0, 10);
         
-        // Générer un nom de fichier basé sur l'objet
         const cleanSubject = subject
             .toLowerCase()
             .normalize('NFD')
@@ -379,36 +415,149 @@ function initEditor() {
             .replace(/[^a-z0-9]+/g, '-')
             .replace(/^-+|-+$/g, '')
             .substring(0, 50);
-        const filename = `${cleanSubject}-${timestamp}.html`;
+        const filename = `${cleanSubject}-${timestamp}.txt`;
         
-        // Créer le contenu complet avec métadonnées
-        const fullContent = `<!-- Objet: ${subject} -->\n<!-- Date: ${timestamp} -->\n\n${content}`;
+        const textContent = htmlToText(htmlContent);
         
-        // Créer un blob avec le contenu
-        const blob = new Blob([fullContent], { type: 'text/html;charset=utf-8' });
+        const fullContent = `TITRE: ${subject}
+DATE: ${new Date().toLocaleDateString('fr-FR')}
+-------------------------------------------
+
+${textContent}`;
         
-        // Créer un lien de téléchargement
+        const blob = new Blob([fullContent], { type: 'text/plain;charset=utf-8' });
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
         link.download = filename;
         
-        // Déclencher le téléchargement
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
         
-        // Libérer la mémoire
         URL.revokeObjectURL(link.href);
+        
+        showStatus(`✓ Fichier "${filename}" téléchargé !`, 'success');
+    }
+
+    /**
+     * Convertit le HTML en texte brut
+     */
+    function htmlToText(html) {
+        const temp = document.createElement('div');
+        temp.innerHTML = html;
+        
+        let text = '';
+        
+        function processNode(node) {
+            if (node.nodeType === Node.TEXT_NODE) {
+                text += node.textContent;
+            } else if (node.nodeType === Node.ELEMENT_NODE) {
+                const tagName = node.tagName.toLowerCase();
+                
+                switch(tagName) {
+                    case 'h1':
+                        text += '\n\n========== ';
+                        processChildren(node);
+                        text += ' ==========\n\n';
+                        break;
+                    case 'h2':
+                        text += '\n\n---------- ';
+                        processChildren(node);
+                        text += ' ----------\n\n';
+                        break;
+                    case 'h3':
+                        text += '\n\n### ';
+                        processChildren(node);
+                        text += ' ###\n\n';
+                        break;
+                    case 'p':
+                        text += '\n';
+                        processChildren(node);
+                        text += '\n';
+                        break;
+                    case 'br':
+                        text += '\n';
+                        break;
+                    case 'strong':
+                    case 'b':
+                        text += '**';
+                        processChildren(node);
+                        text += '**';
+                        break;
+                    case 'em':
+                    case 'i':
+                        text += '_';
+                        processChildren(node);
+                        text += '_';
+                        break;
+                    case 'a':
+                        processChildren(node);
+                        const href = node.getAttribute('href');
+                        if (href) {
+                            text += ` (${href})`;
+                        }
+                        break;
+                    case 'ul':
+                    case 'ol':
+                        text += '\n';
+                        processChildren(node);
+                        text += '\n';
+                        break;
+                    case 'li':
+                        text += '  • ';
+                        processChildren(node);
+                        text += '\n';
+                        break;
+                    case 'blockquote':
+                        text += '\n> ';
+                        processChildren(node);
+                        text += '\n';
+                        break;
+                    default:
+                        processChildren(node);
+                }
+            }
+        }
+        
+        function processChildren(node) {
+            for (let child of node.childNodes) {
+                processNode(child);
+            }
+        }
+        
+        processNode(temp);
+        
+        return text
+            .replace(/\n{3,}/g, '\n\n')
+            .replace(/[ \t]+/g, ' ')
+            .trim();
+    }
+
+    /**
+     * Crée un nouvel article vierge
+     */
+    function createNewArticle() {
+        if (hasUnsavedChanges && !confirm('Voulez-vous créer un nouvel article ? Les modifications non enregistrées seront perdues.')) {
+            return;
+        }
+        
+        currentArticleId = null;
+        articleSubject.value = '';
+        editor.innerHTML = '<p>Commencez à écrire ou tapez / pour choisir un bloc</p>';
+        output.textContent = '';
+        
+        hasUnsavedChanges = false;
+        markAsSaved();
+        refreshArticlesList();
+        showStatus('✓ Nouvel article créé !', 'success');
     }
 
     /**
      * Sauvegarde l'article dans la liste
      */
     function saveArticleToList(subject, content) {
-        // Récupérer la liste des articles
         const articles = getArticlesList();
         
-        // Créer ou mettre à jour l'article
         const article = {
             id: currentArticleId || Date.now(),
             subject: subject,
@@ -417,7 +566,6 @@ function initEditor() {
             date: new Date().toLocaleString('fr-FR')
         };
         
-        // Vérifier si l'article existe déjà
         const existingIndex = articles.findIndex(a => a.id === article.id);
         
         if (existingIndex >= 0) {
@@ -426,19 +574,14 @@ function initEditor() {
             articles.unshift(article);
         }
         
-        // Sauvegarder dans localStorage
         localStorage.setItem('scribouillart_articles', JSON.stringify(articles));
         
         currentArticleId = article.id;
-        
-        // Rafraîchir la liste
         refreshArticlesList();
-        
-        showStatus(`✓ Article "${subject}" publié et sauvegardé !`, 'success');
     }
 
     /**
-     * Récupère la liste des articles depuis localStorage
+     * Récupère la liste des articles
      */
     function getArticlesList() {
         const stored = localStorage.getItem('scribouillart_articles');
@@ -446,7 +589,7 @@ function initEditor() {
     }
 
     /**
-     * Extrait un aperçu textuel du contenu HTML
+     * Extrait un aperçu textuel
      */
     function getTextPreview(html) {
         const temp = document.createElement('div');
@@ -456,7 +599,7 @@ function initEditor() {
     }
 
     /**
-     * Rafraîchit l'affichage de la liste des articles
+     * Rafraîchit l'affichage de la liste
      */
     function refreshArticlesList() {
         const articles = getArticlesList();
@@ -477,7 +620,6 @@ function initEditor() {
             </div>
         `).join('');
         
-        // Ajouter les événements de clic
         articlesList.querySelectorAll('.article-card-item').forEach(card => {
             card.addEventListener('click', () => {
                 const id = parseInt(card.dataset.id);
@@ -485,7 +627,6 @@ function initEditor() {
             });
         });
         
-        // Ajouter les événements de suppression
         articlesList.querySelectorAll('.article-card-delete').forEach(btn => {
             btn.addEventListener('click', () => {
                 const id = parseInt(btn.dataset.id);
@@ -498,6 +639,10 @@ function initEditor() {
      * Charge un article depuis la liste
      */
     function loadArticleFromList(id) {
+        if (hasUnsavedChanges && !confirm('Charger cet article ? Les modifications non enregistrées seront perdues.')) {
+            return;
+        }
+        
         const articles = getArticlesList();
         const article = articles.find(a => a.id === id);
         
@@ -506,6 +651,8 @@ function initEditor() {
             editor.innerHTML = article.content;
             currentArticleId = article.id;
             
+            hasUnsavedChanges = false;
+            markAsSaved();
             refreshArticlesList();
             showStatus(`✓ Article "${article.subject}" chargé !`, 'success');
         }
@@ -533,7 +680,7 @@ function initEditor() {
     }
 
     /**
-     * Échappe le HTML pour l'affichage
+     * Échappe le HTML
      */
     function escapeHtml(text) {
         const div = document.createElement('div');
@@ -542,7 +689,79 @@ function initEditor() {
     }
 
     /**
-     * Sauvegarde le contenu dans le localStorage (sauvegarde automatique)
+     * Nettoie le HTML
+     */
+    function cleanHTML(html) {
+        const temp = document.createElement('div');
+        temp.innerHTML = html;
+
+        temp.querySelectorAll('[style]').forEach(el => {
+            el.removeAttribute('style');
+        });
+
+        temp.querySelectorAll('font, span').forEach(el => {
+            const parent = el.parentNode;
+            while (el.firstChild) {
+                parent.insertBefore(el.firstChild, el);
+            }
+            parent.removeChild(el);
+        });
+
+        return formatHTML(temp.innerHTML);
+    }
+
+    /**
+     * Formate le HTML
+     */
+    function formatHTML(html) {
+        let formatted = '';
+        let indent = 0;
+        const tab = '    ';
+
+        html = html.replace(/\s+/g, ' ');
+
+        const tokens = html.split(/(<\/?[^>]+>)/g).filter(token => token.trim());
+
+        tokens.forEach(token => {
+            if (token.match(/^<\/\w/)) {
+                indent = Math.max(0, indent - 1);
+                formatted += tab.repeat(indent) + token.trim() + '\n';
+            } else if (token.match(/^<\w[^>]*[^\/]>$/)) {
+                formatted += tab.repeat(indent) + token.trim() + '\n';
+                indent++;
+            } else if (token.match(/^<\w[^>]*\/>$/)) {
+                formatted += tab.repeat(indent) + token.trim() + '\n';
+            } else {
+                const text = token.trim();
+                if (text) {
+                    formatted += tab.repeat(indent) + text + '\n';
+                }
+            }
+        });
+
+        return formatted.trim();
+    }
+
+    /**
+     * Convertit en JavaScript
+     */
+    function convertToJavaScript(html) {
+        const cleanedHTML = cleanHTML(html);
+
+        const escaped = cleanedHTML
+            .replace(/\\/g, '\\\\')
+            .replace(/`/g, '\\`')
+            .replace(/\$\{/g, '\\${');
+
+        return `const articleContent = \`
+${escaped}
+\`;
+
+export default articleContent;`;
+    }
+
+    /**
+     * Sauvegarde dans le localStorage
      */
     function saveToLocalStorage(isAutoSave = false) {
         const content = editor.innerHTML;
@@ -553,22 +772,17 @@ function initEditor() {
             localStorage.setItem('scribouillart_editor_content', content);
             localStorage.setItem('scribouillart_editor_subject', subject);
             localStorage.setItem('scribouillart_editor_timestamp', timestamp);
-            
-            if (!isAutoSave) {
-                console.log(`Sauvegarde automatique : ${timestamp}`);
-            }
         } catch (e) {
-            console.error('Erreur lors de la sauvegarde automatique');
+            console.error('Erreur sauvegarde automatique');
         }
     }
 
     /**
-     * Charge le contenu depuis le localStorage
+     * Charge depuis le localStorage
      */
     function loadFromLocalStorage() {
         const savedContent = localStorage.getItem('scribouillart_editor_content');
         const savedSubject = localStorage.getItem('scribouillart_editor_subject');
-        const timestamp = localStorage.getItem('scribouillart_editor_timestamp');
         
         if (savedContent) {
             editor.innerHTML = savedContent;
@@ -577,161 +791,27 @@ function initEditor() {
         if (savedSubject) {
             articleSubject.value = savedSubject;
         }
-        
-        if (timestamp) {
-            console.log(`Contenu restauré (dernier enregistrement : ${timestamp})`);
-        }
     }
 
-    /**
-     * Bascule entre le mode clair et le mode nuit
-     */
-    function toggleDarkMode() {
-        const body = document.body;
-        const isDarkMode = body.classList.toggle('dark-mode');
-        
-        // Changer l'icône
-        darkModeToggle.textContent = isDarkMode ? '☀️' : '🌙';
-        
-        // Sauvegarder la préférence
-        localStorage.setItem('scribouillart_dark_mode', isDarkMode ? 'true' : 'false');
-    }
-
-    /**
-     * Charge la préférence du mode nuit
-     */
-    function loadDarkModePreference() {
-        const isDarkMode = localStorage.getItem('scribouillart_dark_mode') === 'true';
-        
-        if (isDarkMode) {
-            document.body.classList.add('dark-mode');
-            darkModeToggle.textContent = '☀️';
-        }
-    }
-
-    // Sauvegarder dans localStorage avant de quitter la page
-    window.addEventListener('beforeunload', () => {
-        saveToLocalStorage(true);
-    });
-}
-
-/**
- * Nettoie et formate le HTML généré par contenteditable
- */
-function cleanHTML(html) {
-    // Créer un élément temporaire pour parser le HTML
-    const temp = document.createElement('div');
-    temp.innerHTML = html;
-
-    // Supprimer les attributs de style inline ajoutés par contenteditable
-    temp.querySelectorAll('[style]').forEach(el => {
-        el.removeAttribute('style');
-    });
-
-    // Supprimer les balises non désirées
-    temp.querySelectorAll('font, span').forEach(el => {
-        const parent = el.parentNode;
-        while (el.firstChild) {
-            parent.insertBefore(el.firstChild, el);
-        }
-        parent.removeChild(el);
-    });
-
-    // Récupérer le HTML nettoyé
-    let cleaned = temp.innerHTML;
-
-    // Formater avec indentation
-    cleaned = formatHTML(cleaned);
-
-    return cleaned;
-}
-
-/**
- * Formate le HTML avec indentation
- */
-function formatHTML(html) {
-    let formatted = '';
-    let indent = 0;
-    const tab = '    ';
-
-    // Supprimer les espaces multiples
-    html = html.replace(/\s+/g, ' ');
-
-    // Diviser par balises
-    const tokens = html.split(/(<\/?[^>]+>)/g).filter(token => token.trim());
-
-    tokens.forEach(token => {
-        if (token.match(/^<\/\w/)) {
-            // Balise fermante
-            indent = Math.max(0, indent - 1);
-            formatted += tab.repeat(indent) + token.trim() + '\n';
-        } else if (token.match(/^<\w[^>]*[^\/]>$/)) {
-            // Balise ouvrante
-            formatted += tab.repeat(indent) + token.trim() + '\n';
-            indent++;
-        } else if (token.match(/^<\w[^>]*\/>$/)) {
-            // Balise auto-fermante
-            formatted += tab.repeat(indent) + token.trim() + '\n';
-        } else {
-            // Texte
-            const text = token.trim();
-            if (text) {
-                formatted += tab.repeat(indent) + text + '\n';
+        /**
+         * Affiche un message de statut
+         */
+        function showStatus(message, type) {
+            statusMessage.textContent = message;
+            statusMessage.className = `status-message ${type}`;
+            
+            if (type === 'success') {
+                setTimeout(() => {
+                    hideStatus();
+                }, 3000);
             }
         }
-    });
-
-    return formatted.trim();
-}
-
-/**
- * Convertit le HTML en code JavaScript
- */
-function convertToJavaScript(html) {
-    // Nettoyer le HTML d'abord
-    const cleanedHTML = cleanHTML(html);
-
-    // Échapper les backticks et les template literals
-    const escaped = cleanedHTML
-        .replace(/\\/g, '\\\\')  // Échapper les backslashes
-        .replace(/`/g, '\\`')     // Échapper les backticks
-        .replace(/\$\{/g, '\\${'); // Échapper les interpolations
-
-    // Créer le code JavaScript
-    const jsCode = `const articleContent = \`
-${escaped}
-\`;
-
-export default articleContent;
-
-// Ou en CommonJS :
-// module.exports = articleContent;
-
-// Ou comme constante simple :
-// const content = \`${escaped.split('\n').slice(0, 3).join('\n')}...\`;`;
-
-    return jsCode;
-}
-
-/**
- * Affiche un message de statut
- */
-function showStatus(message, type) {
-    const statusMessage = document.getElementById('statusMessage');
-    statusMessage.textContent = message;
-    statusMessage.className = `status-message ${type}`;
     
-    if (type === 'success') {
-        setTimeout(() => {
-            hideStatus();
-        }, 3000);
+        /**
+         * Cache le message de statut
+         */
+        function hideStatus() {
+            statusMessage.textContent = '';
+            statusMessage.className = 'status-message';
+        }
     }
-}
-
-/**
- * Cache le message de statut
- */
-function hideStatus() {
-    const statusMessage = document.getElementById('statusMessage');
-    statusMessage.className = 'status-message';
-}
