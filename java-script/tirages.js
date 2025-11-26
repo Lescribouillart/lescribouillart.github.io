@@ -290,7 +290,7 @@ function initEditor() {
      */
     function markAsModified() {
         if (!saveBtn.textContent.includes('*')) {
-            saveBtn.textContent = '📤 Publier *';
+            saveBtn.textContent = 'Publier *';
             saveBtn.title = 'Des modifications non enregistrées';
         }
     }
@@ -300,7 +300,7 @@ function initEditor() {
      */
     function markAsSaved() {
         hasUnsavedChanges = false;
-        saveBtn.textContent = '📤 Publier';
+        saveBtn.textContent = 'Publier';
         saveBtn.title = 'Publier l\'article';
     }
 
