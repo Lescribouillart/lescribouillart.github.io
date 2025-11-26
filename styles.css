@@ -468,105 +468,102 @@ a.highlight-blue:hover {
 .top-bar {
     background: var(--editor-bg-secondary);
     border-bottom: 1px solid var(--editor-border-color);
-    padding: 1rem 2rem;
+    padding: 0.5rem 1.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: sticky;
     top: 0;
     z-index: 100;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: none;
+    min-height: 50px;
 }
 
 .top-bar-left {
     display: flex;
     gap: 1rem;
     align-items: center;
+    flex: 1;
 }
 
-.editor-mode-title {
-    font-size: 0.9rem;
-    color: var(--editor-text-primary);
-    font-weight: 400;
-}
-
-.dark-mode-toggle {
+/* Toolbar inline dans la top-bar */
+.toolbar {
+    display: flex;
+    align-items: center;
+    gap: 2px;
     background: transparent;
     border: none;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
+    padding: 0;
+    margin: 0;
+}
+
+.toolbar-btn {
+    background: transparent;
+    color: var(--editor-text-primary);
+    border: 1px solid transparent;
+    padding: 0.4rem 0.6rem;
+    border-radius: 2px;
     cursor: pointer;
+    font-weight: 500;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    min-width: 32px;
+    height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.2rem;
-    transition: all 0.3s ease;
-    margin-right: 1rem;
 }
 
-.dark-mode-toggle:hover {
+.toolbar-btn:hover {
     background: var(--editor-bg-tertiary);
-    transform: rotate(20deg);
+    border-color: var(--editor-border-color);
 }
 
-.dark-mode-toggle svg {
-    transition: all 0.3s ease;
+.toolbar-btn:active,
+.toolbar-btn.active {
+    background: var(--editor-accent-color);
+    color: #fff;
+    border-color: var(--editor-accent-color);
 }
 
-.moon-icon,
-.sun-icon {
-    color: var(--editor-text-primary);
-}
-
-.top-bar-actions {
-    display: flex;
-    gap: 0.75rem;
-    align-items: center;
-}
-
-/* Boutons WordPress */
-.wp-button {
+.toolbar-select {
+    padding: 0.4rem 0.6rem;
     background: var(--editor-bg-secondary);
-    border: 1px solid var(--editor-accent-color);
-    color: var(--editor-accent-color);
-    padding: 0.5rem 1rem;
+    color: var(--editor-text-primary);
+    border: 1px solid var(--editor-border-color);
     border-radius: 2px;
     cursor: pointer;
     font-size: 13px;
-    font-weight: 400;
-    transition: all 0.1s ease;
-    height: 36px;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
+    height: 32px;
+    min-width: 120px;
 }
 
-.wp-button:hover {
+.toolbar-select:hover {
     background: var(--editor-bg-tertiary);
-    border-color: var(--editor-accent-hover);
-    color: var(--editor-accent-hover);
 }
 
-.wp-button.primary {
-    background: var(--editor-accent-color);
+.toolbar-select:focus {
+    outline: none;
     border-color: var(--editor-accent-color);
-    color: #fff;
 }
 
-.wp-button.primary:hover {
-    background: var(--editor-accent-hover);
-    border-color: var(--editor-accent-hover);
+.toolbar-separator {
+    width: 1px;
+    background: var(--editor-border-color);
+    height: 20px;
+    margin: 0 4px;
 }
 
-.wp-button.danger {
-    border-color: #d63638;
-    color: #d63638;
+.color-picker-wrapper {
+    position: relative;
+    display: inline-block;
 }
 
-.wp-button.danger:hover {
-    background: #d63638;
-    color: #fff;
+.color-input {
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0;
 }
 
 /* Container principal */
@@ -582,7 +579,145 @@ a.highlight-blue:hover {
     min-height: calc(100vh - 200px);
 }
 
-/* Sidebar */
+/* Lecteur YouTube Sidebar */
+.youtube-player-sidebar {
+    width: 350px;
+    background: var(--editor-bg-secondary);
+    border-left: 1px solid var(--editor-border-color);
+    flex-shrink: 0;
+    overflow-y: auto;
+    position: sticky;
+    top: 50px;
+    height: calc(100vh - 50px);
+}
+
+.youtube-player-container {
+    padding: 1rem;
+}
+
+.youtube-player-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--editor-border-color);
+}
+
+.youtube-player-header h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--editor-text-primary);
+    margin: 0;
+}
+
+.youtube-toggle {
+    background: transparent;
+    border: 1px solid var(--editor-border-color);
+    color: var(--editor-text-primary);
+    width: 28px;
+    height: 28px;
+    border-radius: 2px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.youtube-toggle:hover {
+    background: var(--editor-bg-tertiary);
+}
+
+.youtube-player-content {
+    transition: all 0.3s ease;
+}
+
+.youtube-player-content.collapsed {
+    display: none;
+}
+
+.youtube-search {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.youtube-search-input {
+    flex: 1;
+    padding: 0.5rem;
+    background: var(--editor-bg-tertiary);
+    color: var(--editor-text-primary);
+    border: 1px solid var(--editor-border-color);
+    border-radius: 2px;
+    font-size: 13px;
+    outline: none;
+}
+
+.youtube-search-input:focus {
+    border-color: var(--editor-accent-color);
+}
+
+.youtube-search-btn {
+    background: var(--editor-accent-color);
+    border: none;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 2px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.youtube-search-btn:hover {
+    background: var(--editor-accent-hover);
+}
+
+.youtube-iframe-wrapper {
+    margin-bottom: 1rem;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #000;
+}
+
+.youtube-iframe-wrapper iframe {
+    display: block;
+    border-radius: 4px;
+}
+
+.youtube-suggestions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.suggestion-item {
+    padding: 0.75rem;
+    background: var(--editor-bg-tertiary);
+    border: 1px solid var(--editor-border-color);
+    border-radius: 2px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--editor-text-primary);
+    transition: all 0.2s ease;
+}
+
+.suggestion-item:hover {
+    background: var(--editor-bg-secondary);
+    border-color: var(--editor-accent-color);
+    transform: translateX(5px);
+}
+
+/* Responsive YouTube player */
+@media (max-width: 1200px) {
+    .youtube-player-sidebar {
+        display: none;
+    }
+}
+
+/* Sidebar articles */
 .sidebar {
     width: 280px;
     background: var(--editor-bg-secondary);
@@ -673,7 +808,6 @@ a.highlight-blue:hover {
     line-height: 1.4;
     display: -webkit-box;
     -webkit-line-clamp: 2;
-    line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
@@ -744,89 +878,6 @@ a.highlight-blue:hover {
     color: var(--editor-text-muted);
 }
 
-/* Barre d'outils */
-.toolbar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.25rem;
-    padding: 0.75rem;
-    background: var(--editor-bg-tertiary);
-    border: 1px solid var(--editor-border-color);
-    border-radius: 2px;
-    margin-bottom: 1rem;
-}
-
-.toolbar-btn {
-    background: transparent;
-    color: var(--editor-text-primary);
-    border: 1px solid transparent;
-    padding: 0.5rem 0.7rem;
-    border-radius: 2px;
-    cursor: pointer;
-    font-weight: 500;
-    font-size: 14px;
-    transition: all 0.1s ease;
-    min-width: 38px;
-    height: 38px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.toolbar-btn:hover {
-    background: var(--editor-bg-secondary);
-    border-color: var(--editor-border-color);
-}
-
-.toolbar-btn:active,
-.toolbar-btn.active {
-    background: var(--editor-accent-color);
-    color: #fff;
-    border-color: var(--editor-accent-color);
-}
-
-.toolbar-select {
-    padding: 0.4rem 0.6rem;
-    background: transparent;
-    color: var(--editor-text-primary);
-    border: 1px solid transparent;
-    border-radius: 2px;
-    cursor: pointer;
-    font-size: 13px;
-    height: 38px;
-    min-width: 100px;
-    transition: all 0.1s ease;
-}
-
-.toolbar-select:hover {
-    background: var(--editor-bg-secondary);
-    border-color: var(--editor-border-color);
-}
-
-.toolbar-select:focus {
-    outline: none;
-    border-color: var(--editor-accent-color);
-}
-
-.color-picker-wrapper {
-    position: relative;
-    display: inline-block;
-}
-
-.color-input {
-    position: absolute;
-    width: 0;
-    height: 0;
-    opacity: 0;
-}
-
-.toolbar-separator {
-    width: 1px;
-    background: var(--editor-border-color);
-    margin: 0.25rem 0.5rem;
-    align-self: stretch;
-}
-
 /* Zone d'édition */
 .editor-area {
     min-height: 500px;
@@ -874,46 +925,76 @@ a.highlight-blue:hover {
     text-decoration: underline;
 }
 
-/* Responsive éditeur */
-@media (max-width: 782px) {
-    .sidebar { display: none; }
-    .top-bar { padding: 0.75rem 1rem; }
-    .editor-wrapper { padding: 1rem; }
-    .article-subject { font-size: 1.75rem; }
-}
-
-/* Bouton mode nuit dans le header */
-.header .dark-mode-toggle {
-    position: absolute;
-    top: 1rem;
+/* Message de statut */
+.status-message {
+    position: fixed;
+    bottom: 2rem;
     right: 2rem;
-    background: transparent;
-    border: none;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-}
-
-.header .dark-mode-toggle:hover {
-    background: rgba(255, 255, 255, 0.1);
-    transform: rotate(20deg);
-}
-
-.header .dark-mode-toggle svg {
-    transition: all 0.3s ease;
-}
-
-.header .moon-icon,
-.header .sun-icon {
-    color: var(--text-light);
-}
-
-/* Supprimer l'ancien style du bouton mode nuit dans top-bar */
-.top-bar-actions .dark-mode-toggle {
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    font-size: 13px;
     display: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 2000;
+}
+
+.status-message.success {
+    background: #00a32a;
+    color: #fff;
+    display: block;
+}
+
+.status-message.error {
+    background: #d63638;
+    color: #fff;
+    display: block;
+}
+
+/* Boutons WordPress */
+.wp-button {
+    background: transparent;
+    border: 1px solid var(--editor-border-color);
+    color: var(--editor-text-primary);
+    padding: 0.5rem 1rem;
+    border-radius: 2px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.wp-button:hover {
+    background: var(--editor-bg-tertiary);
+}
+
+.wp-button.primary {
+    background: var(--editor-accent-color);
+    border-color: var(--editor-accent-color);
+    color: #fff;
+}
+
+.wp-button.primary:hover {
+    background: var(--editor-accent-hover);
+    border-color: var(--editor-accent-hover);
+}
+
+.wp-button.danger {
+    border-color: var(--editor-border-color);
+    color: var(--editor-text-primary);
+}
+
+.wp-button.danger:hover {
+    background: #fcf0f1;
+    border-color: #d63638;
+    color: #d63638;
+}
+
+.top-bar-actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
 }

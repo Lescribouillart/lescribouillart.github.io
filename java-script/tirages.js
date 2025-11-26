@@ -19,10 +19,6 @@ if (isLocalHost()) {
 function initEditor() {
     const editor = document.getElementById('editor');
     const articleSubject = document.getElementById('articleSubject');
-    const output = document.getElementById('output');
-    const formatSelector = document.getElementById('formatSelector');
-    const convertBtn = document.getElementById('convertBtn');
-    const copyBtn = document.getElementById('copyBtn');
     const statusMessage = document.getElementById('statusMessage');
     const linkBtn = document.getElementById('linkBtn');
     const unlinkBtn = document.getElementById('unlinkBtn');
@@ -37,6 +33,12 @@ function initEditor() {
     const formatSelect = document.getElementById('formatSelect');
     const textColor = document.getElementById('textColor');
     const bgColor = document.getElementById('bgColor');
+    const youtubeToggle = document.getElementById('youtubeToggle');
+    const youtubeContent = document.getElementById('youtubeContent');
+    const youtubeSearch = document.getElementById('youtubeSearch');
+    const searchBtn = document.getElementById('searchBtn');
+    const youtubeIframe = document.getElementById('youtubeIframe');
+    const suggestions = document.querySelectorAll('.suggestion-item');
 
     let currentArticleId = null;
     let isSourceMode = false;
@@ -75,16 +77,20 @@ function initEditor() {
     });
 
     // Couleur du texte
-    textColor.addEventListener('change', (e) => {
-        document.execCommand('foreColor', false, e.target.value);
-        editor.focus();
-    });
+    if (textColor) {
+        textColor.addEventListener('change', (e) => {
+            document.execCommand('foreColor', false, e.target.value);
+            editor.focus();
+        });
+    }
 
     // Couleur de fond
-    bgColor.addEventListener('change', (e) => {
-        document.execCommand('backColor', false, e.target.value);
-        editor.focus();
-    });
+    if (bgColor) {
+        bgColor.addEventListener('change', (e) => {
+            document.execCommand('backColor', false, e.target.value);
+            editor.focus();
+        });
+    }
 
     // Gestion des boutons de la barre d'outils
     document.querySelectorAll('.toolbar-btn[data-command]').forEach(btn => {
@@ -100,47 +106,55 @@ function initEditor() {
     });
 
     // Bouton lien amélioré
-    linkBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        const selection = window.getSelection().toString();
-        const url = prompt('Entrez l\'URL du lien :', selection ? '' : 'https://');
-        const text = selection || prompt('Texte du lien :');
-        
-        if (url && text) {
-            if (selection) {
-                document.execCommand('createLink', false, url);
-            } else {
-                document.execCommand('insertHTML', false, `<a href="${url}">${text}</a>`);
+    if (linkBtn) {
+        linkBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const selection = window.getSelection().toString();
+            const url = prompt('Entrez l\'URL du lien :', selection ? '' : 'https://');
+            const text = selection || prompt('Texte du lien :');
+            
+            if (url && text) {
+                if (selection) {
+                    document.execCommand('createLink', false, url);
+                } else {
+                    document.execCommand('insertHTML', false, `<a href="${url}">${text}</a>`);
+                }
             }
-        }
-        editor.focus();
-    });
+            editor.focus();
+        });
+    }
 
     // Bouton supprimer le lien
-    unlinkBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        document.execCommand('unlink', false, null);
-        editor.focus();
-    });
+    if (unlinkBtn) {
+        unlinkBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            document.execCommand('unlink', false, null);
+            editor.focus();
+        });
+    }
 
     // Bouton image
-    imageBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        const url = prompt('Entrez l\'URL de l\'image :');
-        const alt = prompt('Texte alternatif (description) :');
-        
-        if (url) {
-            const imgHTML = `<img src="${url}" alt="${alt || ''}" style="max-width: 100%; height: auto;">`;
-            document.execCommand('insertHTML', false, imgHTML);
-        }
-        editor.focus();
-    });
+    if (imageBtn) {
+        imageBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const url = prompt('Entrez l\'URL de l\'image :');
+            const alt = prompt('Texte alternatif (description) :');
+            
+            if (url) {
+                const imgHTML = `<img src="${url}" alt="${alt || ''}" style="max-width: 100%; height: auto;">`;
+                document.execCommand('insertHTML', false, imgHTML);
+            }
+            editor.focus();
+        });
+    }
 
     // Bouton code source
-    sourceBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        toggleSourceMode();
-    });
+    if (sourceBtn) {
+        sourceBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            toggleSourceMode();
+        });
+    }
 
     // Mettre à jour l'état de la barre d'outils
     editor.addEventListener('mouseup', updateToolbarState);
@@ -284,6 +298,55 @@ function initEditor() {
             return e.returnValue;
         }
     });
+
+    // Toggle YouTube player
+    if (youtubeToggle && youtubeContent) {
+        youtubeToggle.addEventListener('click', () => {
+            youtubeContent.classList.toggle('collapsed');
+            youtubeToggle.textContent = youtubeContent.classList.contains('collapsed') ? '+' : '−';
+        });
+    }
+
+    // Recherche YouTube
+    if (searchBtn && youtubeSearch) {
+        searchBtn.addEventListener('click', searchYouTube);
+        youtubeSearch.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                searchYouTube();
+            }
+        });
+    }
+
+    // Suggestions de vidéos
+    if (suggestions) {
+        suggestions.forEach(item => {
+            item.addEventListener('click', () => {
+                const videoId = item.dataset.video;
+                loadYouTubeVideo(videoId);
+            });
+        });
+    }
+
+    /**
+     * Recherche une vidéo sur YouTube
+     */
+    function searchYouTube() {
+        const query = youtubeSearch?.value.trim();
+        if (!query) return;
+
+        // Créer une recherche YouTube
+        const searchUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`;
+        window.open(searchUrl, '_blank');
+    }
+
+    /**
+     * Charge une vidéo YouTube
+     */
+    function loadYouTubeVideo(videoId) {
+        if (youtubeIframe) {
+            youtubeIframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+        }
+    }
 
     /**
      * Marque l'article comme modifié

@@ -189,6 +189,52 @@
                     <div class="status-message" id="statusMessage"></div>
                 </div>
             </div>
+
+            <!-- Radio YouTube -->
+            <aside class="youtube-player-sidebar">
+                <div class="youtube-player-container">
+                    <div class="youtube-player-header">
+                        <h3>🎵 Musique YouTube</h3>
+                        <button class="youtube-toggle" id="youtubeToggle" title="Réduire/Agrandir">−</button>
+                    </div>
+                    <div class="youtube-player-content" id="youtubeContent">
+                        <div class="youtube-search">
+                            <input 
+                                type="text" 
+                                id="youtubeSearch" 
+                                class="youtube-search-input" 
+                                placeholder="Rechercher sur YouTube..."
+                            >
+                            <button class="youtube-search-btn" id="searchBtn">🔍</button>
+                        </div>
+                        <div class="youtube-iframe-wrapper">
+                            <iframe 
+                                id="youtubeIframe"
+                                width="100%" 
+                                height="315" 
+                                src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=0" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                        <div class="youtube-suggestions">
+                            <div class="suggestion-item" data-video="jfKfPfyJRdk">
+                                🎵 Lofi Hip Hop Radio
+                            </div>
+                            <div class="suggestion-item" data-video="5qap5aO4i9A">
+                                🎹 Musique Classique
+                            </div>
+                            <div class="suggestion-item" data-video="EgqUJOudrcM">
+                                🎸 Jazz Relaxant
+                            </div>
+                            <div class="suggestion-item" data-video="lTRiuFIWV54">
+                                🌊 Sons de la Nature
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
         </div>
     </main>
 
