@@ -35,10 +35,117 @@
     </header>
 
     <main class="main">
-        <!-- Barre supérieure -->
+        <!-- Barre supérieure avec toolbar intégrée -->
         <div class="top-bar">
             <div class="top-bar-left">
-                <span class="editor-mode-title"></span>
+                <!-- Barre d'outils enrichie -->
+                <div class="toolbar">
+                    <!-- Sélecteur de paragraphe -->
+                    <select class="toolbar-select" id="formatSelect">
+                        <option value="p">Paragraphe</option>
+                        <option value="h1">Titre 1</option>
+                        <option value="h2">Titre 2</option>
+                        <option value="h3">Titre 3</option>
+                        <option value="h4">Titre 4</option>
+                        <option value="h5">Titre 5</option>
+                        <option value="h6">Titre 6</option>
+                        <option value="blockquote">Citation</option>
+                        <option value="pre">Code</option>
+                    </select>
+
+                    <div class="toolbar-separator"></div>
+
+                    <!-- Formatage de texte -->
+                    <button class="toolbar-btn" data-command="bold" title="Gras (Ctrl+B)">
+                        <strong>B</strong>
+                    </button>
+                    <button class="toolbar-btn" data-command="italic" title="Italique (Ctrl+I)">
+                        <em>I</em>
+                    </button>
+                    <button class="toolbar-btn" data-command="underline" title="Souligné (Ctrl+U)">
+                        <u>U</u>
+                    </button>
+                    <button class="toolbar-btn" data-command="strikeThrough" title="Barré">
+                        <s>S</s>
+                    </button>
+
+                    <div class="toolbar-separator"></div>
+
+                    <!-- Couleurs -->
+                    <div class="color-picker-wrapper">
+                        <button class="toolbar-btn" title="Couleur du texte" onclick="document.getElementById('textColor').click()">
+                            A
+                        </button>
+                        <input type="color" id="textColor" class="color-input">
+                    </div>
+                    <div class="color-picker-wrapper">
+                        <button class="toolbar-btn" title="Couleur de fond" onclick="document.getElementById('bgColor').click()">
+                            🎨
+                        </button>
+                        <input type="color" id="bgColor" class="color-input">
+                    </div>
+
+                    <div class="toolbar-separator"></div>
+
+                    <!-- Listes -->
+                    <button class="toolbar-btn" data-command="insertUnorderedList" title="Liste à puces">
+                        •
+                    </button>
+                    <button class="toolbar-btn" data-command="insertOrderedList" title="Liste numérotée">
+                        1.
+                    </button>
+                    <button class="toolbar-btn" data-command="outdent" title="Réduire le retrait">
+                        ◁
+                    </button>
+                    <button class="toolbar-btn" data-command="indent" title="Augmenter le retrait">
+                        ▷
+                    </button>
+
+                    <div class="toolbar-separator"></div>
+
+                    <!-- Alignement -->
+                    <button class="toolbar-btn" data-command="justifyLeft" title="Aligner à gauche">
+                        ⬅
+                    </button>
+                    <button class="toolbar-btn" data-command="justifyCenter" title="Centrer">
+                        ↔
+                    </button>
+                    <button class="toolbar-btn" data-command="justifyRight" title="Aligner à droite">
+                        ➡
+                    </button>
+                    <button class="toolbar-btn" data-command="justifyFull" title="Justifier">
+                        ⬌
+                    </button>
+
+                    <div class="toolbar-separator"></div>
+
+                    <!-- Liens et médias -->
+                    <button class="toolbar-btn" id="linkBtn" title="Insérer un lien">
+                        🔗
+                    </button>
+                    <button class="toolbar-btn" id="unlinkBtn" data-command="unlink" title="Supprimer le lien">
+                        🔓
+                    </button>
+                    <button class="toolbar-btn" id="imageBtn" title="Insérer une image">
+                        🖼️
+                    </button>
+
+                    <div class="toolbar-separator"></div>
+
+                    <!-- Actions -->
+                    <button class="toolbar-btn" data-command="undo" title="Annuler (Ctrl+Z)">
+                        ↶
+                    </button>
+                    <button class="toolbar-btn" data-command="redo" title="Rétablir (Ctrl+Y)">
+                        ↷
+                    </button>
+                    <button class="toolbar-btn" data-command="removeFormat" title="Supprimer le formatage">
+                        ✖
+                    </button>
+                    <button class="toolbar-btn" id="sourceBtn" title="Voir le code HTML">
+                        &lt;/&gt;
+                    </button>
+                </div>
             </div>
             <div class="top-bar-actions">
                 <button class="wp-button" id="loadBtn">Charger</button>
@@ -71,117 +178,6 @@
                             placeholder="Ajouter un titre"
                             maxlength="100"
                         >
-                    </div>
-
-                    <!-- Barre d'outils enrichie -->
-                    <div class="toolbar">
-                        <!-- Sélecteur de paragraphe -->
-                        <div class="toolbar-dropdown">
-                            <select class="toolbar-select" id="formatSelect">
-                                <option value="p">Paragraphe</option>
-                                <option value="h1">Titre 1</option>
-                                <option value="h2">Titre 2</option>
-                                <option value="h3">Titre 3</option>
-                                <option value="h4">Titre 4</option>
-                                <option value="h5">Titre 5</option>
-                                <option value="h6">Titre 6</option>
-                                <option value="blockquote">Citation</option>
-                                <option value="pre">Code</option>
-                            </select>
-                        </div>
-
-                        <div class="toolbar-separator"></div>
-
-                        <!-- Formatage de texte -->
-                        <button class="toolbar-btn" data-command="bold" title="Gras (Ctrl+B)">
-                            <strong>B</strong>
-                        </button>
-                        <button class="toolbar-btn" data-command="italic" title="Italique (Ctrl+I)">
-                            <em>I</em>
-                        </button>
-                        <button class="toolbar-btn" data-command="underline" title="Souligné (Ctrl+U)">
-                            <u>U</u>
-                        </button>
-                        <button class="toolbar-btn" data-command="strikeThrough" title="Barré">
-                            <s>S</s>
-                        </button>
-
-                        <div class="toolbar-separator"></div>
-
-                        <!-- Couleurs -->
-                        <div class="color-picker-wrapper">
-                            <button class="toolbar-btn" title="Couleur du texte" onclick="document.getElementById('textColor').click()">
-                                A
-                            </button>
-                            <input type="color" id="textColor" class="color-input">
-                        </div>
-                        <div class="color-picker-wrapper">
-                            <button class="toolbar-btn" title="Couleur de fond" onclick="document.getElementById('bgColor').click()">
-                                🎨
-                            </button>
-                            <input type="color" id="bgColor" class="color-input">
-                        </div>
-
-                        <div class="toolbar-separator"></div>
-
-                        <!-- Listes -->
-                        <button class="toolbar-btn" data-command="insertUnorderedList" title="Liste à puces">
-                            •
-                        </button>
-                        <button class="toolbar-btn" data-command="insertOrderedList" title="Liste numérotée">
-                            1.
-                        </button>
-                        <button class="toolbar-btn" data-command="outdent" title="Réduire le retrait">
-                            ◁
-                        </button>
-                        <button class="toolbar-btn" data-command="indent" title="Augmenter le retrait">
-                            ▷
-                        </button>
-
-                        <div class="toolbar-separator"></div>
-
-                        <!-- Alignement -->
-                        <button class="toolbar-btn" data-command="justifyLeft" title="Aligner à gauche">
-                            ⬅
-                        </button>
-                        <button class="toolbar-btn" data-command="justifyCenter" title="Centrer">
-                            ↔
-                        </button>
-                        <button class="toolbar-btn" data-command="justifyRight" title="Aligner à droite">
-                            ➡
-                        </button>
-                        <button class="toolbar-btn" data-command="justifyFull" title="Justifier">
-                            ⬌
-                        </button>
-
-                        <div class="toolbar-separator"></div>
-
-                        <!-- Liens et médias -->
-                        <button class="toolbar-btn" id="linkBtn" title="Insérer un lien">
-                            🔗
-                        </button>
-                        <button class="toolbar-btn" id="unlinkBtn" data-command="unlink" title="Supprimer le lien">
-                            🔓
-                        </button>
-                        <button class="toolbar-btn" id="imageBtn" title="Insérer une image">
-                            🖼️
-                        </button>
-
-                        <div class="toolbar-separator"></div>
-
-                        <!-- Actions -->
-                        <button class="toolbar-btn" data-command="undo" title="Annuler (Ctrl+Z)">
-                            ↶
-                        </button>
-                        <button class="toolbar-btn" data-command="redo" title="Rétablir (Ctrl+Y)">
-                            ↷
-                        </button>
-                        <button class="toolbar-btn" data-command="removeFormat" title="Supprimer le formatage">
-                            ✖
-                        </button>
-                        <button class="toolbar-btn" id="sourceBtn" title="Voir le code HTML">
-                            &lt;/&gt;
-                        </button>
                     </div>
 
                     <!-- Zone d'édition -->
