@@ -479,6 +479,15 @@ a.highlight-blue:hover {
     transform: rotate(20deg);
 }
 
+.dark-mode-toggle svg {
+    transition: all 0.3s ease;
+}
+
+.moon-icon,
+.sun-icon {
+    color: var(--editor-text-primary);
+}
+
 .top-bar-actions {
     display: flex;
     gap: 0.75rem;

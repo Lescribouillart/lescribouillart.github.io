@@ -311,7 +311,17 @@ function initEditor() {
         const body = document.body;
         const isDarkMode = body.classList.toggle('dark-mode');
         
-        darkModeToggle.textContent = isDarkMode ? '☀️' : '🌙';
+        const moonIcon = darkModeToggle.querySelector('.moon-icon');
+        const sunIcon = darkModeToggle.querySelector('.sun-icon');
+        
+        if (isDarkMode) {
+            moonIcon.style.display = 'none';
+            sunIcon.style.display = 'block';
+        } else {
+            moonIcon.style.display = 'block';
+            sunIcon.style.display = 'none';
+        }
+        
         localStorage.setItem('scribouillart_dark_mode', isDarkMode ? 'true' : 'false');
     }
 
@@ -323,7 +333,10 @@ function initEditor() {
         
         if (isDarkMode) {
             document.body.classList.add('dark-mode');
-            darkModeToggle.textContent = '☀️';
+            const moonIcon = darkModeToggle.querySelector('.moon-icon');
+            const sunIcon = darkModeToggle.querySelector('.sun-icon');
+            moonIcon.style.display = 'none';
+            sunIcon.style.display = 'block';
         }
     }
 
