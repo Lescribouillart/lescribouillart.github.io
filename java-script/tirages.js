@@ -35,10 +35,6 @@ function initEditor() {
     const bgColor = document.getElementById('bgColor');
     const youtubeToggle = document.getElementById('youtubeToggle');
     const youtubeContent = document.getElementById('youtubeContent');
-    const youtubeSearch = document.getElementById('youtubeSearch');
-    const searchBtn = document.getElementById('searchBtn');
-    const youtubeIframe = document.getElementById('youtubeIframe');
-    const suggestions = document.querySelectorAll('.suggestion-item');
 
     let currentArticleId = null;
     let isSourceMode = false;
@@ -305,47 +301,6 @@ function initEditor() {
             youtubeContent.classList.toggle('collapsed');
             youtubeToggle.textContent = youtubeContent.classList.contains('collapsed') ? '+' : '−';
         });
-    }
-
-    // Recherche YouTube
-    if (searchBtn && youtubeSearch) {
-        searchBtn.addEventListener('click', searchYouTube);
-        youtubeSearch.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                searchYouTube();
-            }
-        });
-    }
-
-    // Suggestions de vidéos
-    if (suggestions) {
-        suggestions.forEach(item => {
-            item.addEventListener('click', () => {
-                const videoId = item.dataset.video;
-                loadYouTubeVideo(videoId);
-            });
-        });
-    }
-
-    /**
-     * Recherche une vidéo sur YouTube
-     */
-    function searchYouTube() {
-        const query = youtubeSearch?.value.trim();
-        if (!query) return;
-
-        // Créer une recherche YouTube
-        const searchUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`;
-        window.open(searchUrl, '_blank');
-    }
-
-    /**
-     * Charge une vidéo YouTube
-     */
-    function loadYouTubeVideo(videoId) {
-        if (youtubeIframe) {
-            youtubeIframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-        }
     }
 
     /**
