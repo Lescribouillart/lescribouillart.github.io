@@ -203,9 +203,11 @@ body.editor-page .main {
 
 /* Footer */
 .footer {
+    background: var(--bg-color);
     padding: 2rem 0;
     text-align: center;
     color: var(--text-light);
+    border-top: 1px solid var(--border-color);
 }
 
 .footer-nav {
