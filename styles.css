@@ -88,6 +88,37 @@ body.editor-page .main {
     text-transform: uppercase;
     letter-spacing: 1px;
     margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Bouton mode nuit à côté du tagline */
+.header .dark-mode-toggle {
+    background: transparent;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.header .dark-mode-toggle:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: rotate(20deg);
+}
+
+.header .dark-mode-toggle svg {
+    transition: all 0.3s ease;
+}
+
+.header .moon-icon,
+.header .sun-icon {
+    color: var(--text-light);
 }
 
 .nav {
@@ -849,4 +880,40 @@ a.highlight-blue:hover {
     .top-bar { padding: 0.75rem 1rem; }
     .editor-wrapper { padding: 1rem; }
     .article-subject { font-size: 1.75rem; }
+}
+
+/* Bouton mode nuit dans le header */
+.header .dark-mode-toggle {
+    position: absolute;
+    top: 1rem;
+    right: 2rem;
+    background: transparent;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.header .dark-mode-toggle:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: rotate(20deg);
+}
+
+.header .dark-mode-toggle svg {
+    transition: all 0.3s ease;
+}
+
+.header .moon-icon,
+.header .sun-icon {
+    color: var(--text-light);
+}
+
+/* Supprimer l'ancien style du bouton mode nuit dans top-bar */
+.top-bar-actions .dark-mode-toggle {
+    display: none;
 }
