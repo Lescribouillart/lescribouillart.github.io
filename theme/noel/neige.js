@@ -16,7 +16,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            overflow: visible;
+            overflow: hidden;
             pointer-events: none;
             z-index: 1000;
         `;
@@ -26,15 +26,17 @@
             header.style.position = 'relative';
         }
         
+        header.style.overflow = 'hidden';
         header.appendChild(snowContainer);
 
         function createSnowflake() {
             const snowflake = document.createElement('div');
-            const size = Math.random() * 5 + 2; // Entre 2px et 7px
-            const startX = Math.random() * 100; // Position horizontale en %
-            const duration = Math.random() * 15 + 12; // Entre 12s et 27s (encore plus lent)
-            const delay = Math.random() * 2; // Délai initial
-            const opacity = Math.random() * 0.6 + 0.4; // Entre 0.4 et 1
+            const size = Math.random() * 5 + 2;
+            const startX = Math.random() * 95 + 2.5; // Entre 2.5% et 97.5% pour rester dans les limites
+            const duration = Math.random() * 15 + 12;
+            const delay = Math.random() * 2;
+            const opacity = Math.random() * 0.6 + 0.4;
+            const drift = Math.random() * 30 - 15; // Dérive horizontale limitée entre -15px et +15px
             
             snowflake.textContent = '❆';
             snowflake.style.cssText = `
@@ -44,37 +46,40 @@
                 font-size: ${size * 2}px;
                 color: white;
                 opacity: ${opacity};
-                animation: snowfall ${duration}s linear ${delay}s;
+                animation: snowfall-${Math.floor(Math.random() * 1000)} ${duration}s linear ${delay}s;
                 pointer-events: none;
                 user-select: none;
             `;
 
             snowContainer.appendChild(snowflake);
 
-            // Supprimer le flocon après l'animation
+            // Animation inline pour éviter les débordements
+            const keyframeName = `snowfall-${Math.floor(Math.random() * 10000)}`;
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes ${keyframeName} {
+                    0% {
+                        transform: translateY(0) translateX(0);
+                        opacity: 1;
+                    }
+                    70% {
+                        opacity: 1;
+                    }
+                    100% {
+                        transform: translateY(${header.offsetHeight + 50}px) translateX(${drift}px);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+            snowflake.style.animation = `${keyframeName} ${duration}s linear ${delay}s`;
+
+            // Supprimer le flocon et le style après l'animation
             setTimeout(() => {
                 snowflake.remove();
+                style.remove();
             }, (duration + delay) * 1000);
         }
-
-        // Ajouter les keyframes pour l'animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes snowfall {
-                0% {
-                    transform: translateY(0) translateX(0);
-                    opacity: 1;
-                }
-                70% {
-                    opacity: 1;
-                }
-                100% {
-                    transform: translateY(${header.offsetHeight + 200}px) translateX(${Math.random() * 50 - 25}px);
-                    opacity: 0;
-                }
-            }
-        `;
-        document.head.appendChild(style);
 
         // Créer des flocons régulièrement
         setInterval(createSnowflake, 200);
