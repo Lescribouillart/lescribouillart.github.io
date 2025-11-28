@@ -174,7 +174,7 @@ body.editor-page .main {
     max-width: 900px;
     margin: 3rem auto;
     padding: 2rem;
-    line-height: 1.8;
+    line-height: 1.6;
     font-size: 18px;
     font-family: Georgia, 'Merriweather', serif;
     text-align: justify;
@@ -188,7 +188,7 @@ body.editor-page .main {
 }
 
 .presentation p {
-    margin-bottom: 1.2rem;
+    margin-bottom: 0.1rem;
 }
 
 .presentation p:last-child {
