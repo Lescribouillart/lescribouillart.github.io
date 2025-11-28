@@ -1014,3 +1014,8 @@ a.highlight-blue:hover {
     gap: 0.5rem;
     align-items: center;
 }
+
+.feuillet-title,
+.feuillet-subtitle {
+    text-align: center;
+}
