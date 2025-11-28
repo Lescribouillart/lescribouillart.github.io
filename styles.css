@@ -1021,6 +1021,13 @@ a.highlight-blue:hover {
     color: #7ba3d8;
 }
 
+.feuillet-title {
+    margin-bottom: 1.2rem;
+}
+.feuillet-subtitle{
+    margin-bottom: 1.2rem;
+}
+
 .feuillet-section.contexte {
     margin-bottom: 3rem; /* espace supplémentaire avant la section suivante */
 }
