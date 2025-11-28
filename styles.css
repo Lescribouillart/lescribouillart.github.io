@@ -1020,3 +1020,7 @@ a.highlight-blue:hover {
     text-align: center;
     color: #7ba3d8;
 }
+
+.feuillet-section.contexte {
+    margin-bottom: 3rem; /* espace supplémentaire avant la section suivante */
+}
