@@ -1034,7 +1034,8 @@ a.highlight-blue:hover {
 
 .feuillet-presentation img[src*="Nocthériga.png"] {
     display: block;
-    max-width: 100%;
+    max-width: 60%;
+    width: 100%;
     height: auto;
     margin: 1.2rem auto;
 }
