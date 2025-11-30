@@ -1031,3 +1031,10 @@ a.highlight-blue:hover {
 .feuillet-section.contexte {
     margin-bottom: 3rem; /* espace supplémentaire avant la section suivante */
 }
+
+.feuillet-presentation img[src*="Nocthériga.png"] {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 1.2rem auto;
+}
