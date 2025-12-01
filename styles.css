@@ -1072,3 +1072,10 @@ a.highlight-blue:hover {
     flex-direction: column;
     justify-content: center;
 }
+
+.presentation-bg2 {
+    background: #2f2e3a;
+    border-radius: 8px;
+    padding: 2rem;
+    margin-top: 0;
+}
