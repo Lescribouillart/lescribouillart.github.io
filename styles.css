@@ -1039,3 +1039,11 @@ a.highlight-blue:hover {
     height: auto;
     margin: 1.2rem auto;
 }
+
+.presentation img[src*="presentation/presentation.png"] {
+    display: block;
+    max-width: 24%;
+    width: 100%;
+    height: auto;
+    margin: 1.2rem auto;
+}
