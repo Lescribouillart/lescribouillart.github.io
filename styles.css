@@ -206,6 +206,7 @@ body.editor-page .main {
     font-style: italic;
     margin-top: 1.5rem;
     margin-bottom: 1.2rem;
+    text-align: center;
 }
 
 /* Points clés avec style discret */
@@ -1046,4 +1047,29 @@ a.highlight-blue:hover {
     width: 100%;
     height: auto;
     margin: 1.2rem auto;
+}
+
+.presentation-flex {
+    display: flex;
+    align-items: center; /* centrer verticalement le texte par rapport à l'image */
+    gap: 2rem;
+    margin-bottom: 1.2rem;
+}
+
+.presentation-flex img[src*="presentation/presentation.png"] {
+    display: block;
+    max-width: 220px;
+    width: 35vw;
+    min-width: 120px;
+    height: auto;
+    margin: 0;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.presentation-texte {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
