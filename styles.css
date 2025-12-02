@@ -1099,10 +1099,10 @@ a.highlight-blue:hover {
 
 .logo-img {
     position: absolute;
-    right: -100px;
+    right: -114px;
     top: 50%;
     transform: translateY(-50%);
-    height: 6.5rem;
+    height: 7.5rem;
     width: auto;
     display: block;
     z-index: 2;
