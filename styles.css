@@ -1091,6 +1091,21 @@ a.highlight-blue:hover {
     border-radius: 8px;
     padding: 2rem;
     margin-top: 0;
+    line-height: 1.4; /* réduit l'espacement vertical */
+}
+
+.presentation-bg2 p,
+.presentation-bg2 .key-point,
+.presentation-bg2 .alternative-intro,
+.presentation-bg2 .note {
+    margin-bottom: 0.7rem; /* réduit l'espacement entre paragraphes */
+}
+
+.presentation-bg2 p:last-child,
+.presentation-bg2 .key-point:last-child,
+.presentation-bg2 .alternative-intro:last-child,
+.presentation-bg2 .note:last-child {
+    margin-bottom: 0;
 }
 
 .logo-row {
