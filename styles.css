@@ -1142,3 +1142,13 @@ a.highlight-blue:hover {
     display: block;
     z-index: 2;
 }
+
+.main h2 {
+    text-align: center;
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: #50575e;
+    margin-bottom: 2rem;
+    margin-top: 0;
+    letter-spacing: 0.08em;
+}
