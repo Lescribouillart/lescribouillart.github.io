@@ -1163,11 +1163,10 @@ a.highlight-blue:hover {
     right: 50%;
     margin-left: -50vw;
     margin-right: -50vw;
-   
     padding: 0.8rem 0;
     margin-bottom: 0;
     margin-top: 0;
-    z-index: 1;
+    background-color: #e0e0e0;
 }
 
 .intro-site {
