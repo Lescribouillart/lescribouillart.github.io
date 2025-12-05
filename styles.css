@@ -165,10 +165,12 @@ body.editor-page .main {
 }
 
 /* Main */
-.main {
-    min-height: calc(100vh - 200px);
-    padding: 3rem 0;
-    background-color: #ead5b7;
+main {
+  background-image: url('./images/fondmain/murdebriquebleu.png');
+  background-repeat: repeat-y;
+  background-position: center top;
+  background-size: cover;
+  min-height: 100vh;
 }
 
 /* Presentation Section */
@@ -1160,12 +1162,11 @@ a.highlight-blue:hover {
     right: 50%;
     margin-left: -50vw;
     margin-right: -50vw;
-    background: #ededed;
+   
     padding: 0.8rem 0;
     margin-bottom: 0;
     margin-top: 0;
     z-index: 1;
-    box-shadow: 0 1px 0 #d3d3d3, 0 -1px 0 #d3d3d3;
 }
 
 .intro-site {
