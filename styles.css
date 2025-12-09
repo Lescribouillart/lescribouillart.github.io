@@ -1034,7 +1034,7 @@ a.highlight-blue:hover {
 .feuillet-title,
 .feuillet-subtitle {
     text-align: center;
-    color: #7ba3d8;
+    color: #e0e0e0;
 }
 
 .feuillet-title {
@@ -1042,6 +1042,7 @@ a.highlight-blue:hover {
 }
 .feuillet-subtitle{
     margin-bottom: 1.2rem;
+    margin-top:-27px;
 }
 
 .feuillet-section.contexte {
@@ -1148,10 +1149,10 @@ a.highlight-blue:hover {
 
 .main h2 {
     text-align: center;
-    font-size: 2.4rem;
+    font-size: 1.6rem;
     font-weight: 700;
     color: #7ba3d8;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     margin-top: 0;
     letter-spacing: 0.08em;
 }
