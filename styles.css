@@ -187,9 +187,10 @@ main {
     border-radius: 8px;
     background-color: var(--bg-light);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    max-height: 871px;
+    max-height: 1384px;
     overflow-y: auto;
-    color: #e0e0e0
+    color: #e0e0e0;
+    margin-bottom: 60px;
 }
 
 .presentation p {
@@ -1187,4 +1188,10 @@ a.highlight-blue:hover {
 
 .mulder-xfiles {
     color: #e0e0e0;
+}
+
+body {
+    min-height: 100vh;
+    background: url('./images/background.jpg') repeat; /* ou votre image de fond */
+    /* autres propriétés de fond si besoin */
 }
