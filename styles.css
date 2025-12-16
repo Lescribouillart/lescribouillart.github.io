@@ -1084,8 +1084,18 @@ a.highlight-blue {
         font-size: 2.5rem;
     }
     
+    /* Garder le logo visible et l'adapter pour mobile */
     .logo-img {
-        display: none;
+        position: static;
+        transform: none;
+        height: 3.5rem;
+        margin-left: 0.5rem;
+        display: inline-block;
+    }
+    
+    .logo-row {
+        justify-content: center;
+        gap: 0.5rem;
     }
     
     .nav {
@@ -1176,6 +1186,12 @@ a.highlight-blue {
 @media (max-width: 480px) {
     .logo {
         font-size: 2rem;
+    }
+    
+    /* Réduire encore la taille du logo sur petits mobiles */
+    .logo-img {
+        height: 3rem;
+        margin-left: 0.3rem;
     }
     
     .tagline {
@@ -1307,6 +1323,11 @@ a.highlight-blue {
 @media (max-width: 360px) {
     .logo {
         font-size: 1.75rem;
+    }
+    
+    /* Logo encore plus petit pour très petits écrans */
+    .logo-img {
+        height: 2.5rem;
     }
     
     .tagline {
