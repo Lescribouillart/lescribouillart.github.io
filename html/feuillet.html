@@ -4,16 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feuillet - Le Scribouill'art</title>
-    
-    <!-- Préchargement des ressources critiques -->
-    <link rel="preload" href="../styles.css" as="style">
-    <link rel="preload" href="../images/logo/scribouillart.png" as="image">
-    
     <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
     <header class="header">
         <div class="container">
+            <button class="accessibility-btn" aria-label="Mode dyslexie">
+                <img src="../images/inclusif/dislexie.png" alt="Icône dyslexie">
+            </button>
             <a href="../index.html" style="text-decoration: none; color: inherit;">
                 <div class="logo-row">
                     <h1 class="logo">Le Scribouill'art</h1>
@@ -93,6 +91,6 @@
         </div>
     </footer>
     
-    <script src="../theme/noel/neige.js" defer></script>
+    <script src="../js/dyslexic-mode.js"></script>
 </body>
 </html>
