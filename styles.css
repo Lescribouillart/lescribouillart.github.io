@@ -1055,14 +1055,7 @@ a.highlight-blue:hover {
     margin-bottom: 3rem; /* espace supplémentaire avant la section suivante */
 }
 
-.feuillet-presentation img[src*="Nocthériga.png"] {
-    display: block;
-    max-width: 60%;
-    width: 100%;
-    height: auto;
-    margin: 1.2rem auto;
-}
-
+/* Styles spécifiques pour la page d'accueil */
 .presentation img[src*="presentation/presentation.png"] {
     display: block;
     max-width: 24%;
@@ -1073,7 +1066,7 @@ a.highlight-blue:hover {
 
 .presentation-flex {
     display: flex;
-    align-items: center; /* centrer verticalement le texte par rapport à l'image */
+    align-items: center;
     gap: 2rem;
     margin-bottom: 1.2rem;
 }
@@ -1105,26 +1098,54 @@ a.highlight-blue:hover {
     margin-top: 0;
 }
 
+/* Styles spécifiques pour le feuillet */
+.feuillet-presentation img[src*="Nocthériga.png"] {
+    display: block;
+    max-width: 60%;
+    width: 100%;
+    height: auto;
+    margin: 1.2rem auto;
+}
+
+.feuillet-flex {
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+    margin: 1.2rem 0;
+}
+
+.feuillet-flex img[src*="Nocthériga.png"] {
+    display: block;
+    max-width: 300px;
+    width: 40vw;
+    min-width: 180px;
+    height: auto;
+    margin: 0;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.feuillet-texte {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.feuillet-texte p {
+    margin-bottom: 0.7rem;
+}
+
+.feuillet-texte p:last-child {
+    margin-bottom: 0;
+}
+
 .presentation-bg2 {
     background: #2f2e3a;
     border-radius: 8px;
     padding: 2rem;
     margin-top: 0;
-    line-height: 1.4; /* réduit l'espacement vertical */
-}
-
-.presentation-bg2 p,
-.presentation-bg2 .key-point,
-.presentation-bg2 .alternative-intro,
-.presentation-bg2 .note {
-    margin-bottom: 0.7rem; /* réduit l'espacement entre paragraphes */
-}
-
-.presentation-bg2 p:last-child,
-.presentation-bg2 .key-point:last-child,
-.presentation-bg2 .alternative-intro:last-child,
-.presentation-bg2 .note:last-child {
-    margin-bottom: 0;
+    line-height: 1.4;
 }
 
 .logo-row {
