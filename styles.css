@@ -1195,6 +1195,11 @@ a.highlight-blue:hover {
     color: #e0e0e0;
 }
 
+.noctheriga-name {
+    color: #7ba3b8;
+    font-style: italic;
+}
+
 body {
     min-height: 100vh;
     background: url('./images/background.jpg') repeat; /* ou votre image de fond */
