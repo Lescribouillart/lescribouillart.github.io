@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Rozha+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=OpenDyslexic&display=swap');
 
 /* ========================================
    RESET & BASE
@@ -1435,4 +1436,89 @@ a.highlight-blue {
     .accessibility-btn {
         display: none;
     }
+}
+
+/* ========================================
+   MODE DYSLEXIE
+   ======================================== */
+body.dyslexic-mode {
+    font-family: 'OpenDyslexic', Arial, sans-serif !important;
+    letter-spacing: 0.12em;
+    word-spacing: 0.16em;
+    line-height: 2 !important;
+}
+
+body.dyslexic-mode * {
+    font-family: 'OpenDyslexic', Arial, sans-serif !important;
+}
+
+body.dyslexic-mode .logo {
+    font-family: 'OpenDyslexic', Arial, sans-serif !important;
+}
+
+body.dyslexic-mode p,
+body.dyslexic-mode .presentation,
+body.dyslexic-mode .intro-site,
+body.dyslexic-mode .article-body,
+body.dyslexic-mode .article-summary {
+    line-height: 2.2 !important;
+    letter-spacing: 0.12em !important;
+    word-spacing: 0.16em !important;
+}
+
+body.dyslexic-mode .presentation,
+body.dyslexic-mode .feuillet-presentation {
+    background-color: #faf8f0 !important;
+    color: #000 !important;
+}
+
+body.dyslexic-mode .presentation-bg2 {
+    background-color: #f5f5dc !important;
+    color: #000 !important;
+}
+
+body.dyslexic-mode .article-card {
+    background: #faf8f0 !important;
+}
+
+body.dyslexic-mode .article-title,
+body.dyslexic-mode .presentation-texte h3,
+body.dyslexic-mode h1, body.dyslexic-mode h2, 
+body.dyslexic-mode h3, body.dyslexic-mode h4 {
+    color: #000 !important;
+}
+
+body.dyslexic-mode .article-summary,
+body.dyslexic-mode .article-date,
+body.dyslexic-mode p {
+    color: #1a1a1a !important;
+}
+
+body.dyslexic-mode .intro-site-bg {
+    background-color: #fff9e6 !important;
+}
+
+body.dyslexic-mode .intro-site {
+    color: #000 !important;
+}
+
+body.dyslexic-mode .key-point {
+    color: #0056b3 !important;
+}
+
+body.dyslexic-mode .quote-mulder {
+    color: #0056b3 !important;
+}
+
+body.dyslexic-mode .highlight-blue {
+    color: #0056b3 !important;
+}
+
+body.dyslexic-mode main {
+    background-image: none !important;
+    background-color: #fefefe !important;
+}
+
+body.dyslexic-mode .header {
+    background-color: #e8e6df !important;
 }
