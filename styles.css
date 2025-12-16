@@ -92,9 +92,8 @@ body.editor-page .main {
     left: 0;
     top: 0.5rem;
     background: transparent;
-    border: 2px solid var(--secondary-color);
-    padding: 0.4rem;
-    border-radius: 6px;
+    border: none;
+    padding: 0;
     cursor: pointer;
     transition: all 0.3s ease;
     display: flex;
@@ -107,12 +106,15 @@ body.editor-page .main {
     width: 32px;
     height: 32px;
     display: block;
+    transition: all 0.3s ease;
 }
 
 .accessibility-btn:hover {
-    background: var(--secondary-color);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(123, 163, 216, 0.3);
+    transform: translateY(-2px) scale(1.1);
+}
+
+.accessibility-btn:hover img {
+    filter: brightness(1.2);
 }
 
 .logo-row {
