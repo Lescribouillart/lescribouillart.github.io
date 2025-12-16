@@ -1322,50 +1322,6 @@ a.highlight-blue {
     .article-body h2 {
         font-size: 1.3rem;
     }
-    
-    .footer-nav {
-        flex-direction: column;
-        gap: 1rem;
-    }
-    
-    .footer-link {
-        font-size: 0.85rem;
-    }
-    
-    /* Éditeur responsive */
-    .sidebar {
-        width: 100%;
-        border-right: none;
-        border-bottom: 1px solid var(--editor-border-color);
-        max-height: 300px;
-    }
-    
-    .editor-container {
-        flex-direction: column;
-    }
-    
-    .editor-wrapper {
-        padding: 1rem;
-    }
-    
-    .article-subject {
-        font-size: 1.75rem;
-    }
-    
-    .editor-area {
-        font-size: 1rem;
-        padding: 1rem;
-    }
-    
-    .toolbar {
-        flex-wrap: wrap;
-    }
-    
-    .toolbar-btn {
-        min-width: 28px;
-        height: 28px;
-        padding: 0.3rem 0.4rem;
-    }
 }
 
 /* Très petits mobiles */
@@ -1466,59 +1422,99 @@ body.dyslexic-mode .article-summary {
     word-spacing: 0.16em !important;
 }
 
-body.dyslexic-mode .presentation,
-body.dyslexic-mode .feuillet-presentation {
-    background-color: #faf8f0 !important;
-    color: #000 !important;
+/* Les couleurs restent identiques au mode normal */
+body.dyslexic-mode .presentation {
+    background-color: var(--bg-light) !important;
+    color: #e0e0e0 !important;
 }
 
 body.dyslexic-mode .presentation-bg2 {
-    background-color: #f5f5dc !important;
-    color: #000 !important;
+    background-color: #2f2e3a !important;
+    color: #e0e0e0 !important;
 }
 
 body.dyslexic-mode .article-card {
-    background: #faf8f0 !important;
+    background: var(--bg-light) !important;
 }
 
-body.dyslexic-mode .article-title,
-body.dyslexic-mode .presentation-texte h3,
-body.dyslexic-mode h1, body.dyslexic-mode h2, 
-body.dyslexic-mode h3, body.dyslexic-mode h4 {
-    color: #000 !important;
+body.dyslexic-mode .article-title {
+    color: var(--primary-color) !important;
+}
+
+body.dyslexic-mode .presentation-texte h3 {
+    color: #e8e3d5 !important;
+}
+
+body.dyslexic-mode h1,
+body.dyslexic-mode h2, 
+body.dyslexic-mode h3,
+body.dyslexic-mode h4 {
+    color: var(--primary-color) !important;
 }
 
 body.dyslexic-mode .article-summary,
-body.dyslexic-mode .article-date,
+body.dyslexic-mode .article-date {
+    color: var(--text-color) !important;
+}
+
 body.dyslexic-mode p {
-    color: #1a1a1a !important;
+    color: #e0e0e0 !important;
 }
 
 body.dyslexic-mode .intro-site-bg {
-    background-color: #fff9e6 !important;
+    background-color: #e0e0e0 !important;
 }
 
 body.dyslexic-mode .intro-site {
-    color: #000 !important;
+    color: #2f2e3a !important;
 }
 
 body.dyslexic-mode .key-point {
-    color: #0056b3 !important;
+    color: #7ba3d8 !important;
 }
 
 body.dyslexic-mode .quote-mulder {
-    color: #0056b3 !important;
+    color: #7ba3d8 !important;
 }
 
 body.dyslexic-mode .highlight-blue {
-    color: #0056b3 !important;
+    color: #7ba3d8 !important;
 }
 
 body.dyslexic-mode main {
-    background-image: none !important;
-    background-color: #fefefe !important;
+    background-image: url('./images/fondmain/murdebriquebleu.png') !important;
+    background-repeat: repeat-y !important;
+    background-position: center top !important;
+    background-size: cover !important;
+    background-color: transparent !important;
 }
 
 body.dyslexic-mode .header {
-    background-color: #e8e6df !important;
+    background-color: var(--bg-color) !important;
+}
+
+body.dyslexic-mode .tagline {
+    color: var(--text-light) !important;
+}
+
+body.dyslexic-mode .nav-link {
+    color: var(--text-light) !important;
+}
+
+body.dyslexic-mode .nav-link:hover,
+body.dyslexic-mode .nav-link.active {
+    color: var(--secondary-color) !important;
+}
+
+body.dyslexic-mode .mulder-xfiles {
+    color: #e0e0e0 !important;
+}
+
+body.dyslexic-mode .article-card:hover .article-title {
+    color: var(--secondary-color) !important;
+}
+
+body.dyslexic-mode .feuillet-title,
+body.dyslexic-mode .feuillet-subtitle {
+    color: #e0e0e0 !important;
 }
