@@ -1,17 +1,30 @@
 @import url('https://fonts.googleapis.com/css2?family=Rozha+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap');
 
+/* ========================================
+   RESET & BASE
+   ======================================== */
 html, body {
     width: 100%;
     overflow-x: hidden;
+    min-height: 100vh;
 }
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+body {
+    background: url('./images/background.jpg') repeat;
+}
+
+/* ========================================
+   VARIABLES CSS
+   ======================================== */
 :root {
+    /* Couleurs principales */
     --primary-color: #e8e3d5;
     --secondary-color: #7ba3d8;
     --text-color: #e0e0e0;
@@ -20,14 +33,8 @@ html, body {
     --bg-light: #3a3944;
     --border-color: #4a4956;
     --spacing: 1.5rem;
-}
-
-/* ========================================
-   ÉDITEUR D'ARTICLES - TIRAGES.HTML
-   ======================================== */
-
-/* Variables pour le mode clair/sombre */
-:root {
+    
+    /* Éditeur mode clair */
     --editor-bg-primary: #f0f0f1;
     --editor-bg-secondary: #fff;
     --editor-bg-tertiary: #f6f7f7;
@@ -51,7 +58,6 @@ body.dark-mode {
     --editor-accent-hover: #4a8ec2;
 }
 
-/* Override du body et main pour l'éditeur */
 body.editor-page {
     background: var(--editor-bg-primary);
 }
@@ -62,7 +68,9 @@ body.editor-page .main {
     min-height: 100vh;
 }
 
-/* Header */
+/* ========================================
+   HEADER & NAVIGATION
+   ======================================== */
 .header {
     background: var(--bg-color);
     border-bottom: 1px solid var(--border-color);
@@ -78,6 +86,14 @@ body.editor-page .main {
     margin: 0 auto;
 }
 
+.logo-row {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
 .logo {
     font-family: 'Rozha One', serif;
     font-size: 3.5rem;
@@ -85,7 +101,19 @@ body.editor-page .main {
     color: var(--primary-color);
     margin-bottom: -0.5rem;
     text-align: center;
+    width: 100%;
+    z-index: 1;
+}
+
+.logo-img {
+    position: absolute;
+    right: -114px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 7.5rem;
     width: auto;
+    display: block;
+    z-index: 2;
 }
 
 .tagline {
@@ -97,34 +125,6 @@ body.editor-page .main {
     display: flex;
     align-items: center;
     gap: 1rem;
-}
-
-/* Bouton mode nuit à côté du tagline */
-.header .dark-mode-toggle {
-    background: transparent;
-    border: none;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-}
-
-.header .dark-mode-toggle:hover {
-    background: rgba(255, 255, 255, 0.1);
-    transform: rotate(20deg);
-}
-
-.header .dark-mode-toggle svg {
-    transition: all 0.3s ease;
-}
-
-.header .moon-icon,
-.header .sun-icon {
-    color: var(--text-light);
 }
 
 .nav {
@@ -161,27 +161,66 @@ body.editor-page .main {
     width: 100%;
 }
 
-/* Container */
+/* ========================================
+   LAYOUT
+   ======================================== */
 .container {
-    max-width: 1200px;
+    max-width: 1100px;
     margin: 0 auto;
     padding: 0 2rem;
 }
 
-/* Main */
 main {
-  background-image: url('./images/fondmain/murdebriquebleu.png');
-  background-repeat: repeat-y;
-  background-position: center top;
-  background-size: cover;
-  min-height: 100vh;
-  padding-top: 48px;
+    background-image: url('./images/fondmain/murdebriquebleu.png');
+    background-repeat: repeat-y;
+    background-position: center top;
+    background-size: cover;
+    min-height: 100vh;
+    padding-top: 48px;
 }
 
-/* Presentation Section */
-.presentation {
+.main h2 {
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #7ba3d8;
+    margin-bottom: 2rem;
+    margin-top: 0;
+    letter-spacing: 0.08em;
+}
+
+/* ========================================
+   INTRO SITE (BANDEAU)
+   ======================================== */
+.intro-site-bg {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    padding: 0.8rem 0;
+    margin-bottom: 0;
+    margin-top: 0;
+    background-color: #e0e0e0;
+}
+
+.intro-site {
+    font-size: 18px;
+    font-family: Georgia, serif;
+    color: #2f2e3a;
+    font-weight: 400;
     max-width: 900px;
     margin: 0 auto;
+    text-align: justify;
+}
+
+/* ========================================
+   PRESENTATION (PAGE D'ACCUEIL)
+   ======================================== */
+.presentation {
+    max-width: 900px;
+    margin: 0 auto 60px;
     padding: 2rem;
     line-height: 1.6;
     font-size: 18px;
@@ -194,7 +233,6 @@ main {
     max-height: 1384px;
     overflow-y: auto;
     color: #e0e0e0;
-    margin-bottom: 60px;
 }
 
 .presentation p {
@@ -209,20 +247,17 @@ main {
     font-size: 0.95em;
 }
 
-/* Citation de Mulder en italique avec couleur différente */
 .presentation .quote-mulder {
     font-style: italic;
     color: #7ba3d8;
 }
 
-/* Paragraphe d'introduction à la lecture alternative */
 .presentation .alternative-intro {
     font-style: italic;
     margin-top: 1.5rem;
     margin-bottom: 2.2rem;
 }
 
-/* Points clés avec style discret */
 .presentation .key-point {
     padding-left: 1.5rem;
     color: #7ba3d8;
@@ -254,7 +289,147 @@ main {
     background: var(--text-light);
 }
 
-/* Footer */
+/* Layout avec image pour page d'accueil */
+.presentation-flex {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 1.2rem;
+}
+
+.presentation-flex img[src*="presentation/presentation.png"] {
+    display: block;
+    max-width: 220px;
+    width: 35vw;
+    min-width: 120px;
+    height: auto;
+    margin: 0;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.presentation-texte {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.presentation-texte h3 {
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #e8e3d5;
+    margin-bottom: 1.2rem;
+    margin-top: 0;
+}
+
+.presentation-bg2 {
+    background: #2f2e3a;
+    border-radius: 8px;
+    padding: 2rem;
+    margin-top: 0;
+    line-height: 1.4;
+}
+
+.presentation-bg2 p,
+.presentation-bg2 .key-point,
+.presentation-bg2 .alternative-intro,
+.presentation-bg2 .note {
+    margin-bottom: 0.7rem;
+}
+
+.presentation-bg2 p:last-child,
+.presentation-bg2 .key-point:last-child,
+.presentation-bg2 .alternative-intro:last-child,
+.presentation-bg2 .note:last-child {
+    margin-bottom: 0;
+}
+
+/* ========================================
+   FEUILLET (PAGE FEUILLET)
+   ======================================== */
+.feuillet-presentation {
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.feuillet-title,
+.feuillet-subtitle {
+    text-align: center;
+    color: #e0e0e0;
+}
+
+.feuillet-title {
+    margin-bottom: 1.2rem;
+}
+
+.feuillet-subtitle {
+    margin-bottom: 1.9rem;
+    margin-top: 13px;
+    font-size: 26px;
+}
+
+.feuillet-section.contexte {
+    margin-bottom: 3rem;
+}
+
+/* Layout avec image pour feuillet */
+.feuillet-flex {
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+    margin: 1.2rem 0;
+}
+
+.feuillet-flex img[src*="Nocthériga.png"] {
+    display: block;
+    max-width: 300px;
+    width: 40vw;
+    min-width: 180px;
+    height: auto;
+    margin: 0;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.feuillet-texte {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.feuillet-texte p {
+    margin-bottom: 0.7rem;
+}
+
+.feuillet-texte p:last-child {
+    margin-bottom: 0;
+}
+
+/* Classes utilitaires */
+.highlight-blue {
+    color: #7ba3d8;
+}
+
+a.highlight-blue {
+    text-decoration: none;
+}
+
+.mulder-xfiles {
+    color: #e0e0e0;
+}
+
+.noctheriga-name {
+    color: #7ba3d8;
+    font-style: italic;
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
 .footer {
     background: var(--bg-color);
     padding: 2rem 0;
@@ -283,13 +458,9 @@ main {
     color: var(--secondary-color);
 }
 
-.footer-separator {
-    margin: 0 1rem;
-    color: var(--text-light);
-    display: none;
-}
-
-/* Articles Grid - Style Korben */
+/* ========================================
+   ARTICLES GRID & CARDS
+   ======================================== */
 .articles-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -387,7 +558,9 @@ main {
     transform: translateX(5px);
 }
 
-/* Article Page */
+/* ========================================
+   ARTICLE PAGE
+   ======================================== */
 .article-header {
     text-align: center;
     padding-bottom: 2rem;
@@ -453,39 +626,9 @@ main {
     color: var(--primary-color);
 }
 
-/* Texte en bleu */
-.highlight-blue {
-    color: #7ba3d8;
-}
-
-a.highlight-blue {
-    text-decoration: none;
-}
-
-a.highlight-blue:hover {
-    text-decoration: none;
-}
-
-/* Responsive */
-@media (max-width: 1024px) {
-    .articles-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1.5rem;
-    }
-}
-
-@media (max-width: 768px) {
-    .articles-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
-    
-    .article-title {
-        font-size: 1.2rem;
-    }
-}
-
-/* Barre supérieure style WordPress */
+/* ========================================
+   ÉDITEUR (TIRAGES.HTML)
+   ======================================== */
 .top-bar {
     background: var(--editor-bg-secondary);
     border-bottom: 1px solid var(--editor-border-color);
@@ -496,7 +639,6 @@ a.highlight-blue:hover {
     position: sticky;
     top: 0;
     z-index: 100;
-    box-shadow: none;
     min-height: 50px;
 }
 
@@ -507,7 +649,12 @@ a.highlight-blue:hover {
     flex: 1;
 }
 
-/* Toolbar inline dans la top-bar */
+.top-bar-actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
 .toolbar {
     display: flex;
     align-items: center;
@@ -575,19 +722,6 @@ a.highlight-blue:hover {
     margin: 0 4px;
 }
 
-.color-picker-wrapper {
-    position: relative;
-    display: inline-block;
-}
-
-.color-input {
-    position: absolute;
-    width: 0;
-    height: 0;
-    opacity: 0;
-}
-
-/* Container principal */
 .editor-container {
     max-width: 100%;
     margin: 0;
@@ -600,160 +734,6 @@ a.highlight-blue:hover {
     min-height: calc(100vh - 200px);
 }
 
-/* Augmente la largeur max de la présentation pour le feuillet */
-.presentation,
-.feuillet-presentation {
-    max-width: 900px; /* ou 1000px selon votre préférence */
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* Si le conteneur limite la largeur, vous pouvez aussi l'ajuster */
-.container {
-    max-width: 1100px; /* augmentez si besoin */
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* Lecteur YouTube Sidebar */
-.youtube-player-sidebar {
-    width: 350px;
-    background: var(--editor-bg-secondary);
-    border-left: 1px solid var(--editor-border-color);
-    flex-shrink: 0;
-    overflow-y: auto;
-    position: sticky;
-    top: 50px;
-    height: calc(100vh - 50px);
-}
-
-.youtube-player-container {
-    padding: 1rem;
-}
-
-.youtube-player-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 1px solid var(--editor-border-color);
-}
-
-.youtube-player-header h3 {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--editor-text-primary);
-    margin: 0;
-}
-
-.youtube-toggle {
-    background: transparent;
-    border: 1px solid var(--editor-border-color);
-    color: var(--editor-text-primary);
-    width: 28px;
-    height: 28px;
-    border-radius: 2px;
-    cursor: pointer;
-    font-size: 18px;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-}
-
-.youtube-toggle:hover {
-    background: var(--editor-bg-tertiary);
-}
-
-.youtube-player-content {
-    transition: all 0.3s ease;
-}
-
-.youtube-player-content.collapsed {
-    display: none;
-}
-
-.youtube-search {
-    display: flex;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-}
-
-.youtube-search-input {
-    flex: 1;
-    padding: 0.5rem;
-    background: var(--editor-bg-tertiary);
-    color: var(--editor-text-primary);
-    border: 1px solid var(--editor-border-color);
-    border-radius: 2px;
-    font-size: 13px;
-    outline: none;
-}
-
-.youtube-search-input:focus {
-    border-color: var(--editor-accent-color);
-}
-
-.youtube-search-btn {
-    background: var(--editor-accent-color);
-    border: none;
-    color: #fff;
-    padding: 0.5rem 1rem;
-    border-radius: 2px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: all 0.2s ease;
-}
-
-.youtube-search-btn:hover {
-    background: var(--editor-accent-hover);
-}
-
-.youtube-iframe-wrapper {
-    margin-bottom: 1rem;
-    border-radius: 4px;
-    overflow: hidden;
-    background: #000;
-}
-
-.youtube-iframe-wrapper iframe {
-    display: block;
-    border-radius: 4px;
-}
-
-.youtube-suggestions {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.suggestion-item {
-    padding: 0.75rem;
-    background: var(--editor-bg-tertiary);
-    border: 1px solid var(--editor-border-color);
-    border-radius: 2px;
-    cursor: pointer;
-    font-size: 13px;
-    color: var(--editor-text-primary);
-    transition: all 0.2s ease;
-}
-
-.suggestion-item:hover {
-    background: var(--editor-bg-secondary);
-    border-color: var(--editor-accent-color);
-    transform: translateX(5px);
-}
-
-/* Responsive YouTube player */
-@media (max-width: 1200px) {
-    .youtube-player-sidebar {
-        display: none;
-    }
-}
-
-/* Sidebar articles */
 .sidebar {
     width: 280px;
     background: var(--editor-bg-secondary);
@@ -879,7 +859,6 @@ a.highlight-blue:hover {
     font-size: 13px;
 }
 
-/* Zone principale */
 .editor-main {
     flex: 1;
     background: var(--editor-bg-secondary);
@@ -915,7 +894,6 @@ a.highlight-blue:hover {
     color: var(--editor-text-muted);
 }
 
-/* Zone d'édition */
 .editor-area {
     min-height: 500px;
     padding: 1.5rem;
@@ -962,32 +940,6 @@ a.highlight-blue:hover {
     text-decoration: underline;
 }
 
-/* Message de statut */
-.status-message {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    padding: 0.75rem 1rem;
-    border-radius: 4px;
-    font-size: 13px;
-    display: none;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    z-index: 2000;
-}
-
-.status-message.success {
-    background: #00a32a;
-    color: #fff;
-    display: block;
-}
-
-.status-message.error {
-    background: #d63638;
-    color: #fff;
-    display: block;
-}
-
-/* Boutons WordPress */
 .wp-button {
     background: transparent;
     border: 1px solid var(--editor-border-color);
@@ -1030,199 +982,65 @@ a.highlight-blue:hover {
     color: #d63638;
 }
 
-.top-bar-actions {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
+.status-message {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    font-size: 13px;
+    display: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 2000;
 }
 
-.feuillet-title,
-.feuillet-subtitle {
-    text-align: center;
-    color: #e0e0e0;
-}
-
-.feuillet-title {
-    margin-bottom: 1.2rem;
-}
-.feuillet-subtitle{
-    margin-bottom: 1.9rem;
-    margin-top:13px;
-    font-size: 26px;
-}
-
-.feuillet-section.contexte {
-    margin-bottom: 3rem; /* espace supplémentaire avant la section suivante */
-}
-
-/* Styles spécifiques pour la page d'accueil */
-.presentation img[src*="presentation/presentation.png"] {
+.status-message.success {
+    background: #00a32a;
+    color: #fff;
     display: block;
-    max-width: 24%;
-    width: 100%;
-    height: auto;
-    margin: 1.2rem auto;
 }
 
-.presentation-flex {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-    margin-bottom: 1.2rem;
-}
-
-.presentation-flex img[src*="presentation/presentation.png"] {
+.status-message.error {
+    background: #d63638;
+    color: #fff;
     display: block;
-    max-width: 220px;
-    width: 35vw;
-    min-width: 120px;
-    height: auto;
-    margin: 0;
-    border-radius: 8px;
+}
+
+/* YouTube Player (non utilisé actuellement, peut être supprimé si pas nécessaire) */
+.youtube-player-sidebar {
+    width: 350px;
+    background: var(--editor-bg-secondary);
+    border-left: 1px solid var(--editor-border-color);
     flex-shrink: 0;
+    overflow-y: auto;
+    position: sticky;
+    top: 50px;
+    height: calc(100vh - 50px);
 }
 
-.presentation-texte {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (max-width: 1200px) {
+    .youtube-player-sidebar {
+        display: none;
+    }
 }
 
-.presentation-texte h3 {
-    text-align: center;
-    font-size: 1.6rem;
-    font-weight: 600;
-    color: #e8e3d5;
-    margin-bottom: 1.2rem;
-    margin-top: 0;
+@media (max-width: 1024px) {
+    .articles-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
 }
 
-/* Styles spécifiques pour le feuillet */
-.feuillet-presentation img[src*="Nocthériga.png"] {
-    display: block;
-    max-width: 60%;
-    width: 100%;
-    height: auto;
-    margin: 1.2rem auto;
-}
-
-.feuillet-flex {
-    display: flex;
-    align-items: flex-start;
-    gap: 2rem;
-    margin: 1.2rem 0;
-}
-
-.feuillet-flex img[src*="Nocthériga.png"] {
-    display: block;
-    max-width: 300px;
-    width: 40vw;
-    min-width: 180px;
-    height: auto;
-    margin: 0;
-    border-radius: 8px;
-    flex-shrink: 0;
-}
-
-.feuillet-texte {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-}
-
-.feuillet-texte p {
-    margin-bottom: 0.7rem;
-}
-
-.feuillet-texte p:last-child {
-    margin-bottom: 0;
-}
-
-.presentation-bg2 {
-    background: #2f2e3a;
-    border-radius: 8px;
-    padding: 2rem;
-    margin-top: 0;
-    line-height: 1.4;
-}
-
-.logo-row {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-}
-
-.logo {
-    text-align: center;
-    width: 100%;
-    margin-bottom: -0.5rem;
-    z-index: 1;
-}
-
-.logo-img {
-    position: absolute;
-    right: -114px;
-    top: 50%;
-    transform: translateY(-50%);
-    height: 7.5rem;
-    width: auto;
-    display: block;
-    z-index: 2;
-}
-
-.main h2 {
-    text-align: center;
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: #7ba3d8;
-    margin-bottom: 2rem;
-    margin-top: 0;
-    letter-spacing: 0.08em;
-}
-
-.intro-site-bg {
-    width: 100vw;
-    position: relative;
-    left: 50%;
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
-    padding: 0.8rem 0;
-    margin-bottom: 0;
-    margin-top: 0;
-    background-color: #e0e0e0;
-}
-
-.intro-site {
-    font-size: 18px;
-    font-family: Georgia, serif;
-    color: #2f2e3a;
-    font-weight: 400;
-    margin-bottom: 0;
-    margin-top: 0;
-    max-width: 900px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: justify;
-    background: none;
-    padding: 0;
-}
-
-.mulder-xfiles {
-    color: #e0e0e0;
-}
-
-.noctheriga-name {
-    color: #7ba3d8;
-    font-style: italic;
-}
-
-body {
-    min-height: 100vh;
-    background: url('./images/background.jpg') repeat; /* ou votre image de fond */
-    /* autres propriétés de fond si besoin */
+@media (max-width: 768px) {
+    .articles-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .article-title {
+        font-size: 1.2rem;
+    }
 }
