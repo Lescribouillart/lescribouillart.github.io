@@ -89,7 +89,7 @@ body.editor-page .main {
 
 .accessibility-btn {
     position: absolute;
-    left: 0;
+    left: -290px;
     top: calc(0.7rem + 15px);
     background: transparent;
     border: none;
