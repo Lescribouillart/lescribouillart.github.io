@@ -1021,19 +1021,51 @@ a.highlight-blue {
 /* ========================================
    RESPONSIVE
    ======================================== */
+
+/* Tablettes paysage et petits desktops */
 @media (max-width: 1200px) {
     .youtube-player-sidebar {
         display: none;
     }
+    
+    .logo-img {
+        right: -80px;
+        height: 6rem;
+    }
+    
+    .container {
+        max-width: 960px;
+    }
 }
 
+/* Tablettes */
 @media (max-width: 1024px) {
     .articles-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 1.5rem;
     }
+    
+    .logo {
+        font-size: 3rem;
+    }
+    
+    .logo-img {
+        right: -60px;
+        height: 5rem;
+    }
+    
+    .container {
+        padding: 0 1.5rem;
+    }
+    
+    .presentation,
+    .feuillet-presentation {
+        max-width: 100%;
+        padding: 1.5rem;
+    }
 }
 
+/* Tablettes portrait et grands mobiles */
 @media (max-width: 768px) {
     .articles-grid {
         grid-template-columns: 1fr;
@@ -1042,5 +1074,292 @@ a.highlight-blue {
     
     .article-title {
         font-size: 1.2rem;
+    }
+    
+    .header .container {
+        padding: 0.5rem 1rem 1rem;
+    }
+    
+    .logo {
+        font-size: 2.5rem;
+    }
+    
+    .logo-img {
+        display: none;
+    }
+    
+    .nav {
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .nav-link {
+        font-size: 0.9rem;
+    }
+    
+    .container {
+        padding: 0 1rem;
+    }
+    
+    .presentation,
+    .feuillet-presentation {
+        padding: 1.5rem;
+        font-size: 16px;
+        max-height: none;
+    }
+    
+    /* Adapter le layout flex pour mobile */
+    .presentation-flex,
+    .feuillet-flex {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .presentation-flex img[src*="presentation/presentation.png"],
+    .feuillet-flex img[src*="Nocthériga.png"] {
+        max-width: 100%;
+        width: 80%;
+        min-width: auto;
+        margin: 1rem auto;
+    }
+    
+    .presentation-texte,
+    .feuillet-texte {
+        width: 100%;
+    }
+    
+    .presentation-texte h3 {
+        font-size: 1.4rem;
+    }
+    
+    .feuillet-subtitle {
+        font-size: 22px;
+    }
+    
+    .intro-site {
+        font-size: 16px;
+        padding: 0 1rem;
+    }
+    
+    .intro-site-bg {
+        padding: 1rem 0;
+    }
+    
+    main {
+        padding-top: 24px;
+    }
+    
+    .presentation-bg2 {
+        padding: 1.5rem;
+    }
+    
+    /* Articles cards responsive */
+    .article-content {
+        padding: 1.25rem;
+    }
+    
+    .article-content-title {
+        font-size: 2rem;
+    }
+    
+    .article-body {
+        font-size: 1rem;
+    }
+    
+    .article-body h2 {
+        font-size: 1.5rem;
+    }
+}
+
+/* Mobiles */
+@media (max-width: 480px) {
+    .logo {
+        font-size: 2rem;
+    }
+    
+    .tagline {
+        font-size: 0.75rem;
+        text-align: center;
+    }
+    
+    .nav {
+        gap: 0.75rem;
+    }
+    
+    .nav-link {
+        font-size: 0.85rem;
+    }
+    
+    .container {
+        padding: 0 0.75rem;
+    }
+    
+    .presentation,
+    .feuillet-presentation {
+        padding: 1rem;
+        font-size: 15px;
+        border-width: 1px;
+    }
+    
+    .presentation-bg2 {
+        padding: 1rem;
+    }
+    
+    .presentation-flex img[src*="presentation/presentation.png"],
+    .feuillet-flex img[src*="Nocthériga.png"] {
+        width: 90%;
+    }
+    
+    .presentation-texte h3 {
+        font-size: 1.2rem;
+    }
+    
+    .feuillet-subtitle {
+        font-size: 20px;
+    }
+    
+    .intro-site {
+        font-size: 15px;
+        padding: 0 0.75rem;
+    }
+    
+    .presentation .key-point {
+        padding-left: 1rem;
+        font-size: 0.95em;
+    }
+    
+    .article-content {
+        padding: 1rem;
+    }
+    
+    .article-category {
+        font-size: 0.7rem;
+        padding: 0.3rem 0.7rem;
+    }
+    
+    .article-title {
+        font-size: 1.1rem;
+    }
+    
+    .article-summary {
+        font-size: 0.9rem;
+    }
+    
+    .article-content-title {
+        font-size: 1.75rem;
+    }
+    
+    .article-body {
+        font-size: 0.95rem;
+    }
+    
+    .article-body h2 {
+        font-size: 1.3rem;
+    }
+    
+    .footer-nav {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .footer-link {
+        font-size: 0.85rem;
+    }
+    
+    /* Éditeur responsive */
+    .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--editor-border-color);
+        max-height: 300px;
+    }
+    
+    .editor-container {
+        flex-direction: column;
+    }
+    
+    .editor-wrapper {
+        padding: 1rem;
+    }
+    
+    .article-subject {
+        font-size: 1.75rem;
+    }
+    
+    .editor-area {
+        font-size: 1rem;
+        padding: 1rem;
+    }
+    
+    .toolbar {
+        flex-wrap: wrap;
+    }
+    
+    .toolbar-btn {
+        min-width: 28px;
+        height: 28px;
+        padding: 0.3rem 0.4rem;
+    }
+}
+
+/* Très petits mobiles */
+@media (max-width: 360px) {
+    .logo {
+        font-size: 1.75rem;
+    }
+    
+    .tagline {
+        font-size: 0.7rem;
+    }
+    
+    .nav-link {
+        font-size: 0.8rem;
+    }
+    
+    .presentation,
+    .feuillet-presentation {
+        padding: 0.75rem;
+        font-size: 14px;
+    }
+    
+    .presentation-bg2 {
+        padding: 0.75rem;
+    }
+    
+    .intro-site {
+        font-size: 14px;
+    }
+    
+    .article-content {
+        padding: 0.75rem;
+    }
+    
+    .article-title {
+        font-size: 1rem;
+    }
+}
+
+/* Landscape mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+    .header .container {
+        padding: 0.25rem 1rem 0.5rem;
+    }
+    
+    .logo {
+        font-size: 2rem;
+        margin-bottom: 0;
+    }
+    
+    .tagline {
+        display: none;
+    }
+    
+    .nav {
+        gap: 0.75rem;
+    }
+    
+    main {
+        padding-top: 16px;
     }
 }
