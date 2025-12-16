@@ -107,10 +107,10 @@ body.editor-page .main {
 
 .logo-img {
     position: absolute;
-    right: -114px;
+    right: -90px;
     top: 50%;
     transform: translateY(-50%);
-    height: 7.5rem;
+    height: 5rem;
     width: auto;
     display: block;
     z-index: 2;
