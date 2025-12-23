@@ -90,12 +90,8 @@ function afficherPageFooter(pageId) {
     }
 
     // Remplacer le contenu du main
-    mainContent.innerHTML = `
-        <button id="btn-retour" class="btn-retour">← Retour</button>
-        ${page.contenu}
-    `;
+    mainContent.innerHTML = page.contenu;
 
-    document.getElementById('btn-retour').addEventListener('click', fermerPageFooter);
     window.scrollTo(0, 0);
 
     if (pageId === 'contact') {
