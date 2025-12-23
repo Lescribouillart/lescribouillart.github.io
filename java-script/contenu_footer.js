@@ -89,9 +89,6 @@ function afficherPageFooter(pageId) {
         document.body.appendChild(pageContainer);
     }
 
-    // Mettre à jour le titre de la page
-    document.title = `${page.titre} - ${document.title.split(' - ')[1] || 'Blog'}`;
-
     // Afficher le contenu
     pageContainer.innerHTML = `
         <button id="btn-retour" class="btn-retour">← Retour</button>
@@ -134,9 +131,6 @@ function fermerPageFooter() {
     if (mainContent) {
         mainContent.style.display = 'block';
     }
-
-    // Restaurer le titre original
-    document.title = document.title.split(' - ')[1] || 'Blog';
 }
 
 // Fonction pour gérer la soumission du formulaire de contact
@@ -173,13 +167,4 @@ if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initialiserLinksFooter);
 } else {
     initialiserLinksFooter();
-}
-
-// Exporter les fonctions si nécessaire
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = {
-        afficherPageFooter,
-        fermerPageFooter,
-        contenuPagesFooter
-    };
 }
