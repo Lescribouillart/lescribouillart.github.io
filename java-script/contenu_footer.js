@@ -81,36 +81,23 @@ function afficherPageFooter(pageId) {
     const page = contenuPagesFooter[pageId];
     if (!page) return;
 
-    // Créer le conteneur de la page s'il n'existe pas
-    let pageContainer = document.getElementById('page-footer-container');
-    if (!pageContainer) {
-        pageContainer = document.createElement('div');
-        pageContainer.id = 'page-footer-container';
-        document.body.appendChild(pageContainer);
+    const mainContent = document.querySelector('main .container');
+    if (!mainContent) return;
+
+    // Sauvegarder le contenu original si ce n'est pas déjà fait
+    if (!mainContent.dataset.originalContent) {
+        mainContent.dataset.originalContent = mainContent.innerHTML;
     }
 
-    // Afficher le contenu
-    pageContainer.innerHTML = `
+    // Remplacer le contenu du main
+    mainContent.innerHTML = `
         <button id="btn-retour" class="btn-retour">← Retour</button>
         ${page.contenu}
     `;
 
-    // Cacher le contenu principal
-    const mainContent = document.querySelector('main') || document.querySelector('.container');
-    if (mainContent) {
-        mainContent.style.display = 'none';
-    }
-
-    // Afficher le conteneur de la page
-    pageContainer.style.display = 'block';
-
-    // Gérer le bouton retour
     document.getElementById('btn-retour').addEventListener('click', fermerPageFooter);
-
-    // Scroll vers le haut
     window.scrollTo(0, 0);
 
-    // Si c'est la page contact, gérer le formulaire
     if (pageId === 'contact') {
         const form = document.getElementById('contact-form');
         if (form) {
@@ -121,16 +108,11 @@ function afficherPageFooter(pageId) {
 
 // Fonction pour fermer la page du footer
 function fermerPageFooter() {
-    const pageContainer = document.getElementById('page-footer-container');
-    if (pageContainer) {
-        pageContainer.style.display = 'none';
+    const mainContent = document.querySelector('main .container');
+    if (mainContent && mainContent.dataset.originalContent) {
+        mainContent.innerHTML = mainContent.dataset.originalContent;
     }
-
-    // Réafficher le contenu principal
-    const mainContent = document.querySelector('main') || document.querySelector('.container');
-    if (mainContent) {
-        mainContent.style.display = 'block';
-    }
+    window.scrollTo(0, 0);
 }
 
 // Fonction pour gérer la soumission du formulaire de contact

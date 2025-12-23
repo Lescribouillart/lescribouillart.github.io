@@ -490,6 +490,105 @@ a.highlight-blue {
     color: var(--secondary-color);
 }
 
+/* Styles pour les pages du footer */
+.btn-retour {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-bottom: 2rem;
+    transition: background-color 0.3s;
+    display: inline-block;
+}
+
+.btn-retour:hover {
+    background-color: #555;
+}
+
+.page-footer-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.page-footer-content h1 {
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+.page-footer-content h2 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: #555;
+}
+
+.page-footer-content p {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+#contact-form button[type="submit"] {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 0.75rem 2rem;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+#contact-form button[type="submit"]:hover {
+    background-color: #555;
+}
+
+.social-links {
+    margin-top: 1.5rem;
+}
+
+.social-links a {
+    display: inline-block;
+    margin-right: 1rem;
+    color: #333;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border: 1px solid #333;
+    border-radius: 4px;
+    transition: all 0.3s;
+}
+
+.social-links a:hover {
+    background-color: #333;
+    color: white;
+}
+
 /* ========================================
    ARTICLES GRID & CARDS
    ======================================== */
