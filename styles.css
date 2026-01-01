@@ -479,7 +479,7 @@ a.highlight-blue {
 }
 
 .footer-link {
-    color: var(--text-light);
+    color: #e0e0e0;
     text-decoration: none;
     transition: color 0.3s ease;
     font-size: 0.9rem;
