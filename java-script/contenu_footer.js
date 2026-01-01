@@ -57,20 +57,32 @@ const contenuPagesFooter = {
         contenu: `
             <div class="page-footer-content">
                 <h1>Mentions Légales</h1>
+                
                 <h2>Éditeur du site</h2>
-                <p>[Nom ou raison sociale]<br>
-                [Adresse]<br>
-                Email : [email]</p>
+                <p><strong>Nom ou pseudonyme :</strong> Drelall</p>
+                <p><strong>Email :</strong> lescribouillart@protonmail.com</p>
+                <p>Site non professionnel réalisé à titre personnel.</p>
+                <p><strong>Adresse du site :</strong> <a href="https://drelall.github.io/" target="_blank" rel="noopener noreferrer">https://drelall.github.io/</a></p>
                 
                 <h2>Hébergeur</h2>
-                <p>[Nom de l'hébergeur]<br>
-                [Adresse de l'hébergeur]</p>
+                <p><strong>Nom :</strong> GitHub Pages</p>
+                <p><strong>Compte GitHub :</strong> <a href="https://github.com/Drelall" target="_blank" rel="noopener noreferrer">https://github.com/Drelall</a></p>
+                <p><strong>Adresse du dépôt :</strong> <a href="https://github.com/Drelall/drelall.github.io" target="_blank" rel="noopener noreferrer">https://github.com/Drelall/drelall.github.io</a></p>
+                <p><strong>Hébergeur :</strong> GitHub, Inc.<br>
+                88 Colin P. Kelly Jr Street, San Francisco, CA 94107, USA<br>
+                <strong>Site :</strong> <a href="https://github.com" target="_blank" rel="noopener noreferrer">https://github.com</a></p>
                 
                 <h2>Propriété intellectuelle</h2>
-                <p>Tous les contenus présents sur ce site sont protégés par le droit d'auteur.</p>
+                <p>L'ensemble du contenu présent sur ce site (textes, images, illustrations, code, design) est protégé par le droit d'auteur. Toute reproduction, modification ou diffusion sans autorisation est interdite.</p>
                 
-                <h2>Protection des données personnelles</h2>
-                <p>Conformément au RGPD, vous disposez d'un droit d'accès, de rectification et de suppression de vos données personnelles.</p>
+                <h2>Données personnelles</h2>
+                <p>Ce site ne collecte aucune donnée personnelle et ne dépose aucun cookie.</p>
+                <p>Conformément au RGPD, vous disposez d'un droit d'accès, de rectification et de suppression de vos données personnelles. Pour toute demande, vous pouvez contacter l'éditeur à l'adresse mentionnée ci-dessus.</p>
+                
+                <h2>Cookies</h2>
+                <p>Ce site n'utilise aucun cookie et ne trace aucune activité des visiteurs.</p>
+                
+                <p style="margin-top: 2em;"><em>Dernière mise à jour : 1er janvier 2026</em></p>
             </div>
         `
     }
