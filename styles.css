@@ -490,6 +490,13 @@ a.highlight-blue {
     color: var(--secondary-color);
 }
 
+.footer-copyright {
+    text-align: center;
+    margin-top: 1rem;
+    color: var(--text-light);
+    font-size: 0.85rem;
+}
+
 /* Styles pour les pages du footer */
 .btn-retour {
     background-color: #333;
