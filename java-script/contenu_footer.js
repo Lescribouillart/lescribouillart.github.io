@@ -3,51 +3,57 @@ const contenuPagesFooter = {
     'a-propos': {
         titre: 'À Propos',
         contenu: `
-            <div class="page-footer-content">
-                <h1>À Propos</h1>
-                <p>Bienvenue sur notre blog dédié à [votre thématique].</p>
-                <p>Notre mission est de partager des connaissances, des expériences et des idées pour [objectif du blog].</p>
-                <p>Lancé en [année], ce blog est devenu une référence pour [votre domaine].</p>
+            <div class="presentation">
+                <div class="presentation-bg2">
+                    <h1>À Propos</h1>
+                    <p>Bienvenue sur notre blog dédié à [votre thématique].</p>
+                    <p>Notre mission est de partager des connaissances, des expériences et des idées pour [objectif du blog].</p>
+                    <p>Lancé en [année], ce blog est devenu une référence pour [votre domaine].</p>
+                </div>
             </div>
         `
     },
     'contact': {
         titre: 'Contact',
         contenu: `
-            <div class="page-footer-content">
-                <h1>Contact</h1>
-                <p>N'hésitez pas à nous contacter pour toute question ou suggestion.</p>
-                <form id="contact-form">
-                    <div class="form-group">
-                        <label for="nom">Nom :</label>
-                        <input type="text" id="nom" name="nom" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email :</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Message :</label>
-                        <textarea id="message" name="message" rows="5" required></textarea>
-                    </div>
-                    <button type="submit">Envoyer</button>
-                </form>
+            <div class="presentation">
+                <div class="presentation-bg2">
+                    <h1>Contact</h1>
+                    <p>N'hésitez pas à nous contacter pour toute question ou suggestion.</p>
+                    <form id="contact-form">
+                        <div class="form-group">
+                            <label for="nom">Nom :</label>
+                            <input type="text" id="nom" name="nom" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email :</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message :</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit">Envoyer</button>
+                    </form>
+                </div>
             </div>
         `
     },
     'auteur': {
         titre: 'Auteur',
         contenu: `
-            <div class="page-footer-content">
-                <h1>L'Auteur</h1>
-                <p><strong>Nom de l'auteur</strong></p>
-                <p>Passionné par [domaine], j'écris sur ce blog depuis [année].</p>
-                <p>Mon parcours : [description brève du parcours]</p>
-                <p>Mes centres d'intérêt : [liste des centres d'intérêt]</p>
-                <div class="social-links">
-                    <a href="#" target="_blank">Twitter</a>
-                    <a href="#" target="_blank">LinkedIn</a>
-                    <a href="#" target="_blank">GitHub</a>
+            <div class="presentation">
+                <div class="presentation-bg2">
+                    <h1>L'Auteur</h1>
+                    <p><strong>Nom de l'auteur</strong></p>
+                    <p>Passionné par [domaine], j'écris sur ce blog depuis [année].</p>
+                    <p>Mon parcours : [description brève du parcours]</p>
+                    <p>Mes centres d'intérêt : [liste des centres d'intérêt]</p>
+                    <div class="social-links">
+                        <a href="#" target="_blank">Twitter</a>
+                        <a href="#" target="_blank">LinkedIn</a>
+                        <a href="#" target="_blank">GitHub</a>
+                    </div>
                 </div>
             </div>
         `
