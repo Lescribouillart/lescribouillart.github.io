@@ -383,6 +383,10 @@ main {
     margin-bottom: 10px;
 }
 
+h2.titrelegal2 {
+    text-align: left !important;
+}
+
 /* ========================================
    FEUILLET (PAGE FEUILLET)
    ======================================== */
