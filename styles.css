@@ -204,11 +204,12 @@ body.editor-page .main {
 
 main {
     background-image: url('./images/fondmain/murdebriquebleu.png');
-    background-repeat: repeat-y;
+    background-repeat: repeat;
     background-position: center top;
-    background-size: cover;
-    min-height: 100vh;
+    background-size: auto;
+    min-height: calc(100vh - 200px);
     padding-top: 48px;
+    padding-bottom: 48px;
 }
 
 .main h2 {
