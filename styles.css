@@ -387,6 +387,16 @@ h2.titrelegal2 {
     text-align: left !important;
 }
 
+.presentation-bg2 a {
+    color: #6BCF7F;
+    text-decoration: underline;
+}
+
+.presentation-bg2 a:hover {
+    color: #7FDC94;
+    text-decoration: none;
+}
+
 /* ========================================
    FEUILLET (PAGE FEUILLET)
    ======================================== */
