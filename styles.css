@@ -188,8 +188,7 @@ body.editor-page .main {
     transition: width 0.3s ease;
 }
 
-.nav-link:hover::after,
-.nav-link.active::after {
+.nav-link:hover::after {
     width: 100%;
 }
 
@@ -784,17 +783,19 @@ a.highlight-blue {
     margin-top: 3rem;
     padding-top: 2rem;
     border-top: 1px solid var(--border-color);
+    text-align: center;
 }
 
 .back-link {
     color: var(--secondary-color);
-    text-decoration: none;
+    text-decoration: none !important;
     font-weight: 600;
     transition: color 0.3s ease;
 }
 
 .back-link:hover {
     color: var(--primary-color);
+    text-decoration: none !important;
 }
 
 /* ========================================
