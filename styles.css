@@ -251,7 +251,7 @@ main {
    PRESENTATION (PAGE D'ACCUEIL)
    ======================================== */
 .presentation {
-    max-width: 900px;
+    max-width: 966px;
     margin: 0 auto 60px;
     padding: 2rem;
     line-height: 1.6;
@@ -262,7 +262,7 @@ main {
     border-radius: 8px;
     background-color: var(--bg-light);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    max-height: 1384px;
+    max-height: 1433px;
     overflow-y: auto;
     color: #e0e0e0;
 }
@@ -385,6 +385,13 @@ main {
 
 h2.titrelegal2 {
     text-align: left !important;
+}
+
+.section-content {
+    background-color: rgba(232, 227, 213, 0.1);
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
 }
 
 .presentation-bg2 a {
