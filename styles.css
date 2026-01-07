@@ -815,9 +815,17 @@ a.highlight-blue {
     text-decoration: none !important;
 }
 
+.back-link-mentions {
+    color: var(--text-color) !important;
+}
+
+.back-link-mentions:hover {
+    color: var(--primary-color) !important;
+}
+
 /* ========================================
    ÉDITEUR (TIRAGES.HTML)
-   ======================================== */
+   ========================================*/
 .top-bar {
     background: var(--editor-bg-secondary);
     border-bottom: 1px solid var(--editor-border-color);
