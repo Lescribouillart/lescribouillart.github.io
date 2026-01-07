@@ -394,6 +394,10 @@ h2.titrelegal2 {
     margin-bottom: 1.5rem;
 }
 
+.section-content strong {
+    color: #ecd68e;
+}
+
 .last-update {
     font-size: 0.85rem;
     color: var(--text-light);
