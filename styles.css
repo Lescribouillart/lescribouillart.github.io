@@ -394,6 +394,12 @@ h2.titrelegal2 {
     margin-bottom: 1.5rem;
 }
 
+.last-update {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-top: 2rem;
+}
+
 .presentation-bg2 a {
    text-decoration: underline;
 }
