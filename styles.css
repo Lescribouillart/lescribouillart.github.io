@@ -398,6 +398,8 @@ h2.titrelegal2 {
     font-size: 0.85rem;
     color: var(--text-light);
     margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
 }
 
 .presentation-bg2 a {
@@ -794,8 +796,6 @@ a.highlight-blue {
 
 .article-footer {
     margin-top: 3rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--border-color);
     text-align: center;
 }
 
