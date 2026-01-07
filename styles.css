@@ -397,6 +397,20 @@ h2.titrelegal2 {
     text-decoration: none;
 }
 
+/* Styles spécifiques pour les liens de la page mentions légales */
+.mentions-legales-content a {
+    color: #7ba3d8;
+    font-weight: 500;
+}
+
+.mentions-legales-content a:hover {
+    color: #7FDC94;
+}
+
+.mentions-legales-content a:visited {
+    color: #9ab8d8;
+}
+
 /* ========================================
    FEUILLET (PAGE FEUILLET)
    ======================================== */
