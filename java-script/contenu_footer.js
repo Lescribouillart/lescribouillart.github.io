@@ -38,25 +38,6 @@ const contenuPagesFooter = {
                 </div>
             </div>
         `
-    },
-    'auteur': {
-        titre: 'Auteur',
-        contenu: `
-            <div class="presentation">
-                <div class="presentation-bg2">
-                    <h1>L'Auteur</h1>
-                    <p><strong>Nom de l'auteur</strong></p>
-                    <p>Passionné par [domaine], j'écris sur ce blog depuis [année].</p>
-                    <p>Mon parcours : [description brève du parcours]</p>
-                    <p>Mes centres d'intérêt : [liste des centres d'intérêt]</p>
-                    <div class="social-links">
-                        <a href="#" target="_blank">Twitter</a>
-                        <a href="#" target="_blank">LinkedIn</a>
-                        <a href="#" target="_blank">GitHub</a>
-                    </div>
-                </div>
-            </div>
-        `
     }
 };
 
