@@ -21,9 +21,16 @@ const contenuPagesFooter = {
                     <h1>Contact</h1>
                     <p>N'hésitez pas à nous contacter pour toute question ou suggestion.</p>
                     <form id="contact-form">
+                        <!-- Configuration optionnelle -->
+                        <input type="hidden" name="subject" value="Nouveau message depuis Le Scribouill'art">
+                        <input type="hidden" name="from_name" value="Le Scribouill'art">
+                        
+                        <!-- Protection anti-spam (honeypot) -->
+                        <input type="checkbox" name="botcheck" style="display: none;">
+                        
                         <div class="form-group">
                             <label for="nom">Nom :</label>
-                            <input type="text" id="nom" name="nom" required>
+                            <input type="text" id="nom" name="name" required>
                         </div>
                         <div class="form-group">
                             <label for="email">Email :</label>
@@ -35,6 +42,10 @@ const contenuPagesFooter = {
                         </div>
                         <button type="submit">Envoyer</button>
                     </form>
+                    
+                    <div class="article-footer">
+                        <a href="index.html" class="back-link">← Retour à l'accueil</a>
+                    </div>
                 </div>
             </div>
         `
@@ -78,7 +89,7 @@ async function afficherPageFooter(pageId) {
     if (pageId === 'contact') {
         const form = document.getElementById('contact-form');
         if (form) {
-            form.addEventListener('submit', gererSoumissionContact);
+            form.addEventListener('submit', gererSoumissionContactWeb3Forms);
         }
     }
 }
@@ -92,7 +103,81 @@ function fermerPageFooter() {
     window.scrollTo(0, 0);
 }
 
-// Fonction pour gérer la soumission du formulaire de contact
+// Fonction pour gérer la soumission du formulaire de contact avec Web3Forms
+async function gererSoumissionContactWeb3Forms(e) {
+    e.preventDefault();
+    console.log("📤 Formulaire contact soumis depuis index.html");
+    
+    const form = e.target;
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalText = submitBtn.textContent;
+    
+    const formData = new FormData(form);
+    // Ajout de la clé d'accès via JavaScript
+    formData.append("access_key", "85ca8a20-ae8d-4ee7-abc1-d47fa9ded6ef");
+    
+    console.log("📦 Données du formulaire :");
+    for (let [key, value] of formData.entries()) {
+        console.log(`  ${key}: ${value}`);
+    }
+    
+    submitBtn.textContent = "Envoi en cours...";
+    submitBtn.disabled = true;
+    
+    try {
+        console.log("🌐 Envoi vers Web3Forms...");
+        
+        const response = await fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            body: formData
+        });
+        
+        const data = await response.json();
+        console.log("📨 Réponse reçue :", data);
+        
+        if (response.ok) {
+            console.log("✅ Succès !");
+            showMessageInForm(form, submitBtn, "✅ Votre message a été envoyé avec succès !", "success");
+            form.reset();
+        } else {
+            console.error("❌ Erreur de Web3Forms :", data);
+            showMessageInForm(form, submitBtn, "❌ Erreur : " + (data.message || "Veuillez réessayer."), "error");
+        }
+        
+    } catch (error) {
+        console.error("❌ Erreur lors de l'envoi :", error);
+        showMessageInForm(form, submitBtn, "❌ Erreur de connexion. Veuillez vérifier votre connexion internet.", "error");
+    } finally {
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+    }
+}
+
+// Fonction pour afficher les messages dans le formulaire
+function showMessageInForm(form, submitBtn, text, type) {
+    console.log(`💬 Affichage message : ${text}`);
+    
+    // Supprimer les anciens messages
+    const oldMessage = form.querySelector('.form-message');
+    if (oldMessage) {
+        oldMessage.remove();
+    }
+    
+    // Créer le nouveau message
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `form-message ${type}`;
+    messageDiv.textContent = text;
+    
+    // Insérer le message après le bouton
+    submitBtn.parentNode.insertBefore(messageDiv, submitBtn.nextSibling);
+    
+    // Supprimer le message après 5 secondes
+    setTimeout(() => {
+        messageDiv.remove();
+    }, 5000);
+}
+
+// Fonction pour gérer la soumission du formulaire de contact (ancienne version - conservée pour compatibilité)
 function gererSoumissionContact(e) {
     e.preventDefault();
     
