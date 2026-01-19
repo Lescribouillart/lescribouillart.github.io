@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const formData = new FormData(form);
         // Ajout de la clé d'accès via JavaScript (méthode Web3Forms)
-        formData.append("access_key", "e3dd0f5e-91eb-481f-8ead-f5fe129beaae");
+        formData.append("access_key", "e3d0f5e-91eb-481f-8ead-f5fe129beaae");
 
         const originalText = submitBtn.textContent;
 
@@ -25,15 +25,15 @@ document.addEventListener('DOMContentLoaded', function() {
             const data = await response.json();
 
             if (response.ok) {
-                showMessage("✅ Votre message a été envoyé avec succès !", "success");
+                showMessage(" Votre message a été envoyé avec succès !", "success");
                 form.reset();
             } else {
-                showMessage("❌ Erreur : " + (data.message || "Veuillez réessayer."), "error");
+                showMessage(" Erreur : " + (data.message || "Veuillez réessayer."), "error");
                 console.error("Erreur Web3Forms:", data);
             }
 
         } catch (error) {
-            showMessage("❌ Erreur de connexion. Veuillez vérifier votre connexion internet.", "error");
+            showMessage(" Erreur de connexion. Veuillez vérifier votre connexion internet.", "error");
             console.error("Erreur:", error);
         } finally {
             submitBtn.textContent = originalText;
