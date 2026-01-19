@@ -1,45 +1,43 @@
 // Configuration du formulaire de contact avec Web3Forms
+// Basé sur l'exemple officiel de Web3Forms
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('contact-form');
-    const submitButton = form.querySelector('button[type="submit"]');
-    const originalButtonText = submitButton.textContent;
+    const submitBtn = form.querySelector('button[type="submit"]');
 
-    form.addEventListener('submit', async function(e) {
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        // Désactiver le bouton pendant l'envoi
-        submitButton.disabled = true;
-        submitButton.textContent = 'Envoi en cours...';
-
-        // Récupérer les données du formulaire
         const formData = new FormData(form);
+        // Ajout de la clé d'accès via JavaScript (méthode Web3Forms)
+        formData.append("access_key", "e3dd0f5e-91eb-481f-8ead-f5fe129beaae");
+
+        const originalText = submitBtn.textContent;
+
+        submitBtn.textContent = "Envoi en cours...";
+        submitBtn.disabled = true;
 
         try {
-            // Envoi à Web3Forms
-            const response = await fetch('https://api.web3forms.com/submit', {
-                method: 'POST',
+            const response = await fetch("https://api.web3forms.com/submit", {
+                method: "POST",
                 body: formData
             });
 
             const data = await response.json();
 
-            if (data.success) {
-                // Message de succès
-                showMessage('✅ Votre message a été envoyé avec succès !', 'success');
+            if (response.ok) {
+                showMessage("✅ Votre message a été envoyé avec succès !", "success");
                 form.reset();
             } else {
-                // Message d'erreur
-                showMessage('❌ Une erreur est survenue. Veuillez réessayer.', 'error');
-                console.error('Erreur:', data);
+                showMessage("❌ Erreur : " + (data.message || "Veuillez réessayer."), "error");
+                console.error("Erreur Web3Forms:", data);
             }
+
         } catch (error) {
-            // Erreur de connexion
-            showMessage('❌ Erreur de connexion. Veuillez vérifier votre connexion internet.', 'error');
-            console.error('Erreur:', error);
+            showMessage("❌ Erreur de connexion. Veuillez vérifier votre connexion internet.", "error");
+            console.error("Erreur:", error);
         } finally {
-            // Réactiver le bouton
-            submitButton.disabled = false;
-            submitButton.textContent = originalButtonText;
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
         }
     });
 
@@ -57,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
         messageDiv.textContent = text;
         
         // Insérer le message après le bouton
-        submitButton.parentNode.insertBefore(messageDiv, submitButton.nextSibling);
+        submitBtn.parentNode.insertBefore(messageDiv, submitBtn.nextSibling);
 
         // Supprimer le message après 5 secondes
         setTimeout(() => {
