@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const formData = new FormData(form);
         // Ajout de la clé d'accès via JavaScript (méthode Web3Forms)
-        formData.append("access_key", "e3d0f5e-91eb-481f-8ead-f5fe129beaae");
+        formData.append("access_key", "85ca8a20-ae8d-4ee7-abc1-d47fa9ded6ef");
 
         const originalText = submitBtn.textContent;
 
