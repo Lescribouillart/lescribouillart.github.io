@@ -17,34 +17,36 @@ const contenuPagesFooter = {
         titre: 'Contact',
         contenu: `
             <div class="presentation">
-                <div class="presentation-bg2">
+                <div class="presentation-bg2 mentions-legales-content">
                     <h1>Contact</h1>
-                    <p>N'hésitez pas à nous contacter pour toute question ou suggestion.</p>
-                    <form id="contact-form">
-                        <!-- Configuration optionnelle -->
-                        <input type="hidden" name="subject" value="Nouveau message depuis Le Scribouill'art">
-                        <input type="hidden" name="from_name" value="Le Scribouill'art">
-                        
-                        <!-- Protection anti-spam (honeypot) -->
-                        <input type="checkbox" name="botcheck" style="display: none;">
-                        
-                        <div class="form-group">
-                            <label for="nom">Nom :</label>
-                            <input type="text" id="nom" name="name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email :</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Message :</label>
-                            <textarea id="message" name="message" rows="5" required></textarea>
-                        </div>
-                        <button type="submit">Envoyer</button>
-                    </form>
+                    
+                    <div class="section-content">
+                        <form id="contact-form">
+                            <!-- Configuration optionnelle -->
+                            <input type="hidden" name="subject" value="Nouveau message depuis Le Scribouill'art">
+                            <input type="hidden" name="from_name" value="Le Scribouill'art">
+                            
+                            <!-- Protection anti-spam (honeypot) -->
+                            <input type="checkbox" name="botcheck" style="display: none;">
+                            
+                            <div class="form-group">
+                                <label for="nom">Nom :</label>
+                                <input type="text" id="nom" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email :</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Message :</label>
+                                <textarea id="message" name="message" rows="5" required></textarea>
+                            </div>
+                            <button type="submit">Envoyer</button>
+                        </form>
+                    </div>
                     
                     <div class="article-footer">
-                        <a href="index.html" class="back-link">← Retour à l'accueil</a>
+                        <a href="index.html" class="back-link back-link-mentions">Accueil</a>
                     </div>
                 </div>
             </div>
