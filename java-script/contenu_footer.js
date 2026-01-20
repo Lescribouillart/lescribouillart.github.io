@@ -84,6 +84,16 @@ async function afficherPageFooter(pageId) {
     // Remplacer le contenu du main
     mainContent.innerHTML = contenu;
 
+    // Cacher le div intro-site-bg pour la page de contact
+    const introSiteBg = document.querySelector('.intro-site-bg');
+    if (introSiteBg) {
+        if (pageId === 'contact') {
+            introSiteBg.style.display = 'none';
+        } else {
+            introSiteBg.style.display = '';
+        }
+    }
+
     window.scrollTo(0, 0);
 
     if (pageId === 'contact') {
@@ -100,6 +110,13 @@ function fermerPageFooter() {
     if (mainContent && mainContent.dataset.originalContent) {
         mainContent.innerHTML = mainContent.dataset.originalContent;
     }
+    
+    // Réafficher le div intro-site-bg
+    const introSiteBg = document.querySelector('.intro-site-bg');
+    if (introSiteBg) {
+        introSiteBg.style.display = '';
+    }
+    
     window.scrollTo(0, 0);
 }
 
