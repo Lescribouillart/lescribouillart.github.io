@@ -443,7 +443,7 @@ h2.titrelegal2 {
 /* Icône d'information et infobulle */
 .info-icon {
     display: inline-block;
-    margin-left: 0.5rem;
+    margin-left: 0.25rem;
     width: 16px;
     height: 16px;
     cursor: help;
