@@ -429,6 +429,17 @@ h2.titrelegal2 {
     color: #9ab8d8;
 }
 
+/* Styles spécifiques pour le formulaire de contact */
+.mentions-legales-content h1 {
+    font-size: 1.8rem;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.form-group label {
+    font-size: 1rem;
+}
+
 /* ========================================
    FEUILLET (PAGE FEUILLET)
    ======================================== */
