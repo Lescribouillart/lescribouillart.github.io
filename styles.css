@@ -440,6 +440,51 @@ h2.titrelegal2 {
     font-size: 1rem;
 }
 
+/* Icône d'information et infobulle */
+.info-icon {
+    display: inline-block;
+    margin-left: 0.5rem;
+    color: #7ba3d8;
+    cursor: help;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.info-icon:hover {
+    color: #5a8ec8;
+}
+
+.tooltip-bubble {
+    position: fixed;
+    background: #2f2e3a;
+    color: #e0e0e0;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    max-width: 250px;
+    z-index: 10000;
+    transform: translateX(-50%) translateY(0);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    border: 1px solid #4a4956;
+}
+
+.tooltip-bubble.show {
+    opacity: 1;
+}
+
+.tooltip-bubble::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: #2f2e3a;
+}
+
 /* ========================================
    FEUILLET (PAGE FEUILLET)
    ======================================== */
