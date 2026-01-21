@@ -444,14 +444,16 @@ h2.titrelegal2 {
 .info-icon {
     display: inline-block;
     margin-left: 0.5rem;
-    color: #7ba3d8;
+    width: 16px;
+    height: 16px;
     cursor: help;
-    font-size: 1rem;
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
+    vertical-align: middle;
 }
 
 .info-icon:hover {
-    color: #5a8ec8;
+    transform: scale(1.15);
+    filter: brightness(1.1);
 }
 
 .tooltip-bubble {
