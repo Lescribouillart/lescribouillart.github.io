@@ -44,6 +44,9 @@ document.addEventListener('DOMContentLoaded', function() {
             // Exécuter la commande
             document.execCommand(command, false, null);
             
+            // Mettre à jour l'état visuel du bouton
+            updateButtonState(this, command);
+            
             // Remettre le focus sur l'éditeur
             editor.focus();
             
@@ -51,6 +54,37 @@ document.addEventListener('DOMContentLoaded', function() {
             hiddenTextarea.value = editor.innerHTML;
         });
     });
+
+    // Fonction pour mettre à jour l'état visuel des boutons
+    function updateButtonState(button, command) {
+        // Vérifier si la commande est active à la position actuelle
+        const isActive = document.queryCommandState(command);
+        
+        if (isActive) {
+            button.classList.add('active');
+        } else {
+            button.classList.remove('active');
+        }
+    }
+
+    // Mettre à jour les boutons quand la sélection change
+    editor.addEventListener('mouseup', updateAllButtons);
+    editor.addEventListener('keyup', updateAllButtons);
+    editor.addEventListener('focus', updateAllButtons);
+
+    function updateAllButtons() {
+        editorButtons.forEach(button => {
+            const command = button.getAttribute('data-command');
+            if (command) {
+                const isActive = document.queryCommandState(command);
+                if (isActive) {
+                    button.classList.add('active');
+                } else {
+                    button.classList.remove('active');
+                }
+            }
+        });
+    }
 
     // Avant la soumission du formulaire, s'assurer que le contenu est synchronisé
     if (form) {

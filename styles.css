@@ -672,8 +672,8 @@ a.highlight-blue {
 }
 
 .editor-btn {
-    background: #2c2c2c;
-    border: 1px solid #2c2c2c;
+    background: #e0e0d8;
+    border: 1px solid #bbb;
     padding: 0.4rem 0.6rem;
     cursor: pointer;
     border-radius: 3px;
@@ -684,24 +684,37 @@ a.highlight-blue {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
+    color: #333;
 }
 
 .editor-btn strong,
 .editor-btn em,
 .editor-btn u,
 .editor-btn s {
-    color: white;
+    color: #333;
 }
 
 .editor-btn:hover {
-    background: #3c3c3c;
-    border-color: #3c3c3c;
+    background: #d0d0c8;
+    border-color: #999;
 }
 
 .editor-btn:active {
-    background: #1c1c1c;
+    background: #c0c0b8;
     transform: scale(0.95);
+}
+
+.editor-btn.active {
+    background: #343944;
+    border-color: #343944;
+    color: white;
+}
+
+.editor-btn.active strong,
+.editor-btn.active em,
+.editor-btn.active u,
+.editor-btn.active s {
+    color: white;
 }
 
 .editor-separator {
