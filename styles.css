@@ -247,6 +247,10 @@ main {
     text-align: justify;
 }
 
+.intro-site.centered {
+    text-align: center;
+}
+
 /* ========================================
    PRESENTATION (PAGE D'ACCUEIL)
    ======================================== */
@@ -803,6 +807,10 @@ a.highlight-blue {
 
 /* Page de confirmation */
 .confirmation-content {
+    text-align: center;
+}
+
+.confirmation-content .intro-site {
     text-align: center;
 }
 
