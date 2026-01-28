@@ -801,6 +801,68 @@ a.highlight-blue {
     resize: vertical;
 }
 
+/* Page de confirmation */
+.confirmation-content {
+    text-align: center;
+}
+
+.confirmation-content h1 {
+    color: #4a7c59;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.confirmation-message {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.confirmation-info {
+    background: #f5f5f5;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin: 2rem 0;
+    text-align: left;
+}
+
+.confirmation-info strong {
+    display: block;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.confirmation-info ul {
+    list-style: none;
+    padding: 0;
+}
+
+.confirmation-info li {
+    padding: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.confirmation-info li:before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #4a7c59;
+    font-weight: bold;
+}
+
+.confirmation-note {
+    color: #666;
+    font-size: 0.95rem;
+    margin-top: 2rem;
+}
+
+.article-footer .back-link + .back-link {
+    margin-left: 1rem;
+}
+
 #contact-form button[type="submit"] {
     background-color: #333;
     color: white;

@@ -25,8 +25,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const data = await response.json();
 
             if (response.ok) {
-                showMessage(" Votre message a été envoyé avec succès !", "success");
-                form.reset();
+                // Redirection vers la page de confirmation
+                window.location.href = "confirmation.html";
             } else {
                 showMessage(" Erreur : " + (data.message || "Veuillez réessayer."), "error");
                 console.error("Erreur Web3Forms:", data);
