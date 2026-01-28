@@ -695,7 +695,7 @@ a.highlight-blue {
 }
 
 .editor-btn:hover {
-    background: #d0d0c8;
+    background: #e0e0e0;
     border-color: #999;
 }
 
@@ -732,7 +732,7 @@ a.highlight-blue {
     padding: 0.75rem;
     border: 1px solid #ddd;
     border-radius: 0 0 4px 4px;
-    background: #e0e0d8;
+    background: #f5f5f5;
     color: #333;
     font-size: 1rem;
     line-height: 1.6;
@@ -787,7 +787,14 @@ a.highlight-blue {
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 1rem;
-    background: #e0e0d8;
+}
+
+.form-group input {
+    background: #f5f5f5;
+}
+
+.form-group textarea {
+    background: #f5f5f5;
 }
 
 .form-group textarea {
