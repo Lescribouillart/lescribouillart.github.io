@@ -672,8 +672,8 @@ a.highlight-blue {
 }
 
 .editor-btn {
-    background: white;
-    border: 1px solid #ddd;
+    background: #2c2c2c;
+    border: 1px solid #2c2c2c;
     padding: 0.4rem 0.6rem;
     cursor: pointer;
     border-radius: 3px;
@@ -684,15 +684,23 @@ a.highlight-blue {
     display: flex;
     align-items: center;
     justify-content: center;
+    color: white;
+}
+
+.editor-btn strong,
+.editor-btn em,
+.editor-btn u,
+.editor-btn s {
+    color: white;
 }
 
 .editor-btn:hover {
-    background: #e9e9e9;
-    border-color: #999;
+    background: #3c3c3c;
+    border-color: #3c3c3c;
 }
 
 .editor-btn:active {
-    background: #d9d9d9;
+    background: #1c1c1c;
     transform: scale(0.95);
 }
 
