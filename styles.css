@@ -719,7 +719,7 @@ a.highlight-blue {
     padding: 0.75rem;
     border: 1px solid #ddd;
     border-radius: 0 0 4px 4px;
-    background: white;
+    background: #e0e0d8;
     color: #333;
     font-size: 1rem;
     line-height: 1.6;
@@ -774,6 +774,7 @@ a.highlight-blue {
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 1rem;
+    background: #e0e0d8;
 }
 
 .form-group textarea {
