@@ -607,7 +607,7 @@ a.highlight-blue {
 .footer-copyright {
     text-align: center;
     margin-top: 1rem;
-    color: var(--text-light);
+    color: #ccc;
     font-size: 0.85rem;
 }
 
@@ -863,7 +863,7 @@ a.highlight-blue {
 }
 
 .confirmation-note {
-    color: #333;
+    color: #e0e0e0;
     font-size: 0.95rem;
     margin-top: 2rem;
 }
