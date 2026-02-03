@@ -855,7 +855,6 @@ a.highlight-blue {
 }
 
 .confirmation-info li:before {
-    content: "✓";
     position: absolute;
     left: 0;
     color: #4a7c59;
