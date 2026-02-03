@@ -867,6 +867,10 @@ a.highlight-blue {
     margin-top: 2rem;
 }
 
+.question-highlight {
+    color: #7ba3d8;
+}
+
 .article-footer .back-link + .back-link {
     margin-left: 1rem;
 }
