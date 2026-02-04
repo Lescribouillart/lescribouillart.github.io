@@ -169,8 +169,8 @@ body.editor-page .main {
    ======================================== */
 .search-container {
     position: absolute;
-    right: 0;
-    top: calc(1.9rem + -1px);
+    right: -280px;
+    top: calc(1.9rem + 5px);
     display: flex;
     gap: 0.5rem;
     align-items: center;
