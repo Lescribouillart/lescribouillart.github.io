@@ -1105,6 +1105,11 @@ a.highlight-blue {
     text-align: center;
 }
 
+.article-footer .nav-link {
+    text-decoration: none;
+    color: #e0e0e0 !important;
+}
+
 .back-link {
     color: var(--secondary-color);
     text-decoration: none !important;
