@@ -8,13 +8,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Liste des pages du site
     const sitePages = [
-        { title: 'Accueil', url: '../index.html', keywords: ['accueil', 'home', 'bienvenue', 'index'] },
-        { title: 'Contact', url: 'contact.html', keywords: ['contact', 'contacter', 'message', 'email', 'écrire'] },
-        { title: 'À propos', url: 'a-propos.html', keywords: ['à propos', 'a propos', 'about', 'rédacteur', 'redacteur', 'devenir'] },
-        { title: 'Auteur', url: 'auteur.html', keywords: ['auteur', 'drelall', 'créateur', 'createur', 'rédacteur', 'redacteur'] },
-        { title: 'Mentions légales', url: 'mentions-legales.html', keywords: ['mentions légales', 'mentions legales', 'legal', 'rgpd', 'données', 'donnees'] },
-        { title: 'Publications', url: 'listage-articles.html', keywords: ['publications', 'articles', 'liste', 'tous les articles'] },
-        { title: 'Feuillet', url: 'feuillet.html', keywords: ['feuillet', 'chronologie', 'timeline', 'histoire'] }
+        { title: 'Accueil', url: '../index.html', keywords: ['accueil', 'home', 'bienvenue', 'index'], snippet: 'Bienvenue sur Le Scribouill\'art, le journal fictif aux articles bien réels.' },
+        { title: 'Contact', url: 'contact.html', keywords: ['contact', 'contacter', 'message', 'email', 'écrire'], snippet: 'N\'hésitez pas à nous contacter pour toute question ou suggestion. Nous nous efforçons de répondre selon nos disponibilités.' },
+        { title: 'À propos', url: 'a-propos.html', keywords: ['à propos', 'a propos', 'about', 'rédacteur', 'redacteur', 'devenir'], snippet: 'Découvrez qui se cache derrière Le Scribouill\'art et comment devenir rédacteur.' },
+        { title: 'Auteur', url: 'auteur.html', keywords: ['auteur', 'drelall', 'créateur', 'createur', 'rédacteur', 'redacteur'], snippet: 'Découvrez les auteurs et créateurs du Scribouill\'art.' },
+        { title: 'Mentions légales', url: 'mentions-legales.html', keywords: ['mentions légales', 'mentions legales', 'legal', 'rgpd', 'données', 'donnees'], snippet: 'Consultez les mentions légales et la politique de confidentialité du site Le Scribouill\'art.' },
+        { title: 'Publications', url: 'listage-articles.html', keywords: ['publications', 'articles', 'liste', 'tous les articles'], snippet: 'Retrouvez tous les articles publiés sur Le Scribouill\'art.' },
+        { title: 'Feuillet', url: 'feuillet.html', keywords: ['feuillet', 'chronologie', 'timeline', 'histoire'], snippet: 'Parcourez la chronologie des publications du Scribouill\'art.' }
     ];
 
     // Fonction pour effectuer la recherche
@@ -77,6 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         // Charger et filtrer les articles
+        const startTime = performance.now();
         fetch('../publication-articles.json')
             .then(response => response.json())
             .then(articles => {
@@ -87,10 +88,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
 
                 const totalResults = matchingPages.length + matchingArticles.length;
+                const endTime = performance.now();
+                const searchTime = ((endTime - startTime) / 1000).toFixed(2);
                 
                 // Afficher les statistiques
                 if (searchStats) {
-                    searchStats.textContent = `Environ ${totalResults} résultat${totalResults > 1 ? 's' : ''} pour "${searchTerm}"`;
+                    const startRange = totalResults > 0 ? '1' : '0';
+                    const endRange = Math.min(10, totalResults);
+                    searchStats.innerHTML = `Résultats <strong>${startRange}-${endRange}</strong> sur environ <strong>${totalResults}</strong> pour <strong>${searchTerm}</strong>. Recherche en <strong>${searchTime}</strong> secondes.`;
                 }
 
                 let resultsHTML = '';
@@ -102,15 +107,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     matchingPages.forEach(page => {
                         resultsHTML += `
                             <div class="search-result-item-google">
-                                <div class="search-result-url">
-                                    <span class="search-result-domain">lescribouillart.fr</span>
-                                    <span style="color: #70757a;">›</span>
-                                    <span>${page.title}</span>
-                                </div>
                                 <h3 class="search-result-title">
                                     <a href="${page.url}">${page.title}</a>
                                 </h3>
-                                <p class="search-result-snippet">Accédez à la page ${page.title.toLowerCase()} du site Le Scribouill'art.</p>
+                                <p class="search-result-snippet">${page.snippet}</p>
+                                <div class="search-result-url">
+                                    <span class="search-result-domain">drelall.github.io</span>
+                                    <span style="color: #006621;"> › </span>
+                                    <span style="color: #006621;">${page.title}</span>
+                                </div>
                             </div>
                         `;
                     });
@@ -125,16 +130,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     matchingArticles.forEach(article => {
                         resultsHTML += `
                             <div class="search-result-item-google">
-                                <div class="search-result-url">
-                                    <span class="search-result-domain">lescribouillart.fr</span>
-                                    <span style="color: #70757a;">›</span>
-                                    <span>${article.category}</span>
-                                </div>
                                 <h3 class="search-result-title">
                                     <a href="affichage-article.html?id=${article.id}">${article.title}</a>
                                 </h3>
-                                <div class="search-result-date">${article.date}</div>
                                 <p class="search-result-snippet">${article.excerpt}</p>
+                                <div class="search-result-url">
+                                    <span class="search-result-domain">drelall.github.io</span>
+                                    <span style="color: #006621;"> › </span>
+                                    <span style="color: #006621;">${article.category}</span>
+                                    <span style="color: #70757a; margin-left: 0.5rem;">${article.date}</span>
+                                </div>
                             </div>
                         `;
                     });

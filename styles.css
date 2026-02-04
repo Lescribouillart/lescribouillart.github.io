@@ -422,7 +422,14 @@ body.editor-page .main {
 .search-stats {
     color: #70757a;
     font-size: 0.875rem;
-    padding: 0.5rem 0 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid #ebebeb;
+    margin-bottom: 1.5rem;
+}
+
+.search-stats strong {
+    font-weight: 400;
+    color: #202124;
 }
 
 .search-results-list {
@@ -434,20 +441,20 @@ body.editor-page .main {
 .search-result-item-google {
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    gap: 0.3rem;
 }
 
 .search-result-url {
-    color: #202124;
+    color: #006621;
     font-size: 0.875rem;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.25rem;
 }
 
 .search-result-domain {
-    color: #5f6368;
-    font-size: 0.75rem;
+    color: #006621;
+    font-size: 0.875rem;
 }
 
 .search-result-title {
@@ -458,7 +465,7 @@ body.editor-page .main {
 
 .search-result-title a {
     color: #1a0dab;
-    text-decoration: none;
+    text-decoration: underline;
 }
 
 .search-result-title a:hover {
@@ -470,7 +477,7 @@ body.editor-page .main {
 }
 
 .search-result-snippet {
-    color: #4d5156;
+    color: #545454;
     font-size: 0.875rem;
     line-height: 1.6;
     margin: 0;
