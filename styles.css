@@ -875,6 +875,14 @@ a.highlight-blue {
     margin-left: 1rem;
 }
 
+.article-footer .nav-link + .back-link {
+    margin-left: 1rem;
+}
+
+.article-footer .nav-link + .nav-link {
+    margin-left: 1rem;
+}
+
 #contact-form button[type="submit"] {
     background-color: #333;
     color: white;
@@ -1108,6 +1116,29 @@ a.highlight-blue {
 .article-footer .nav-link {
     text-decoration: none;
     color: #e0e0e0 !important;
+}
+
+.article-footer .nav-link-with-icon::after {
+    display: none;
+}
+
+.article-footer .nav-link .underline-text {
+    position: relative;
+}
+
+.article-footer .nav-link .underline-text::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--secondary-color);
+    transition: width 0.3s ease;
+}
+
+.article-footer .nav-link:hover .underline-text::after {
+    width: 100%;
 }
 
 .back-link {
