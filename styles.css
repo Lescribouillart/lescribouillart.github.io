@@ -283,7 +283,7 @@ body.editor-page .main {
    PAGE MOTEUR DE RECHERCHE (style Google ancien)
    ======================================== */
 .search-page-header {
-    background: #fff;
+    background: #e8e6e3;
     border-bottom: 1px solid #ebebeb;
     padding: 1rem 0;
 }
@@ -329,7 +329,7 @@ body.editor-page .main {
 }
 
 .search-main {
-    background: #fff;
+    background: #e8e6e3;
     min-height: 70vh;
     padding: 1rem 0;
 }
