@@ -70,28 +70,52 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // Rechercher dans les pages du site
-        const matchingPages = sitePages.filter(page => {
-            return page.title.toLowerCase().includes(searchLower) || 
-                   page.keywords.some(keyword => keyword.includes(searchLower));
-        });
-
-        // Charger et filtrer les articles
-        const startTime = performance.now();
-        fetch('../publication-articles.json')
-            .then(response => response.json())
-            .then(articles => {
-                const matchingArticles = articles.filter(article => {
-                    return article.title.toLowerCase().includes(searchLower) ||
-                           article.excerpt.toLowerCase().includes(searchLower) ||
-                           article.category.toLowerCase().includes(searchLower);
-                });
-
-                const totalResults = matchingPages.length + matchingArticles.length;
-                const endTime = performance.now();
-                const searchTime = ((endTime - startTime) / 1000).toFixed(2);
+        // Fonction pour charger et chercher dans le contenu d'une page
+        async function searchInPageContent(page) {
+            try {
+                const response = await fetch(page.url);
+                const html = await response.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
                 
-                let resultsHTML = '';
+                // Extraire le texte du contenu principal (éviter header, footer, nav)
+                const main = doc.querySelector('main') || doc.body;
+                const textContent = main.textContent.toLowerCase();
+                
+                return textContent.includes(searchLower);
+            } catch (error) {
+                console.error('Erreur lors du chargement de la page:', error);
+                return false;
+            }
+        }
+
+        // Rechercher dans les pages du site
+        Promise.all(sitePages.map(async (page) => {
+            const titleMatch = page.title.toLowerCase().includes(searchLower);
+            const keywordMatch = page.keywords.some(keyword => keyword.includes(searchLower));
+            const snippetMatch = page.snippet.toLowerCase().includes(searchLower);
+            const contentMatch = await searchInPageContent(page);
+            
+            return (titleMatch || keywordMatch || snippetMatch || contentMatch) ? page : null;
+        })).then(results => {
+            const matchingPages = results.filter(page => page !== null);
+            
+            // Charger et filtrer les articles
+            const startTime = performance.now();
+            fetch('../publication-articles.json')
+                .then(response => response.json())
+                .then(articles => {
+                    const matchingArticles = articles.filter(article => {
+                        return article.title.toLowerCase().includes(searchLower) ||
+                               article.excerpt.toLowerCase().includes(searchLower) ||
+                               article.category.toLowerCase().includes(searchLower);
+                    });
+
+                    const totalResults = matchingPages.length + matchingArticles.length;
+                    const endTime = performance.now();
+                    const searchTime = ((endTime - startTime) / 1000).toFixed(2);
+                    
+                    let resultsHTML = '';
 
                 // Afficher les pages correspondantes
                 if (matchingPages.length > 0) {
@@ -158,6 +182,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Erreur lors du chargement des articles:', error);
                 searchResults.innerHTML = '<div class="no-results-google"><h2>Erreur</h2><p>Impossible de charger les résultats.</p></div>';
             });
+        });
     }
 
     // Exécuter l'affichage des résultats si on est sur la page moteur de recherche
@@ -203,7 +228,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Rechercher dans les pages du site
         const matchingPages = sitePages.filter(page => {
             return page.title.toLowerCase().includes(searchLower) || 
-                   page.keywords.some(keyword => keyword.includes(searchLower));
+                   page.keywords.some(keyword => keyword.includes(searchLower)) ||
+                   page.snippet.toLowerCase().includes(searchLower);
         });
 
         // Afficher les résultats
