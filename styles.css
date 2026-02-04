@@ -170,7 +170,7 @@ body.editor-page .main {
 .search-container {
     position: absolute;
     right: 0;
-    top: 1.5rem;
+    top: calc(1.9rem + -1px);
     display: flex;
     gap: 0.5rem;
     align-items: center;
@@ -184,7 +184,7 @@ body.editor-page .main {
     color: var(--text-light);
     border-radius: 20px;
     font-size: 0.9rem;
-    width: 180px;
+    width: 200px;
     transition: all 0.3s ease;
 }
 
