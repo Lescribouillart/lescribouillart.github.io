@@ -62,14 +62,9 @@ document.addEventListener('DOMContentLoaded', function() {
             searchInput.value = searchTerm;
         }
 
-        // Mettre à jour le message d'information
-        const searchInfo = document.getElementById('search-info');
-        if (searchInfo) {
-            searchInfo.textContent = `Résultats de recherche pour : "${searchTerm}"`;
-        }
-
         const searchLower = searchTerm.toLowerCase();
         const searchResults = document.getElementById('search-results');
+        const searchStats = document.getElementById('search-stats');
         
         if (!searchResults) {
             return;
@@ -91,50 +86,74 @@ document.addEventListener('DOMContentLoaded', function() {
                            article.category.toLowerCase().includes(searchLower);
                 });
 
+                const totalResults = matchingPages.length + matchingArticles.length;
+                
+                // Afficher les statistiques
+                if (searchStats) {
+                    searchStats.textContent = `Environ ${totalResults} résultat${totalResults > 1 ? 's' : ''} pour "${searchTerm}"`;
+                }
+
                 let resultsHTML = '';
 
                 // Afficher les pages correspondantes
                 if (matchingPages.length > 0) {
-                    resultsHTML += '<div class="pages-results"><h2 style="color: var(--primary-color); margin-bottom: 1rem;">Pages du site</h2><div class="pages-list">';
+                    resultsHTML += '<h3 class="search-section-title">Pages du site</h3>';
                     
                     matchingPages.forEach(page => {
                         resultsHTML += `
-                            <a href="${page.url}" class="page-result-item">
-                                <span class="page-icon">📄</span>
-                                <span class="page-title">${page.title}</span>
-                            </a>
+                            <div class="search-result-item-google">
+                                <div class="search-result-url">
+                                    <span class="search-result-domain">lescribouillart.fr</span>
+                                    <span style="color: #70757a;">›</span>
+                                    <span>${page.title}</span>
+                                </div>
+                                <h3 class="search-result-title">
+                                    <a href="${page.url}">${page.title}</a>
+                                </h3>
+                                <p class="search-result-snippet">Accédez à la page ${page.title.toLowerCase()} du site Le Scribouill'art.</p>
+                            </div>
                         `;
                     });
-                    
-                    resultsHTML += '</div></div>';
                 }
 
                 // Afficher les articles correspondants
                 if (matchingArticles.length > 0) {
-                    resultsHTML += '<div class="articles-results"><h2 style="color: var(--primary-color); margin: 2rem 0 1rem;">Articles</h2><div class="articles-grid">';
+                    if (matchingPages.length > 0) {
+                        resultsHTML += '<h3 class="search-section-title">Articles</h3>';
+                    }
                     
                     matchingArticles.forEach(article => {
                         resultsHTML += `
-                            <article class="article-card" data-id="${article.id}">
-                                <div class="article-category">${article.category}</div>
-                                <h2 class="article-title">${article.title}</h2>
-                                <p class="article-date">${article.date}</p>
-                                <p class="article-excerpt">${article.excerpt}</p>
-                                <a href="affichage-article.html?id=${article.id}" class="read-more">Lire l'article →</a>
-                            </article>
+                            <div class="search-result-item-google">
+                                <div class="search-result-url">
+                                    <span class="search-result-domain">lescribouillart.fr</span>
+                                    <span style="color: #70757a;">›</span>
+                                    <span>${article.category}</span>
+                                </div>
+                                <h3 class="search-result-title">
+                                    <a href="affichage-article.html?id=${article.id}">${article.title}</a>
+                                </h3>
+                                <div class="search-result-date">${article.date}</div>
+                                <p class="search-result-snippet">${article.excerpt}</p>
+                            </div>
                         `;
                     });
-                    
-                    resultsHTML += '</div></div>';
                 }
 
                 // Si aucun résultat
                 if (matchingPages.length === 0 && matchingArticles.length === 0) {
+                    if (searchStats) {
+                        searchStats.textContent = `Aucun résultat pour "${searchTerm}"`;
+                    }
                     resultsHTML = `
-                        <div class="no-results">
-                            <h2>Aucun résultat trouvé</h2>
-                            <p>Aucun article ou page ne correspond à votre recherche : "<strong>${searchTerm}</strong>"</p>
-                            <p><a href="listage-articles.html" class="nav-link">Voir tous les articles</a></p>
+                        <div class="no-results-google">
+                            <h2>Aucun document ne correspond aux termes de recherche spécifiés.</h2>
+                            <p>Suggestions :</p>
+                            <ul style="color: #70757a; font-size: 0.875rem; line-height: 1.8;">
+                                <li>Vérifiez l'orthographe des termes de recherche.</li>
+                                <li>Essayez d'autres mots.</li>
+                                <li>Utilisez des mots plus généraux.</li>
+                            </ul>
                         </div>
                     `;
                 }
@@ -143,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .catch(error => {
                 console.error('Erreur lors du chargement des articles:', error);
-                searchResults.innerHTML = '<div class="no-results"><h2>Erreur</h2><p>Impossible de charger les résultats.</p></div>';
+                searchResults.innerHTML = '<div class="no-results-google"><h2>Erreur</h2><p>Impossible de charger les résultats.</p></div>';
             });
     }
 
