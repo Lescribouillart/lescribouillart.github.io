@@ -1,10 +1,21 @@
-// Fonction de recherche d'articles
+// Fonction de recherche d'articles et de pages
 document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('search-input');
     
     if (!searchInput) {
         return; // Si l'élément n'existe pas, on sort
     }
+
+    // Liste des pages du site
+    const sitePages = [
+        { title: 'Accueil', url: '../index.html', keywords: ['accueil', 'home', 'bienvenue', 'index'] },
+        { title: 'Contact', url: 'contact.html', keywords: ['contact', 'contacter', 'message', 'email', 'écrire'] },
+        { title: 'À propos', url: 'a-propos.html', keywords: ['à propos', 'a propos', 'about', 'rédacteur', 'redacteur', 'devenir'] },
+        { title: 'Auteur', url: 'auteur.html', keywords: ['auteur', 'drelall', 'créateur', 'createur', 'rédacteur', 'redacteur'] },
+        { title: 'Mentions légales', url: 'mentions-legales.html', keywords: ['mentions légales', 'mentions legales', 'legal', 'rgpd', 'données', 'donnees'] },
+        { title: 'Publications', url: 'listage-articles.html', keywords: ['publications', 'articles', 'liste', 'tous les articles'] },
+        { title: 'Feuillet', url: 'feuillet.html', keywords: ['feuillet', 'chronologie', 'timeline', 'histoire'] }
+    ];
 
     // Fonction pour effectuer la recherche
     function performSearch() {
@@ -14,16 +25,16 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // Rediriger vers la page de listage avec le terme de recherche
+        // Rediriger vers la page moteur de recherche avec le terme de recherche
         const currentPath = window.location.pathname;
         const isInHtmlFolder = currentPath.includes('/html/');
         
         // Construire l'URL en fonction de l'emplacement actuel
         let targetUrl;
         if (isInHtmlFolder) {
-            targetUrl = `listage-articles.html?search=${encodeURIComponent(searchTerm)}`;
+            targetUrl = `moteurderecherche.html?search=${encodeURIComponent(searchTerm)}`;
         } else {
-            targetUrl = `html/listage-articles.html?search=${encodeURIComponent(searchTerm)}`;
+            targetUrl = `html/moteurderecherche.html?search=${encodeURIComponent(searchTerm)}`;
         }
         
         window.location.href = targetUrl;
@@ -37,7 +48,111 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Fonction pour filtrer les articles sur la page de listage
+    // Fonction pour filtrer les articles et pages sur la page de recherche
+    function displaySearchResults() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const searchTerm = urlParams.get('search');
+        
+        if (!searchTerm) {
+            return;
+        }
+
+        // Remplir le champ de recherche avec le terme recherché
+        if (searchInput) {
+            searchInput.value = searchTerm;
+        }
+
+        // Mettre à jour le message d'information
+        const searchInfo = document.getElementById('search-info');
+        if (searchInfo) {
+            searchInfo.textContent = `Résultats de recherche pour : "${searchTerm}"`;
+        }
+
+        const searchLower = searchTerm.toLowerCase();
+        const searchResults = document.getElementById('search-results');
+        
+        if (!searchResults) {
+            return;
+        }
+
+        // Rechercher dans les pages du site
+        const matchingPages = sitePages.filter(page => {
+            return page.title.toLowerCase().includes(searchLower) || 
+                   page.keywords.some(keyword => keyword.includes(searchLower));
+        });
+
+        // Charger et filtrer les articles
+        fetch('../publication-articles.json')
+            .then(response => response.json())
+            .then(articles => {
+                const matchingArticles = articles.filter(article => {
+                    return article.title.toLowerCase().includes(searchLower) ||
+                           article.excerpt.toLowerCase().includes(searchLower) ||
+                           article.category.toLowerCase().includes(searchLower);
+                });
+
+                let resultsHTML = '';
+
+                // Afficher les pages correspondantes
+                if (matchingPages.length > 0) {
+                    resultsHTML += '<div class="pages-results"><h2 style="color: var(--primary-color); margin-bottom: 1rem;">Pages du site</h2><div class="pages-list">';
+                    
+                    matchingPages.forEach(page => {
+                        resultsHTML += `
+                            <a href="${page.url}" class="page-result-item">
+                                <span class="page-icon">📄</span>
+                                <span class="page-title">${page.title}</span>
+                            </a>
+                        `;
+                    });
+                    
+                    resultsHTML += '</div></div>';
+                }
+
+                // Afficher les articles correspondants
+                if (matchingArticles.length > 0) {
+                    resultsHTML += '<div class="articles-results"><h2 style="color: var(--primary-color); margin: 2rem 0 1rem;">Articles</h2><div class="articles-grid">';
+                    
+                    matchingArticles.forEach(article => {
+                        resultsHTML += `
+                            <article class="article-card" data-id="${article.id}">
+                                <div class="article-category">${article.category}</div>
+                                <h2 class="article-title">${article.title}</h2>
+                                <p class="article-date">${article.date}</p>
+                                <p class="article-excerpt">${article.excerpt}</p>
+                                <a href="affichage-article.html?id=${article.id}" class="read-more">Lire l'article →</a>
+                            </article>
+                        `;
+                    });
+                    
+                    resultsHTML += '</div></div>';
+                }
+
+                // Si aucun résultat
+                if (matchingPages.length === 0 && matchingArticles.length === 0) {
+                    resultsHTML = `
+                        <div class="no-results">
+                            <h2>Aucun résultat trouvé</h2>
+                            <p>Aucun article ou page ne correspond à votre recherche : "<strong>${searchTerm}</strong>"</p>
+                            <p><a href="listage-articles.html" class="nav-link">Voir tous les articles</a></p>
+                        </div>
+                    `;
+                }
+
+                searchResults.innerHTML = resultsHTML;
+            })
+            .catch(error => {
+                console.error('Erreur lors du chargement des articles:', error);
+                searchResults.innerHTML = '<div class="no-results"><h2>Erreur</h2><p>Impossible de charger les résultats.</p></div>';
+            });
+    }
+
+    // Exécuter l'affichage des résultats si on est sur la page moteur de recherche
+    if (window.location.pathname.includes('moteurderecherche')) {
+        displaySearchResults();
+    }
+
+    // Fonction pour filtrer les articles sur la page de listage (conservée pour compatibilité)
     function filterArticlesOnPage() {
         const urlParams = new URLSearchParams(window.location.search);
         const searchTerm = urlParams.get('search');
@@ -57,6 +172,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const searchLower = searchTerm.toLowerCase();
 
+        // Filtrer les articles
         articles.forEach(article => {
             const title = article.querySelector('.article-title')?.textContent.toLowerCase() || '';
             const excerpt = article.querySelector('.article-excerpt')?.textContent.toLowerCase() || '';
@@ -71,22 +187,61 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        // Afficher un message si aucun résultat
+        // Rechercher dans les pages du site
+        const matchingPages = sitePages.filter(page => {
+            return page.title.toLowerCase().includes(searchLower) || 
+                   page.keywords.some(keyword => keyword.includes(searchLower));
+        });
+
+        // Afficher les résultats
         const articlesGrid = document.querySelector('.articles-grid');
-        if (articlesGrid && visibleCount === 0) {
-            const noResults = document.createElement('div');
-            noResults.className = 'no-results';
-            noResults.innerHTML = `
-                <h2>Aucun résultat trouvé</h2>
-                <p>Aucun article ne correspond à votre recherche : "<strong>${searchTerm}</strong>"</p>
-                <p><a href="listage-articles.html" class="nav-link">Voir tous les articles</a></p>
-            `;
-            noResults.style.textAlign = 'center';
-            noResults.style.padding = '2rem';
-            noResults.style.color = 'var(--text-light)';
-            
-            // Insérer le message après la grille
-            articlesGrid.parentNode.insertBefore(noResults, articlesGrid.nextSibling);
+        if (articlesGrid) {
+            // Supprimer les résultats de pages précédents si ils existent
+            const oldPagesResults = document.querySelector('.pages-results');
+            if (oldPagesResults) {
+                oldPagesResults.remove();
+            }
+
+            // Si on a des pages correspondantes, les afficher en premier
+            if (matchingPages.length > 0) {
+                const pagesResultsDiv = document.createElement('div');
+                pagesResultsDiv.className = 'pages-results';
+                pagesResultsDiv.style.marginBottom = '2rem';
+                
+                let pagesHTML = '<h2 style="color: var(--primary-color); margin-bottom: 1rem;">Pages du site</h2><div class="pages-list">';
+                
+                matchingPages.forEach(page => {
+                    pagesHTML += `
+                        <a href="${page.url}" class="page-result-item">
+                            <span class="page-icon">📄</span>
+                            <span class="page-title">${page.title}</span>
+                        </a>
+                    `;
+                });
+                
+                pagesHTML += '</div>';
+                pagesResultsDiv.innerHTML = pagesHTML;
+                
+                // Insérer avant la grille d'articles
+                articlesGrid.parentNode.insertBefore(pagesResultsDiv, articlesGrid);
+            }
+
+            // Si aucun article et aucune page ne correspond
+            if (visibleCount === 0 && matchingPages.length === 0) {
+                const noResults = document.createElement('div');
+                noResults.className = 'no-results';
+                noResults.innerHTML = `
+                    <h2>Aucun résultat trouvé</h2>
+                    <p>Aucun article ou page ne correspond à votre recherche : "<strong>${searchTerm}</strong>"</p>
+                    <p><a href="listage-articles.html" class="nav-link">Voir tous les articles</a></p>
+                `;
+                noResults.style.textAlign = 'center';
+                noResults.style.padding = '2rem';
+                noResults.style.color = 'var(--text-light)';
+                
+                // Insérer le message après la grille
+                articlesGrid.parentNode.insertBefore(noResults, articlesGrid.nextSibling);
+            }
         }
     }
 
