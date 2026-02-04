@@ -164,6 +164,85 @@ body.editor-page .main {
     gap: 2rem;
 }
 
+/* ========================================
+   CHAMP DE RECHERCHE
+   ======================================== */
+.search-container {
+    position: absolute;
+    right: 0;
+    top: 1.5rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    z-index: 10;
+}
+
+#search-input {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--text-light);
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-light);
+    border-radius: 20px;
+    font-size: 0.9rem;
+    width: 180px;
+    transition: all 0.3s ease;
+}
+
+#search-input:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    background: rgba(255, 255, 255, 0.15);
+    width: 220px;
+}
+
+#search-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+#search-button {
+    background: var(--secondary-color);
+    color: var(--bg-dark);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+#search-button:hover {
+    background: var(--primary-color);
+    color: var(--text-light);
+}
+
+.no-results {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-light);
+}
+
+.no-results h2 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.no-results p {
+    margin-bottom: 0.5rem;
+}
+
+.no-results a {
+    color: var(--secondary-color);
+    text-decoration: none;
+}
+
+.no-results a:hover {
+    text-decoration: underline;
+}
+
+/* ========================================
+   NAVIGATION LINKS
+   ======================================== */
 .nav-link {
     color: var(--text-light);
     text-decoration: none;
