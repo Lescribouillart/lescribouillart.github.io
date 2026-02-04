@@ -91,18 +91,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 const endTime = performance.now();
                 const searchTime = ((endTime - startTime) / 1000).toFixed(2);
                 
-                // Afficher les statistiques
-                if (searchStats) {
-                    const startRange = totalResults > 0 ? '1' : '0';
-                    const endRange = Math.min(10, totalResults);
-                    searchStats.innerHTML = `Résultats <strong>${startRange}-${endRange}</strong> sur environ <strong>${totalResults}</strong> pour <strong>${searchTerm}</strong>. Recherche en <strong>${searchTime}</strong> secondes.`;
-                }
-
                 let resultsHTML = '';
 
                 // Afficher les pages correspondantes
                 if (matchingPages.length > 0) {
-                    resultsHTML += '<h3 class="search-section-title">Pages du site</h3>';
                     
                     matchingPages.forEach(page => {
                         resultsHTML += `
@@ -123,9 +115,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // Afficher les articles correspondants
                 if (matchingArticles.length > 0) {
-                    if (matchingPages.length > 0) {
-                        resultsHTML += '<h3 class="search-section-title">Articles</h3>';
-                    }
                     
                     matchingArticles.forEach(article => {
                         resultsHTML += `
