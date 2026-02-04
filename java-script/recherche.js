@@ -262,4 +262,14 @@ document.addEventListener('DOMContentLoaded', function() {
     if (window.location.pathname.includes('listage-articles')) {
         filterArticlesOnPage();
     }
+
+    // Bouton "J'ai de la chance" - redirection vers une page aléatoire
+    const luckyButton = document.querySelector('.search-button-secondary');
+    if (luckyButton) {
+        luckyButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            const randomPage = sitePages[Math.floor(Math.random() * sitePages.length)];
+            window.location.href = randomPage.url;
+        });
+    }
 });
