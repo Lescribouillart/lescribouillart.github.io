@@ -1,10 +1,9 @@
 // Fonction de recherche d'articles
 document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('search-input');
-    const searchButton = document.getElementById('search-button');
     
-    if (!searchInput || !searchButton) {
-        return; // Si les éléments n'existent pas, on sort
+    if (!searchInput) {
+        return; // Si l'élément n'existe pas, on sort
     }
 
     // Fonction pour effectuer la recherche
@@ -12,7 +11,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const searchTerm = searchInput.value.trim();
         
         if (searchTerm === '') {
-            alert('Veuillez entrer un terme de recherche');
             return;
         }
 
@@ -30,9 +28,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         window.location.href = targetUrl;
     }
-
-    // Événement sur le bouton de recherche
-    searchButton.addEventListener('click', performSearch);
 
     // Événement sur la touche Entrée
     searchInput.addEventListener('keypress', function(e) {
