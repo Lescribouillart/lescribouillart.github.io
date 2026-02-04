@@ -192,7 +192,6 @@ body.editor-page .main {
     outline: none;
     border-color: var(--secondary-color);
     background: rgba(255, 255, 255, 0.15);
-    width: 220px;
 }
 
 #search-input::placeholder {
