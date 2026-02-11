@@ -1008,6 +1008,103 @@ a.highlight-blue {
     font-size: 0.85rem;
 }
 
+/* ========================================
+   MENU FLOTTANT RSS
+   ======================================== */
+.floating-social {
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+}
+
+.floating-social-button {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    text-decoration: none;
+}
+
+.floating-social-button:first-child {
+    background: #333;
+    border-radius: 10px 10px 0 0;
+}
+
+.floating-social-button:first-child svg {
+    stroke: #fff;
+}
+
+.floating-social-button.rss-button {
+    background: #ff6600;
+    border-radius: 0 0 10px 10px;
+}
+
+.floating-social-button.rss-button:hover {
+    background: #ff8533;
+    transform: scale(1.05);
+}
+
+.floating-social-button svg,
+.floating-social-button img {
+    width: 24px;
+    height: 24px;
+}
+
+/* Tooltip pour RSS */
+.floating-social-button::before {
+    content: attr(title);
+    position: absolute;
+    right: 60px;
+    background: #333;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    font-size: 0.85rem;
+}
+
+.floating-social-button::after {
+    content: '';
+    position: absolute;
+    right: 50px;
+    border: 6px solid transparent;
+    border-left-color: #333;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.floating-social-button:hover::before,
+.floating-social-button:hover::after {
+    opacity: 1;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .floating-social {
+        right: 10px;
+        transform: translateY(-50%) scale(0.9);
+    }
+}
+
 /* Styles pour les pages du footer */
 .btn-retour {
     background-color: #333;

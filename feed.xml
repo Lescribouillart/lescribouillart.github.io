@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Le Scribouill'art</title>
+    <link>https://drelall.github.io/</link>
+    <description>Le journal fictif aux articles bien réels - Articles romancés inspirés de l'univers Saga</description>
+    <language>fr-FR</language>
+    <lastBuildDate>Mon, 11 Feb 2026 00:00:00 GMT</lastBuildDate>
+    <atom:link href="https://drelall.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    
+    <item>
+      <title>L'art de la simplicité dans l'écriture</title>
+      <link>https://drelall.github.io/html/affichage-article.html?id=1</link>
+      <description>Découvrez comment le minimalisme peut transformer votre façon d'écrire et de communiquer vos idées avec clarté et impact.</description>
+      <category>Minimalisme</category>
+      <pubDate>Tue, 14 Jan 2025 00:00:00 GMT</pubDate>
+      <guid>https://drelall.github.io/html/affichage-article.html?id=1</guid>
+    </item>
+    
+    <item>
+      <title>Écrire moins pour dire plus</title>
+      <link>https://drelall.github.io/html/affichage-article.html?id=2</link>
+      <description>La puissance de la concision : comment chaque mot compte quand on adopte une approche minimaliste de l'écriture.</description>
+      <category>Productivité</category>
+      <pubDate>Fri, 10 Jan 2025 00:00:00 GMT</pubDate>
+      <guid>https://drelall.github.io/html/affichage-article.html?id=2</guid>
+    </item>
+    
+    <item>
+      <title>Le pouvoir du silence en écriture</title>
+      <link>https://drelall.github.io/html/affichage-article.html?id=3</link>
+      <description>Parfois, ce que vous ne dites pas est aussi important que ce que vous écrivez. Découvrez l'art des espaces blancs.</description>
+      <category>Réflexion</category>
+      <pubDate>Sun, 05 Jan 2025 00:00:00 GMT</pubDate>
+      <guid>https://drelall.github.io/html/affichage-article.html?id=3</guid>
+    </item>
+  </channel>
+</rss>
