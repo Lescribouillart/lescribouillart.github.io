@@ -1064,6 +1064,21 @@ a.highlight-blue {
     transform: scale(1.05);
 }
 
+.floating-social-button.home-button {
+    background: #4CAF50;
+    border-radius: 0;
+}
+
+.floating-social-button.home-button:hover {
+    background: #5CBF60;
+    transform: scale(1.05);
+}
+
+.floating-social-button.home-button svg {
+    stroke: #fff;
+    fill: none;
+}
+
 .floating-social-button.footer-scroll-button {
     background: #555;
     border-radius: 0 0 10px 10px;
