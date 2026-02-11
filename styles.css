@@ -1041,7 +1041,7 @@ a.highlight-blue {
 }
 
 .floating-social-button.header-scroll-button {
-    background: #555;
+    background: #e0e0e0;
     border-radius: 10px 10px 0 0;
 }
 
@@ -1080,7 +1080,7 @@ a.highlight-blue {
 }
 
 .floating-social-button.footer-scroll-button {
-    background: #555;
+    background: #e0e0e0;
     border-radius: 0 0 10px 10px;
 }
 
