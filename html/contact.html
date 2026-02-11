@@ -7,13 +7,14 @@
     <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
     <header class="header">
         <div class="container">
             <button class="accessibility-btn" aria-label="Mode dyslexie">
                 <img src="../images/inclusif/dislexie.png" alt="Icône dyslexie" title="dyslexie">
             </button>
             <div class="search-container">
-                <input type="text" id="search-input" placeholder="Rechercher..." autocomplete="off" readonly onfocus="this.removeAttribute('readonly');">
+                <input type="text" id="search-input" placeholder="Rechercher..." autocomplete="off">
             </div>
             <a href="../index.html" style="text-decoration: none; color: inherit;">
                 <div class="logo-row">
@@ -41,7 +42,7 @@
             </p>
         </div>
 
-        <main class="main">
+        <main class="main" id="main-content">
             <div class="container">
                 <div class="presentation">
                     <div class="presentation-bg2 mentions-legales-content">
@@ -59,34 +60,37 @@
                             <div class="form-group">
                                 <label for="nom">
                                     Nom :
-                                    <img src="../images/info/infobulle.png" alt="Info" class="info-icon" data-tooltip="Indiquez votre nom complet ou pseudonyme">
+                                    <img src="../images/info/infobulle.png" alt="Info" class="info-icon" aria-describedby="nom-help">
                                 </label>
-                                <input type="text" id="nom" name="name" required>
+                                <p id="nom-help" class="sr-only">Indiquez votre nom complet ou pseudonyme</p>
+                                <input type="text" id="nom" name="name" aria-describedby="nom-help" required>
                             </div>
                             <div class="form-group">
                                 <label for="email">
                                     Email :
-                                    <img src="../images/info/infobulle.png" alt="Info" class="info-icon" data-tooltip="Indiquez une adresse email valide pour recevoir notre réponse">
+                                    <img src="../images/info/infobulle.png" alt="Info" class="info-icon" aria-describedby="email-help">
                                 </label>
-                                <input type="email" id="email" name="email" required>
+                                <p id="email-help" class="sr-only">Indiquez une adresse email valide pour recevoir notre réponse</p>
+                                <input type="email" id="email" name="email" aria-describedby="email-help" required>
                             </div>
                             <div class="form-group">
                                 <label for="message">
                                     Message :
-                                    <img src="../images/info/infobulle.png" alt="Info" class="info-icon" data-tooltip="Utilisez la barre d'outils pour mettre en forme votre texte">
+                                    <img src="../images/info/infobulle.png" alt="Info" class="info-icon" aria-describedby="message-help">
                                 </label>
+                                <p id="message-help" class="sr-only">Utilisez la barre d'outils pour mettre en forme votre texte</p>
                                 <div class="editor-toolbar">
-                                    <button type="button" class="editor-btn" data-command="bold" title="Gras"><strong>B</strong></button>
-                                    <button type="button" class="editor-btn" data-command="italic" title="Italique"><em>I</em></button>
-                                    <button type="button" class="editor-btn" data-command="underline" title="Souligner"><u>U</u></button>
-                                    <button type="button" class="editor-btn" data-command="strikeThrough" title="Barrer"><s>S</s></button>
+                                    <button type="button" class="editor-btn" data-command="bold" title="Gras" aria-label="Mettre en gras"><strong>B</strong></button>
+                                    <button type="button" class="editor-btn" data-command="italic" title="Italique" aria-label="Mettre en italique"><em>I</em></button>
+                                    <button type="button" class="editor-btn" data-command="underline" title="Souligner" aria-label="Souligner le texte"><u>U</u></button>
+                                    <button type="button" class="editor-btn" data-command="strikeThrough" title="Barrer" aria-label="Barrer le texte"><s>S</s></button>
                                     <span class="editor-separator"></span>
-                                    <button type="button" class="editor-btn" data-command="insertUnorderedList" title="Liste à puces">•</button>
-                                    <button type="button" class="editor-btn" data-command="insertOrderedList" title="Liste numérotée">1.</button>
+                                    <button type="button" class="editor-btn" data-command="insertUnorderedList" title="Liste à puces" aria-label="Insérer une liste à puces">•</button>
+                                    <button type="button" class="editor-btn" data-command="insertOrderedList" title="Liste numérotée" aria-label="Insérer une liste numérotée">1.</button>
                                     <span class="editor-separator"></span>
-                                    <button type="button" class="editor-btn" data-command="justifyLeft" title="Aligner à gauche">≡</button>
-                                    <button type="button" class="editor-btn" data-command="justifyCenter" title="Centrer">≣</button>
-                                    <button type="button" class="editor-btn" data-command="justifyRight" title="Aligner à droite">≡</button>
+                                    <button type="button" class="editor-btn" data-command="justifyLeft" title="Aligner à gauche" aria-label="Aligner le texte à gauche">≡</button>
+                                    <button type="button" class="editor-btn" data-command="justifyCenter" title="Centrer" aria-label="Centrer le texte">≣</button>
+                                    <button type="button" class="editor-btn" data-command="justifyRight" title="Aligner à droite" aria-label="Aligner le texte à droite">≡</button>
                                 </div>
                                 <div id="message-editor" class="text-editor" contenteditable="true"></div>
                                 <textarea id="message" name="message" style="display: none;" required></textarea>

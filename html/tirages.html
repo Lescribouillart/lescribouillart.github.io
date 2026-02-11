@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../styles.css">
 </head>
 <body class="editor-page">
+    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
     <header class="header">
         <div class="container">
             <a href="../index.html" style="text-decoration: none; color: inherit;">
@@ -34,7 +35,7 @@
         </div>
     </header>
 
-    <main class="main">
+    <main class="main" id="main-content">
         <!-- Barre supérieure avec toolbar intégrée -->
         <div class="top-bar">
             <div class="top-bar-left">
@@ -158,7 +159,7 @@
             <!-- Barre latérale des articles -->
             <aside class="sidebar">
                 <div class="sidebar-header">
-                    <h3 class="sidebar-title">Mes articles</h3>
+                    <h2 class="sidebar-title">Mes articles</h2>
                     <button class="new-article-btn" id="newArticleBtn" title="Nouvel article">+</button>
                 </div>
                 <div class="articles-list" id="articlesList">
@@ -194,7 +195,7 @@
             <aside class="youtube-player-sidebar">
                 <div class="youtube-player-container">
                     <div class="youtube-player-header">
-                        <h3>Musique</h3>
+                        <h2>Musique</h2>
                         <button class="youtube-toggle" id="youtubeToggle" title="Réduire/Agrandir">−</button>
                     </div>
                     <div class="youtube-player-content" id="youtubeContent">

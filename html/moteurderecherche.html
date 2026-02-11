@@ -12,6 +12,7 @@
     </style>
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
     <button class="accessibility-btn" aria-label="Mode dyslexie" style="position: fixed; left: 2rem; top: 2rem; z-index: 1000;">
         <img src="../images/inclusif/dislexie.png" alt="Icône dyslexie" title="dyslexie">
     </button>
@@ -24,7 +25,7 @@
             </a>
             <p class="search-tagline-header">Recherchez sur Le Scribouill'art !</p>
             <div class="search-box-container-large">
-                <input type="text" id="search-input" class="search-box-large" placeholder="" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');">
+                <input type="text" id="search-input" class="search-box-large" placeholder="" autocomplete="off">
             </div>
             <div class="search-buttons-container">
                 <button id="search-btn" class="search-button-primary">Rechercher</button>
@@ -33,7 +34,7 @@
         </div>
     </div>
 
-    <main class="search-main">
+    <main class="search-main" id="main-content">
         <div class="search-page-container">
             <div id="search-stats" class="search-stats"></div>
             <div id="search-results" class="search-results-list">
