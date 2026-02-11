@@ -1098,8 +1098,11 @@ a.highlight-blue {
 
 .floating-social-button svg,
 .floating-social-button img {
-    width: 20px;
-    height: 20px;
+    width: 36px;
+    height: 36px;
+    display: block;
+    object-fit: contain;
+    object-position: center;
 }
 
 /* Tooltip pour RSS */
