@@ -983,6 +983,24 @@ a.highlight-blue {
     color: var(--secondary-color);
 }
 
+.footer-icon-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.3rem;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.footer-icon-link:hover {
+    background: rgba(123, 163, 216, 0.2);
+    transform: scale(1.1);
+}
+
+.footer-icon-link svg {
+    display: block;
+}
+
 .footer-copyright {
     text-align: center;
     margin-top: 1rem;
