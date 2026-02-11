@@ -1046,8 +1046,7 @@ a.highlight-blue {
 }
 
 .floating-social-button.header-scroll-button:hover {
-    background: #5a5966;
-    transform: scale(1.05);
+    filter: brightness(1.2);
 }
 
 .floating-social-button.header-scroll-button svg {
@@ -1055,25 +1054,23 @@ a.highlight-blue {
 }
 
 .floating-social-button.rss-button {
-    background: #ff6600;
+    background: #2f2e3a;
     border-radius: 0;
 }
 
 .floating-social-button.rss-button:hover {
-    background: #ff8533;
-    transform: scale(1.05);
+    filter: brightness(1.2);
 }
 
 .floating-social-button.home-button {
-    background: #7ba3d8;
+    background: #e0e0e0;
     border-radius: 0;
     width: 40px;
     height: 40px;
 }
 
 .floating-social-button.home-button:hover {
-    background: #8bb3e8;
-    transform: scale(1.05);
+    filter: brightness(1.2);
 }
 
 .floating-social-button.home-button svg {
@@ -1092,8 +1089,7 @@ a.highlight-blue {
 }
 
 .floating-social-button.footer-scroll-button:hover {
-    background: #5a5966;
-    transform: scale(1.05);
+    filter: brightness(1.2);
 }
 
 .floating-social-button svg,
