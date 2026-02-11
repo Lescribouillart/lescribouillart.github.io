@@ -1027,8 +1027,8 @@ a.highlight-blue {
 }
 
 .floating-social-button {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1061,8 +1061,8 @@ a.highlight-blue {
 
 .floating-social-button svg,
 .floating-social-button img {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
 }
 
 /* Tooltip pour RSS */
