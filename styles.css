@@ -1051,11 +1051,21 @@ a.highlight-blue {
 
 .floating-social-button.rss-button {
     background: #ff6600;
-    border-radius: 0 0 10px 10px;
+    border-radius: 0;
 }
 
 .floating-social-button.rss-button:hover {
     background: #ff8533;
+    transform: scale(1.05);
+}
+
+.floating-social-button.footer-scroll-button {
+    background: #555;
+    border-radius: 0 0 10px 10px;
+}
+
+.floating-social-button.footer-scroll-button:hover {
+    background: #666;
     transform: scale(1.05);
 }
 
