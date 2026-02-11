@@ -1040,12 +1040,17 @@ a.highlight-blue {
     text-decoration: none;
 }
 
-.floating-social-button:first-child {
-    background: #333;
+.floating-social-button.header-scroll-button {
+    background: #555;
     border-radius: 10px 10px 0 0;
 }
 
-.floating-social-button:first-child svg {
+.floating-social-button.header-scroll-button:hover {
+    background: #666;
+    transform: scale(1.05);
+}
+
+.floating-social-button.header-scroll-button svg {
     stroke: #fff;
 }
 
