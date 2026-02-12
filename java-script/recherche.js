@@ -6,17 +6,36 @@ document.addEventListener('DOMContentLoaded', function() {
         return; // Si l'élément n'existe pas, on sort
     }
 
-    // Liste des pages du site
-    const sitePages = [
-        { title: 'Accueil', url: '../index.html', keywords: ['accueil', 'home', 'bienvenue', 'index'], snippet: 'Bienvenue sur Le Scribouill\'art, le journal fictif aux articles bien réels.' },
-        { title: 'Contact', url: 'contact.html', keywords: ['contact', 'contacter', 'message', 'email', 'écrire'], snippet: 'N\'hésitez pas à nous contacter pour toute question ou suggestion. Nous nous efforçons de répondre selon nos disponibilités.' },
-        { title: 'À propos', url: 'a-propos.html', keywords: ['à propos', 'a propos', 'about', 'rédacteur', 'redacteur', 'devenir'], snippet: 'Découvrez qui se cache derrière Le Scribouill\'art et comment devenir rédacteur.' },
-        { title: 'Auteur', url: 'auteur.html', keywords: ['auteur', 'drelall', 'créateur', 'createur', 'rédacteur', 'redacteur'], snippet: 'Découvrez les auteurs et créateurs du Scribouill\'art.' },
-        { title: 'Mentions légales', url: 'mentions-legales.html', keywords: ['mentions légales', 'mentions legales', 'legal', 'rgpd', 'données', 'donnees'], snippet: 'Consultez les mentions légales et la politique de confidentialité du site Le Scribouill\'art.' },
-        { title: 'Accessibilité', url: 'accessibilite.html', keywords: ['accessibilité', 'accessibilite', 'a11y', 'wcag', 'inclusion'], snippet: 'Découvrez les engagements d\'accessibilité et les fonctionnalités inclusives du site.' },
-        { title: 'Publications', url: 'listage-articles.html', keywords: ['publications', 'articles', 'liste', 'tous les articles'], snippet: 'Retrouvez tous les articles publiés sur Le Scribouill\'art.' },
-        { title: 'Feuillet', url: 'feuillet.html', keywords: ['feuillet', 'chronologie', 'timeline', 'histoire'], snippet: 'Parcourez la chronologie des publications du Scribouill\'art.' }
+    const sitePagesFallback = [
+        { title: 'Accueil', url: '../index.html', keywords: ['accueil', 'home', 'bienvenue', 'index'], snippet: 'Bienvenue sur Le Scribouill\'art, le journal fictif aux articles bien réels.' }
     ];
+    let cachedSitePages = null;
+
+    function getPagesIndexUrl() {
+        const currentPath = window.location.pathname;
+        const isInHtmlFolder = currentPath.includes('/html/');
+        return isInHtmlFolder ? '../pages.json' : 'pages.json';
+    }
+
+    async function loadSitePages() {
+        if (cachedSitePages) {
+            return cachedSitePages;
+        }
+
+        try {
+            const response = await fetch(getPagesIndexUrl());
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+            const pages = await response.json();
+            cachedSitePages = Array.isArray(pages) ? pages : sitePagesFallback;
+            return cachedSitePages;
+        } catch (error) {
+            console.error('Erreur lors du chargement de pages.json:', error);
+            cachedSitePages = sitePagesFallback;
+            return cachedSitePages;
+        }
+    }
 
     // Fonction pour effectuer la recherche
     function performSearch() {
@@ -50,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Fonction pour filtrer les articles et pages sur la page de recherche
-    function displaySearchResults() {
+    async function displaySearchResults() {
         const urlParams = new URLSearchParams(window.location.search);
         const searchTerm = urlParams.get('search');
         
@@ -90,11 +109,13 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
+        const sitePages = await loadSitePages();
+
         // Rechercher dans les pages du site
         Promise.all(sitePages.map(async (page) => {
             const titleMatch = page.title.toLowerCase().includes(searchLower);
-            const keywordMatch = page.keywords.some(keyword => keyword.includes(searchLower));
-            const snippetMatch = page.snippet.toLowerCase().includes(searchLower);
+            const keywordMatch = (page.keywords || []).some(keyword => keyword.includes(searchLower));
+            const snippetMatch = (page.snippet || '').toLowerCase().includes(searchLower);
             const contentMatch = await searchInPageContent(page);
             
             return (titleMatch || keywordMatch || snippetMatch || contentMatch) ? page : null;
@@ -192,7 +213,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Fonction pour filtrer les articles sur la page de listage (conservée pour compatibilité)
-    function filterArticlesOnPage() {
+    async function filterArticlesOnPage() {
         const urlParams = new URLSearchParams(window.location.search);
         const searchTerm = urlParams.get('search');
         
@@ -227,10 +248,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         // Rechercher dans les pages du site
+        const sitePages = await loadSitePages();
         const matchingPages = sitePages.filter(page => {
             return page.title.toLowerCase().includes(searchLower) || 
-                   page.keywords.some(keyword => keyword.includes(searchLower)) ||
-                   page.snippet.toLowerCase().includes(searchLower);
+                   (page.keywords || []).some(keyword => keyword.includes(searchLower)) ||
+                   (page.snippet || '').toLowerCase().includes(searchLower);
         });
 
         // Afficher les résultats
@@ -293,8 +315,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Bouton "J'ai de la chance" - redirection vers une page aléatoire
     const luckyButton = document.querySelector('.search-button-secondary');
     if (luckyButton) {
-        luckyButton.addEventListener('click', function(e) {
+        luckyButton.addEventListener('click', async function(e) {
             e.preventDefault();
+            const sitePages = await loadSitePages();
+            if (sitePages.length === 0) {
+                return;
+            }
             const randomPage = sitePages[Math.floor(Math.random() * sitePages.length)];
             window.location.href = randomPage.url;
         });

@@ -1,0 +1,62 @@
+[
+  {
+    "title": "Accueil",
+    "url": "../index.html",
+    "keywords": ["accueil", "home", "bienvenue", "index"],
+    "snippet": "Bienvenue sur Le Scribouill'art, le journal fictif aux articles bien réels."
+  },
+  {
+    "title": "À propos",
+    "url": "a-propos.html",
+    "keywords": ["à propos", "a propos", "about", "rédacteur", "redacteur", "devenir"],
+    "snippet": "Découvrez qui se cache derrière Le Scribouill'art et comment devenir rédacteur."
+  },
+  {
+    "title": "Accessibilité",
+    "url": "accessibilite.html",
+    "keywords": ["accessibilité", "accessibilite", "a11y", "wcag", "inclusion"],
+    "snippet": "Découvrez les engagements d'accessibilité et les fonctionnalités inclusives du site."
+  },
+  {
+    "title": "Auteur",
+    "url": "auteur.html",
+    "keywords": ["auteur", "drelall", "créateur", "createur", "rédacteur", "redacteur"],
+    "snippet": "Découvrez les auteurs et créateurs du Scribouill'art."
+  },
+  {
+    "title": "Contact",
+    "url": "contact.html",
+    "keywords": ["contact", "contacter", "message", "email", "écrire"],
+    "snippet": "N'hésitez pas à nous contacter pour toute question ou suggestion."
+  },
+  {
+    "title": "Confirmation",
+    "url": "confirmation.html",
+    "keywords": ["confirmation", "message", "envoyé", "envoye"],
+    "snippet": "Votre message a été envoyé avec succès."
+  },
+  {
+    "title": "Feuillet",
+    "url": "feuillet.html",
+    "keywords": ["feuillet", "chronologie", "timeline", "histoire"],
+    "snippet": "Parcourez la chronologie des publications du Scribouill'art."
+  },
+  {
+    "title": "Mentions légales",
+    "url": "mentions-legales.html",
+    "keywords": ["mentions légales", "mentions legales", "legal", "rgpd", "données", "donnees"],
+    "snippet": "Consultez les mentions légales et la politique de confidentialité du site."
+  },
+  {
+    "title": "Publications",
+    "url": "listage-articles.html",
+    "keywords": ["publications", "articles", "liste", "tous les articles"],
+    "snippet": "Retrouvez tous les articles publiés sur Le Scribouill'art."
+  },
+  {
+    "title": "Tirages",
+    "url": "tirages.html",
+    "keywords": ["tirages", "éditeur", "editeur", "articles"],
+    "snippet": "Éditeur d'articles pour Le Scribouill'art."
+  }
+]
