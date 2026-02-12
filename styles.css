@@ -1050,16 +1050,16 @@ a.highlight-blue {
     display: flex;
     flex-direction: column;
     gap: 0;
-    padding: 6px;
+    padding: 4px;
     background: #3a3944;
-    border-radius: 10px;
+    border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     overflow: visible;
 }
 
 .floating-social-button {
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1073,7 +1073,7 @@ a.highlight-blue {
 
 .floating-social-button.header-scroll-button {
     background: #4a4956;
-    border-radius: 10px 10px 0 0;
+    border-radius: 8px 8px 0 0;
 }
 
 .floating-social-button.header-scroll-button:hover {
@@ -1086,8 +1086,8 @@ a.highlight-blue {
 
 .floating-social-button.rss-button {
     background: #2f2e3a;
-    border-radius: 10px;
-    margin: 6px 0;
+    border-radius: 8px;
+    margin: 4px 0;
 }
 
 .floating-social-button.rss-button:hover {
@@ -1096,10 +1096,10 @@ a.highlight-blue {
 
 .floating-social-button.home-button {
     background: #f2efe6;
-    border-radius: 10px;
-    margin: 6px 0;
-    width: 40px;
-    height: 40px;
+    border-radius: 8px;
+    margin: 4px 0;
+    width: 32px;
+    height: 32px;
 }
 
 .floating-social-button.home-button:hover {
@@ -1112,13 +1112,13 @@ a.highlight-blue {
 }
 
 .floating-social-button.home-button img {
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
 }
 
 .floating-social-button.footer-scroll-button {
     background: #4a4956;
-    border-radius: 0 0 10px 10px;
+    border-radius: 0 0 8px 8px;
 }
 
 .floating-social-button.footer-scroll-button:hover {
@@ -1127,8 +1127,8 @@ a.highlight-blue {
 
 .floating-social-button svg,
 .floating-social-button img {
-    width: 36px;
-    height: 36px;
+    width: 28px;
+    height: 28px;
     display: block;
     object-fit: contain;
     object-position: center;
