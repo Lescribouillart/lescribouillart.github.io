@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
         { title: 'À propos', url: 'a-propos.html', keywords: ['à propos', 'a propos', 'about', 'rédacteur', 'redacteur', 'devenir'], snippet: 'Découvrez qui se cache derrière Le Scribouill\'art et comment devenir rédacteur.' },
         { title: 'Auteur', url: 'auteur.html', keywords: ['auteur', 'drelall', 'créateur', 'createur', 'rédacteur', 'redacteur'], snippet: 'Découvrez les auteurs et créateurs du Scribouill\'art.' },
         { title: 'Mentions légales', url: 'mentions-legales.html', keywords: ['mentions légales', 'mentions legales', 'legal', 'rgpd', 'données', 'donnees'], snippet: 'Consultez les mentions légales et la politique de confidentialité du site Le Scribouill\'art.' },
+        { title: 'Accessibilité', url: 'accessibilite.html', keywords: ['accessibilité', 'accessibilite', 'a11y', 'wcag', 'inclusion'], snippet: 'Découvrez les engagements d\'accessibilité et les fonctionnalités inclusives du site.' },
         { title: 'Publications', url: 'listage-articles.html', keywords: ['publications', 'articles', 'liste', 'tous les articles'], snippet: 'Retrouvez tous les articles publiés sur Le Scribouill\'art.' },
         { title: 'Feuillet', url: 'feuillet.html', keywords: ['feuillet', 'chronologie', 'timeline', 'histoire'], snippet: 'Parcourez la chronologie des publications du Scribouill\'art.' }
     ];
