@@ -632,14 +632,16 @@ main {
 .intro-accessibility-btn {
     position: absolute;
     left: -450px;
-    top: 0.1rem;
+    top: 50%;
+    transform: translateY(-50%);
     flex-shrink: 0;
 }
 
 .intro-site-content .intro-search-container {
     position: absolute;
     right: -450px;
-    top: 0;
+    top: 50%;
+    transform: translateY(-50%);
     margin-left: 0;
     padding-right: 0;
 }
