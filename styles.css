@@ -1053,7 +1053,7 @@ a.highlight-blue {
     background: #3a3944;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    overflow: hidden;
+    overflow: visible;
 }
 
 .floating-social-button {
@@ -1085,7 +1085,8 @@ a.highlight-blue {
 
 .floating-social-button.rss-button {
     background: #2f2e3a;
-    border-radius: 0;
+    border-radius: 10px;
+    margin: 6px 0;
 }
 
 .floating-social-button.rss-button:hover {
@@ -1093,8 +1094,9 @@ a.highlight-blue {
 }
 
 .floating-social-button.home-button {
-    background: #e0e0e0;
-    border-radius: 0;
+    background: #f2efe6;
+    border-radius: 10px;
+    margin: 6px 0;
     width: 40px;
     height: 40px;
 }
