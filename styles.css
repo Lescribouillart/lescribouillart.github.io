@@ -616,6 +616,27 @@ main {
     background-color: #e0e0e0;
 }
 
+.intro-site-content {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    position: relative;
+}
+
+.intro-site-content .intro-site {
+    margin: 0;
+    flex: 1;
+}
+
+.intro-accessibility-btn {
+    position: absolute;
+    left: -450px;
+    top: 0.1rem;
+    flex-shrink: 0;
+}
+
 .intro-site {
     font-size: 18px;
     font-family: Georgia, serif;
@@ -2238,6 +2259,14 @@ a.highlight-blue {
         font-size: 16px;
         padding: 0 1rem;
     }
+
+    .intro-site-content {
+        padding: 0 1rem;
+    }
+
+    .intro-site-content .intro-site {
+        padding: 0;
+    }
     
     .intro-site-bg {
         padding: 1rem 0;
@@ -2325,6 +2354,14 @@ a.highlight-blue {
     .intro-site {
         font-size: 15px;
         padding: 0 0.75rem;
+    }
+
+    .intro-site-content {
+        padding: 0 0.75rem;
+    }
+
+    .intro-site-content .intro-site {
+        padding: 0;
     }
     
     .presentation .key-point {
