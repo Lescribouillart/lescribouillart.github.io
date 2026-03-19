@@ -23,6 +23,11 @@ function displayArticles(articles) {
     
     container.innerHTML = articles.map(article => `
         <a href="affichage-article.html?id=${article.id}" class="article-card">
+            ${article.image ? `
+            <div class="article-image-wrapper">
+                <img src="../${article.image}" alt="${article.title}" class="article-image">
+            </div>
+            ` : ''}
             <div class="article-content">
                 <span class="article-category">${article.category}</span>
                 <h3 class="article-title">${article.title}</h3>
