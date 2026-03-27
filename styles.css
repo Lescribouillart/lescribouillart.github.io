@@ -1614,7 +1614,16 @@ a.highlight-blue {
     text-align: center;
     padding-bottom: 2rem;
     border-bottom: 1px solid var(--border-color);
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
+}
+
+.article-hero-image {
+    display: block;
+    width: 100%;
+    max-height: 420px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 2.5rem;
 }
 
 .article-content-title {
