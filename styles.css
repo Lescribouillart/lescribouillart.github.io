@@ -1617,13 +1617,31 @@ a.highlight-blue {
     margin-bottom: 2rem;
 }
 
+.article-hero-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 8px;
+    margin-bottom: 2.5rem;
+}
+
+.article-hero-bg {
+    position: absolute;
+    inset: -30px;
+    background-size: cover;
+    background-position: center;
+    filter: blur(18px);
+    transform: scale(1.12);
+    z-index: 0;
+}
+
 .article-hero-image {
     display: block;
-    max-width: 321px;
+    position: relative;
+    z-index: 1;
     width: 100%;
     height: auto;
-    border-radius: 8px;
-    margin: 0 auto 2.5rem;
+    border-radius: 0;
 }
 
 .article-content-title {

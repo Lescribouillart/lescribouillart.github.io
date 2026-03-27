@@ -38,7 +38,10 @@ function displayArticle(article) {
     // Afficher le contenu de l'article
     const container = document.getElementById('article-content');
     const imageHTML = article.image
-        ? `<img src="../${article.image}" alt="Illustration : ${article.title}" class="article-hero-image">`
+        ? `<div class="article-hero-wrapper">
+            <div class="article-hero-bg" style="background-image: url('../${article.image}')"></div>
+            <img src="../${article.image}" alt="Illustration : ${article.title}" class="article-hero-image">
+           </div>`
         : '';
     container.innerHTML = `
         <div class="article-header">
