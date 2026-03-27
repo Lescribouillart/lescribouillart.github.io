@@ -1640,7 +1640,9 @@ a.highlight-blue {
     position: relative;
     z-index: 1;
     width: 100%;
-    height: auto;
+    max-height: 423px;
+    object-fit: cover;
+    object-position: bottom;
     border-radius: 0;
 }
 
