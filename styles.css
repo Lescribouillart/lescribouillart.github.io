@@ -1603,6 +1603,13 @@ a.highlight-blue {
 /* ========================================
    ARTICLE PAGE
    ======================================== */
+#article-content {
+    background: rgba(30, 29, 42, 0.88);
+    border-radius: 10px;
+    padding: 2.5rem 3rem;
+    backdrop-filter: blur(2px);
+}
+
 .article-header {
     text-align: center;
     padding-bottom: 2rem;
