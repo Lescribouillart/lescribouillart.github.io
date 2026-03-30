@@ -1653,9 +1653,11 @@ a.highlight-blue {
 }
 
 .article-body {
-    font-size: 1.1rem;
-    line-height: 1.8;
+    font-family: 'Merriweather', Georgia, serif;
+    font-size: 1.15rem;
+    line-height: 2;
     color: var(--text-color);
+    font-weight: 300;
 }
 
 .article-body h2 {
@@ -1928,7 +1930,7 @@ a.highlight-blue {
     }
     
     .article-body {
-        font-size: 1rem;
+        font-size: 1.05rem;
     }
     
     .article-body h2 {
@@ -2037,7 +2039,7 @@ a.highlight-blue {
     }
     
     .article-body {
-        font-size: 0.95rem;
+        font-size: 1rem;
     }
     
     .article-body h2 {
