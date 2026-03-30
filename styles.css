@@ -1604,7 +1604,7 @@ a.highlight-blue {
    ARTICLE PAGE
    ======================================== */
 #article-content {
-    background: var(--bg-color);
+    background: var(--bg-light);
     border-radius: 10px;
     padding: 2.5rem 3rem;
 }
