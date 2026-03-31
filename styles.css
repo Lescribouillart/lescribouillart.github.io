@@ -1698,6 +1698,131 @@ a.highlight-blue {
     margin-bottom: 1.75rem;
 }
 
+/* Images flottantes dans les articles */
+.article-figure {
+    margin: 0 0 1.5rem 2rem;
+    float: right;
+    max-width: 45%;
+    clear: right;
+}
+
+.article-figure-left {
+    margin: 0 2rem 1.5rem 0;
+    float: left;
+    max-width: 45%;
+    clear: left;
+}
+
+.article-figure img,
+.article-figure-left img {
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+    display: block;
+}
+
+.article-figure figcaption,
+.article-figure-left figcaption {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    font-style: italic;
+    text-align: center;
+    margin-top: 0.4rem;
+    line-height: 1.4;
+}
+
+.article-body::after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+@media (max-width: 600px) {
+    .article-figure,
+    .article-figure-left {
+        float: none;
+        max-width: 100%;
+        margin: 1.5rem 0;
+    }
+}
+
+/* Image cadrée sur la hauteur du paragraphe */
+.article-para-with-image {
+    position: relative;
+    margin-bottom: 1.75rem;
+}
+
+.article-para-with-image p {
+    margin-bottom: 0;
+}
+
+/* Figure à gauche (figure est le premier enfant) */
+.article-para-with-image .article-figure-img:first-child + p {
+    margin-left: calc(38% + 1.5rem);
+}
+
+/* Figure à droite (p est le premier enfant) */
+.article-para-with-image p:first-child {
+    margin-right: calc(38% + 1.5rem);
+}
+
+.article-para-with-image .article-figure-img {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 38%;
+    overflow: hidden;
+    margin: 0;
+    border-radius: 6px;
+}
+
+.article-para-with-image .article-figure-img:first-child {
+    left: 0;
+}
+
+.article-para-with-image .article-figure-img:last-child {
+    right: 0;
+}
+
+.article-para-with-image .article-figure-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+}
+
+.article-para-with-image .article-figure-img figcaption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(26, 43, 34, 0.85);
+    padding: 0.3rem 0.5rem;
+    font-size: 0.78rem;
+    color: var(--text-light);
+    font-style: italic;
+    text-align: center;
+    line-height: 1.3;
+}
+
+@media (max-width: 600px) {
+    .article-para-with-image .article-figure-img {
+        position: relative;
+        width: 100%;
+        height: 220px;
+        top: auto;
+        bottom: auto;
+        left: auto;
+        right: auto;
+    }
+    .article-para-with-image .article-figure-img:first-child + p,
+    .article-para-with-image p:first-child {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
 .article-footer {
     margin-top: 1rem;
     text-align: center;
