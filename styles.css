@@ -92,7 +92,7 @@ body {
 
 .header-drawer-toggle {
     position: absolute;
-    left: calc(-268px - 2rem);
+    left: calc(-273px - 2rem);
     top: 50%;
     transform: translateY(-50%);
     width: 52px;
@@ -2098,7 +2098,7 @@ a.highlight-blue {
     }
 
     .header-drawer-toggle {
-        left: calc(-180px - 1rem);
+        left: calc(-185px - 1rem);
         width: 46px;
         height: 46px;
         padding: 0 0.8rem;
