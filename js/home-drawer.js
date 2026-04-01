@@ -7,7 +7,7 @@
         const backdrop = document.querySelector('.home-drawer-backdrop');
         const closeButton = document.querySelector('.home-side-panel-close');
 
-        if (!toggleButton || !sidePanel || !backdrop || !closeButton) {
+        if (!toggleButton || !sidePanel || !backdrop) {
             return;
         }
 
@@ -19,7 +19,6 @@
             backdrop.hidden = !isOpen;
 
             if (isOpen) {
-                closeButton.focus();
                 return;
             }
 
@@ -31,9 +30,11 @@
             setDrawerState(!isOpen);
         });
 
-        closeButton.addEventListener('click', function() {
-            setDrawerState(false);
-        });
+        if (closeButton) {
+            closeButton.addEventListener('click', function() {
+                setDrawerState(false);
+            });
+        }
 
         backdrop.addEventListener('click', function() {
             setDrawerState(false);
