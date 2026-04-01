@@ -17,6 +17,17 @@
     <a href="#main-content" class="skip-link">Aller au contenu principal</a>
     <header class="header">
         <div class="container">
+            <button
+                class="header-drawer-toggle"
+                type="button"
+                aria-label="Ouvrir le volet latéral"
+                aria-controls="home-side-panel"
+                aria-expanded="false"
+            >
+                <span class="header-drawer-toggle-line"></span>
+                <span class="header-drawer-toggle-line"></span>
+                <span class="header-drawer-toggle-line"></span>
+            </button>
             <a href="index.html" style="text-decoration: none; color: inherit;">
                 <div class="logo-row">
                     <h1 class="logo">Le Scribouill'art</h1>
@@ -31,6 +42,21 @@
             </nav>
         </div>
     </header>
+
+    <div class="home-drawer-backdrop" hidden></div>
+    <aside class="home-side-panel" id="home-side-panel" aria-hidden="true" hidden>
+        <div class="home-side-panel-inner">
+            <div class="home-side-panel-header">
+                <p class="home-side-panel-kicker">Volet</p>
+                <button class="home-side-panel-close" type="button" aria-label="Fermer le volet latéral">×</button>
+            </div>
+            <h2 class="home-side-panel-title">Espace feuillet</h2>
+            <p class="home-side-panel-text">
+                Ce volet vertical est prêt à accueillir le contenu que vous souhaitez déplacer depuis l'onglet Feuillet.
+            </p>
+            <a href="html/feuillet.html" class="home-side-panel-link">Ouvrir le feuillet</a>
+        </div>
+    </aside>
 
     <div class="intro-site-bg">
         <div class="intro-site-content">
@@ -119,6 +145,7 @@
     </div>
     
     <!-- <script src="theme/noel/neige.js" defer></script> -->
+    <script src="js/home-drawer.js"></script>
     <script src="js/dyslexic-mode.js"></script>
     <script src="java-script/recherche.js"></script>
 </body>
