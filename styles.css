@@ -435,6 +435,13 @@ body.home-drawer-open .home-side-panel-inner {
     padding: 3rem 0;
 }
 
+.search-page-drawer-toggle {
+    position: fixed;
+    left: 1rem;
+    top: 1rem;
+    z-index: 1100;
+}
+
 .search-page-container {
     max-width: 600px;
     margin: 0 auto;

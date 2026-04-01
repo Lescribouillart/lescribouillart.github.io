@@ -10,6 +10,17 @@
     <a href="#main-content" class="skip-link">Aller au contenu principal</a>
     <header class="header">
         <div class="container">
+            <button
+                class="header-drawer-toggle"
+                type="button"
+                aria-label="Ouvrir le volet latéral"
+                aria-controls="home-side-panel"
+                aria-expanded="false"
+            >
+                <span class="header-drawer-toggle-line"></span>
+                <span class="header-drawer-toggle-line"></span>
+                <span class="header-drawer-toggle-line"></span>
+            </button>
             <a href="../index.html" style="text-decoration: none; color: inherit;">
                 <div class="logo-row">
                     <h1 class="logo">Le Scribouill'art</h1>
@@ -23,6 +34,14 @@
             </nav>
         </div>
     </header>
+
+    <div class="home-drawer-backdrop" hidden></div>
+    <aside class="home-side-panel" id="home-side-panel" aria-hidden="true" hidden>
+        <div class="home-side-panel-inner">
+            <h2 class="home-side-panel-title">Le feuillet</h2>
+            <a href="feuillet.html" class="home-side-panel-text">À l'aube des temps</a>
+        </div>
+    </aside>
     
     <div class="intro-site-bg">
         <div class="intro-site-content">
@@ -118,6 +137,7 @@
         </button>
     </div>
     
+    <script src="../js/home-drawer.js"></script>
     <script src="../js/dyslexic-mode.js"></script>
     <script src="../java-script/recherche.js"></script>
 </body>

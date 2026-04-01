@@ -13,6 +13,24 @@
 </head>
 <body>
     <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+    <button
+        class="header-drawer-toggle search-page-drawer-toggle"
+        type="button"
+        aria-label="Ouvrir le volet latéral"
+        aria-controls="home-side-panel"
+        aria-expanded="false"
+    >
+        <span class="header-drawer-toggle-line"></span>
+        <span class="header-drawer-toggle-line"></span>
+        <span class="header-drawer-toggle-line"></span>
+    </button>
+    <div class="home-drawer-backdrop" hidden></div>
+    <aside class="home-side-panel" id="home-side-panel" aria-hidden="true" hidden>
+        <div class="home-side-panel-inner">
+            <h2 class="home-side-panel-title">Le feuillet</h2>
+            <a href="feuillet.html" class="home-side-panel-text">À l'aube des temps</a>
+        </div>
+    </aside>
     <div class="search-page-header">
         <div class="intro-site-content">
             <button class="accessibility-btn intro-accessibility-btn" aria-label="Mode dyslexie">
@@ -46,6 +64,7 @@
     </main>
 
     <!-- <script src="../theme/noel/neige.js" defer></script> -->
+    <script src="../js/home-drawer.js"></script>
     <script src="../js/dyslexic-mode.js"></script>
     <script src="../java-script/recherche.js"></script>
 </body>
