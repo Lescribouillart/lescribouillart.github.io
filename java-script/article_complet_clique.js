@@ -45,8 +45,8 @@ function displayArticle(article) {
            </figure>`
         : '';
     const articleMeta = [
-        article.author ? `<span class="article-meta-author">Article rédigé par ${article.author}</span>` : '',
-        article.date ? `<span class="article-meta-date">${article.date}</span>` : ''
+        article.date ? `<span class="article-meta-date">${article.date}</span>` : '',
+        article.author ? `<span class="article-meta-author">Article rédigé par ${article.author}</span>` : ''
     ].filter(Boolean).join(' - ');
     container.innerHTML = `
         <div class="article-header">
