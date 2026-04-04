@@ -1646,9 +1646,13 @@ a.highlight-blue {
    ======================================== */
 .articles-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 2rem;
     margin-top: 2rem;
+}
+
+.publications-main .container {
+    max-width: 1480px;
 }
 
 .article-card {
@@ -2055,6 +2059,17 @@ a.highlight-blue {
 /* ========================================
    RESPONSIVE
    ======================================== */
+
+/* Desktops intermédiaires */
+@media (max-width: 1400px) {
+    .publications-main .container {
+        max-width: 1100px;
+    }
+
+    .articles-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
 
 /* Tablettes paysage et petits desktops */
 @media (max-width: 1200px) {
