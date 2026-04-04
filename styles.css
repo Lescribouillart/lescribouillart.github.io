@@ -1733,6 +1733,11 @@ a.highlight-blue {
     font-weight: 500;
 }
 
+.article-meta-author {
+    color: #7ba3d8;
+    font-style: italic;
+}
+
 .article-summary {
     color: var(--text-color);
     line-height: 1.6;

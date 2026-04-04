@@ -44,11 +44,15 @@ function displayArticle(article) {
             ${article.imageCaption ? `<figcaption>${article.imageCaption}</figcaption>` : ''}
            </figure>`
         : '';
+    const articleMeta = [
+        article.author ? `<span class="article-meta-author">Article rédigé par ${article.author}</span>` : '',
+        article.date ? `<span class="article-meta-date">${article.date}</span>` : ''
+    ].filter(Boolean).join(' - ');
     container.innerHTML = `
         <div class="article-header">
             <span class="article-category">${article.category}</span>
             <h1 class="article-content-title">${article.title}</h1>
-            <p class="article-date">${article.date}</p>
+            ${articleMeta ? `<p class="article-date">${articleMeta}</p>` : ''}
         </div>
         ${imageHTML}
         <div class="article-body">
