@@ -13,7 +13,7 @@
     "id": 2,
     "title": "Chronique à venir",
     "category": "À paraître",
-    "date": "Prochainement",
+    "date": "",
     "excerpt": "Un nouvel article prendra bientôt place ici. Ce contenu provisoire sera remplacé par une publication complète.",
     "content": "<p class=\"article-placeholder\">Cet article provisoire sera remplacé prochainement par une publication du Scribouill'art.</p>"
   },
@@ -21,7 +21,7 @@
     "id": 3,
     "title": "Chronique à venir",
     "category": "À paraître",
-    "date": "Prochainement",
+    "date": "",
     "excerpt": "Un nouvel article prendra bientôt place ici. Ce contenu provisoire sera remplacé par une publication complète.",
     "content": "<p class=\"article-placeholder\">Cet article provisoire sera remplacé prochainement par une publication du Scribouill'art.</p>"
   },
@@ -29,7 +29,7 @@
     "id": 4,
     "title": "Chronique à venir",
     "category": "À paraître",
-    "date": "Prochainement",
+    "date": "",
     "excerpt": "Un nouvel article prendra bientôt place ici. Ce contenu provisoire sera remplacé par une publication complète.",
     "content": "<p class=\"article-placeholder\">Cet article provisoire sera remplacé prochainement par une publication du Scribouill'art.</p>"
   }
