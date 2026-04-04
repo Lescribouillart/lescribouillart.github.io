@@ -1655,7 +1655,7 @@ a.highlight-blue {
     background: var(--bg-light);
     border-radius: 8px;
     overflow: hidden;
-    transition: all 0.3s ease;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
     border: 1px solid var(--border-color);
     cursor: pointer;
     display: flex;
@@ -1678,7 +1678,6 @@ a.highlight-blue {
 }
 
 .article-card:hover {
-    transform: translateY(-8px);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     border-color: var(--secondary-color);
 }
@@ -1751,7 +1750,7 @@ a.highlight-blue {
 }
 
 .article-card:hover .article-link::after {
-    transform: translateX(5px);
+    transform: none;
 }
 
 /* ========================================
