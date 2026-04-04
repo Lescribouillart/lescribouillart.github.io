@@ -1885,6 +1885,14 @@ a.highlight-blue {
     margin-bottom: 1.75rem;
 }
 
+.article-signature {
+    text-align: right;
+    font-size: 0.9rem;
+    font-style: italic;
+    margin-top: 2rem;
+    margin-bottom: 0;
+}
+
 /* Images flottantes dans les articles */
 .article-figure {
     margin: 0 0 1.5rem 2rem;
