@@ -1776,6 +1776,8 @@ a.highlight-blue {
     overflow: hidden;
     border-radius: 8px;
     margin-bottom: 2.5rem;
+    margin-left: 0;
+    margin-right: 0;
 }
 
 .article-hero-bg {
@@ -1797,6 +1799,21 @@ a.highlight-blue {
     object-fit: cover;
     object-position: bottom;
     border-radius: 0;
+}
+
+.article-hero-wrapper figcaption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    background: rgba(26, 43, 34, 0.85);
+    padding: 0.55rem 0.75rem;
+    font-size: 0.82rem;
+    color: var(--text-light);
+    font-style: italic;
+    text-align: center;
+    line-height: 1.4;
 }
 
 .article-content-title {
