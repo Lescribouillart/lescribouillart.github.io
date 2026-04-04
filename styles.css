@@ -1678,7 +1678,7 @@ a.highlight-blue {
 }
 
 .article-card:hover {
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: none;
     border-color: var(--border-color);
     outline: none;
 }
