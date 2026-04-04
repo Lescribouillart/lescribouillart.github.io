@@ -15,7 +15,7 @@
     "category": "À paraître",
     "date": "Prochainement",
     "excerpt": "Un nouvel article prendra bientôt place ici. Ce contenu provisoire sera remplacé par une publication complète.",
-    "content": "<p>Cet article est un emplacement temporaire destiné à accueillir une future publication.</p><p>Son contenu sera remplacé prochainement par un véritable article du Scribouill'art.</p>"
+    "content": "<p class=\"article-placeholder\">Cet article provisoire sera remplacé prochainement par une publication du Scribouill'art.</p>"
   },
   {
     "id": 3,
@@ -23,7 +23,7 @@
     "category": "À paraître",
     "date": "Prochainement",
     "excerpt": "Un nouvel article prendra bientôt place ici. Ce contenu provisoire sera remplacé par une publication complète.",
-    "content": "<p>Cet article est un emplacement temporaire destiné à accueillir une future publication.</p><p>Son contenu sera remplacé prochainement par un véritable article du Scribouill'art.</p>"
+    "content": "<p class=\"article-placeholder\">Cet article provisoire sera remplacé prochainement par une publication du Scribouill'art.</p>"
   },
   {
     "id": 4,
@@ -31,6 +31,6 @@
     "category": "À paraître",
     "date": "Prochainement",
     "excerpt": "Un nouvel article prendra bientôt place ici. Ce contenu provisoire sera remplacé par une publication complète.",
-    "content": "<p>Cet article est un emplacement temporaire destiné à accueillir une future publication.</p><p>Son contenu sera remplacé prochainement par un véritable article du Scribouill'art.</p>"
+    "content": "<p class=\"article-placeholder\">Cet article provisoire sera remplacé prochainement par une publication du Scribouill'art.</p>"
   }
 ]
