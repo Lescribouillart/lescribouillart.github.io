@@ -1647,12 +1647,12 @@ a.highlight-blue {
 .articles-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
+    gap: 1.25rem;
     margin-top: 2rem;
 }
 
 .publications-main .container {
-    max-width: 1480px;
+    max-width: 1640px;
 }
 
 .article-card {
