@@ -313,9 +313,12 @@ body.home-drawer-open .home-side-panel-inner {
     text-transform: uppercase;
     letter-spacing: 1px;
     margin-bottom: 1rem;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 1rem;
+    padding: 0.45rem 0.9rem;
+    border: 1px solid rgba(123, 163, 216, 0.35);
+    border-radius: 6px;
 }
 
 .nav {
