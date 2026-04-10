@@ -12,6 +12,144 @@ function normalizeArticleContent(content) {
     return content || '';
 }
 
+function escapeHtml(value) {
+    return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+}
+
+function parseInlineMarkdown(text) {
+    return escapeHtml(text)
+        .replace(/`([^`]+)`/g, '<code>$1</code>')
+        .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*([^*]+)\*/g, '<em>$1</em>')
+        .replace(/_([^_]+)_/g, '<em>$1</em>')
+        .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
+}
+
+function renderMarkdown(markdown) {
+    const lines = markdown.replace(/\r\n/g, '\n').split('\n');
+    const html = [];
+    let paragraphBuffer = [];
+    let listBuffer = [];
+    let listType = null;
+    let htmlBuffer = [];
+
+    function flushParagraph() {
+        if (paragraphBuffer.length === 0) {
+            return;
+        }
+
+        html.push(`<p>${parseInlineMarkdown(paragraphBuffer.join(' '))}</p>`);
+        paragraphBuffer = [];
+    }
+
+    function flushList() {
+        if (listBuffer.length === 0 || !listType) {
+            return;
+        }
+
+        const items = listBuffer.map((item) => `<li>${parseInlineMarkdown(item)}</li>`).join('');
+        html.push(`<${listType}>${items}</${listType}>`);
+        listBuffer = [];
+        listType = null;
+    }
+
+    function flushHtmlBuffer() {
+        if (htmlBuffer.length === 0) {
+            return;
+        }
+
+        html.push(htmlBuffer.join('\n'));
+        htmlBuffer = [];
+    }
+
+    for (const line of lines) {
+        const trimmed = line.trim();
+
+        if (!trimmed) {
+            flushParagraph();
+            flushList();
+            flushHtmlBuffer();
+            continue;
+        }
+
+        if (htmlBuffer.length > 0 || trimmed.startsWith('<')) {
+            flushParagraph();
+            flushList();
+            htmlBuffer.push(line);
+            continue;
+        }
+
+        const headingMatch = trimmed.match(/^(#{1,6})\s+(.*)$/);
+
+        if (headingMatch) {
+            flushParagraph();
+            flushList();
+            const level = headingMatch[1].length;
+            html.push(`<h${level}>${parseInlineMarkdown(headingMatch[2])}</h${level}>`);
+            continue;
+        }
+
+        const unorderedMatch = trimmed.match(/^[-*+]\s+(.*)$/);
+
+        if (unorderedMatch) {
+            flushParagraph();
+
+            if (listType && listType !== 'ul') {
+                flushList();
+            }
+
+            listType = 'ul';
+            listBuffer.push(unorderedMatch[1]);
+            continue;
+        }
+
+        const orderedMatch = trimmed.match(/^\d+\.\s+(.*)$/);
+
+        if (orderedMatch) {
+            flushParagraph();
+
+            if (listType && listType !== 'ol') {
+                flushList();
+            }
+
+            listType = 'ol';
+            listBuffer.push(orderedMatch[1]);
+            continue;
+        }
+
+        flushList();
+        paragraphBuffer.push(trimmed);
+    }
+
+    flushParagraph();
+    flushList();
+    flushHtmlBuffer();
+
+    return html.join('\n');
+}
+
+async function resolveArticleContent(article) {
+    if (article.markdownFile) {
+        try {
+            const response = await fetch(`../${article.markdownFile}`);
+
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+
+            const markdown = await response.text();
+            return renderMarkdown(markdown);
+        } catch (error) {
+            console.error('Erreur lors du chargement du Markdown :', error);
+        }
+    }
+
+    return normalizeArticleContent(article.content);
+}
+
 // Charger et afficher l'article
 async function loadArticle() {
     const articleId = getArticleId();
@@ -28,7 +166,8 @@ async function loadArticle() {
         const article = articles.find(a => a.id === articleId);
         
         if (article) {
-            displayArticle(article);
+            const articleContent = await resolveArticleContent(article);
+            displayArticle(article, articleContent);
         } else {
             displayError('Article non trouvé');
         }
@@ -39,7 +178,7 @@ async function loadArticle() {
 }
 
 // Afficher l'article complet
-function displayArticle(article) {
+function displayArticle(article, articleContent) {
     // Mettre à jour le titre de la page
     document.getElementById('page-title').textContent = `${article.title} - Le Scribouill'art`;
     
@@ -56,8 +195,6 @@ function displayArticle(article) {
         article.date ? `<span class="article-meta-date">${article.date}</span>` : '',
         article.author ? `<span class="article-meta-author">Article rédigé par ${article.author}</span>` : ''
     ].filter(Boolean).join(' - ');
-    const articleContent = normalizeArticleContent(article.content);
-
     container.innerHTML = `
         <div class="article-header">
             <span class="article-category">${article.category}</span>
