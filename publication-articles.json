@@ -3,12 +3,12 @@
     "id": 1,
     "title": "Le barrage d'Écluselac refait surface",
     "author": "Drelall",
-    "category": "Investigation",
+    "category": "Reportage",
     "date": "RP : 12 Juin 2001/ HRP : 19 mars 2025",
     "image": "images/lesarticles/1/barrage2.png",
     "imageCaption": "Mise ne fonction du barrage Le Serre-Étoile en 1963",
     "excerpt": "Le barrage du Serre-Étoile s'est effondré. Le CERF a fermé ses portes. Mais la cause officielle du drame laisse encore trop de questions sans réponse.",
-    "markdownFile": "articles/barrage-ecluselac.md"
+    "markdownFile": "textes/barrage-ecluselac.md"
   },
   {
     "id": 2,
@@ -16,7 +16,7 @@
     "category": "À paraître",
     "date": "",
     "excerpt": "Un nouvel article prendra bientôt place ici. Ce contenu provisoire sera remplacé par une publication complète.",
-    "markdownFile": "articles/chronique-a-venir-2.md"
+    "markdownFile": "textes/chronique-a-venir-2.md"
   },
   {
     "id": 3,
@@ -24,7 +24,7 @@
     "category": "À paraître",
     "date": "",
     "excerpt": "Un nouvel article prendra bientôt place ici. Ce contenu provisoire sera remplacé par une publication complète.",
-    "markdownFile": "articles/chronique-a-venir-3.md"
+    "markdownFile": "textes/chronique-a-venir-3.md"
   },
   {
     "id": 4,
@@ -32,6 +32,6 @@
     "category": "À paraître",
     "date": "",
     "excerpt": "Un nouvel article prendra bientôt place ici. Ce contenu provisoire sera remplacé par une publication complète.",
-    "markdownFile": "articles/chronique-a-venir-4.md"
+    "markdownFile": "textes/chronique-a-venir-4.md"
   }
 ]
