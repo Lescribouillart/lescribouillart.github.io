@@ -4,6 +4,14 @@ function getArticleId() {
     return parseInt(params.get('id'));
 }
 
+function normalizeArticleContent(content) {
+    if (Array.isArray(content)) {
+        return content.join('\n');
+    }
+
+    return content || '';
+}
+
 // Charger et afficher l'article
 async function loadArticle() {
     const articleId = getArticleId();
@@ -48,6 +56,8 @@ function displayArticle(article) {
         article.date ? `<span class="article-meta-date">${article.date}</span>` : '',
         article.author ? `<span class="article-meta-author">Article rédigé par ${article.author}</span>` : ''
     ].filter(Boolean).join(' - ');
+    const articleContent = normalizeArticleContent(article.content);
+
     container.innerHTML = `
         <div class="article-header">
             <span class="article-category">${article.category}</span>
@@ -56,7 +66,7 @@ function displayArticle(article) {
         </div>
         ${imageHTML}
         <div class="article-body">
-            ${article.content}
+            ${articleContent}
         </div>
     `;
 }
