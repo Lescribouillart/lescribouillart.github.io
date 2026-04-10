@@ -317,7 +317,7 @@ body.home-drawer-open .home-side-panel-inner {
     align-items: center;
     gap: 1rem;
     padding: 0.45rem 0.9rem;
-    border: 1px solid rgba(123, 163, 216, 0.35);
+    border: 0.05px solid var(--text-light);
     border-radius: 6px;
 }
 
