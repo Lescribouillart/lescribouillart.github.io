@@ -1949,6 +1949,7 @@ a.highlight-blue {
 
 /* Image cadrée sur la hauteur du paragraphe */
 .article-para-with-image {
+    --article-inline-figure-width: 38%;
     position: relative;
     margin-bottom: 1.75rem;
 }
@@ -1959,22 +1960,26 @@ a.highlight-blue {
 
 /* Figure à gauche (figure est le premier enfant) */
 .article-para-with-image .article-figure-img:first-child + p {
-    margin-left: calc(38% + 1.5rem);
+    margin-left: calc(var(--article-inline-figure-width) + 1.5rem);
 }
 
 /* Figure à droite (p est le premier enfant) */
 .article-para-with-image p:first-child {
-    margin-right: calc(38% + 1.5rem);
+    margin-right: calc(var(--article-inline-figure-width) + 1.5rem);
 }
 
 .article-para-with-image .article-figure-img {
     position: absolute;
     top: 0;
     bottom: 0;
-    width: 38%;
+    width: var(--article-inline-figure-width);
     overflow: hidden;
     margin: 0;
     border-radius: 6px;
+}
+
+.article-para-with-image.article-para-with-machine-room {
+    --article-inline-figure-width: 38%;
 }
 
 .article-para-with-image .article-figure-img:first-child {
@@ -1985,7 +1990,15 @@ a.highlight-blue {
     right: 0;
 }
 
-.article-para-with-image .article-figure-img img {
+.article-para-with-image .article-figure-img.article-figure-fun img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+.article-para-with-image .article-figure-img.article-figure-machine-room img {
     width: 100%;
     height: 100%;
     object-fit: cover;
