@@ -320,6 +320,7 @@ body.home-drawer-open .home-side-panel-inner {
     position: relative;
     border: 1px solid currentColor;
     border-radius: 6px;
+    overflow: visible;
 }
 
 .tagline::before,
@@ -341,6 +342,35 @@ body.home-drawer-open .home-side-panel-inner {
     right: -2px;
     top: calc(50% - 7px);
 }
+
+.tagline-firefly {
+    position: absolute;
+    width: var(--firefly-size, 7px);
+    height: var(--firefly-size, 7px);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 3;
+    background: radial-gradient(circle, rgba(233, 245, 255, 0.98) 0%, rgba(201, 226, 251, 0.95) 34%, rgba(123, 163, 216, 0.35) 68%, rgba(123, 163, 216, 0) 100%);
+    box-shadow: 0 0 6px rgba(233, 245, 255, 0.95), 0 0 12px rgba(123, 163, 216, 0.4);
+    animation: tagline-firefly-drift var(--firefly-duration, 1100ms) ease-out forwards;
+}
+
+@keyframes tagline-firefly-drift {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.45);
+    }
+
+    18% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(calc(-50% + var(--firefly-x)), calc(-50% + var(--firefly-y))) scale(1.2);
+    }
+}
+
 
 .nav {
     display: flex;
