@@ -317,8 +317,28 @@ body.home-drawer-open .home-side-panel-inner {
     align-items: center;
     gap: 1rem;
     padding: 0.45rem 0.9rem;
-    border: 0.05px solid var(--text-light);
+    position: relative;
+    border: 1px solid currentColor;
     border-radius: 6px;
+}
+
+.tagline::before,
+.tagline::after {
+    content: '';
+    position: absolute;
+    width: 3px;
+    height: 14px;
+    background: var(--bg-color);
+}
+
+.tagline::before {
+    left: -2px;
+    top: calc(50% - 7px);
+}
+
+.tagline::after {
+    right: -2px;
+    top: calc(50% - 7px);
 }
 
 .nav {
