@@ -4,6 +4,7 @@
     const LEAF_SPAWN_INTERVAL = 2560;
     const GLOW_POP_DELAY = 300;
     const INTRO_LEAF_BURST_DELAY = 180;
+    const INTRO_LEAF_SECOND_BURST_DELAY = 340;
 
     document.addEventListener('DOMContentLoaded', function() {
         const taglines = document.querySelectorAll('.tagline');
@@ -143,15 +144,30 @@
                     leafImageUrl: leafImageUrls[0],
                     trajectory: createIntroTrajectory(1),
                     duration: 1800,
-                    startY: (tagline.clientHeight / 2) - 6
+                    startY: (tagline.clientHeight / 2) - 11
                 });
                 createLeaf(tagline, 'right', leafImageUrls, {
                     leafImageUrl: leafImageUrls[1],
                     trajectory: createIntroTrajectory(-1),
                     duration: 1800,
-                    startY: (tagline.clientHeight / 2) + 2
+                    startY: (tagline.clientHeight / 2) + 7
                 });
             }, GLOW_POP_DELAY + INTRO_LEAF_BURST_DELAY);
+
+            window.setTimeout(function() {
+                createLeaf(tagline, 'left', leafImageUrls, {
+                    leafImageUrl: leafImageUrls[1],
+                    trajectory: createIntroTrajectory(1),
+                    duration: 1850,
+                    startY: (tagline.clientHeight / 2) + 9
+                });
+                createLeaf(tagline, 'right', leafImageUrls, {
+                    leafImageUrl: leafImageUrls[0],
+                    trajectory: createIntroTrajectory(-1),
+                    duration: 1850,
+                    startY: (tagline.clientHeight / 2) - 10
+                });
+            }, GLOW_POP_DELAY + INTRO_LEAF_BURST_DELAY + INTRO_LEAF_SECOND_BURST_DELAY);
         }
 
         function pickTrajectory(sideDirection) {
