@@ -144,14 +144,14 @@
             window.setTimeout(function() {
                 createLeaf(tagline, 'left', leafImageUrls, {
                     leafImageUrl: leafImageUrls[0],
-                    trajectory: createIntroTrajectory(1),
+                    trajectory: createIntroTrajectory(-1),
                     duration: 1800,
                     startX: -16,
                     startY: (tagline.clientHeight / 2) - 11
                 });
                 createLeaf(tagline, 'right', leafImageUrls, {
                     leafImageUrl: leafImageUrls[1],
-                    trajectory: createIntroTrajectory(-1),
+                    trajectory: createIntroTrajectory(1),
                     duration: 1800,
                     startX: tagline.clientWidth + 16,
                     startY: (tagline.clientHeight / 2) + 7
@@ -161,14 +161,14 @@
             window.setTimeout(function() {
                 createLeaf(tagline, 'left', leafImageUrls, {
                     leafImageUrl: leafImageUrls[1],
-                    trajectory: createIntroTrajectory(1),
+                    trajectory: createIntroTrajectory(-1),
                     duration: 1850,
                     startX: -20,
                     startY: (tagline.clientHeight / 2) + 9
                 });
                 createLeaf(tagline, 'right', leafImageUrls, {
                     leafImageUrl: leafImageUrls[0],
-                    trajectory: createIntroTrajectory(-1),
+                    trajectory: createIntroTrajectory(1),
                     duration: 1850,
                     startX: tagline.clientWidth + 20,
                     startY: (tagline.clientHeight / 2) - 10
