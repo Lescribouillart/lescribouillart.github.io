@@ -2,6 +2,8 @@
     'use strict';
 
     const LEAF_SPAWN_INTERVAL = 2560;
+    const GLOW_POP_DELAY = 300;
+    const INTRO_LEAF_BURST_DELAY = 180;
 
     document.addEventListener('DOMContentLoaded', function() {
         const taglines = document.querySelectorAll('.tagline');
@@ -17,9 +19,16 @@
             return;
         }
 
+        const shouldRunIntroBurst = document.body.classList.contains('home-page')
+            && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
         taglines.forEach(function(tagline) {
             let activeSide = null;
             let spawnTimer = null;
+
+            if (shouldRunIntroBurst) {
+                triggerIntroLeafBurst(tagline, leafImageUrls);
+            }
 
             tagline.addEventListener('mousemove', function(event) {
                 const hoveredSide = getHoveredGlowSide(tagline, event);
@@ -81,16 +90,17 @@
             return isLeftGlow ? 'left' : 'right';
         }
 
-        function createLeaf(tagline, side, leafImageUrls) {
+        function createLeaf(tagline, side, leafImageUrls, options) {
+            const leafOptions = options || {};
             const leaf = document.createElement('span');
             const leafBody = document.createElement('span');
-            const leafImageUrl = leafImageUrls[Math.floor(Math.random() * leafImageUrls.length)];
+            const leafImageUrl = leafOptions.leafImageUrl || leafImageUrls[Math.floor(Math.random() * leafImageUrls.length)];
             const size = 18 + Math.random() * 12;
             const sideDirection = side === 'left' ? 1 : -1;
-            const trajectory = pickTrajectory(sideDirection);
-            const duration = 4600 + Math.random() * 2200;
+            const trajectory = leafOptions.trajectory || pickTrajectory(sideDirection);
+            const duration = leafOptions.duration || (4600 + Math.random() * 2200);
             const startX = side === 'left' ? 0 : tagline.clientWidth;
-            const startY = (tagline.clientHeight / 2) + ((Math.random() * 14) - 7);
+            const startY = leafOptions.startY || ((tagline.clientHeight / 2) + ((Math.random() * 14) - 7));
             const swayDirection = Math.random() < 0.5 ? -1 : 1;
             const rotationStart = swayDirection * (8 + Math.random() * 12);
             const rotationMid = rotationStart + (swayDirection * (12 + Math.random() * 10));
@@ -127,6 +137,23 @@
             });
         }
 
+        function triggerIntroLeafBurst(tagline, leafImageUrls) {
+            window.setTimeout(function() {
+                createLeaf(tagline, 'left', leafImageUrls, {
+                    leafImageUrl: leafImageUrls[0],
+                    trajectory: createIntroTrajectory(1),
+                    duration: 1800,
+                    startY: (tagline.clientHeight / 2) - 6
+                });
+                createLeaf(tagline, 'right', leafImageUrls, {
+                    leafImageUrl: leafImageUrls[1],
+                    trajectory: createIntroTrajectory(-1),
+                    duration: 1800,
+                    startY: (tagline.clientHeight / 2) + 2
+                });
+            }, GLOW_POP_DELAY + INTRO_LEAF_BURST_DELAY);
+        }
+
         function pickTrajectory(sideDirection) {
             const lanes = [
                 createDirectionalPath(sideDirection, 0, 28, 96, 0.18),
@@ -159,6 +186,22 @@
                 y3: (axisY * 0.76) + (normalY * swayThree),
                 endX: axisX + (normalX * (((Math.random() * 2) - 1) * baseRadius * 0.16)),
                 endY: axisY + (normalY * (((Math.random() * 2) - 1) * baseRadius * 0.16))
+            };
+        }
+
+        function createIntroTrajectory(sideDirection) {
+            const baseX = sideDirection * (10 + Math.random() * 10);
+            const liftY = ((Math.random() * 12) - 6);
+
+            return {
+                x1: baseX * 0.25,
+                y1: liftY * 0.2,
+                x2: baseX * 0.5,
+                y2: liftY * 0.45,
+                x3: baseX * 0.78,
+                y3: liftY * 0.7,
+                endX: baseX,
+                endY: liftY
             };
         }
     });
