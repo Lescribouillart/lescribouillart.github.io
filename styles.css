@@ -87,7 +87,58 @@ select {
 .header {
     background: var(--bg-color);
     border-bottom: 1px solid var(--border-color);
+    position: relative;
+    overflow: visible;
+    isolation: isolate;
     z-index: 1000;
+}
+
+.header::before,
+.header::after {
+    content: '';
+    position: absolute;
+    pointer-events: none;
+}
+
+.header::before {
+    display: none;
+}
+
+.header::after {
+    inset: 0;
+    background:
+        radial-gradient(circle at 50% 0%, rgba(155, 191, 231, 0.08), transparent 38%),
+        linear-gradient(180deg, rgba(18, 18, 24, 0.08) 0%, rgba(18, 18, 24, 0) 36%, rgba(18, 18, 24, 0.12) 100%);
+    opacity: 0.62;
+    z-index: 0;
+}
+
+.header-rootline {
+    position: absolute;
+    left: -50px;
+    bottom: -10px;
+    width: min(830px, calc(50% - 70px));
+    height: 72px;
+    opacity: 0.92;
+    z-index: 1;
+    user-select: none;
+    pointer-events: none;
+    transform: translate(0, 18px);
+    transform-origin: center bottom;
+}
+
+.header-rootline-right {
+    left: auto;
+    right: -50px;
+}
+
+.header-rootline img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    pointer-events: none;
+    opacity: 0.92;
 }
 
 .header .container {
@@ -98,6 +149,19 @@ select {
     max-width: 1200px;
     margin: 0 auto;
     position: relative;
+    z-index: 2;
+}
+
+@keyframes header-rootline-in {
+    0% {
+        opacity: 0;
+        transform: translate(calc(-50% + var(--rootline-offset-x, 0px)), calc(var(--rootline-offset-y, 0px) + 8px));
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(calc(-50% + var(--rootline-offset-x, 0px)), var(--rootline-offset-y, 0px));
+    }
 }
 
 .header-drawer-toggle {
@@ -874,7 +938,7 @@ main {
     right: 50%;
     margin-left: -50vw;
     margin-right: -50vw;
-    padding: 0.8rem 0;
+    padding: 2.2rem 0 0.8rem;
     margin-bottom: 0;
     margin-top: 0;
     background-color: #e0e0e0;
