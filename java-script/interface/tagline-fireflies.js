@@ -100,7 +100,9 @@
             const sideDirection = side === 'left' ? 1 : -1;
             const trajectory = leafOptions.trajectory || pickTrajectory(sideDirection);
             const duration = leafOptions.duration || (4600 + Math.random() * 2200);
-            const startX = side === 'left' ? 0 : tagline.clientWidth;
+            const startX = leafOptions.startX !== undefined
+                ? leafOptions.startX
+                : (side === 'left' ? 0 : tagline.clientWidth);
             const startY = leafOptions.startY || ((tagline.clientHeight / 2) + ((Math.random() * 14) - 7));
             const swayDirection = Math.random() < 0.5 ? -1 : 1;
             const rotationStart = swayDirection * (8 + Math.random() * 12);
@@ -144,12 +146,14 @@
                     leafImageUrl: leafImageUrls[0],
                     trajectory: createIntroTrajectory(1),
                     duration: 1800,
+                    startX: -16,
                     startY: (tagline.clientHeight / 2) - 11
                 });
                 createLeaf(tagline, 'right', leafImageUrls, {
                     leafImageUrl: leafImageUrls[1],
                     trajectory: createIntroTrajectory(-1),
                     duration: 1800,
+                    startX: tagline.clientWidth + 16,
                     startY: (tagline.clientHeight / 2) + 7
                 });
             }, GLOW_POP_DELAY + INTRO_LEAF_BURST_DELAY);
@@ -159,12 +163,14 @@
                     leafImageUrl: leafImageUrls[1],
                     trajectory: createIntroTrajectory(1),
                     duration: 1850,
+                    startX: -20,
                     startY: (tagline.clientHeight / 2) + 9
                 });
                 createLeaf(tagline, 'right', leafImageUrls, {
                     leafImageUrl: leafImageUrls[0],
                     trajectory: createIntroTrajectory(-1),
                     duration: 1850,
+                    startX: tagline.clientWidth + 20,
                     startY: (tagline.clientHeight / 2) - 10
                 });
             }, GLOW_POP_DELAY + INTRO_LEAF_BURST_DELAY + INTRO_LEAF_SECOND_BURST_DELAY);
