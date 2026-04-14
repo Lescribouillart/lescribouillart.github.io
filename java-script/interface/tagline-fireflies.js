@@ -78,20 +78,21 @@
 
         function createLeaf(tagline, side, leafImageUrl) {
             const leaf = document.createElement('span');
+            const leafBody = document.createElement('span');
             const size = 18 + Math.random() * 12;
             const sideDirection = side === 'left' ? 1 : -1;
             const trajectory = pickTrajectory(sideDirection);
             const duration = 4600 + Math.random() * 2200;
             const startX = side === 'left' ? 0 : tagline.clientWidth;
             const startY = (tagline.clientHeight / 2) + ((Math.random() * 14) - 7);
-            const rotationDirection = Math.random() < 0.5 ? -1 : 1;
-            const rotationStart = rotationDirection * (8 + Math.random() * 16);
-            const rotationOne = rotationStart + (rotationDirection * (10 + Math.random() * 18));
-            const rotationTwo = rotationOne - (rotationDirection * (14 + Math.random() * 20));
-            const rotationThree = rotationTwo + (rotationDirection * (12 + Math.random() * 20));
-            const rotationEnd = rotationThree + (rotationDirection * (8 + Math.random() * 18));
+            const swayDirection = Math.random() < 0.5 ? -1 : 1;
+            const rotationStart = swayDirection * (8 + Math.random() * 12);
+            const rotationMid = rotationStart + (swayDirection * (12 + Math.random() * 10));
+            const rotationEnd = rotationStart - (swayDirection * (10 + Math.random() * 12));
+            const swayDuration = 2300 + Math.random() * 900;
 
             leaf.className = 'tagline-leaf';
+            leafBody.className = 'tagline-leaf-body';
             leaf.style.left = `${startX}px`;
             leaf.style.top = `${startY}px`;
             leaf.style.setProperty('--leaf-size', `${size}px`);
@@ -103,14 +104,15 @@
             leaf.style.setProperty('--leaf-y-3', `${trajectory.y3}px`);
             leaf.style.setProperty('--leaf-x-end', `${trajectory.endX}px`);
             leaf.style.setProperty('--leaf-y-end', `${trajectory.endY}px`);
-            leaf.style.setProperty('--leaf-rotate-start', `${rotationStart}deg`);
-            leaf.style.setProperty('--leaf-rotate-one', `${rotationOne}deg`);
-            leaf.style.setProperty('--leaf-rotate-two', `${rotationTwo}deg`);
-            leaf.style.setProperty('--leaf-rotate-three', `${rotationThree}deg`);
-            leaf.style.setProperty('--leaf-rotate-end', `${rotationEnd}deg`);
             leaf.style.setProperty('--leaf-duration', `${duration}ms`);
             leaf.style.setProperty('--leaf-delay', `${Math.random() * 140}ms`);
-            leaf.style.setProperty('--leaf-image', `url("${leafImageUrl}")`);
+            leafBody.style.setProperty('--leaf-image', `url("${leafImageUrl}")`);
+            leafBody.style.setProperty('--leaf-rotate-start', `${rotationStart}deg`);
+            leafBody.style.setProperty('--leaf-rotate-mid', `${rotationMid}deg`);
+            leafBody.style.setProperty('--leaf-rotate-end', `${rotationEnd}deg`);
+            leafBody.style.setProperty('--leaf-sway-duration', `${swayDuration}ms`);
+
+            leaf.appendChild(leafBody);
 
             tagline.appendChild(leaf);
 
