@@ -6,7 +6,12 @@
     document.addEventListener('DOMContentLoaded', function() {
         const taglines = document.querySelectorAll('.tagline');
         const script = document.currentScript || document.querySelector('script[src*="tagline-fireflies.js"]');
-        const leafImageUrl = script ? new URL('../../images/icons/feuille.png', script.src).href : 'images/icons/feuille.png';
+        const leafImageUrls = script
+            ? [
+                new URL('../../images/icons/feuille.png', script.src).href,
+                new URL('../../images/icons/feuilleautomne.png', script.src).href
+            ]
+            : ['images/icons/feuille.png', 'images/icons/feuilleautomne.png'];
 
         if (!taglines.length) {
             return;
@@ -37,14 +42,14 @@
                     return;
                 }
 
-                createLeaf(tagline, activeSide, leafImageUrl);
+                createLeaf(tagline, activeSide, leafImageUrls);
                 spawnTimer = window.setInterval(function() {
                     if (!activeSide) {
                         stopLeafStream();
                         return;
                     }
 
-                    createLeaf(tagline, activeSide, leafImageUrl);
+                    createLeaf(tagline, activeSide, leafImageUrls);
                 }, LEAF_SPAWN_INTERVAL);
             }
 
@@ -76,9 +81,10 @@
             return isLeftGlow ? 'left' : 'right';
         }
 
-        function createLeaf(tagline, side, leafImageUrl) {
+        function createLeaf(tagline, side, leafImageUrls) {
             const leaf = document.createElement('span');
             const leafBody = document.createElement('span');
+            const leafImageUrl = leafImageUrls[Math.floor(Math.random() * leafImageUrls.length)];
             const size = 18 + Math.random() * 12;
             const sideDirection = side === 'left' ? 1 : -1;
             const trajectory = pickTrajectory(sideDirection);
