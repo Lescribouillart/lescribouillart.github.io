@@ -12,9 +12,10 @@
         const leafImageUrls = script
             ? [
                 new URL('../../images/icons/feuille.png', script.src).href,
-                new URL('../../images/icons/feuilleautomne.png', script.src).href
+                new URL('../../images/icons/feuilleautomne.png', script.src).href,
+                new URL('../../images/icons/feuilleautomrouge.png', script.src).href
             ]
-            : ['images/icons/feuille.png', 'images/icons/feuilleautomne.png'];
+            : ['images/icons/feuille.png', 'images/icons/feuilleautomne.png', 'images/icons/feuilleautomrouge.png'];
 
         if (!taglines.length) {
             return;
@@ -149,12 +150,26 @@
                     startX: -16,
                     startY: (tagline.clientHeight / 2) - 11
                 });
+                createLeaf(tagline, 'left', leafImageUrls, {
+                    leafImageUrl: leafImageUrls[2],
+                    trajectory: createIntroTrajectory(-1),
+                    duration: 1825,
+                    startX: -24,
+                    startY: (tagline.clientHeight / 2) - 1
+                });
                 createLeaf(tagline, 'right', leafImageUrls, {
                     leafImageUrl: leafImageUrls[1],
                     trajectory: createIntroTrajectory(1),
                     duration: 1800,
                     startX: tagline.clientWidth + 16,
                     startY: (tagline.clientHeight / 2) + 7
+                });
+                createLeaf(tagline, 'right', leafImageUrls, {
+                    leafImageUrl: leafImageUrls[2],
+                    trajectory: createIntroTrajectory(1),
+                    duration: 1825,
+                    startX: tagline.clientWidth + 24,
+                    startY: (tagline.clientHeight / 2) - 2
                 });
             }, GLOW_POP_DELAY + INTRO_LEAF_BURST_DELAY);
 
