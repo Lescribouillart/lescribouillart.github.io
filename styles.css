@@ -638,9 +638,13 @@ body.home-drawer-open .home-side-panel-inner {
 /* ========================================
    PAGE MOTEUR DE RECHERCHE (style Google ancien)
    ======================================== */
+body.search-page {
+    background-color: #E0E0E0;
+}
+
 .search-page-header {
-    background: #2b2b2b;
-    border-bottom: 1px solid #2b2b2b;
+    background: #2F2E3A;
+    border-bottom: 1px solid #2F2E3A;
     padding: 3rem 0;
 }
 
@@ -777,7 +781,7 @@ body.home-drawer-open .home-side-panel-inner {
 }
 
 .search-main {
-    background: #2b2b2b;
+    background: #E0E0E0;
     min-height: 70vh;
     padding: 1.5rem 0 2rem;
 }
