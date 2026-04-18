@@ -18,7 +18,7 @@
             return 0;
         }
 
-        return searchResults.querySelectorAll('.search-result-item-google').length;
+        return searchResults.querySelectorAll('[data-search-result-item]').length;
     };
 
     const syncHeaderHeight = () => {

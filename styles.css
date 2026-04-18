@@ -857,10 +857,62 @@ body.search-page.search-page-scrolled .search-buttons-container {
     display: none;
 }
 
+.search-tabs {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin: 0 0 1.5rem;
+    padding-bottom: 0.85rem;
+    border-bottom: 1px solid #c9c9cf;
+}
+
+.search-tab-button {
+    appearance: none;
+    border: 0;
+    background: transparent;
+    color: #5f6368;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0 0 0.7rem;
+    position: relative;
+    cursor: pointer;
+}
+
+.search-tab-button::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.9rem;
+    height: 3px;
+    border-radius: 999px;
+    background: transparent;
+    transition: background-color 0.2s ease;
+}
+
+.search-tab-button:hover {
+    color: #202124;
+}
+
+.search-tab-button.is-active {
+    color: #1a73e8;
+}
+
+.search-tab-button.is-active::after {
+    background: #1a73e8;
+}
+
 .search-results-list {
     display: flex;
     flex-direction: column;
     gap: 2rem;
+}
+
+.search-results-list.search-results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 250px);
+    justify-content: start;
+    gap: 1.25rem;
 }
 
 .search-result-item-google {
@@ -915,6 +967,49 @@ body.search-page.search-page-scrolled .search-buttons-container {
     margin-top: 0.25rem;
 }
 
+.search-image-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border-radius: 1rem;
+    background: #f3f3f5;
+    border: 1px solid #d5d7dc;
+    box-shadow: 0 8px 18px rgba(34, 34, 44, 0.06);
+}
+
+.search-image-link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.search-image-thumb {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 0.8rem;
+    display: block;
+    background: #d7d7dc;
+}
+
+.search-image-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.search-image-title {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.35;
+    color: #202124;
+}
+
+.search-image-source {
+    color: #5f6368;
+    font-size: 0.92rem;
+}
+
 @media (max-width: 900px) {
     .search-page-container {
         width: calc(100% - 2rem);
@@ -929,6 +1024,16 @@ body.search-page.search-page-scrolled .search-buttons-container {
     .search-result-snippet {
         font-size: 1rem;
         max-width: none;
+    }
+
+    .search-tabs {
+        gap: 1rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .search-results-list.search-results-grid {
+        grid-template-columns: repeat(auto-fit, 250px);
+        justify-content: center;
     }
 }
 

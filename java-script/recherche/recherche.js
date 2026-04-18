@@ -1,6 +1,11 @@
 // Fonction de recherche d'articles et de pages
 document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('search-input');
+    const searchButton = document.getElementById('search-btn');
+    const searchResults = document.getElementById('search-results');
+    const searchStats = document.getElementById('search-stats');
+    const searchTabButtons = Array.from(document.querySelectorAll('[data-search-tab]'));
+    const defaultSearchTab = 'all';
     
     if (!searchInput) {
         return; // Si l'élément n'existe pas, on sort
@@ -51,13 +56,166 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Construire l'URL en fonction de l'emplacement actuel
         let targetUrl;
+        const activeTab = getActiveSearchTab();
         if (isInHtmlFolder) {
-            targetUrl = `moteurderecherche.html?search=${encodeURIComponent(searchTerm)}`;
+            targetUrl = `moteurderecherche.html?search=${encodeURIComponent(searchTerm)}&tab=${encodeURIComponent(activeTab)}`;
         } else {
-            targetUrl = `html/moteurderecherche.html?search=${encodeURIComponent(searchTerm)}`;
+            targetUrl = `html/moteurderecherche.html?search=${encodeURIComponent(searchTerm)}&tab=${encodeURIComponent(activeTab)}`;
         }
         
         window.location.href = targetUrl;
+    }
+
+    function getActiveSearchTab() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const tab = urlParams.get('tab');
+        return tab === 'images' ? 'images' : defaultSearchTab;
+    }
+
+    function setActiveSearchTab(tab) {
+        const nextTab = tab === 'images' ? 'images' : defaultSearchTab;
+
+        searchTabButtons.forEach((button) => {
+            const isActive = button.dataset.searchTab === nextTab;
+            button.classList.toggle('is-active', isActive);
+            button.setAttribute('aria-selected', isActive ? 'true' : 'false');
+            button.tabIndex = isActive ? 0 : -1;
+        });
+    }
+
+    function updateSearchUrl(searchTerm, tab) {
+        const url = new URL(window.location.href);
+
+        if (searchTerm) {
+            url.searchParams.set('search', searchTerm);
+        }
+
+        url.searchParams.set('tab', tab);
+        window.history.replaceState({}, '', url);
+    }
+
+    function normalizeAssetPath(path) {
+        if (!path) {
+            return '';
+        }
+
+        if (/^(?:https?:)?\/\//.test(path) || path.startsWith('../')) {
+            return path;
+        }
+
+        const currentPath = window.location.pathname;
+        const isInHtmlFolder = currentPath.includes('/html/');
+        return isInHtmlFolder ? `../${path}` : path;
+    }
+
+    function escapeHtml(value) {
+        return String(value ?? '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
+    function buildDefaultNoResults(searchTerm) {
+        return `
+            <div class="no-results-google">
+                <h2>Aucun document ne correspond aux termes de recherche spécifiés.</h2>
+                <p>Suggestions :</p>
+                <ul style="color: #70757a; font-size: 0.875rem; line-height: 1.8;">
+                    <li>Vérifiez l'orthographe des termes de recherche.</li>
+                    <li>Essayez d'autres mots.</li>
+                    <li>Utilisez des mots plus généraux.</li>
+                </ul>
+                <p>Recherche : "${escapeHtml(searchTerm)}"</p>
+            </div>
+        `;
+    }
+
+    function renderAllResults(matchingPages, matchingArticles, searchTerm) {
+        let resultsHTML = '';
+
+        if (matchingPages.length > 0) {
+            matchingPages.forEach(page => {
+                resultsHTML += `
+                    <div class="search-result-item-google" data-search-result-item>
+                        <h3 class="search-result-title">
+                            <a href="${page.url}">${escapeHtml(page.title)}</a>
+                        </h3>
+                        <p class="search-result-snippet">${escapeHtml(page.snippet || '')}</p>
+                        <div class="search-result-url">
+                            <span class="search-result-domain">drelall.github.io</span>
+                            <span style="color: #006621;"> › </span>
+                            <span style="color: #006621;">${escapeHtml(page.title)}</span>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        if (matchingArticles.length > 0) {
+            matchingArticles.forEach(article => {
+                resultsHTML += `
+                    <div class="search-result-item-google" data-search-result-item>
+                        <h3 class="search-result-title">
+                            <a href="affichage-article.html?id=${article.id}">${escapeHtml(article.title)}</a>
+                        </h3>
+                        <p class="search-result-snippet">${escapeHtml(article.excerpt || '')}</p>
+                        <div class="search-result-url">
+                            <span class="search-result-domain">drelall.github.io</span>
+                            <span style="color: #006621;"> › </span>
+                            <span style="color: #006621;">${escapeHtml(article.category || '')}</span>
+                            <span style="color: #70757a; margin-left: 0.5rem;">${escapeHtml(article.date || '')}</span>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        if (matchingPages.length === 0 && matchingArticles.length === 0) {
+            return buildDefaultNoResults(searchTerm);
+        }
+
+        return resultsHTML;
+    }
+
+    function renderImageResults(matchingArticles, searchTerm) {
+        const articlesWithImages = matchingArticles.filter(article => article.image);
+
+        if (articlesWithImages.length === 0) {
+            return `
+                <div class="no-results-google">
+                    <h2>Aucune image ne correspond à cette recherche.</h2>
+                    <p>Essaie l'onglet Tous pour voir les pages et articles textuels liés à "${escapeHtml(searchTerm)}".</p>
+                </div>
+            `;
+        }
+
+        return articlesWithImages.map(article => `
+            <article class="search-image-card" data-search-result-item>
+                <a class="search-image-link" href="affichage-article.html?id=${article.id}">
+                    <img class="search-image-thumb" src="${normalizeAssetPath(article.image)}" alt="${escapeHtml(article.imageCaption || article.title)}">
+                </a>
+                <div class="search-image-meta">
+                    <h3 class="search-image-title">
+                        <a class="search-image-link" href="affichage-article.html?id=${article.id}">${escapeHtml(article.title)}</a>
+                    </h3>
+                    <span class="search-image-source">${escapeHtml(article.category || 'Article')}</span>
+                </div>
+            </article>
+        `).join('');
+    }
+
+    function renderSearchResults(activeTab, matchingPages, matchingArticles, searchTerm) {
+        if (!searchResults) {
+            return;
+        }
+
+        const isImageTab = activeTab === 'images';
+        searchResults.classList.toggle('search-results-grid', isImageTab);
+        searchResults.innerHTML = isImageTab
+            ? renderImageResults(matchingArticles, searchTerm)
+            : renderAllResults(matchingPages, matchingArticles, searchTerm);
     }
 
     // Événement sur la touche Entrée
@@ -72,6 +230,8 @@ document.addEventListener('DOMContentLoaded', function() {
     async function displaySearchResults() {
         const urlParams = new URLSearchParams(window.location.search);
         const searchTerm = urlParams.get('search');
+        const activeTab = getActiveSearchTab();
+        setActiveSearchTab(activeTab);
         
         if (!searchTerm) {
             return;
@@ -83,8 +243,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         const searchLower = searchTerm.toLowerCase();
-        const searchResults = document.getElementById('search-results');
-        const searchStats = document.getElementById('search-stats');
         
         if (!searchResults) {
             return;
@@ -136,69 +294,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     const totalResults = matchingPages.length + matchingArticles.length;
                     const endTime = performance.now();
                     const searchTime = ((endTime - startTime) / 1000).toFixed(2);
-                    
-                    let resultsHTML = '';
 
-                // Afficher les pages correspondantes
-                if (matchingPages.length > 0) {
-                    
-                    matchingPages.forEach(page => {
-                        resultsHTML += `
-                            <div class="search-result-item-google">
-                                <h3 class="search-result-title">
-                                    <a href="${page.url}">${page.title}</a>
-                                </h3>
-                                <p class="search-result-snippet">${page.snippet}</p>
-                                <div class="search-result-url">
-                                    <span class="search-result-domain">drelall.github.io</span>
-                                    <span style="color: #006621;"> › </span>
-                                    <span style="color: #006621;">${page.title}</span>
-                                </div>
-                            </div>
-                        `;
-                    });
-                }
-
-                // Afficher les articles correspondants
-                if (matchingArticles.length > 0) {
-                    
-                    matchingArticles.forEach(article => {
-                        resultsHTML += `
-                            <div class="search-result-item-google">
-                                <h3 class="search-result-title">
-                                    <a href="affichage-article.html?id=${article.id}">${article.title}</a>
-                                </h3>
-                                <p class="search-result-snippet">${article.excerpt}</p>
-                                <div class="search-result-url">
-                                    <span class="search-result-domain">drelall.github.io</span>
-                                    <span style="color: #006621;"> › </span>
-                                    <span style="color: #006621;">${article.category}</span>
-                                    <span style="color: #70757a; margin-left: 0.5rem;">${article.date}</span>
-                                </div>
-                            </div>
-                        `;
-                    });
-                }
-
-                // Si aucun résultat
-                if (matchingPages.length === 0 && matchingArticles.length === 0) {
                     if (searchStats) {
-                        searchStats.textContent = `Aucun résultat pour "${searchTerm}"`;
+                        searchStats.textContent = `${totalResults} résultat${totalResults > 1 ? 's' : ''} en ${searchTime} s`;
                     }
-                    resultsHTML = `
-                        <div class="no-results-google">
-                            <h2>Aucun document ne correspond aux termes de recherche spécifiés.</h2>
-                            <p>Suggestions :</p>
-                            <ul style="color: #70757a; font-size: 0.875rem; line-height: 1.8;">
-                                <li>Vérifiez l'orthographe des termes de recherche.</li>
-                                <li>Essayez d'autres mots.</li>
-                                <li>Utilisez des mots plus généraux.</li>
-                            </ul>
-                        </div>
-                    `;
-                }
 
-                searchResults.innerHTML = resultsHTML;
+                    renderSearchResults(activeTab, matchingPages, matchingArticles, searchTerm);
             })
             .catch(error => {
                 console.error('Erreur lors du chargement des articles:', error);
@@ -211,6 +312,19 @@ document.addEventListener('DOMContentLoaded', function() {
     if (window.location.pathname.includes('moteurderecherche')) {
         displaySearchResults();
     }
+
+    if (searchButton) {
+        searchButton.addEventListener('click', performSearch);
+    }
+
+    searchTabButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+            const nextTab = button.dataset.searchTab === 'images' ? 'images' : defaultSearchTab;
+            setActiveSearchTab(nextTab);
+            updateSearchUrl(searchInput.value.trim(), nextTab);
+            displaySearchResults();
+        });
+    });
 
     // Fonction pour filtrer les articles sur la page de listage (conservée pour compatibilité)
     async function filterArticlesOnPage() {

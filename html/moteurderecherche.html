@@ -35,7 +35,11 @@
     <main class="search-main" id="main-content">
         <div class="search-page-container">
             <div id="search-stats" class="search-stats"></div>
-            <div id="search-results" class="search-results-list">
+            <div class="search-tabs" role="tablist" aria-label="Type de recherche">
+                <button type="button" class="search-tab-button is-active" id="search-tab-all" data-search-tab="all" role="tab" aria-selected="true" aria-controls="search-results">Tous</button>
+                <button type="button" class="search-tab-button" id="search-tab-images" data-search-tab="images" role="tab" aria-selected="false" aria-controls="search-results">Image</button>
+            </div>
+            <div id="search-results" class="search-results-list" aria-live="polite">
                 <!-- Les résultats de recherche seront affichés ici -->
             </div>
         </div>
