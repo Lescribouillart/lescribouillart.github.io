@@ -640,12 +640,23 @@ body.home-drawer-open .home-side-panel-inner {
    ======================================== */
 body.search-page {
     background-color: #E0E0E0;
+    --search-header-height: 0px;
 }
 
 .search-page-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
     background: #2F2E3A;
     border-bottom: 1px solid #2F2E3A;
     padding: 3rem 0;
+    z-index: 1000;
+    box-shadow: 0 12px 30px rgba(21, 21, 30, 0.12);
+}
+
+.search-page-header-spacer {
+    height: var(--search-header-height);
 }
 
 .search-page-drawer-toggle {
@@ -784,6 +795,12 @@ body.search-page {
     background: #E0E0E0;
     min-height: 70vh;
     padding: 1.5rem 0 2rem;
+}
+
+@media (max-width: 900px) {
+    .search-page-header {
+        padding: 2rem 0;
+    }
 }
 
 .search-stats {
