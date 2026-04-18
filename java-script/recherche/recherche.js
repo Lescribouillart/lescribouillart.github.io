@@ -42,6 +42,21 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    function buildSearchPageUrl(searchTerm = '') {
+        const currentPath = window.location.pathname;
+        const isInHtmlFolder = currentPath.includes('/html/');
+        const activeTab = getActiveSearchTab();
+        const baseUrl = isInHtmlFolder
+            ? 'moteurderecherche.html'
+            : 'html/moteurderecherche.html';
+
+        if (!searchTerm) {
+            return `${baseUrl}?tab=${encodeURIComponent(activeTab)}`;
+        }
+
+        return `${baseUrl}?search=${encodeURIComponent(searchTerm)}&tab=${encodeURIComponent(activeTab)}`;
+    }
+
     // Fonction pour effectuer la recherche
     function performSearch() {
         const searchTerm = searchInput.value.trim();
@@ -63,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function() {
             targetUrl = `html/moteurderecherche.html?search=${encodeURIComponent(searchTerm)}&tab=${encodeURIComponent(activeTab)}`;
         }
         
-        window.location.href = targetUrl;
+        window.location.href = buildSearchPageUrl(searchTerm);
     }
 
     function getActiveSearchTab() {
@@ -273,6 +288,18 @@ document.addEventListener('DOMContentLoaded', function() {
             performSearch();
         }
     });
+
+    if (window.location.pathname.endsWith('/index.html') || window.location.pathname.endsWith('/index') || !window.location.pathname.includes('/html/')) {
+        const redirectToSearchPage = () => {
+            window.location.href = buildSearchPageUrl(searchInput.value.trim());
+        };
+
+        searchInput.addEventListener('focus', redirectToSearchPage);
+        searchInput.addEventListener('pointerdown', (event) => {
+            event.preventDefault();
+            redirectToSearchPage();
+        });
+    }
 
     // Fonction pour filtrer les articles et pages sur la page de recherche
     async function displaySearchResults() {
