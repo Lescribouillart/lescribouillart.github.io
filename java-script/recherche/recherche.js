@@ -117,6 +117,35 @@ document.addEventListener('DOMContentLoaded', function() {
             .replace(/'/g, '&#39;');
     }
 
+    function isDecorativeImageSource(src) {
+        const normalizedSrc = (src || '').toLowerCase();
+
+        return [
+            'images/header/',
+            'images/logo/',
+            'images/icons/',
+            'images/inclusif/',
+            'images/info/',
+            'racines-bas-header',
+            'scribouillart.png',
+            'dislexie'
+        ].some(fragment => normalizedSrc.includes(fragment));
+    }
+
+    function extractRelevantPageImage(main) {
+        const images = Array.from(main.querySelectorAll('img'));
+        const relevantImage = images.find((image) => !isDecorativeImageSource(image.getAttribute('src') || ''));
+
+        if (!relevantImage) {
+            return null;
+        }
+
+        return {
+            src: relevantImage.getAttribute('src') || '',
+            alt: relevantImage.getAttribute('alt') || ''
+        };
+    }
+
     function buildDefaultNoResults(searchTerm) {
         return `
             <div class="no-results-google">
@@ -179,10 +208,29 @@ document.addEventListener('DOMContentLoaded', function() {
         return resultsHTML;
     }
 
-    function renderImageResults(matchingArticles, searchTerm) {
+    function renderImageResults(matchingPages, matchingArticles, searchTerm) {
+        const pagesWithImages = matchingPages.filter(page => page.image);
         const articlesWithImages = matchingArticles.filter(article => article.image);
+        const imageResults = [
+            ...pagesWithImages.map(page => ({
+                type: 'page',
+                url: page.url,
+                title: page.title,
+                image: page.image,
+                imageAlt: page.imageAlt,
+                source: 'Page du site'
+            })),
+            ...articlesWithImages.map(article => ({
+                type: 'article',
+                url: `affichage-article.html?id=${article.id}`,
+                title: article.title,
+                image: article.image,
+                imageAlt: article.imageCaption || article.title,
+                source: article.category || 'Article'
+            }))
+        ];
 
-        if (articlesWithImages.length === 0) {
+        if (imageResults.length === 0) {
             return `
                 <div class="no-results-google">
                     <h2>Aucune image ne correspond à cette recherche.</h2>
@@ -191,16 +239,16 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
         }
 
-        return articlesWithImages.map(article => `
+        return imageResults.map(result => `
             <article class="search-image-card" data-search-result-item>
-                <a class="search-image-link" href="affichage-article.html?id=${article.id}">
-                    <img class="search-image-thumb" src="${normalizeAssetPath(article.image)}" alt="${escapeHtml(article.imageCaption || article.title)}">
+                <a class="search-image-link" href="${result.url}">
+                    <img class="search-image-thumb" src="${normalizeAssetPath(result.image)}" alt="${escapeHtml(result.imageAlt || result.title)}">
                 </a>
                 <div class="search-image-meta">
                     <h3 class="search-image-title">
-                        <a class="search-image-link" href="affichage-article.html?id=${article.id}">${escapeHtml(article.title)}</a>
+                        <a class="search-image-link" href="${result.url}">${escapeHtml(result.title)}</a>
                     </h3>
-                    <span class="search-image-source">${escapeHtml(article.category || 'Article')}</span>
+                    <span class="search-image-source">${escapeHtml(result.source)}</span>
                 </div>
             </article>
         `).join('');
@@ -214,7 +262,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const isImageTab = activeTab === 'images';
         searchResults.classList.toggle('search-results-grid', isImageTab);
         searchResults.innerHTML = isImageTab
-            ? renderImageResults(matchingArticles, searchTerm)
+            ? renderImageResults(matchingPages, matchingArticles, searchTerm)
             : renderAllResults(matchingPages, matchingArticles, searchTerm);
     }
 
@@ -259,11 +307,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Extraire le texte du contenu principal (éviter header, footer, nav)
                 const main = doc.querySelector('main') || doc.body;
                 const textContent = main.textContent.toLowerCase();
+                const pageImage = extractRelevantPageImage(main);
                 
-                return textContent.includes(searchLower);
+                return {
+                    contentMatch: textContent.includes(searchLower),
+                    image: pageImage?.src || '',
+                    imageAlt: pageImage?.alt || ''
+                };
             } catch (error) {
                 console.error('Erreur lors du chargement de la page:', error);
-                return false;
+                return {
+                    contentMatch: false,
+                    image: '',
+                    imageAlt: ''
+                };
             }
         }
 
@@ -274,9 +331,15 @@ document.addEventListener('DOMContentLoaded', function() {
             const titleMatch = page.title.toLowerCase().includes(searchLower);
             const keywordMatch = (page.keywords || []).some(keyword => keyword.includes(searchLower));
             const snippetMatch = (page.snippet || '').toLowerCase().includes(searchLower);
-            const contentMatch = await searchInPageContent(page);
+            const pageContentData = await searchInPageContent(page);
             
-            return (titleMatch || keywordMatch || snippetMatch || contentMatch) ? page : null;
+            return (titleMatch || keywordMatch || snippetMatch || pageContentData.contentMatch)
+                ? {
+                    ...page,
+                    image: pageContentData.image,
+                    imageAlt: pageContentData.imageAlt
+                }
+                : null;
         })).then(results => {
             const matchingPages = results.filter(page => page !== null);
             
