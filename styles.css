@@ -653,6 +653,7 @@ body.search-page {
     padding: 3rem 0;
     z-index: 1000;
     box-shadow: 0 12px 30px rgba(21, 21, 30, 0.12);
+    transition: padding 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
 }
 
 .search-page-header-spacer {
@@ -681,6 +682,7 @@ body.search-page {
     display: flex;
     flex-direction: column;
     align-items: center;
+    transition: gap 0.25s ease;
 }
 
 .search-logo {
@@ -699,6 +701,8 @@ body.search-page {
     display: inline-block;
     margin-bottom: 1.5rem;
     font-family: var(--font-title);
+    line-height: 1;
+    transition: font-size 0.25s ease, margin-bottom 0.25s ease, transform 0.25s ease;
 }
 
 .search-logo-colorful .color-blue {
@@ -734,6 +738,7 @@ body.search-page {
     margin: 0 auto 1.5rem auto;
     display: flex;
     justify-content: center;
+    transition: margin-bottom 0.25s ease, max-width 0.25s ease;
 }
 
 .search-box {
@@ -751,7 +756,7 @@ body.search-page {
     border: 1px solid #dfe1e5;
     border-radius: 24px;
     font-size: 1.1rem;
-    transition: all 0.2s ease;
+    transition: padding 0.2s ease, font-size 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 .search-box:hover,
@@ -769,6 +774,9 @@ body.search-page {
 .search-buttons-container {
     display: flex;
     gap: 1rem;
+    transition: opacity 0.2s ease, transform 0.2s ease, max-height 0.25s ease, margin 0.25s ease;
+    max-height: 5rem;
+    overflow: hidden;
 }
 
 .search-button-primary,
@@ -797,9 +805,51 @@ body.search-page {
     padding: 1.5rem 0 2rem;
 }
 
+body.search-page.search-page-scrolled .search-page-header {
+    padding: 1rem 0 0.9rem;
+    box-shadow: 0 10px 24px rgba(21, 21, 30, 0.18);
+}
+
+body.search-page.search-page-scrolled .search-logo-colorful {
+    font-size: 1.9rem;
+    margin-bottom: 0.7rem;
+    transform: translateY(-0.05rem);
+}
+
+body.search-page.search-page-scrolled .search-box-container-large {
+    max-width: 620px;
+    margin-bottom: 0;
+}
+
+body.search-page.search-page-scrolled .search-box-large {
+    padding: 0.72rem 1.25rem;
+    font-size: 1rem;
+}
+
+body.search-page.search-page-scrolled .search-buttons-container {
+    opacity: 0;
+    transform: translateY(-0.5rem);
+    max-height: 0;
+    margin: 0;
+    pointer-events: none;
+}
+
 @media (max-width: 900px) {
     .search-page-header {
         padding: 2rem 0;
+    }
+
+    body.search-page.search-page-scrolled .search-page-header {
+        padding: 0.9rem 0 0.8rem;
+    }
+
+    body.search-page.search-page-scrolled .search-logo-colorful {
+        font-size: 1.5rem;
+        margin-bottom: 0.55rem;
+    }
+
+    .search-box-container-large {
+        margin-bottom: 1rem;
     }
 }
 
