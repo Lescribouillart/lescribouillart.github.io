@@ -1356,7 +1356,7 @@ main {
     margin-bottom: 1.2rem;
 }
 
-.presentation-flex img[src*="presentation/presentation.png"] {
+.presentation-flex > img {
     display: block;
     max-width: 220px;
     width: 35vw;
@@ -2734,7 +2734,7 @@ a.highlight-blue {
         align-items: center;
     }
     
-    .presentation-flex img[src*="presentation/presentation.png"],
+    .presentation-flex > img,
     .feuillet-flex img[src*="Nocthériga.png"] {
         max-width: 100%;
         width: 80%;
@@ -2870,7 +2870,7 @@ a.highlight-blue {
         font-size: 0.95rem;
     }
     
-    .presentation-flex img[src*="presentation/presentation.png"],
+    .presentation-flex > img,
     .feuillet-flex img[src*="Nocthériga.png"] {
         width: 90%;
     }
