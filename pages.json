@@ -52,11 +52,5 @@
     "url": "listage-articles.html",
     "keywords": ["publications", "articles", "liste", "tous les articles"],
     "snippet": "Retrouvez tous les articles publiés sur Le Scribouill'art."
-  },
-  {
-    "title": "Tirages",
-    "url": "tirages.html",
-    "keywords": ["tirages", "éditeur", "editeur", "articles"],
-    "snippet": "Éditeur d'articles pour Le Scribouill'art."
   }
 ]
