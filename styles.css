@@ -633,8 +633,8 @@ body.has-scroll-header.header-scrolled .nav {
     color: rgba(47, 46, 58, 0.55);
 }
 
-/* Loupe intégrée au champ sur l'accueil uniquement */
-body.home-page .intro-site-content .intro-search-container {
+/* Loupe intégrée au champ sur toutes les pages avec bandeau intro */
+.intro-site-content .intro-search-container {
     position: absolute;
     right: -450px;
     top: 50%;
@@ -643,11 +643,11 @@ body.home-page .intro-site-content .intro-search-container {
     padding-right: 0;
 }
 
-body.home-page .intro-site-content .intro-search-container #search-input {
+.intro-site-content .intro-search-container #search-input {
     padding-right: 2.5rem;
 }
 
-body.home-page .intro-site-content .intro-search-container::before {
+.intro-site-content .intro-search-container::before {
     content: '';
     position: absolute;
     right: 14px;
@@ -660,7 +660,7 @@ body.home-page .intro-site-content .intro-search-container::before {
     pointer-events: none;
 }
 
-body.home-page .intro-site-content .intro-search-container::after {
+.intro-site-content .intro-search-container::after {
     content: '';
     position: absolute;
     right: 10px;
