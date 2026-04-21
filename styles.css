@@ -1295,6 +1295,7 @@ main {
 }
 
 .presentation p {
+    margin-top: 0;
     margin-bottom: 1.1rem;
 }
 
@@ -1351,19 +1352,20 @@ main {
 /* Layout avec image pour page d'accueil */
 .presentation-flex {
     display: flex;
-    align-items: center;
-    gap: 2rem;
+    align-items: flex-start;
+    gap: 1.75rem;
     margin-bottom: 1.2rem;
 }
 
 .presentation-flex > img {
     display: block;
-    max-width: 220px;
-    width: 35vw;
-    min-width: 120px;
+    max-width: 300px;
+    width: clamp(180px, 28vw, 300px);
+    min-width: 160px;
     height: auto;
-    margin: 0;
-    border-radius: 8px;
+    margin: 0.25rem 0 0;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
     flex-shrink: 0;
 }
 
@@ -1371,8 +1373,8 @@ main {
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    margin-top: -45px;
+    justify-content: flex-start;
+    margin-top: 0;
 }
 
 .presentation-texte h3 {
