@@ -5,6 +5,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const submitBtn = form.querySelector('button[type="submit"]');
 
     form.addEventListener('submit', async (e) => {
+        // Anti-bot : si le champ honeypot est rempli, on bloque la soumission
+        if (form.website && form.website.value) {
+            e.preventDefault();
+            showMessage("Erreur : tentative de spam détectée.", "error");
+            return;
+        }
         e.preventDefault();
 
         const formData = new FormData(form);
