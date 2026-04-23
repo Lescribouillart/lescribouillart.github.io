@@ -11,6 +11,25 @@ document.addEventListener('DOMContentLoaded', function() {
         return; // Si l'élément n'existe pas, on sort
     }
 
+    function updateSearchInputCursor(event) {
+        const inputRect = searchInput.getBoundingClientRect();
+        const iconZoneWidth = 34;
+        const pointerOffsetX = event.clientX - inputRect.left;
+        const pointerOffsetY = event.clientY - inputRect.top;
+        const isInsideInput = pointerOffsetX >= 0
+            && pointerOffsetX <= inputRect.width
+            && pointerOffsetY >= 0
+            && pointerOffsetY <= inputRect.height;
+        const isOverSearchIcon = isInsideInput && pointerOffsetX >= (inputRect.width - iconZoneWidth);
+
+        searchInput.style.cursor = isOverSearchIcon ? 'pointer' : 'text';
+    }
+
+    searchInput.addEventListener('mousemove', updateSearchInputCursor);
+    searchInput.addEventListener('mouseleave', () => {
+        searchInput.style.cursor = 'text';
+    });
+
     const sitePagesFallback = [
         { title: 'Accueil', url: '../index.html', keywords: ['accueil', 'home', 'bienvenue', 'index'], snippet: 'Bienvenue sur Le Scribouill\'art, le journal fictif aux articles bien réels.' }
     ];
