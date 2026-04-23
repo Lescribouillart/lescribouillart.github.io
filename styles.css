@@ -410,6 +410,7 @@ body.home-drawer-open .home-side-panel-inner {
     border-radius: 6px;
     overflow: visible;
     transition: opacity 0.2s ease, transform 0.25s ease, margin-bottom 0.25s ease;
+    margin-top: 16px;
 }
 
 .tagline::before,
@@ -545,7 +546,7 @@ body.home-drawer-open .home-side-panel-inner {
     gap: 2rem;
     transition: gap 0.25s ease, transform 0.25s ease;
     align-items: flex-end;
-    margin-top: 38px;
+    margin-top: 16px;
 }
 
 body.has-scroll-header.header-scrolled .header {
