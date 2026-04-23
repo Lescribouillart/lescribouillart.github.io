@@ -1722,9 +1722,7 @@ h2.titrelegal2 {
     transition: transform 0.4s ease;
 }
 
-.carousel-card:hover .carousel-image {
-    transform: scale(1.05);
-}
+
 
 .carousel-card:hover .carousel-title-article {
     color: var(--secondary-color);
