@@ -73,12 +73,42 @@
         </div>
     </div>
 
-    <main class="main" id="main-content">
+    <main class="main home-main" id="main-content">
+        <aside class="left-body-carousel" aria-label="Dernieres publications">
+            <div class="left-body-carousel-inner">
+                <div class="left-body-carousel-header">Dernieres publications</div>
+                <div class="carousel-wrapper-in-presentation">
+                    <button class="carousel-button carousel-button-prev" aria-label="Article precedent">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                    </button>
+
+                    <div class="carousel-container-in-presentation">
+                        <div class="carousel-track" id="carousel-track">
+                            <!-- Les articles seront inseres ici par JavaScript -->
+                        </div>
+                    </div>
+
+                    <button class="carousel-button carousel-button-next" aria-label="Article suivant">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="carousel-indicators-in-presentation" id="carousel-indicators">
+                    <!-- Les points seront inseres ici par JavaScript -->
+                </div>
+            </div>
+        </aside>
+
         <div class="container">
             <div class="presentation">
                 <div class="presentation-bg2">
                     <div class="presentation-flex">
-                        <img src="./images/presentation/yeti.png" alt="Illustration représentant l'évasion et l'imaginaire">
+                        <img src="./images/presentation/yeti.png" alt="Illustration representant l'evasion et l'imaginaire">
+
                         <div class="presentation-texte">
                             <p class="quote-mulder">
     Comme le dirait si bien 
@@ -148,5 +178,6 @@
     <script src="java-script/interface/home-header-scroll.js"></script>
     <script src="java-script/interface/tagline-fireflies.js"></script>
     <script src="java-script/recherche/recherche.js"></script>
+    <script src="java-script/articles/carousel.js" defer></script>
 </body>
 </html>
