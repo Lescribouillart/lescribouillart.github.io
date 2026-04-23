@@ -1,4 +1,14 @@
 @media (max-width: 600px) {
+    footer, .footer-nav {
+        box-sizing: border-box;
+        padding-left: 8vw;
+        padding-right: 8vw;
+        overflow-x: hidden;
+        width: 100vw;
+        max-width: 100vw;
+    }
+}
+@media (max-width: 600px) {
     .footer-nav {
         flex-direction: column !important;
         align-items: center !important;
