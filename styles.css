@@ -544,6 +544,8 @@ body.home-drawer-open .home-side-panel-inner {
     display: flex;
     gap: 2rem;
     transition: gap 0.25s ease, transform 0.25s ease;
+    align-items: flex-end;
+    margin-top: 38px;
 }
 
 body.has-scroll-header.header-scrolled .header {
