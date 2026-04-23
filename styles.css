@@ -1,3 +1,77 @@
+@media (max-width: 600px) {
+    .footer-nav {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 0.3rem !important;
+        width: 100%;
+    }
+    .footer-link {
+        display: block;
+        text-align: center;
+        width: 100%;
+        padding: 0.2rem 0;
+    }
+}
+@media (max-width: 600px) {
+    .header .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .logo-row,
+    .header-drawer-toggle,
+    .tagline {
+        order: unset !important;
+    }
+}
+@media (max-width: 600px) {
+    .header .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .logo-row,
+    .header-drawer-toggle,
+    .tagline {
+        order: unset;
+    }
+}
+@media (max-width: 600px) {
+    .header .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .logo-row {
+        order: 1;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .header-drawer-toggle {
+        order: 2;
+    }
+    .tagline {
+        order: 3;
+    }
+}
+/* Hamburger toujours visible et bien placé sur mobile */
+@media (max-width: 600px) {
+    .header-drawer-toggle {
+        display: inline-flex !important;
+        position: static !important;
+        margin: 0.5rem auto 0.2rem auto !important;
+        left: unset !important;
+        top: unset !important;
+        transform: none !important;
+        z-index: 1002 !important;
+    }
+    .header .container {
+        flex-direction: column;
+        align-items: center;
+    }
+}
 @import url('https://fonts.googleapis.com/css2?family=Rozha+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=OpenDyslexic&display=swap');
