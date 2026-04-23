@@ -1630,13 +1630,14 @@ h2.titrelegal2 {
 }
 
 .left-body-carousel .carousel-image-wrapper {
-    height: 120px;
+    /* plus de hauteur forcée, l'image détermine la hauteur */
 }
 
 .left-body-carousel .carousel-image {
-    height: 120px;
+    width: 100%;
+    display: block;
     object-fit: cover;
-    object-position: center;
+    object-position: center calc(20% - 2px);
 }
 
 .left-body-carousel .carousel-content {
@@ -1730,7 +1731,7 @@ h2.titrelegal2 {
 }
 
 .carousel-content {
-    padding: 1.5rem;
+    padding: 0 1.5rem 1.5rem 1.5rem;
     display: flex;
     flex-direction: column;
     flex: 1;
