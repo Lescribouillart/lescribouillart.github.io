@@ -1574,7 +1574,7 @@ h2.titrelegal2 {
 
 .carousel-wrapper-in-presentation {
     display: flex;
-    align-items: stretch;
+    align-items: center;
     gap: 0.5rem;
     background: transparent;
     padding: 0;
@@ -1582,6 +1582,7 @@ h2.titrelegal2 {
     border: none;
     flex: 1;
     min-height: 0;
+    height: 100%;
 }
 
 .carousel-container-in-presentation {
