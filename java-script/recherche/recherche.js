@@ -30,6 +30,27 @@ document.addEventListener('DOMContentLoaded', function() {
         searchInput.style.cursor = 'text';
     });
 
+    // Ajout : redirection au clic dans le champ ou sur la loupe (hors page moteur de recherche)
+    const isSearchPage = /moteurderecherche\.html$/.test(window.location.pathname);
+    if (!isSearchPage) {
+        searchInput.addEventListener('mousedown', function(event) {
+            const inputRect = searchInput.getBoundingClientRect();
+            const iconZoneWidth = 34;
+            const pointerOffsetX = event.clientX - inputRect.left;
+            const pointerOffsetY = event.clientY - inputRect.top;
+            const isInsideInput = pointerOffsetX >= 0
+                && pointerOffsetX <= inputRect.width
+                && pointerOffsetY >= 0
+                && pointerOffsetY <= inputRect.height;
+            const isOverSearchIcon = isInsideInput && pointerOffsetX >= (inputRect.width - iconZoneWidth);
+            // Redirige si clic dans le champ ou sur la loupe
+            if (isInsideInput) {
+                event.preventDefault();
+                window.location.href = buildSearchPageUrl();
+            }
+        });
+    }
+
     const sitePagesFallback = [
         { title: 'Accueil', url: '../index.html', keywords: ['accueil', 'home', 'bienvenue', 'index'], snippet: 'Bienvenue sur Le Scribouill\'art, le journal fictif aux articles bien réels.' }
     ];
