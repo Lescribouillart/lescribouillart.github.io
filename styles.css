@@ -5,7 +5,7 @@
     justify-content: center;
     align-items: flex-start;
     position: absolute;
-    top: 0;
+    top: -11px; /* Remontée de 5px supplémentaires */
     left: 0;
     z-index: 1200;
     pointer-events: none;
@@ -23,8 +23,6 @@
     padding-top: 0;
     margin-top: 0;
     box-sizing: border-box;
-    /* Pour éviter que le contenu ne passe sous la racine, on ajoute un padding-top égal à la hauteur de la racine (environ 32px, à ajuster si besoin) */
-    padding-top: 32px;
 }
 @media (max-width: 600px) {
     footer, .footer-nav {
