@@ -17,6 +17,7 @@
     display: block;
     pointer-events: none;
     user-select: none;
+    transform: scaleY(2); /* 1.5 = 150% de la hauteur d’origine */
 }
 .home-side-panel-inner {
     position: relative;
