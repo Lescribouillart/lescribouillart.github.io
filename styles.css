@@ -1,3 +1,25 @@
+/* Racine suspendue pour le volet Le feuillet */
+.side-panel-rootline {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-bottom: -12px; /* Ajuste selon l'effet visuel souhaité */
+    z-index: 1200;
+    position: relative;
+}
+.side-panel-rootline img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    pointer-events: none;
+    user-select: none;
+}
+.home-side-panel-inner {
+    position: relative;
+    padding-top: 0.5rem; /* Ajuste si besoin pour l'espace sous la racine */
+}
 @media (max-width: 600px) {
     footer, .footer-nav {
         box-sizing: border-box;
