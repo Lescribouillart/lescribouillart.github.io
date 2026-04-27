@@ -433,7 +433,7 @@ body.home-drawer-open .home-side-panel-inner {
 .home-side-panel-title {
     margin: 0;
     font-family: var(--font-body);
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 700;
     color: var(--primary-color);
     text-align: center;
