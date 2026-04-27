@@ -418,7 +418,7 @@ body.home-drawer-open .home-side-panel-inner {
     font-size: 2rem;
     font-weight: 700;
     color: var(--primary-color);
-    text-align: left;
+    text-align: center;
 }
 
 .home-side-panel-text {
