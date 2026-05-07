@@ -22,7 +22,7 @@ Une démarche associative qui était perçue comme marginale, en faisant partie 
   </figure>
 </div>
 
-Cependant, la présence d'indices chimiques comme les acides de type phénols et flavonoïdes<sup>*</sup> dans ses soubassements, laissa en suspens certains questionnements liés au rapport final. Des zones où le béton aurait pris une coloration jaune, parfois brun clair, rappelant les signes typiques laissés par des plantes invasives. Les mêmes que l'on peut retrouver sur des constructions laissées à l'abandon. Or, le suivi de maintenance ne faisait pas mention de cette avarie.
+Cependant, la présence d'indices chimiques comme les acides de type phénols et flavonoïdes* dans ses soubassements, laissa en suspens certains questionnements liés au rapport final. Des zones où le béton aurait pris une coloration jaune, parfois brun clair, rappelant les signes typiques laissés par des plantes invasives. Les mêmes que l'on peut retrouver sur des constructions laissées à l'abandon. Or, le suivi de maintenance ne faisait pas mention de cette avarie.
 
 <p class="article-note"><sup>*</sup> enzymes capables de dissoudre la roche ou le béton</p>
 
