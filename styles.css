@@ -2032,6 +2032,10 @@ h2.titrelegal2 {
     max-width: 1220px;
 }
 
+.characters-presentation .feuillet-subtitle {
+    margin-top: 0;
+}
+
 .feuillet-title,
 .feuillet-subtitle {
     text-align: center;
