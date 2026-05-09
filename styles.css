@@ -2028,6 +2028,10 @@ h2.titrelegal2 {
     margin-right: auto;
 }
 
+.characters-presentation {
+    max-width: 1220px;
+}
+
 .feuillet-title,
 .feuillet-subtitle {
     text-align: center;
@@ -2110,6 +2114,7 @@ a.highlight-blue {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: nowrap;
     gap: 1rem;
     padding: 0.9rem 1.2rem;
     border: 1px solid rgba(123, 163, 216, 0.2);
@@ -2118,9 +2123,10 @@ a.highlight-blue {
 
 .character-directory-index {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     align-items: center;
-    gap: 0.35rem;
+    gap: 0.25rem;
+    min-width: 0;
 }
 
 .character-directory-filter {
@@ -2155,6 +2161,7 @@ a.highlight-blue {
     color: #00579b;
     font-weight: 600;
     white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .character-directory-status {
@@ -3534,8 +3541,8 @@ a.highlight-blue {
     }
 
     .character-directory-toolbar {
-        flex-direction: column;
-        align-items: flex-start;
+        gap: 0.65rem;
+        padding: 0.8rem 0.9rem;
     }
 
     .character-directory-list {
