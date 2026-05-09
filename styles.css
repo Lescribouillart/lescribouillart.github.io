@@ -2100,6 +2100,170 @@ a.highlight-blue {
     font-style: italic;
 }
 
+.character-directory {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.character-directory-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.9rem 1.2rem;
+    border: 1px solid rgba(123, 163, 216, 0.2);
+    background: rgba(215, 229, 243, 0.95);
+}
+
+.character-directory-index {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.character-directory-filter {
+    border: none;
+    background: transparent;
+    color: #00579b;
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    font-weight: 600;
+    padding: 0.2rem 0.45rem;
+    cursor: pointer;
+}
+
+.character-directory-filter:hover,
+.character-directory-filter:focus-visible {
+    color: #003d70;
+    text-decoration: underline;
+    outline: none;
+}
+
+.character-directory-filter.is-active {
+    color: #111;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.character-directory-filter.is-empty {
+    color: rgba(0, 87, 155, 0.45);
+}
+
+.character-directory-view-tag {
+    color: #00579b;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.character-directory-status {
+    margin: 0;
+    color: rgba(224, 224, 224, 0.72);
+    font-size: 0.98rem;
+}
+
+.character-directory-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.character-card {
+    display: grid;
+    grid-template-columns: minmax(170px, 210px) minmax(0, 1fr);
+    min-height: 188px;
+    background: #d7e5f3;
+    overflow: hidden;
+}
+
+.character-card[hidden] {
+    display: none;
+}
+
+.character-card-media {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    min-height: 100%;
+    padding: 1rem;
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    background-size: cover;
+    background-position: center;
+}
+
+.character-card-media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(7, 21, 38, 0.18) 0%, rgba(7, 21, 38, 0.72) 100%);
+}
+
+.character-card-media span {
+    position: relative;
+    z-index: 1;
+}
+
+.character-card-media-lice {
+    background-image: linear-gradient(135deg, rgba(20, 39, 58, 0.86), rgba(8, 14, 26, 0.92)), radial-gradient(circle at top right, rgba(123, 163, 216, 0.38), transparent 40%);
+}
+
+.character-card-media-pierre {
+    background-image: linear-gradient(135deg, rgba(76, 53, 36, 0.88), rgba(26, 18, 11, 0.94)), radial-gradient(circle at center, rgba(210, 170, 111, 0.34), transparent 42%);
+}
+
+.character-card-media-antoine {
+    background-image: linear-gradient(135deg, rgba(45, 29, 60, 0.88), rgba(17, 11, 22, 0.94)), radial-gradient(circle at bottom right, rgba(169, 134, 214, 0.3), transparent 45%);
+}
+
+.character-card-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    padding: 1rem 1.15rem;
+    color: #003d70;
+}
+
+.character-card-letter {
+    margin: 0;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(0, 61, 112, 0.62);
+}
+
+.character-card-title {
+    margin: 0;
+    font-size: 1.65rem;
+    line-height: 1.15;
+    color: #00579b;
+}
+
+.character-card-role {
+    margin: 0;
+    font-weight: 700;
+    color: #1c3550;
+}
+
+.character-card-description {
+    margin: 0;
+    color: #27445f;
+    line-height: 1.55;
+}
+
+.character-directory-empty {
+    margin: 0;
+    padding: 1rem 1.2rem;
+    background: rgba(215, 229, 243, 0.95);
+    color: #27445f;
+}
+
 /* ========================================
    FOOTER
    ======================================== */
@@ -3383,6 +3547,23 @@ a.highlight-blue {
     
     .feuillet-subtitle {
         font-size: 20px;
+    }
+
+    .character-directory-toolbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .character-directory-list {
+        grid-template-columns: 1fr;
+    }
+
+    .character-card {
+        grid-template-columns: 1fr;
+    }
+
+    .character-card-media {
+        min-height: 150px;
     }
     
     .intro-site {
