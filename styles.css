@@ -1556,6 +1556,96 @@ main {
     margin-bottom: 0;
 }
 
+.lieux-main-container {
+    padding-bottom: 2.5rem;
+}
+
+.saga-globe-panel {
+    display: grid;
+    grid-template-columns: minmax(250px, 360px) minmax(0, 1fr);
+    gap: 2rem;
+    align-items: center;
+    margin-top: 1rem;
+    overflow: hidden;
+}
+
+.saga-globe-copy {
+    position: relative;
+    z-index: 1;
+}
+
+.saga-globe-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin-bottom: 0.85rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--secondary-color);
+}
+
+.saga-globe-kicker::before {
+    content: '';
+    width: 34px;
+    height: 1px;
+    background: rgba(123, 163, 216, 0.55);
+}
+
+.saga-globe-note {
+    color: var(--text-light);
+    font-size: 0.95rem;
+}
+
+.saga-globe-stage {
+    position: relative;
+    min-height: 560px;
+    border-radius: 18px;
+    border: 1px solid rgba(123, 163, 216, 0.2);
+    background:
+        radial-gradient(circle at top, rgba(123, 163, 216, 0.16), transparent 40%),
+        radial-gradient(circle at bottom, rgba(13, 22, 36, 0.58), transparent 48%),
+        linear-gradient(180deg, rgba(9, 16, 28, 0.88), rgba(5, 10, 18, 0.98));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 18px 40px rgba(0, 0, 0, 0.28);
+    overflow: hidden;
+}
+
+.saga-globe-canvas {
+    position: absolute;
+    inset: 0;
+}
+
+.saga-globe-canvas canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.saga-globe-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.08), transparent 18%),
+        radial-gradient(circle at 70% 70%, rgba(123, 163, 216, 0.06), transparent 22%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 20%, transparent 80%, rgba(255, 255, 255, 0.03));
+}
+
+.saga-globe-status {
+    position: absolute;
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 2;
+    padding: 0.7rem 0.9rem;
+    border: 1px solid rgba(123, 163, 216, 0.24);
+    border-radius: 10px;
+    background: rgba(7, 12, 20, 0.72);
+    color: var(--text-light);
+    font-size: 0.92rem;
+    backdrop-filter: blur(8px);
+}
+
 .titrelegal {
     text-align: center;
     margin-bottom: 10px;

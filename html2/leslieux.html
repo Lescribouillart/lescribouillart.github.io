@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="page-title">Personnage - Le Scribouill'art</title>
+    <title id="page-title">Lieux - Le Scribouill'art</title>
 
     <link rel="preload" href="../styles.css" as="style">
     <link rel="preload" href="../images/logo/scribouillart.png" as="image">
@@ -72,8 +72,25 @@
     </div>
 
     <main class="main" id="main-content">
-        <div>
-            
+        <div class="container lieux-main-container">
+            <section class="presentation-bg2 saga-globe-panel" aria-labelledby="saga-globe-title">
+                <div class="saga-globe-copy">
+                    <p class="saga-globe-kicker">Atlas de Saga</p>
+                    <h2 id="saga-globe-title" class="feuillet-subtitle">LE MONDE DE SAGA</h2>
+                    <p>
+                        Ce globe 3D servira de base à la future carte interactive du monde. Pour l'instant, il présente
+                        uniquement la sphère de Saga, prête à recevoir ses continents, ses routes et ses lieux importants.
+                    </p>
+                    <p class="saga-globe-note">
+                        Déplacement : cliquez-glissez pour tourner le globe, utilisez la molette pour zoomer.
+                    </p>
+                </div>
+                <div class="saga-globe-stage" data-saga-globe>
+                    <div class="saga-globe-canvas" data-saga-globe-canvas aria-label="Globe 3D de Saga"></div>
+                    <div class="saga-globe-overlay" aria-hidden="true"></div>
+                    <p class="saga-globe-status" data-saga-globe-status>Initialisation du globe...</p>
+                </div>
+            </section>
         </div>
     </main>
 
@@ -109,7 +126,7 @@
         </button>
     </div>
 
-    <script src="../java-script/interface/personnage_complet_clique.js" defer></script>
+    <script src="../java-script/interface/carteinterractive.js" defer></script>
     <script src="../java-script/interface/home-drawer.js"></script>
     <script src="../java-script/interface/dyslexic-mode.js"></script>
     <script src="../java-script/interface/home-header-scroll.js"></script>
