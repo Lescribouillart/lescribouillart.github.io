@@ -140,15 +140,73 @@
 		ctx.globalAlpha = 1;
 	}
 
+	function blendValue(start, end, ratio) {
+		return (start * (1 - ratio)) + (end * ratio);
+	}
+
+	function blendColor(start, end, ratio) {
+		return {
+			red: blendValue(start.red, end.red, ratio),
+			green: blendValue(start.green, end.green, ratio),
+			blue: blendValue(start.blue, end.blue, ratio)
+		};
+	}
+
+	function sampleTexturePixel(textureBuffer, u, v) {
+		const sourcePixels = textureBuffer.data;
+		const textureWidth = textureBuffer.width;
+		const textureHeight = textureBuffer.height;
+		const wrappedX = (((u % 1) + 1) % 1) * textureWidth;
+		const clampedY = Math.min(textureHeight - 1, Math.max(0, v * (textureHeight - 1)));
+		const x0 = Math.floor(wrappedX) % textureWidth;
+		const x1 = (x0 + 1) % textureWidth;
+		const y0 = Math.floor(clampedY);
+		const y1 = Math.min(textureHeight - 1, y0 + 1);
+		const blendX = wrappedX - Math.floor(wrappedX);
+		const blendY = clampedY - y0;
+
+		const topLeftOffset = (y0 * textureWidth + x0) * 4;
+		const topRightOffset = (y0 * textureWidth + x1) * 4;
+		const bottomLeftOffset = (y1 * textureWidth + x0) * 4;
+		const bottomRightOffset = (y1 * textureWidth + x1) * 4;
+
+		const topColor = {
+			red: blendValue(sourcePixels[topLeftOffset], sourcePixels[topRightOffset], blendX),
+			green: blendValue(sourcePixels[topLeftOffset + 1], sourcePixels[topRightOffset + 1], blendX),
+			blue: blendValue(sourcePixels[topLeftOffset + 2], sourcePixels[topRightOffset + 2], blendX)
+		};
+		const bottomColor = {
+			red: blendValue(sourcePixels[bottomLeftOffset], sourcePixels[bottomRightOffset], blendX),
+			green: blendValue(sourcePixels[bottomLeftOffset + 1], sourcePixels[bottomRightOffset + 1], blendX),
+			blue: blendValue(sourcePixels[bottomLeftOffset + 2], sourcePixels[bottomRightOffset + 2], blendX)
+		};
+
+		return blendColor(topColor, bottomColor, blendY);
+	}
+
+	function sampleTextureColor(textureBuffer, u, v) {
+		const baseColor = sampleTexturePixel(textureBuffer, u, v);
+		const seamBlendWidth = 0.035;
+		const seamDistance = Math.min(u, 1 - u);
+
+		if (seamDistance >= seamBlendWidth) {
+			return baseColor;
+		}
+
+		const seamRatio = 1 - (seamDistance / seamBlendWidth);
+		const neighboringLeft = sampleTexturePixel(textureBuffer, seamBlendWidth + seamDistance, v);
+		const neighboringRight = sampleTexturePixel(textureBuffer, 1 - seamBlendWidth - seamDistance, v);
+		const seamColor = blendColor(neighboringLeft, neighboringRight, 0.5);
+
+		return blendColor(baseColor, seamColor, seamRatio * 0.92);
+	}
+
 	function drawTexturedSphere(renderBuffer, textureBuffer, yaw, pitch) {
 		const size = renderBuffer.size;
 		const center = size * 0.5;
 		const radius = center - 2;
 		const image = renderBuffer.context.createImageData(size, size);
 		const pixels = image.data;
-		const sourcePixels = textureBuffer.data;
-		const textureWidth = textureBuffer.width;
-		const textureHeight = textureBuffer.height;
 
 		for (let y = 0; y < size; y += 1) {
 			for (let x = 0; x < size; x += 1) {
@@ -172,14 +230,12 @@
 				const latitude = Math.asin(globePoint.y);
 				const u = (1 - (((longitude / (Math.PI * 2)) + 1) % 1)) % 1;
 				const v = (0.5 - (latitude / Math.PI));
-				const sourceX = Math.min(textureWidth - 1, Math.max(0, Math.floor(u * textureWidth)));
-				const sourceY = Math.min(textureHeight - 1, Math.max(0, Math.floor(v * textureHeight)));
-				const sourceOffset = (sourceY * textureWidth + sourceX) * 4;
+				const sampledColor = sampleTextureColor(textureBuffer, u, v);
 				const lighting = 0.7 + (visiblePoint.z * 0.38);
 
-				pixels[offset] = Math.min(255, Math.round(sourcePixels[sourceOffset] * lighting));
-				pixels[offset + 1] = Math.min(255, Math.round(sourcePixels[sourceOffset + 1] * lighting));
-				pixels[offset + 2] = Math.min(255, Math.round(sourcePixels[sourceOffset + 2] * lighting));
+				pixels[offset] = Math.min(255, Math.round(sampledColor.red * lighting));
+				pixels[offset + 1] = Math.min(255, Math.round(sampledColor.green * lighting));
+				pixels[offset + 2] = Math.min(255, Math.round(sampledColor.blue * lighting));
 				pixels[offset + 3] = 255;
 			}
 		}
