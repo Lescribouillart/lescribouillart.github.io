@@ -36,10 +36,31 @@
 		}
 
 		context.drawImage(image, 0, 0);
+		const imageData = context.getImageData(0, 0, image.width, image.height);
+		const seamWidth = Math.max(2, Math.floor(image.width * 0.006));
+
+		for (let y = 0; y < image.height; y += 1) {
+			for (let step = 0; step < seamWidth; step += 1) {
+				const ratio = (seamWidth - step) / (seamWidth + 1);
+				const leftX = step;
+				const rightX = image.width - 1 - step;
+				const leftOffset = (y * image.width + leftX) * 4;
+				const rightOffset = (y * image.width + rightX) * 4;
+
+				for (let channel = 0; channel < 3; channel += 1) {
+					const leftValue = imageData.data[leftOffset + channel];
+					const rightValue = imageData.data[rightOffset + channel];
+					const averageValue = (leftValue + rightValue) * 0.5;
+					imageData.data[leftOffset + channel] = Math.round((leftValue * (1 - ratio)) + (averageValue * ratio));
+					imageData.data[rightOffset + channel] = Math.round((rightValue * (1 - ratio)) + (averageValue * ratio));
+				}
+			}
+		}
+
 		return {
 			width: image.width,
 			height: image.height,
-			data: context.getImageData(0, 0, image.width, image.height).data
+			data: imageData.data
 		};
 	}
 
@@ -184,23 +205,6 @@
 		return blendColor(topColor, bottomColor, blendY);
 	}
 
-	function sampleTextureColor(textureBuffer, u, v) {
-		const baseColor = sampleTexturePixel(textureBuffer, u, v);
-		const seamBlendWidth = 0.035;
-		const seamDistance = Math.min(u, 1 - u);
-
-		if (seamDistance >= seamBlendWidth) {
-			return baseColor;
-		}
-
-		const seamRatio = 1 - (seamDistance / seamBlendWidth);
-		const neighboringLeft = sampleTexturePixel(textureBuffer, seamBlendWidth + seamDistance, v);
-		const neighboringRight = sampleTexturePixel(textureBuffer, 1 - seamBlendWidth - seamDistance, v);
-		const seamColor = blendColor(neighboringLeft, neighboringRight, 0.5);
-
-		return blendColor(baseColor, seamColor, seamRatio * 0.92);
-	}
-
 	function drawTexturedSphere(renderBuffer, textureBuffer, yaw, pitch) {
 		const size = renderBuffer.size;
 		const center = size * 0.5;
@@ -230,7 +234,7 @@
 				const latitude = Math.asin(globePoint.y);
 				const u = (1 - (((longitude / (Math.PI * 2)) + 1) % 1)) % 1;
 				const v = (0.5 - (latitude / Math.PI));
-				const sampledColor = sampleTextureColor(textureBuffer, u, v);
+				const sampledColor = sampleTexturePixel(textureBuffer, u, v);
 				const lighting = 0.7 + (visiblePoint.z * 0.38);
 
 				pixels[offset] = Math.min(255, Math.round(sampledColor.red * lighting));
