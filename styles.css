@@ -1632,7 +1632,6 @@ main {
     justify-items: center;
     width: min(320px, calc(100% - 3rem));
     padding: 1rem 1.15rem;
-    border: 1px solid rgba(123, 163, 216, 0.24);
     border-radius: 14px;
     background: rgba(7, 12, 20, 0.82);
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
