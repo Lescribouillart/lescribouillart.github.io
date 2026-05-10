@@ -342,10 +342,6 @@
 			context.stroke();
 		}
 
-		function clampPitch(value) {
-			return Math.max(-1.1, Math.min(1.1, value));
-		}
-
 		canvas.addEventListener('pointerdown', (event) => {
 			state.dragging = true;
 			state.pointerId = event.pointerId;
@@ -364,7 +360,7 @@
 			state.lastX = event.clientX;
 			state.lastY = event.clientY;
 			state.targetYaw -= deltaX * 0.008;
-			state.targetPitch = clampPitch(state.targetPitch + (deltaY * 0.008));
+			state.targetPitch += deltaY * 0.008;
 		});
 
 		function releasePointer(event) {
