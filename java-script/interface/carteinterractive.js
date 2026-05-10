@@ -4,6 +4,7 @@
 	function createStatusUpdater(statusNode) {
 		return function updateStatus(message) {
 			if (statusNode) {
+				statusNode.hidden = !message;
 				statusNode.textContent = message;
 			}
 		};
@@ -330,7 +331,6 @@
 
 		resizeObserver.observe(canvasHost);
 		resizeRenderer();
-		updateStatus('Globe 3D texturé prêt. Cliquez-glissez pour le faire tourner et utilisez la molette pour zoomer.');
 
 		let animationFrameId = 0;
 
