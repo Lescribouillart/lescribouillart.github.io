@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Feuillet - Le Scribouill'art</title>
+    <title id="page-title">Personnage - Le Scribouill'art</title>
+
+    <link rel="preload" href="../styles.css" as="style">
+    <link rel="preload" href="../images/logo/scribouillart.png" as="image">
+
     <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
@@ -45,24 +49,21 @@
     <div class="home-drawer-backdrop" hidden></div>
     <aside class="home-side-panel" id="home-side-panel" aria-hidden="true" hidden>
         <div class="home-side-panel-inner">
-            <div class="side-panel-rootline" aria-hidden="true">
-                <img src="../images/header/racines-bas-header.svg" alt="racine décorative">
-            </div>
             <h2 class="home-side-panel-title">Le feuillet</h2>
-            <a href="feuillet.html" class="home-side-panel-text">Chronologie</a>
+            <a href="../html/feuillet.html" class="home-side-panel-text">Chronologie</a>
             <a href="lespersonnages.html" class="home-side-panel-text">Personnages</a>
             <a href="leslieux.html" class="home-side-panel-text">Lieux</a>
         </div>
     </aside>
-    
+
     <div class="intro-site-bg">
         <div class="intro-site-content">
             <button class="accessibility-btn intro-accessibility-btn" aria-label="Mode dyslexie">
                 <img src="../images/inclusif/dislexie.png" alt="Icône dyslexie" title="dyslexie">
             </button>
             <p class="intro-site">
-                Dans <strong>le feuillet</strong>, vous trouverez toutes les informations importantes concernant <strong>la chronologie</strong>, <strong>le contexte</strong>, et ses multiples <strong>personnages</strong>, ils apparaitront progressivement après chaque parution.
-                Le Scribouill'art alimente ses publications grâce à un lore et une trame principale. L'univers qui sert de toile de fond aux différentes publications se nomme <strong>Saga</strong>.
+                <strong>Le Scribouill'art</strong> rassemble aussi les figures qui traversent ses récits. Chaque fiche développe
+                <strong>leur rôle</strong>, <strong>leurs liens</strong> et les pistes qu'ils laissent derrière eux.
             </p>
             <div class="search-container intro-search-container">
                 <input type="text" id="search-input" placeholder="Rechercher..." autocomplete="off">
@@ -70,73 +71,32 @@
         </div>
     </div>
 
-    <main class="main" id="main-content" style="padding-bottom: 40px;">
-        <div class="container">
-            <div class="presentation feuillet-presentation">
-                <div class="presentation-bg2">
-
-                <section class="feuillet-section introduction">
-                    <h2 class="feuillet-subtitle"></h2>
-                    <div class="feuillet-block">
-                        <p>
-                            Au début, il y avait le vide absolu dans les confins du <span class="noctheriga-name">Néant Abyssal</span>. Et bien que de nos jours personne ne puisse vraiment le nier, ce ne fut pas tout à fait le cas.
-                        </p>
-                        <p>
-                            Dans ce désert infini, il y résidait une cage. Celle-ci avait toujours été là sans qu’on ne sache d’où elle venait.
-                        </p>
-                        <p>
-                            Derrière les barreaux de cette sombre cellule, était enchaînée une entité qui portait le nom de <span class="noctheriga-name">Nocthériga</span>. Cette prison inviolable l'avait laissée affamée et dans un perpétuel ennui depuis des milliards d'années. Ses pensées étaient si profondes et si noires qu'un jour elles s'effondrèrent sur elle-même.
-                        </p>
-                        
-                        <div class="feuillet-flex">
-                            <img src="../images/Nocthériga/Nocthériga.png" alt="Illustration de Nocthériga, entité cosmique de l'univers Saga">
-                            <div class="feuillet-texte">
-                                <p>
-                                    Les Grands mages des premiers cycles appelèrent cet événement céleste qui dégagea une quantité exceptionnelle de matière et d'énergie <span class="noctheriga-name">«Saga»</span>. En provoquant ce cataclysme, <span class="noctheriga-name">Nocthériga</span> bascula dans une dimension parallèle proche de son univers d'origine.
-                                </p>
-                            </div>
-                        </div>
-                        
-                        <p>
-                            Au même moment, de nombreux portails déversèrent de la matière aux quatre coins de l'univers. Ces substances qui ne l'avaient pas suivie dans l'autre monde étaient les composantes restantes de <span class="noctheriga-name">Nocthériga</span>.
-                        </p>
-                        <p>
-                            Surpuissantes et incontrôlables, elles se diffusèrent dans toutes choses et dans tous lieux. La partie de son corps qui resta dans l'univers connu se nommait le <span class="noctheriga-name">Noctherium</span>. Alors, à travers cette énergie consciente qui servit de connexion à l'entité énigmatique...
-                        </p>
-                        <p>
-                            Elle put expérimenter, en créant des étoiles, ainsi que des galaxies. Et peu à peu elle sortit de son ennui morne et infini.
-                        </p>
-                        <p>
-                           Son ultime but n'était ni le bien, ni le mal. Mais seulement d'observer et connaître de nouvelles expériences à travers toutes formes de vie. Malgré son extraordinaire évasion et sa victoire contre le <span class="noctheriga-name">Néant Abyssal</span>, une partie de son corps restera prisonière de la cage pour l'éternité.
-                        </p>
-                    </div>
-                </section>
-            </div>
+    <main class="main" id="main-content">
+        <div>
+            
         </div>
-     </div>   
     </main>
 
     <footer class="footer">
         <div class="container">
             <nav class="footer-nav">
-                <a href="a-propos.html" class="footer-link">À propos</a>
-                <a href="contact.html" class="footer-link">Contact</a>
-                <a href="auteur.html" class="footer-link">Scribes</a>
-                <a href="mentions-legales.html" class="footer-link">Mentions légales</a>
-                <a href="accessibilite.html" class="footer-link footer-icon-link" aria-label="Accessibilité" title="Accessibilité">
+                <a href="../html/a-propos.html" class="footer-link">À propos</a>
+                <a href="../html/contact.html" class="footer-link">Contact</a>
+                <a href="../html/auteur.html" class="footer-link">Scribes</a>
+                <a href="../html/mentions-legales.html" class="footer-link">Mentions légales</a>
+                <a href="../html/accessibilite.html" class="footer-link footer-icon-link" aria-label="Accessibilité" title="Accessibilité">
                     <img src="../images/icons/accessibilite.png" alt="Icône accessibilité" width="20" height="20">
                 </a>
             </nav>
             <p class="footer-copyright">© 2025 Le Scribouill'art - Tous droits réservés</p>
         </div>
     </footer>
-    
-    <!-- Menu flottant RSS -->
+
     <div class="floating-social">
         <button class="floating-social-button header-scroll-button" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Retour en haut" aria-label="Retour en haut">
             <img src="../images/icons/flechehaut.png" alt="Flèche vers le haut" width="20" height="20">
         </button>
-        <a href="../feed.xml" class="floating-social-button rss-button" title="S'abonner au flux RSS" aria-label="S'abonner au flux RSS" target="_blank" rel="noopener noreferrer">
+        <a href="../feed.xml" class="floating-social-button rss-button" title="S'abonner au flux RSS" aria-label="S'abonner au flux RSS" target="_blank">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#fff" aria-hidden="true" focusable="false">
                 <path d="M6.503 20.752c0 1.794-1.456 3.248-3.251 3.248-1.796 0-3.252-1.454-3.252-3.248 0-1.794 1.456-3.248 3.252-3.248 1.795.001 3.251 1.454 3.251 3.248zm-6.503-12.572v4.811c6.05.062 10.96 4.966 11.022 11.009h4.817c-.062-8.71-7.118-15.758-15.839-15.82zm0-3.368c10.58.046 19.152 8.594 19.183 19.188h4.817c-.03-13.231-10.755-23.954-24-24v4.812z"/>
             </svg>
@@ -148,7 +108,8 @@
             <img src="../images/icons/flechebas.png" alt="Flèche vers le bas" width="20" height="20">
         </button>
     </div>
-    
+
+    <script src="../java-script/interface/personnage_complet_clique.js" defer></script>
     <script src="../java-script/interface/home-drawer.js"></script>
     <script src="../java-script/interface/dyslexic-mode.js"></script>
     <script src="../java-script/interface/home-header-scroll.js"></script>
