@@ -1624,28 +1624,47 @@ main {
     backdrop-filter: blur(10px);
 }
 
-.saga-globe-loader-head {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-bottom: 0.7rem;
+.saga-globe-access {
+    position: relative;
+    z-index: 3;
+    display: grid;
+    gap: 0.65rem;
+    justify-items: center;
+    width: min(320px, calc(100% - 3rem));
+    padding: 1rem 1.15rem;
+    border: 1px solid rgba(123, 163, 216, 0.24);
+    border-radius: 14px;
+    background: rgba(7, 12, 20, 0.82);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+    backdrop-filter: blur(10px);
 }
 
-.saga-globe-loader-label {
-    margin: 0;
-    color: var(--text-light);
-    font-size: 0.96rem;
-    letter-spacing: 0.04em;
+.saga-globe-access-button {
+    min-width: 170px;
+    padding: 0.65rem 1rem;
+    border: 1px solid rgba(171, 221, 255, 0.45);
+    border-radius: 999px;
+    background: linear-gradient(135deg, rgba(88, 159, 214, 0.92), rgba(162, 215, 248, 0.98));
+    color: #08121f;
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
     text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(26, 72, 112, 0.3);
+    transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
 }
 
-.saga-globe-loader-progress {
-    margin: 0;
-    min-width: 3ch;
-    color: rgba(224, 241, 255, 0.86);
-    font-size: 0.95rem;
-    font-variant-numeric: tabular-nums;
+.saga-globe-access-button:hover,
+.saga-globe-access-button:focus-visible {
+    transform: translateY(-1px);
+    box-shadow: 0 16px 28px rgba(26, 72, 112, 0.42);
+    filter: brightness(1.05);
+}
+
+.saga-globe-access-button:focus-visible {
+    outline: 2px solid rgba(223, 243, 255, 0.95);
+    outline-offset: 3px;
 }
 
 .saga-globe-loader-track {
@@ -1669,11 +1688,17 @@ main {
 }
 
 .saga-globe-stage.is-loading .saga-globe-canvas,
-.saga-globe-stage.is-loading .saga-globe-overlay {
+.saga-globe-stage.is-loading .saga-globe-overlay,
+.saga-globe-stage.is-awaiting-access .saga-globe-canvas,
+.saga-globe-stage.is-awaiting-access .saga-globe-overlay {
     opacity: 0;
 }
 
 .saga-globe-stage:not(.is-loading) .saga-globe-loader {
+    display: none;
+}
+
+.saga-globe-stage:not(.is-awaiting-access) .saga-globe-access {
     display: none;
 }
 

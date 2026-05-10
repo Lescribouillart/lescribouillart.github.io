@@ -258,8 +258,8 @@
 
 	async function initGlobe() {
 		const root = document.querySelector('[data-saga-globe]');
-		const loadingStart = window.performance.now();
-		const minimumLoadingDuration = 1800;
+		const firstLoadingStepDuration = 900;
+		const secondLoadingStepDuration = 1100;
 
 		if (!root) {
 			return;
@@ -267,11 +267,12 @@
 
 		const canvasHost = root.querySelector('[data-saga-globe-canvas]');
 		const loaderNode = root.querySelector('[data-saga-globe-loader]');
+		const accessNode = root.querySelector('[data-saga-globe-access]');
+		const accessButtonNode = root.querySelector('[data-saga-globe-access-button]');
 		const loaderBarNode = root.querySelector('[data-saga-globe-loader-bar]');
-		const loaderProgressNode = root.querySelector('[data-saga-globe-loader-progress]');
 		const statusNode = root.querySelector('[data-saga-globe-status]');
 		const updateStatus = createStatusUpdater(statusNode);
-		let loaderAnimationFrameId = 0;
+		let progressAnimationFrameId = 0;
 		let currentLoadingProgress = 0;
 
 		function setLoadingProgress(value) {
@@ -281,76 +282,82 @@
 			if (loaderBarNode) {
 				loaderBarNode.style.transform = `scaleX(${nextProgress / 100})`;
 			}
+		}
 
-			if (loaderProgressNode) {
-				loaderProgressNode.textContent = `${Math.round(nextProgress)}%`;
+		function animateLoadingProgress(targetValue, duration) {
+			const startValue = currentLoadingProgress;
+			const targetProgress = Math.max(startValue, Math.min(100, targetValue));
+			const startTime = window.performance.now();
+
+			if (progressAnimationFrameId) {
+				window.cancelAnimationFrame(progressAnimationFrameId);
+				progressAnimationFrameId = 0;
 			}
-		}
 
-		function syncAutoProgress() {
-			const elapsed = window.performance.now() - loadingStart;
-			const ratio = Math.min(1, elapsed / minimumLoadingDuration);
-			const simulatedProgress = ratio * 92;
-			setLoadingProgress(Math.max(currentLoadingProgress, simulatedProgress));
-		}
+			return new Promise((resolve) => {
+				const tick = (now) => {
+					const ratio = duration <= 0 ? 1 : Math.min(1, (now - startTime) / duration);
+					setLoadingProgress(startValue + ((targetProgress - startValue) * ratio));
 
-		function startAutoProgress() {
-			const tick = () => {
-				syncAutoProgress();
-				if (root.classList.contains('is-loading')) {
-					loaderAnimationFrameId = window.requestAnimationFrame(tick);
-				}
-			};
+					if (ratio < 1) {
+						progressAnimationFrameId = window.requestAnimationFrame(tick);
+						return;
+					}
 
-			loaderAnimationFrameId = window.requestAnimationFrame(tick);
+					progressAnimationFrameId = 0;
+					resolve();
+				};
+
+				progressAnimationFrameId = window.requestAnimationFrame(tick);
+			});
 		}
 
 		function setLoadingState(isLoading) {
 			root.classList.toggle('is-loading', isLoading);
-			if (loaderNode) {
-				loaderNode.hidden = !isLoading;
-			}
 
-			if (!isLoading && loaderAnimationFrameId) {
-				window.cancelAnimationFrame(loaderAnimationFrameId);
-				loaderAnimationFrameId = 0;
+			if (!isLoading && progressAnimationFrameId) {
+				window.cancelAnimationFrame(progressAnimationFrameId);
+				progressAnimationFrameId = 0;
 			}
 		}
 
-		async function finishLoading() {
-			const elapsed = window.performance.now() - loadingStart;
-			const remaining = Math.max(0, minimumLoadingDuration - elapsed);
-
-			if (remaining > 0) {
-				await new Promise((resolve) => {
-					window.setTimeout(resolve, remaining);
-				});
+		function setLoaderVisible(isVisible) {
+			if (loaderNode) {
+				loaderNode.hidden = !isVisible;
 			}
+		}
 
+		function setAccessState(isAwaitingAccess) {
+			root.classList.toggle('is-awaiting-access', isAwaitingAccess);
+			if (accessNode) {
+				accessNode.hidden = !isAwaitingAccess;
+			}
+		}
+
+		async function completeLoadingSequence(showAccessButton = true) {
 			setLoadingProgress(100);
 
-			await new Promise((resolve) => {
-				window.setTimeout(resolve, 180);
-			});
-
 			setLoadingState(false);
+			setLoaderVisible(false);
+			setAccessState(showAccessButton);
 		}
 
 		if (!canvasHost) {
 			return;
 		}
 
+		setLoaderVisible(true);
 		setLoadingState(true);
-		setLoadingProgress(4);
-		startAutoProgress();
+		setAccessState(false);
+		setLoadingProgress(0);
+		const firstLoadingStep = animateLoadingProgress(50, firstLoadingStepDuration);
 
 		const canvas = createCanvas(canvasHost);
 		const context = canvas.getContext('2d');
-		syncAutoProgress();
-		setLoadingProgress(12);
 
 		if (!context) {
-			await finishLoading();
+			await firstLoadingStep;
+			await completeLoadingSequence(false);
 			updateStatus('Le navigateur n\'a pas pu initialiser le canvas du globe.');
 			return;
 		}
@@ -359,27 +366,28 @@
 
 		try {
 			planetTexture = await loadPlanetTexture();
-			setLoadingProgress(48);
+			await firstLoadingStep;
 		} catch (error) {
 			console.error(error);
-			await finishLoading();
+			await firstLoadingStep;
+			await completeLoadingSequence(false);
 			updateStatus('La texture du globe n\'a pas pu être chargée.');
 			return;
 		}
 
 		const textureBuffer = createTextureBuffer(planetTexture);
 		const renderBuffer = createRenderBuffer(getRenderBufferSize(textureBuffer));
-		setLoadingProgress(74);
 
 		if (!textureBuffer || !renderBuffer) {
-			await finishLoading();
+			await animateLoadingProgress(100, secondLoadingStepDuration);
+			await completeLoadingSequence(false);
 			updateStatus('Le navigateur n\'a pas pu préparer la texture 3D du globe.');
 			return;
 		}
 
 		const stars = createStars(180);
 		const nebulaBlobs = createNebulaBlobs();
-		setLoadingProgress(88);
+		await animateLoadingProgress(100, secondLoadingStepDuration);
 		const state = {
 			yaw: 0.45,
 			pitch: -0.22,
@@ -547,9 +555,20 @@
 
 		drawBackground(canvas.clientWidth, canvas.clientHeight);
 		drawGlobe(canvas.clientWidth, canvas.clientHeight);
-		await finishLoading();
+		await completeLoadingSequence();
 
-		animate();
+		const revealMap = () => {
+			setAccessState(false);
+			setLoaderVisible(false);
+			animate();
+		};
+
+		if (accessButtonNode) {
+			accessButtonNode.addEventListener('click', revealMap, { once: true });
+			accessButtonNode.focus();
+		} else {
+			revealMap();
+		}
 
 		window.addEventListener('beforeunload', () => {
 			window.cancelAnimationFrame(animationFrameId);
