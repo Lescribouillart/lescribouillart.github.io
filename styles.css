@@ -1624,20 +1624,6 @@ main {
     backdrop-filter: blur(10px);
 }
 
-.saga-globe-access {
-    position: relative;
-    z-index: 3;
-    display: grid;
-    gap: 0.65rem;
-    justify-items: center;
-    width: min(320px, calc(100% - 3rem));
-    padding: 1rem 1.15rem;
-    border-radius: 14px;
-    background: rgba(7, 12, 20, 0.82);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
-    backdrop-filter: blur(10px);
-}
-
 .saga-globe-access-button {
     min-width: 170px;
     padding: 0.65rem 1rem;
@@ -1732,6 +1718,13 @@ main {
 
 .saga-globe-stage:not(.is-loading) .saga-globe-loader {
     display: none;
+}
+
+.saga-globe-access {
+    position: relative;
+    z-index: 3;
+    display: grid;
+    justify-items: center;
 }
 
 .saga-globe-stage:not(.is-awaiting-access) .saga-globe-access {
