@@ -77,6 +77,14 @@
 		return { canvas, context, size };
 	}
 
+	function getRenderBufferSize(textureBuffer) {
+		const pixelRatio = window.devicePixelRatio || 1;
+		const scaledSize = Math.round(640 * pixelRatio);
+		const textureLimitedSize = Math.round(textureBuffer.width * 0.6);
+
+		return Math.max(640, Math.min(1024, scaledSize, textureLimitedSize));
+	}
+
 	function createStars(count) {
 		const stars = [];
 
@@ -281,7 +289,7 @@
 		}
 
 		const textureBuffer = createTextureBuffer(planetTexture);
-		const renderBuffer = createRenderBuffer(320);
+		const renderBuffer = createRenderBuffer(getRenderBufferSize(textureBuffer));
 
 		if (!textureBuffer || !renderBuffer) {
 			updateStatus('Le navigateur n\'a pas pu préparer la texture 3D du globe.');
