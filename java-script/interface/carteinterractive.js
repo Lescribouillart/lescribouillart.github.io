@@ -147,8 +147,27 @@
 	function projectPoint(point, radius, centerX, centerY) {
 		return {
 			x: centerX + (point.x * radius),
-			y: centerY + (point.y * radius),
+			y: centerY - (point.y * radius),
 			z: point.z
+		};
+	}
+
+	function createPointFromCoordinates(latitude, longitude) {
+		const latitudeRadians = latitude * (Math.PI / 180);
+		const longitudeRadians = longitude * (Math.PI / 180);
+		const cosLatitude = Math.cos(latitudeRadians);
+
+		return {
+			x: cosLatitude * Math.cos(longitudeRadians),
+			y: Math.sin(latitudeRadians),
+			z: -cosLatitude * Math.sin(longitudeRadians)
+		};
+	}
+
+	function createCoordinatesFromPoint(point) {
+		return {
+			latitude: Math.asin(point.y) * (180 / Math.PI),
+			longitude: Math.atan2(-point.z, point.x) * (180 / Math.PI)
 		};
 	}
 
@@ -413,6 +432,9 @@
 			targetPitch: -0.22,
 			zoom: 1,
 			dragging: false,
+			markerDragging: false,
+			markerLatitude: 30.62,
+			markerLongitude: 160.14,
 			pointerId: null,
 			lastX: 0,
 			lastY: 0
@@ -498,18 +520,120 @@
 			context.beginPath();
 			context.arc(centerX, centerY, radius, 0, Math.PI * 2);
 			context.stroke();
+
+			drawAlpsMarker(centerX, centerY, radius);
+		}
+
+		function getMarkerProjection(width, height) {
+			const centerX = width * 0.5;
+			const centerY = height * 0.52;
+			const radius = Math.min(width, height) * 0.31 * state.zoom;
+			const markerPoint = createPointFromCoordinates(state.markerLatitude, state.markerLongitude);
+			const rotatedMarker = rotatePoint(markerPoint, state.yaw, state.pitch);
+
+			if (rotatedMarker.z <= 0) {
+				return null;
+			}
+
+			return {
+				centerX,
+				centerY,
+				radius,
+				markerPoint,
+				rotatedMarker,
+				projectedMarker: projectPoint(rotatedMarker, radius, centerX, centerY)
+			};
+		}
+
+		function drawAlpsMarker(centerX, centerY, radius) {
+			const markerPoint = createPointFromCoordinates(state.markerLatitude, state.markerLongitude);
+			const rotatedMarker = rotatePoint(markerPoint, state.yaw, state.pitch);
+
+			if (rotatedMarker.z <= 0) {
+				return;
+			}
+
+			const projectedMarker = projectPoint(rotatedMarker, radius, centerX, centerY);
+			const pulse = (Math.sin(window.performance.now() * 0.008) + 1) * 0.5;
+			const outerRadius = radius * (0.03 + (pulse * 0.012));
+			const innerRadius = radius * 0.014;
+
+			context.save();
+			context.globalAlpha = 0.28 + (pulse * 0.34);
+			context.fillStyle = '#ef2e3a';
+			context.beginPath();
+			context.arc(projectedMarker.x, projectedMarker.y, outerRadius, 0, Math.PI * 2);
+			context.fill();
+
+			context.globalAlpha = 1;
+			context.fillStyle = '#ef2e3a';
+			context.beginPath();
+			context.arc(projectedMarker.x, projectedMarker.y, innerRadius, 0, Math.PI * 2);
+			context.fill();
+
+			context.lineWidth = 1.4;
+			context.strokeStyle = 'rgba(255, 255, 255, 0.92)';
+			context.beginPath();
+			context.arc(projectedMarker.x, projectedMarker.y, innerRadius + (radius * 0.004), 0, Math.PI * 2);
+			context.stroke();
+			context.restore();
+		}
+
+		function updateMarkerFromPointer(event) {
+			const bounds = canvas.getBoundingClientRect();
+			const width = canvas.clientWidth;
+			const height = canvas.clientHeight;
+			const centerX = width * 0.5;
+			const centerY = height * 0.52;
+			const radius = Math.min(width, height) * 0.31 * state.zoom;
+			const localX = event.clientX - bounds.left;
+			const localY = event.clientY - bounds.top;
+			const normalizedX = (localX - centerX) / radius;
+			const normalizedY = (centerY - localY) / radius;
+			const distanceSquared = (normalizedX * normalizedX) + (normalizedY * normalizedY);
+
+			if (distanceSquared > 1) {
+				return false;
+			}
+
+			const visiblePoint = {
+				x: normalizedX,
+				y: normalizedY,
+				z: Math.sqrt(1 - distanceSquared)
+			};
+			const globePoint = inverseRotatePoint(visiblePoint, state.yaw, state.pitch);
+			const coordinates = createCoordinatesFromPoint(globePoint);
+
+			state.markerLatitude = coordinates.latitude;
+			state.markerLongitude = coordinates.longitude;
+			updateStatus(`Point: ${coordinates.latitude.toFixed(2)}, ${coordinates.longitude.toFixed(2)}`);
+			return true;
 		}
 
 		canvas.addEventListener('pointerdown', (event) => {
-			state.dragging = true;
+			const markerProjection = getMarkerProjection(canvas.clientWidth, canvas.clientHeight);
+			const hitRadius = markerProjection ? Math.max(14, markerProjection.radius * 0.05) : 0;
+			const pointerX = event.clientX - canvas.getBoundingClientRect().left;
+			const pointerY = event.clientY - canvas.getBoundingClientRect().top;
+			const markerHit = markerProjection && Math.hypot(pointerX - markerProjection.projectedMarker.x, pointerY - markerProjection.projectedMarker.y) <= hitRadius;
+
+			state.dragging = !markerHit;
+			state.markerDragging = Boolean(markerHit);
 			state.pointerId = event.pointerId;
 			state.lastX = event.clientX;
 			state.lastY = event.clientY;
 			canvas.setPointerCapture(event.pointerId);
+
+			if (state.markerDragging) {
+				updateMarkerFromPointer(event);
+			}
 		});
 
 		canvas.addEventListener('pointermove', (event) => {
 			if (!state.dragging || state.pointerId !== event.pointerId) {
+				if (state.markerDragging && state.pointerId === event.pointerId) {
+					updateMarkerFromPointer(event);
+				}
 				return;
 			}
 
@@ -527,6 +651,7 @@
 			}
 
 			state.dragging = false;
+			state.markerDragging = false;
 			canvas.releasePointerCapture(event.pointerId);
 			state.pointerId = null;
 		}
