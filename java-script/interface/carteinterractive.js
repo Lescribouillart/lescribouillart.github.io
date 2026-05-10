@@ -427,14 +427,6 @@
 			context.fillStyle = '#0b1637';
 			context.fillRect(0, 0, width, height);
 
-			for (let index = 0; index < nebulaBlobs.length; index += 1) {
-				const blob = nebulaBlobs[index];
-				context.beginPath();
-				context.ellipse(width * blob.x, height * blob.y, width * blob.rx, height * blob.ry, 0, 0, Math.PI * 2);
-				context.fillStyle = blob.color;
-				context.fill();
-			}
-
 			const gradient = context.createRadialGradient(width * 0.5, height * 0.28, 30, width * 0.5, height * 0.42, width * 0.72);
 			gradient.addColorStop(0, 'rgba(112, 176, 233, 0.18)');
 			gradient.addColorStop(0.35, 'rgba(22, 51, 97, 0.12)');
@@ -455,15 +447,6 @@
 			const centerX = width * 0.5;
 			const centerY = height * 0.52;
 			const radius = Math.min(width, height) * 0.31 * state.zoom;
-
-			const atmosphereGradient = context.createRadialGradient(centerX - (radius * 0.28), centerY - (radius * 0.32), radius * 0.16, centerX, centerY, radius * 1.4);
-			atmosphereGradient.addColorStop(0, 'rgba(183, 225, 255, 0.3)');
-			atmosphereGradient.addColorStop(0.55, 'rgba(120, 180, 243, 0.12)');
-			atmosphereGradient.addColorStop(1, 'rgba(84, 127, 176, 0)');
-			context.fillStyle = atmosphereGradient;
-			context.beginPath();
-			context.arc(centerX, centerY, radius * 1.34, 0, Math.PI * 2);
-			context.fill();
 
 			const sphereGradient = context.createRadialGradient(centerX - (radius * 0.32), centerY - (radius * 0.35), radius * 0.12, centerX, centerY, radius);
 			sphereGradient.addColorStop(0, '#8fd5ff');
