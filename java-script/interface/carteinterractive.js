@@ -300,10 +300,6 @@
 			context.clearRect(0, 0, width, height);
 			drawBackground(width, height);
 
-			if (!state.dragging) {
-				state.targetYaw += 0.0018;
-			}
-
 			state.yaw += (state.targetYaw - state.yaw) * 0.08;
 			state.pitch += (state.targetPitch - state.pitch) * 0.08;
 			drawGlobe(width, height);
