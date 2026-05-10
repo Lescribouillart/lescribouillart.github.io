@@ -2148,7 +2148,7 @@ a.highlight-blue {
 }
 
 .character-card.article-card {
-    cursor: default;
+    cursor: pointer;
 }
 
 .presentation-bg2 .character-card.article-card,
