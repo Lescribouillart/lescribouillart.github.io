@@ -2151,6 +2151,14 @@ a.highlight-blue {
     cursor: default;
 }
 
+.presentation-bg2 .character-card.article-card,
+.presentation-bg2 .character-card.article-card:visited,
+.presentation-bg2 .character-card.article-card:hover,
+.presentation-bg2 .character-card.article-card:focus {
+    text-decoration: none;
+    color: inherit;
+}
+
 .character-card[hidden] {
     display: none;
 }

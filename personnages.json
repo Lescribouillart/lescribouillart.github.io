@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "title": "Antoine Debrizuela",
+    "category": "Personnage",
+    "role": "Botaniste et journaliste pour la revue Épopée",
+    "excerpt": "Chercheur indépendant, Antoine suit l'évolution des forêts et consigne chaque anomalie dans ses carnets de terrain.",
+    "markdownFile": "textes/lespersonnages/antoinedebrizuela.md"
+  },
+  {
+    "id": 2,
+    "title": "Lice Ohara",
+    "category": "Personnage",
+    "role": "Ancienne présidente du CERF",
+    "excerpt": "Après sa démission, Lice tente de comprendre ce qui s'est réellement joué autour du barrage du Serre-Étoile.",
+    "markdownFile": "textes/lespersonnages/liceohara.md"
+  },
+  {
+    "id": 3,
+    "title": "Pierre Debrask",
+    "category": "Personnage",
+    "role": "Architecte du barrage du Serre-Étoile",
+    "excerpt": "Concepteur du barrage d'Écluselac, Pierre reste associé à un ouvrage devenu le centre de toutes les suspicions.",
+    "markdownFile": "textes/lespersonnages/pierredebrask.md"
+  }
+]

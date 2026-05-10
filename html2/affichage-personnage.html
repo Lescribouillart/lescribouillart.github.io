@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Personnage - Le Scribouill'art</title>
+
+    <link rel="preload" href="../styles.css" as="style">
+    <link rel="preload" href="../images/logo/scribouillart.png" as="image">
+
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+    <header class="header">
+        <div class="header-rootline" aria-hidden="true">
+            <img src="../images/header/racines-bas-header.svg" alt="">
+        </div>
+        <div class="header-rootline header-rootline-right" aria-hidden="true">
+            <img src="../images/header/racines-bas-header.svg" alt="">
+        </div>
+        <div class="container">
+            <button
+                class="header-drawer-toggle"
+                type="button"
+                aria-label="Ouvrir le volet latéral"
+                aria-controls="home-side-panel"
+                aria-expanded="false"
+            >
+                <span class="header-drawer-toggle-line"></span>
+                <span class="header-drawer-toggle-line"></span>
+                <span class="header-drawer-toggle-line"></span>
+            </button>
+            <a href="../index.html" style="text-decoration: none; color: inherit;">
+                <div class="logo-row">
+                    <h1 class="logo">Le Scribouill'art</h1>
+                    <img src="../images/logo/scribouillart.png" alt="Logo Scribouill'art" class="logo-img">
+                </div>
+            </a>
+            <p class="tagline">Le journal fictif aux articles bien réels</p>
+            <nav class="nav">
+                <a href="../index.html" class="nav-link">Accueil</a>
+                <a href="../html/listage-articles.html" class="nav-link">Publications</a>
+            </nav>
+        </div>
+    </header>
+    <div class="site-header-spacer" aria-hidden="true"></div>
+
+    <div class="home-drawer-backdrop" hidden></div>
+    <aside class="home-side-panel" id="home-side-panel" aria-hidden="true" hidden>
+        <div class="home-side-panel-inner">
+            <h2 class="home-side-panel-title">Le feuillet</h2>
+            <a href="../html/feuillet.html" class="home-side-panel-text">Chronologie</a>
+            <a href="lespersonnages.html" class="home-side-panel-text">Personnages</a>
+            <a href="leslieux.html" class="home-side-panel-text">Lieux</a>
+        </div>
+    </aside>
+
+    <div class="intro-site-bg">
+        <div class="intro-site-content">
+            <button class="accessibility-btn intro-accessibility-btn" aria-label="Mode dyslexie">
+                <img src="../images/inclusif/dislexie.png" alt="Icône dyslexie" title="dyslexie">
+            </button>
+            <p class="intro-site">
+                <strong>Le Scribouill'art</strong> rassemble aussi les figures qui traversent ses récits. Chaque fiche développe
+                <strong>leur rôle</strong>, <strong>leurs liens</strong> et les pistes qu'ils laissent derrière eux.
+            </p>
+            <div class="search-container intro-search-container">
+                <input type="text" id="search-input" placeholder="Rechercher..." autocomplete="off">
+            </div>
+        </div>
+    </div>
+
+    <main class="main" id="main-content">
+        <div class="container">
+            <article id="character-content">
+                <p>Chargement du personnage...</p>
+            </article>
+            <div class="article-footer">
+                <a href="lespersonnages.html" class="back-link">← Retour aux personnages</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <nav class="footer-nav">
+                <a href="../html/a-propos.html" class="footer-link">À propos</a>
+                <a href="../html/contact.html" class="footer-link">Contact</a>
+                <a href="../html/auteur.html" class="footer-link">Scribes</a>
+                <a href="../html/mentions-legales.html" class="footer-link">Mentions légales</a>
+                <a href="../html/accessibilite.html" class="footer-link footer-icon-link" aria-label="Accessibilité" title="Accessibilité">
+                    <img src="../images/icons/accessibilite.png" alt="Icône accessibilité" width="20" height="20">
+                </a>
+            </nav>
+            <p class="footer-copyright">© 2025 Le Scribouill'art - Tous droits réservés</p>
+        </div>
+    </footer>
+
+    <div class="floating-social">
+        <button class="floating-social-button header-scroll-button" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Retour en haut" aria-label="Retour en haut">
+            <img src="../images/icons/flechehaut.png" alt="Flèche vers le haut" width="20" height="20">
+        </button>
+        <a href="../feed.xml" class="floating-social-button rss-button" title="S'abonner au flux RSS" aria-label="S'abonner au flux RSS" target="_blank">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#fff" aria-hidden="true" focusable="false">
+                <path d="M6.503 20.752c0 1.794-1.456 3.248-3.251 3.248-1.796 0-3.252-1.454-3.252-3.248 0-1.794 1.456-3.248 3.252-3.248 1.795.001 3.251 1.454 3.251 3.248zm-6.503-12.572v4.811c6.05.062 10.96 4.966 11.022 11.009h4.817c-.062-8.71-7.118-15.758-15.839-15.82zm0-3.368c10.58.046 19.152 8.594 19.183 19.188h4.817c-.03-13.231-10.755-23.954-24-24v4.812z"/>
+            </svg>
+        </a>
+        <a href="../index.html" class="floating-social-button home-button" title="Retour à l'accueil" aria-label="Retour à l'accueil">
+            <img src="../images/logo/scribouillart.png" alt="Le Scribouill'art" width="80" height="80">
+        </a>
+        <button class="floating-social-button footer-scroll-button" onclick="document.querySelector('footer').scrollIntoView({behavior:'smooth'})" title="Aller au pied de page" aria-label="Aller au pied de page">
+            <img src="../images/icons/flechebas.png" alt="Flèche vers le bas" width="20" height="20">
+        </button>
+    </div>
+
+    <script src="../java-script/interface/personnage_complet_clique.js" defer></script>
+    <script src="../java-script/interface/home-drawer.js"></script>
+    <script src="../java-script/interface/dyslexic-mode.js"></script>
+    <script src="../java-script/interface/home-header-scroll.js"></script>
+    <script src="../java-script/interface/tagline-fireflies.js"></script>
+    <script src="../java-script/recherche/recherche.js"></script>
+</body>
+</html>
