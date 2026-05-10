@@ -16,6 +16,46 @@
 		return canvas;
 	}
 
+	function loadPlanetTexture() {
+		return new Promise((resolve, reject) => {
+			const image = new Image();
+			image.onload = () => resolve(image);
+			image.onerror = () => reject(new Error('Impossible de charger planete.png'));
+			image.src = '../images/Map/planete.png';
+		});
+	}
+
+	function createTextureBuffer(image) {
+		const canvas = document.createElement('canvas');
+		canvas.width = image.width;
+		canvas.height = image.height;
+		const context = canvas.getContext('2d');
+
+		if (!context) {
+			return null;
+		}
+
+		context.drawImage(image, 0, 0);
+		return {
+			width: image.width,
+			height: image.height,
+			data: context.getImageData(0, 0, image.width, image.height).data
+		};
+	}
+
+	function createRenderBuffer(size) {
+		const canvas = document.createElement('canvas');
+		canvas.width = size;
+		canvas.height = size;
+		const context = canvas.getContext('2d');
+
+		if (!context) {
+			return null;
+		}
+
+		return { canvas, context, size };
+	}
+
 	function createStars(count) {
 		const stars = [];
 
@@ -29,6 +69,15 @@
 		}
 
 		return stars;
+	}
+
+	function createNebulaBlobs() {
+		return [
+			{ x: 0.5, y: 0.48, rx: 0.52, ry: 0.38, color: 'rgba(49, 123, 177, 0.16)' },
+			{ x: 0.52, y: 0.5, rx: 0.34, ry: 0.24, color: 'rgba(79, 159, 212, 0.12)' },
+			{ x: 0.38, y: 0.64, rx: 0.3, ry: 0.2, color: 'rgba(32, 93, 160, 0.14)' },
+			{ x: 0.66, y: 0.34, rx: 0.28, ry: 0.18, color: 'rgba(55, 134, 173, 0.08)' }
+		];
 	}
 
 	function rotatePoint(point, yaw, pitch) {
@@ -46,6 +95,22 @@
 			x: yawX,
 			y: pitchY,
 			z: pitchZ
+		};
+	}
+
+	function inverseRotatePoint(point, yaw, pitch) {
+		const cosYaw = Math.cos(yaw);
+		const sinYaw = Math.sin(yaw);
+		const cosPitch = Math.cos(pitch);
+		const sinPitch = Math.sin(pitch);
+
+		const baseY = (point.y * cosPitch) + (point.z * sinPitch);
+		const baseZ = (-point.y * sinPitch) + (point.z * cosPitch);
+
+		return {
+			x: (point.x * cosYaw) + (baseZ * sinYaw),
+			y: baseY,
+			z: (-point.x * sinYaw) + (baseZ * cosYaw)
 		};
 	}
 
@@ -75,7 +140,54 @@
 		ctx.globalAlpha = 1;
 	}
 
-	function initGlobe() {
+	function drawTexturedSphere(renderBuffer, textureBuffer, yaw, pitch) {
+		const size = renderBuffer.size;
+		const center = size * 0.5;
+		const radius = center - 2;
+		const image = renderBuffer.context.createImageData(size, size);
+		const pixels = image.data;
+		const sourcePixels = textureBuffer.data;
+		const textureWidth = textureBuffer.width;
+		const textureHeight = textureBuffer.height;
+
+		for (let y = 0; y < size; y += 1) {
+			for (let x = 0; x < size; x += 1) {
+				const offset = (y * size + x) * 4;
+				const normalizedX = ((x + 0.5) - center) / radius;
+				const normalizedY = (center - (y + 0.5)) / radius;
+				const distanceSquared = (normalizedX * normalizedX) + (normalizedY * normalizedY);
+
+				if (distanceSquared > 1) {
+					pixels[offset + 3] = 0;
+					continue;
+				}
+
+				const visiblePoint = {
+					x: normalizedX,
+					y: normalizedY,
+					z: Math.sqrt(1 - distanceSquared)
+				};
+				const globePoint = inverseRotatePoint(visiblePoint, yaw, pitch);
+				const longitude = Math.atan2(globePoint.z, globePoint.x);
+				const latitude = Math.asin(globePoint.y);
+				const u = (1 - (((longitude / (Math.PI * 2)) + 1) % 1)) % 1;
+				const v = (0.5 - (latitude / Math.PI));
+				const sourceX = Math.min(textureWidth - 1, Math.max(0, Math.floor(u * textureWidth)));
+				const sourceY = Math.min(textureHeight - 1, Math.max(0, Math.floor(v * textureHeight)));
+				const sourceOffset = (sourceY * textureWidth + sourceX) * 4;
+				const lighting = 0.7 + (visiblePoint.z * 0.38);
+
+				pixels[offset] = Math.min(255, Math.round(sourcePixels[sourceOffset] * lighting));
+				pixels[offset + 1] = Math.min(255, Math.round(sourcePixels[sourceOffset + 1] * lighting));
+				pixels[offset + 2] = Math.min(255, Math.round(sourcePixels[sourceOffset + 2] * lighting));
+				pixels[offset + 3] = 255;
+			}
+		}
+
+		renderBuffer.context.putImageData(image, 0, 0);
+	}
+
+	async function initGlobe() {
 		const root = document.querySelector('[data-saga-globe]');
 
 		if (!root) {
@@ -98,7 +210,26 @@
 			return;
 		}
 
+		let planetTexture;
+
+		try {
+			planetTexture = await loadPlanetTexture();
+		} catch (error) {
+			console.error(error);
+			updateStatus('La texture du globe n\'a pas pu être chargée.');
+			return;
+		}
+
+		const textureBuffer = createTextureBuffer(planetTexture);
+		const renderBuffer = createRenderBuffer(320);
+
+		if (!textureBuffer || !renderBuffer) {
+			updateStatus('Le navigateur n\'a pas pu préparer la texture 3D du globe.');
+			return;
+		}
+
 		const stars = createStars(180);
+		const nebulaBlobs = createNebulaBlobs();
 		const state = {
 			yaw: 0.45,
 			pitch: -0.22,
@@ -131,14 +262,25 @@
 
 		resizeObserver.observe(canvasHost);
 		resizeRenderer();
-		updateStatus('Globe prêt. Cliquez-glissez pour le faire tourner et utilisez la molette pour zoomer.');
+		updateStatus('Globe 3D texturé prêt. Cliquez-glissez pour le faire tourner et utilisez la molette pour zoomer.');
 
 		let animationFrameId = 0;
 
 		function drawBackground(width, height) {
+			context.fillStyle = '#0b1637';
+			context.fillRect(0, 0, width, height);
+
+			for (let index = 0; index < nebulaBlobs.length; index += 1) {
+				const blob = nebulaBlobs[index];
+				context.beginPath();
+				context.ellipse(width * blob.x, height * blob.y, width * blob.rx, height * blob.ry, 0, 0, Math.PI * 2);
+				context.fillStyle = blob.color;
+				context.fill();
+			}
+
 			const gradient = context.createRadialGradient(width * 0.5, height * 0.28, 30, width * 0.5, height * 0.42, width * 0.72);
-			gradient.addColorStop(0, 'rgba(89, 133, 196, 0.18)');
-			gradient.addColorStop(0.35, 'rgba(16, 26, 42, 0.12)');
+			gradient.addColorStop(0, 'rgba(112, 176, 233, 0.18)');
+			gradient.addColorStop(0.35, 'rgba(22, 51, 97, 0.12)');
 			gradient.addColorStop(1, 'rgba(4, 8, 14, 0)');
 			context.fillStyle = gradient;
 			context.fillRect(0, 0, width, height);
@@ -157,19 +299,19 @@
 			const centerY = height * 0.52;
 			const radius = Math.min(width, height) * 0.31 * state.zoom;
 
-			const atmosphereGradient = context.createRadialGradient(centerX - (radius * 0.28), centerY - (radius * 0.36), radius * 0.18, centerX, centerY, radius * 1.36);
-			atmosphereGradient.addColorStop(0, 'rgba(148, 195, 255, 0.34)');
-			atmosphereGradient.addColorStop(0.55, 'rgba(84, 127, 176, 0.1)');
+			const atmosphereGradient = context.createRadialGradient(centerX - (radius * 0.28), centerY - (radius * 0.32), radius * 0.16, centerX, centerY, radius * 1.4);
+			atmosphereGradient.addColorStop(0, 'rgba(183, 225, 255, 0.3)');
+			atmosphereGradient.addColorStop(0.55, 'rgba(120, 180, 243, 0.12)');
 			atmosphereGradient.addColorStop(1, 'rgba(84, 127, 176, 0)');
 			context.fillStyle = atmosphereGradient;
 			context.beginPath();
 			context.arc(centerX, centerY, radius * 1.34, 0, Math.PI * 2);
 			context.fill();
 
-			const sphereGradient = context.createRadialGradient(centerX - (radius * 0.32), centerY - (radius * 0.35), radius * 0.15, centerX, centerY, radius);
-			sphereGradient.addColorStop(0, '#729bd0');
-			sphereGradient.addColorStop(0.5, '#456c99');
-			sphereGradient.addColorStop(1, '#16263d');
+			const sphereGradient = context.createRadialGradient(centerX - (radius * 0.32), centerY - (radius * 0.35), radius * 0.12, centerX, centerY, radius);
+			sphereGradient.addColorStop(0, '#8fd5ff');
+			sphereGradient.addColorStop(0.55, '#5d8fd3');
+			sphereGradient.addColorStop(1, '#15346f');
 			context.fillStyle = sphereGradient;
 			context.beginPath();
 			context.arc(centerX, centerY, radius, 0, Math.PI * 2);
@@ -180,68 +322,21 @@
 			context.arc(centerX, centerY, radius, 0, Math.PI * 2);
 			context.clip();
 
-			context.lineWidth = 1.1;
+			drawTexturedSphere(renderBuffer, textureBuffer, state.yaw, state.pitch);
+			context.drawImage(renderBuffer.canvas, centerX - radius, centerY - radius, radius * 2, radius * 2);
 
-			for (let latitude = -60; latitude <= 60; latitude += 15) {
-				const latitudeRadians = latitude * (Math.PI / 180);
-				const points = [];
-
-				for (let longitude = -180; longitude <= 180; longitude += 4) {
-					const longitudeRadians = longitude * (Math.PI / 180);
-					const point = {
-						x: Math.cos(latitudeRadians) * Math.cos(longitudeRadians),
-						y: Math.sin(latitudeRadians),
-						z: Math.cos(latitudeRadians) * Math.sin(longitudeRadians)
-					};
-					const rotated = rotatePoint(point, state.yaw, state.pitch);
-
-					if (rotated.z > -0.18) {
-						points.push(projectPoint(rotated, radius, centerX, centerY));
-					} else if (points.length > 1) {
-						drawLine(context, points, 0.17, 'rgba(184, 216, 255, 1)');
-						points.length = 0;
-					} else {
-						points.length = 0;
-					}
-				}
-
-				if (points.length > 1) {
-					drawLine(context, points, 0.17, 'rgba(184, 216, 255, 1)');
-				}
-			}
-
-			for (let longitude = 0; longitude < 180; longitude += 15) {
-				const longitudeRadians = longitude * (Math.PI / 180);
-				const points = [];
-
-				for (let latitude = -90; latitude <= 90; latitude += 3) {
-					const latitudeRadians = latitude * (Math.PI / 180);
-					const point = {
-						x: Math.cos(latitudeRadians) * Math.cos(longitudeRadians),
-						y: Math.sin(latitudeRadians),
-						z: Math.cos(latitudeRadians) * Math.sin(longitudeRadians)
-					};
-					const rotated = rotatePoint(point, state.yaw, state.pitch);
-
-					if (rotated.z > -0.18) {
-						points.push(projectPoint(rotated, radius, centerX, centerY));
-					} else if (points.length > 1) {
-						drawLine(context, points, 0.12, 'rgba(164, 199, 255, 1)');
-						points.length = 0;
-					} else {
-						points.length = 0;
-					}
-				}
-
-				if (points.length > 1) {
-					drawLine(context, points, 0.12, 'rgba(164, 199, 255, 1)');
-				}
-			}
+			const highlight = context.createRadialGradient(centerX - (radius * 0.34), centerY - (radius * 0.36), radius * 0.08, centerX, centerY, radius * 1.05);
+			highlight.addColorStop(0, 'rgba(255, 255, 255, 0.28)');
+			highlight.addColorStop(0.24, 'rgba(255, 255, 255, 0.1)');
+			highlight.addColorStop(0.62, 'rgba(255, 255, 255, 0)');
+			highlight.addColorStop(1, 'rgba(7, 16, 48, 0.22)');
+			context.fillStyle = highlight;
+			context.fillRect(centerX - radius, centerY - radius, radius * 2, radius * 2);
 
 			context.restore();
 
-			context.strokeStyle = 'rgba(198, 222, 255, 0.3)';
-			context.lineWidth = 1.5;
+			context.strokeStyle = 'rgba(232, 247, 255, 0.92)';
+			context.lineWidth = 2.8;
 			context.beginPath();
 			context.arc(centerX, centerY, radius, 0, Math.PI * 2);
 			context.stroke();
