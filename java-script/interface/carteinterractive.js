@@ -269,6 +269,7 @@
 		const loaderNode = root.querySelector('[data-saga-globe-loader]');
 		const accessNode = root.querySelector('[data-saga-globe-access]');
 		const accessButtonNode = root.querySelector('[data-saga-globe-access-button]');
+		const fullscreenButtonNode = root.querySelector('[data-saga-globe-fullscreen]');
 		const loaderBarNode = root.querySelector('[data-saga-globe-loader-bar]');
 		const statusNode = root.querySelector('[data-saga-globe-status]');
 		const updateStatus = createStatusUpdater(statusNode);
@@ -334,6 +335,22 @@
 			}
 		}
 
+		function setFullscreenButtonVisible(isVisible) {
+			if (fullscreenButtonNode) {
+				fullscreenButtonNode.hidden = !isVisible;
+			}
+		}
+
+		function updateFullscreenButtonLabel() {
+			if (!fullscreenButtonNode) {
+				return;
+			}
+
+			const label = document.fullscreenElement === root ? 'Quitter plein ecran' : 'Plein ecran';
+			fullscreenButtonNode.setAttribute('aria-label', label);
+			fullscreenButtonNode.setAttribute('title', label);
+		}
+
 		async function completeLoadingSequence(showAccessButton = true) {
 			setLoadingProgress(100);
 
@@ -349,6 +366,7 @@
 		setLoaderVisible(true);
 		setLoadingState(true);
 		setAccessState(false);
+		setFullscreenButtonVisible(false);
 		setLoadingProgress(0);
 		const firstLoadingStep = animateLoadingProgress(50, firstLoadingStepDuration);
 
@@ -543,8 +561,30 @@
 		const revealMap = () => {
 			setAccessState(false);
 			setLoaderVisible(false);
+			setFullscreenButtonVisible(Boolean(document.fullscreenEnabled && fullscreenButtonNode));
+			updateFullscreenButtonLabel();
 			animate();
 		};
+
+		if (fullscreenButtonNode && document.fullscreenEnabled) {
+			fullscreenButtonNode.addEventListener('click', async () => {
+				try {
+					if (document.fullscreenElement === root) {
+						await document.exitFullscreen();
+					} else {
+						await root.requestFullscreen();
+					}
+					updateFullscreenButtonLabel();
+				} catch (error) {
+					console.error(error);
+					updateStatus('Le mode plein ecran n\'est pas disponible.');
+				}
+			});
+
+			document.addEventListener('fullscreenchange', updateFullscreenButtonLabel);
+		} else {
+			setFullscreenButtonVisible(false);
+		}
 
 		if (accessButtonNode) {
 			accessButtonNode.addEventListener('click', revealMap, { once: true });
