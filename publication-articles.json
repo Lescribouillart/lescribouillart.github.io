@@ -16,7 +16,7 @@
     "category": "À paraître",
     "date": "",
     "excerpt": "Un nouvel article prendra bientôt place ici. Ce contenu provisoire sera remplacé par une publication complète.",
-    "markdownFile": "textes/chronique-a-venir-2.md"
+    "markdownFile": "textes/lesarticles/chronique-a-venir-2.md"
   },
   {
     "id": 3,
@@ -24,7 +24,7 @@
     "category": "À paraître",
     "date": "",
     "excerpt": "Un nouvel article prendra bientôt place ici. Ce contenu provisoire sera remplacé par une publication complète.",
-    "markdownFile": "textes/chronique-a-venir-3.md"
+    "markdownFile": "textes/lesarticles/chronique-a-venir-3.md"
   },
   {
     "id": 4,
@@ -32,6 +32,6 @@
     "category": "À paraître",
     "date": "",
     "excerpt": "Un nouvel article prendra bientôt place ici. Ce contenu provisoire sera remplacé par une publication complète.",
-    "markdownFile": "textes/chronique-a-venir-4.md"
+    "markdownFile": "textes/lesarticles/chronique-a-venir-4.md"
   }
 ]
