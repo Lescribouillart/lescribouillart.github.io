@@ -3171,6 +3171,11 @@ a.highlight-blue {
     text-align: center;
 }
 
+.article-top-back {
+    margin-bottom: 1rem;
+    text-align: left;
+}
+
 .article-footer .nav-link {
     text-decoration: none;
     color: #e0e0e0 !important;

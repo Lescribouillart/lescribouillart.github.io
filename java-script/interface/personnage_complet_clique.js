@@ -144,6 +144,9 @@ async function resolveCharacterContent(character) {
 
 function displayError(message) {
     document.getElementById('character-content').innerHTML = `
+        <div class="article-top-back">
+            <a href="lespersonnages.html" class="back-link">← Retour aux personnages</a>
+        </div>
         <p style="text-align: center; color: var(--text-light);">${message}</p>
     `;
 }
@@ -158,6 +161,9 @@ function displayCharacter(character, characterContent) {
     ].filter(Boolean).join(' - ');
 
     container.innerHTML = `
+        <div class="article-top-back">
+            <a href="lespersonnages.html" class="back-link">← Retour aux personnages</a>
+        </div>
         <div class="article-header">
             <span class="article-category">${character.category || 'Personnage'}</span>
             <h1 class="article-content-title">${character.title}</h1>
