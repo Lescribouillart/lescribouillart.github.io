@@ -258,23 +258,99 @@
 
 	async function initGlobe() {
 		const root = document.querySelector('[data-saga-globe]');
+		const loadingStart = window.performance.now();
+		const minimumLoadingDuration = 1800;
 
 		if (!root) {
 			return;
 		}
 
 		const canvasHost = root.querySelector('[data-saga-globe-canvas]');
+		const loaderNode = root.querySelector('[data-saga-globe-loader]');
+		const loaderBarNode = root.querySelector('[data-saga-globe-loader-bar]');
+		const loaderProgressNode = root.querySelector('[data-saga-globe-loader-progress]');
 		const statusNode = root.querySelector('[data-saga-globe-status]');
 		const updateStatus = createStatusUpdater(statusNode);
+		let loaderAnimationFrameId = 0;
+		let currentLoadingProgress = 0;
+
+		function setLoadingProgress(value) {
+			const nextProgress = Math.max(0, Math.min(100, value));
+			currentLoadingProgress = nextProgress;
+
+			if (loaderBarNode) {
+				loaderBarNode.style.transform = `scaleX(${nextProgress / 100})`;
+			}
+
+			if (loaderProgressNode) {
+				loaderProgressNode.textContent = `${Math.round(nextProgress)}%`;
+			}
+		}
+
+		function syncAutoProgress() {
+			const elapsed = window.performance.now() - loadingStart;
+			const ratio = Math.min(1, elapsed / minimumLoadingDuration);
+			const simulatedProgress = ratio * 92;
+			setLoadingProgress(Math.max(currentLoadingProgress, simulatedProgress));
+		}
+
+		function startAutoProgress() {
+			const tick = () => {
+				syncAutoProgress();
+				if (root.classList.contains('is-loading')) {
+					loaderAnimationFrameId = window.requestAnimationFrame(tick);
+				}
+			};
+
+			loaderAnimationFrameId = window.requestAnimationFrame(tick);
+		}
+
+		function setLoadingState(isLoading) {
+			root.classList.toggle('is-loading', isLoading);
+			if (loaderNode) {
+				loaderNode.hidden = !isLoading;
+			}
+
+			if (!isLoading && loaderAnimationFrameId) {
+				window.cancelAnimationFrame(loaderAnimationFrameId);
+				loaderAnimationFrameId = 0;
+			}
+		}
+
+		async function finishLoading() {
+			const elapsed = window.performance.now() - loadingStart;
+			const remaining = Math.max(0, minimumLoadingDuration - elapsed);
+
+			if (remaining > 0) {
+				await new Promise((resolve) => {
+					window.setTimeout(resolve, remaining);
+				});
+			}
+
+			setLoadingProgress(100);
+
+			await new Promise((resolve) => {
+				window.setTimeout(resolve, 180);
+			});
+
+			setLoadingState(false);
+		}
 
 		if (!canvasHost) {
 			return;
 		}
 
+		setLoadingState(true);
+		setLoadingProgress(4);
+		startAutoProgress();
+
 		const canvas = createCanvas(canvasHost);
 		const context = canvas.getContext('2d');
+		syncAutoProgress();
+		setLoadingProgress(12);
 
 		if (!context) {
+			await finishLoading();
 			updateStatus('Le navigateur n\'a pas pu initialiser le canvas du globe.');
 			return;
 		}
@@ -283,22 +359,27 @@
 
 		try {
 			planetTexture = await loadPlanetTexture();
+			setLoadingProgress(48);
 		} catch (error) {
 			console.error(error);
+			await finishLoading();
 			updateStatus('La texture du globe n\'a pas pu être chargée.');
 			return;
 		}
 
 		const textureBuffer = createTextureBuffer(planetTexture);
 		const renderBuffer = createRenderBuffer(getRenderBufferSize(textureBuffer));
+		setLoadingProgress(74);
 
 		if (!textureBuffer || !renderBuffer) {
+			await finishLoading();
 			updateStatus('Le navigateur n\'a pas pu préparer la texture 3D du globe.');
 			return;
 		}
 
 		const stars = createStars(180);
 		const nebulaBlobs = createNebulaBlobs();
+		setLoadingProgress(88);
 		const state = {
 			yaw: 0.45,
 			pitch: -0.22,
@@ -463,6 +544,10 @@
 			state.pitch += (state.targetPitch - state.pitch) * 0.08;
 			drawGlobe(width, height);
 		}
+
+		drawBackground(canvas.clientWidth, canvas.clientHeight);
+		drawGlobe(canvas.clientWidth, canvas.clientHeight);
+		await finishLoading();
 
 		animate();
 
