@@ -363,7 +363,7 @@
 			const deltaY = event.clientY - state.lastY;
 			state.lastX = event.clientX;
 			state.lastY = event.clientY;
-			state.targetYaw += deltaX * 0.008;
+			state.targetYaw -= deltaX * 0.008;
 			state.targetPitch = clampPitch(state.targetPitch + (deltaY * 0.008));
 		});
 
