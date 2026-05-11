@@ -271,6 +271,25 @@ body.has-scroll-header .site-header-spacer {
     transition: padding 0.25s ease, gap 0.25s ease;
 }
 
+.header .container::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0.35rem;
+    transform: translateX(-50%);
+    width: min(760px, 78vw);
+    height: 180px;
+    background:
+        linear-gradient(180deg, rgba(12, 16, 22, 0.16), rgba(12, 16, 22, 0.08)),
+        url('images/fondmain/forethaeder.png') center 44% / cover no-repeat;
+    opacity: 0.42;
+    border-radius: 22px;
+    filter: saturate(0.9) contrast(1.03);
+    box-shadow: 0 18px 34px rgba(18, 18, 24, 0.14);
+    pointer-events: none;
+    z-index: 0;
+}
+
 @keyframes header-rootline-in {
     0% {
         opacity: 0;
@@ -485,6 +504,8 @@ body.home-drawer-open .home-side-panel-inner {
     align-items: center;
     justify-content: center;
     gap: 0.6rem;
+    position: relative;
+    z-index: 1;
 }
 
 .logo {
@@ -523,6 +544,7 @@ body.home-drawer-open .home-side-panel-inner {
     overflow: visible;
     transition: opacity 0.2s ease, transform 0.25s ease, margin-bottom 0.25s ease;
     margin-top: 16px;
+    z-index: 1;
 }
 
 .tagline::before,
@@ -659,6 +681,8 @@ body.home-drawer-open .home-side-panel-inner {
     transition: gap 0.25s ease, transform 0.25s ease;
     align-items: flex-end;
     margin-top: 16px;
+    position: relative;
+    z-index: 1;
 }
 
 body.has-scroll-header.header-scrolled .header {
@@ -667,6 +691,13 @@ body.has-scroll-header.header-scrolled .header {
 
 body.has-scroll-header.header-scrolled .header .container {
     padding: 0.4rem 2rem 0.55rem;
+}
+
+body.has-scroll-header.header-scrolled .header .container::before {
+    top: 0.2rem;
+    width: min(640px, 70vw);
+    height: 112px;
+    opacity: 0.28;
 }
 
 body.has-scroll-header.header-scrolled .header-rootline {
@@ -3504,6 +3535,14 @@ a.highlight-blue {
         grid-template-columns: 1fr;
         gap: 1.5rem;
     }
+
+    .header .container::before {
+        width: min(92vw, 560px);
+        height: 138px;
+        top: 0.5rem;
+        opacity: 0.34;
+        border-radius: 18px;
+    }
     
     .article-title {
         font-size: 1.2rem;
@@ -3669,6 +3708,14 @@ a.highlight-blue {
 
 /* Mobiles */
 @media (max-width: 480px) {
+    .header .container::before {
+        width: min(94vw, 420px);
+        height: 118px;
+        top: 0.6rem;
+        opacity: 0.3;
+        border-radius: 16px;
+    }
+
     .logo {
         font-size: 2rem;
     }
