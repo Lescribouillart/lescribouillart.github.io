@@ -2187,6 +2187,7 @@ h2.titrelegal2 {
 
 .carousel-indicators {
     display: flex;
+    align-items: center;
     justify-content: center;
     gap: 0.75rem;
     margin-top: 1.5rem;
@@ -2199,7 +2200,22 @@ h2.titrelegal2 {
     border: 1px solid rgba(123, 163, 216, 0.4);
     background: transparent;
     cursor: pointer;
+    position: relative;
     transition: all 0.3s ease;
+}
+
+.carousel-indicator:not(:first-child) {
+    top: 5px;
+}
+
+.carousel-indicator:first-child {
+    width: 22px;
+    height: 22px;
+    border: none;
+    border-radius: 0;
+    background: url('images/icons/journal.png') center / contain no-repeat;
+    opacity: 0.72;
+    top: 0;
 }
 
 .carousel-indicator.active {
@@ -2208,8 +2224,20 @@ h2.titrelegal2 {
     transform: scale(1.2);
 }
 
+.carousel-indicator:first-child.active {
+    background: url('images/icons/journal.png') center / contain no-repeat;
+    border-color: transparent;
+    opacity: 1;
+    filter: drop-shadow(0 0 8px rgba(123, 163, 216, 0.45));
+}
+
 .carousel-indicator:hover {
     border-color: var(--secondary-color);
+}
+
+.carousel-indicator:first-child:hover {
+    border-color: transparent;
+    opacity: 1;
 }
 
 @media (max-width: 1400px) {
