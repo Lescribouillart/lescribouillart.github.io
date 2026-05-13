@@ -681,10 +681,11 @@ body.home-drawer-open .home-side-panel-inner {
 .nav {
     display: flex;
     gap: 2rem;
-    transition: gap 0.25s ease, transform 0.25s ease;
+    transition: gap 0.25s ease, transform 0.25s ease, top 0.25s ease;
     align-items: flex-end;
     margin-top: 16px;
     position: relative;
+    top: 10px;
     z-index: 1;
 }
 
@@ -727,6 +728,7 @@ body.has-scroll-header.header-scrolled .tagline {
 
 body.has-scroll-header.header-scrolled .nav {
     gap: 1.3rem;
+    top: 6px;
     transform: translateY(-0.25rem);
 }
 
