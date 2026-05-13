@@ -281,7 +281,7 @@ body.has-scroll-header .site-header-spacer {
     height: 180px;
     background:
         linear-gradient(180deg, rgba(12, 16, 22, 0.16), rgba(12, 16, 22, 0.08)),
-        url('images/fondmain/forethaeder.png') center 44% / cover no-repeat;
+        url('images/fondmain/arbremonde.png') center 83% / cover no-repeat;
     opacity: 0.42;
     border-radius: 22px;
     filter: saturate(0.9) contrast(1.03);
