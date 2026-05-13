@@ -280,11 +280,11 @@ body.has-scroll-header .site-header-spacer {
     width: min(760px, 78vw);
     height: 180px;
     background:
-        linear-gradient(180deg, rgba(12, 16, 22, 0.16), rgba(12, 16, 22, 0.08)),
+        linear-gradient(180deg, rgba(12, 16, 22, 0.12), rgba(12, 16, 22, 0.05)),
         url('images/fondmain/arbremonde2.png') center 75% / 100% auto no-repeat;
-    opacity: 0.42;
+    opacity: 0.66;
     border-radius: 22px;
-    filter: saturate(0.9) contrast(1.03);
+    filter: saturate(1.12) contrast(1.07) brightness(1.02);
     box-shadow: 0 18px 34px rgba(18, 18, 24, 0.14);
     pointer-events: none;
     z-index: 0;
@@ -541,6 +541,9 @@ body.home-drawer-open .home-side-panel-inner {
     position: relative;
     border: 1px solid currentColor;
     border-radius: 6px;
+    background: rgba(30, 34, 48, 0.4);
+    backdrop-filter: blur(4px);
+    text-shadow: 0 1px 3px rgba(10, 12, 18, 0.45);
     overflow: visible;
     transition: opacity 0.2s ease, transform 0.25s ease, margin-bottom 0.25s ease;
     margin-top: 16px;
