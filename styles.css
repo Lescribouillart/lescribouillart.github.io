@@ -3963,6 +3963,24 @@ a.highlight-blue {
         transform: none;
         z-index: 1105;
     }
+
+    body.home-page .intro-site-content {
+        max-width: 930px;
+        padding-left: 4rem;
+    }
+
+    body.home-page .intro-accessibility-btn {
+        position: absolute;
+        left: 0.55rem;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 20;
+    }
+
+    body.home-page .intro-accessibility-btn img {
+        width: 30px;
+        height: 30px;
+    }
 }
 
 /* ========================================
