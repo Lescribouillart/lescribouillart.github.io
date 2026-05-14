@@ -2580,9 +2580,9 @@ a.highlight-blue {
     flex-direction: column;
     gap: 0;
     padding: 2px;
-    background: #3a3944;
+    background: transparent;
     border-radius: 6px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    box-shadow: none;
     overflow: visible;
 }
 
@@ -2592,7 +2592,7 @@ a.highlight-blue {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #2f2e3a;
+    background: rgba(47, 46, 58, 0.3);
     border: none;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -2601,7 +2601,7 @@ a.highlight-blue {
 }
 
 .floating-social-button.header-scroll-button {
-    background: #4a4956;
+    background: rgba(74, 73, 86, 0.3);
     border-radius: 6px 6px 0 0;
 }
 
@@ -2614,7 +2614,7 @@ a.highlight-blue {
 }
 
 .floating-social-button.rss-button {
-    background: #2f2e3a;
+    background: rgba(47, 46, 58, 0.3);
     border-radius: 6px;
     margin: 2px 0;
 }
@@ -2624,7 +2624,7 @@ a.highlight-blue {
 }
 
 .floating-social-button.home-button {
-    background: #f2efe6;
+    background: rgba(242, 239, 230, 0.38);
     border-radius: 6px;
     margin: 2px 0;
     width: 24px;
@@ -2646,7 +2646,7 @@ a.highlight-blue {
 }
 
 .floating-social-button.footer-scroll-button {
-    background: #4a4956;
+    background: rgba(74, 73, 86, 0.3);
     border-radius: 0 0 6px 6px;
 }
 
