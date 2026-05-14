@@ -3971,15 +3971,15 @@ a.highlight-blue {
 
     body.home-page .intro-accessibility-btn {
         position: absolute;
-        left: calc(0.55rem - 4px);
+        left: calc(0.55rem - 24px);
         top: 50%;
         transform: translateY(-50%);
         z-index: 20;
     }
 
     body.home-page .intro-accessibility-btn img {
-        width: 34px;
-        height: 34px;
+        width: 39px;
+        height: 39px;
     }
 
     body.home-page .intro-site-content .intro-search-container {
