@@ -1943,6 +1943,7 @@ h2.titrelegal2 {
     flex: 1;
     min-height: 0;
     height: 100%;
+    position: relative;
 }
 
 .carousel-container-in-presentation {
@@ -1982,11 +1983,15 @@ h2.titrelegal2 {
 }
 
 .carousel-indicators-in-presentation {
+    position: absolute;
+    top: calc(220px - 34px);
+    left: 0;
+    right: 0;
+    z-index: 2;
     display: flex;
     justify-content: center;
     gap: 0.5rem;
     padding: 0 0.5rem;
-    min-height: auto;
 }
 
 .left-body-carousel .carousel-image-wrapper {
