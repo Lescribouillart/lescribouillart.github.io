@@ -184,11 +184,13 @@ function displayArticle(article, articleContent) {
     
     // Afficher le contenu de l'article
     const container = document.getElementById('article-content');
-    const imageHTML = article.image
+    const heroImage = article.heroImage || article.image;
+    const heroImageCaption = article.heroImageCaption || article.imageCaption;
+    const imageHTML = heroImage
         ? `<figure class="article-hero-wrapper">
-            <div class="article-hero-bg" style="background-image: url('../${article.image}')"></div>
-            <img src="../${article.image}" alt="Illustration : ${article.title}" class="article-hero-image">
-            ${article.imageCaption ? `<figcaption>${article.imageCaption}</figcaption>` : ''}
+            <div class="article-hero-bg" style="background-image: url('../${heroImage}')"></div>
+            <img src="../${heroImage}" alt="Illustration : ${article.title}" class="article-hero-image">
+            ${heroImageCaption ? `<figcaption>${heroImageCaption}</figcaption>` : ''}
            </figure>`
         : '';
     const articleMeta = [
