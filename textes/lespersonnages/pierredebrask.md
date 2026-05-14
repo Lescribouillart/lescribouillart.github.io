@@ -1,4 +1,7 @@
-# Pierre Debrask
+<figure class="article-figure-left">
+	<img src="../images/personnages/pierredebrask/pierredebrask.png" alt="Portrait de Pierre Debrask">
+	<figcaption>Pierre Debrask face au chantier du Serre-Etoile.</figcaption>
+</figure>
 
 Pierre Debrask est l'architecte à qui l'on attribue les plans du barrage du Serre-Étoile. Son nom revient dans presque toutes les discussions sur la catastrophe, sans que l'on sache encore s'il faut y voir une faute, un aveuglement ou une manipulation.
 
