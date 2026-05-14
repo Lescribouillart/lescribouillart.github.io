@@ -2503,7 +2503,11 @@ a.highlight-blue {
 }
 
 .character-card-media-antoine {
-    background-image: linear-gradient(135deg, rgba(45, 29, 60, 0.88), rgba(17, 11, 22, 0.94)), radial-gradient(circle at bottom right, rgba(169, 134, 214, 0.3), transparent 45%);
+    background-image: url('./images/personnages/antoine debrizuela/antoinedebrizuela.png');
+    background-position: center calc(8% + 20px);
+    background-repeat: no-repeat;
+    background-size: 185%;
+    background-color: #f2f1ed;
 }
 
 .character-card-role {
