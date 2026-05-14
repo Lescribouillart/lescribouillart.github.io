@@ -1,4 +1,7 @@
-# Antoine Debrizuela
+<figure class="article-figure-left">
+	<img src="../images/personnages/antoine debrizuela/antoinedebrizuela.png" alt="Portrait d'Antoine Debrizuela">
+	<figcaption>Antoine Debrizuela sur le terrain.</figcaption>
+</figure>
 
 Antoine Debrizuela est un botaniste de terrain devenu journaliste par nécessité. Quand les rapports officiels cessent de répondre aux bonnes questions, il préfère traverser les sous-bois, carnet en main, pour relever lui-même ce que la forêt laisse encore voir.
 
