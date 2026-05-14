@@ -1,5 +1,5 @@
 <figure class="article-figure-left">
-	<img src="../images/personnages/antoine debrizuela/Liceohara.png" alt="Portrait de Lice Ohara">
+	<img src="../images/personnages/Liceohara/Liceohara.png" alt="Portrait de Lice Ohara">
 	<figcaption>Lice Ohara après son départ du CERF.</figcaption>
 </figure>
 
