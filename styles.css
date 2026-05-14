@@ -3854,6 +3854,7 @@ a.highlight-blue {
         margin: 0;
         padding-right: 0;
         z-index: 1105;
+        transition: top 0.25s ease;
     }
 
     .intro-site-content .intro-search-container #search-input {
@@ -3872,6 +3873,15 @@ a.highlight-blue {
     .intro-site-content .intro-search-container::after {
         right: 9px;
         width: 7px;
+    }
+
+    body.has-scroll-header.header-scrolled .header-drawer-toggle {
+        top: 96px;
+    }
+
+    body.has-scroll-header.header-scrolled .intro-site-content .intro-search-container {
+        top: 106px;
+        transition: top 0.25s ease;
     }
 }
 
