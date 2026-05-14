@@ -1605,6 +1605,15 @@ main {
     overflow: hidden;
 }
 
+.saga-globe-panel-centered {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+}
+
+.saga-globe-panel-centered .saga-globe-stage {
+    width: min(100%, 580px);
+}
+
 .saga-globe-copy {
     position: relative;
     z-index: 1;
