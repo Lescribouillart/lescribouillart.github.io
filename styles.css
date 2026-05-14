@@ -2565,6 +2565,14 @@ a.highlight-blue {
     transition: all 0.3s ease;
 }
 
+.footer-icon-link img {
+    display: block;
+}
+
+.footer-rss-link {
+    background: rgba(123, 163, 216, 0.08);
+}
+
 .footer-icon-link:hover {
     background: rgba(123, 163, 216, 0.2);
     transform: scale(1.1);
