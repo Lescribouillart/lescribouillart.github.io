@@ -3981,6 +3981,34 @@ a.highlight-blue {
         width: 30px;
         height: 30px;
     }
+
+    body.home-page .intro-site-content .intro-search-container {
+        position: fixed;
+        top: 102px;
+        right: 37px;
+        transform: none;
+        margin: 0;
+        padding-right: 0;
+        z-index: 1105;
+    }
+
+    body.home-page .intro-site-content .intro-search-container #search-input {
+        width: 163px;
+        padding: 0.38rem 2.15rem 0.38rem 0.9rem;
+        font-size: 0.8rem;
+        border-radius: 18px;
+    }
+
+    body.home-page .intro-site-content .intro-search-container::before {
+        right: 13px;
+        width: 9px;
+        height: 9px;
+    }
+
+    body.home-page .intro-site-content .intro-search-container::after {
+        right: 9px;
+        width: 7px;
+    }
 }
 
 /* ========================================
