@@ -3820,7 +3820,7 @@ a.highlight-blue {
 }
 
 @media (min-width: 1280px) {
-    body.home-page .header-drawer-toggle {
+    .header-drawer-toggle {
         position: fixed;
         left: 8px;
         top: 122px;
@@ -3828,12 +3828,12 @@ a.highlight-blue {
         z-index: 1105;
     }
 
-    body.home-page .intro-site-content {
+    .intro-site-content {
         max-width: 930px;
         padding-left: 4rem;
     }
 
-    body.home-page .intro-accessibility-btn {
+    .intro-accessibility-btn {
         position: absolute;
         left: calc(0.55rem - 24px);
         top: 50%;
@@ -3841,12 +3841,12 @@ a.highlight-blue {
         z-index: 20;
     }
 
-    body.home-page .intro-accessibility-btn img {
+    .intro-accessibility-btn img {
         width: 39px;
         height: 39px;
     }
 
-    body.home-page .intro-site-content .intro-search-container {
+    .intro-site-content .intro-search-container {
         position: fixed;
         top: 132px;
         right: 37px;
@@ -3856,20 +3856,20 @@ a.highlight-blue {
         z-index: 1105;
     }
 
-    body.home-page .intro-site-content .intro-search-container #search-input {
+    .intro-site-content .intro-search-container #search-input {
         width: 163px;
         padding: 0.38rem 2.15rem 0.38rem 0.9rem;
         font-size: 0.8rem;
         border-radius: 18px;
     }
 
-    body.home-page .intro-site-content .intro-search-container::before {
+    .intro-site-content .intro-search-container::before {
         right: 13px;
         width: 9px;
         height: 9px;
     }
 
-    body.home-page .intro-site-content .intro-search-container::after {
+    .intro-site-content .intro-search-container::after {
         right: 9px;
         width: 7px;
     }
