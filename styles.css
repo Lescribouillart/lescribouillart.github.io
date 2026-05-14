@@ -2495,7 +2495,11 @@ a.highlight-blue {
 }
 
 .character-card-media-lice {
-    background-image: linear-gradient(135deg, rgba(20, 39, 58, 0.86), rgba(8, 14, 26, 0.92)), radial-gradient(circle at top right, rgba(123, 163, 216, 0.38), transparent 40%);
+    background-image: url('./images/personnages/antoine debrizuela/Liceohara.png');
+    background-position: center calc(12% + 20px);
+    background-repeat: no-repeat;
+    background-size: 185%;
+    background-color: #f2f1ed;
 }
 
 .character-card-media-pierre {

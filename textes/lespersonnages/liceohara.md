@@ -1,4 +1,7 @@
-# Lice Ohara
+<figure class="article-figure-left">
+	<img src="../images/personnages/antoine debrizuela/Liceohara.png" alt="Portrait de Lice Ohara">
+	<figcaption>Lice Ohara après son départ du CERF.</figcaption>
+</figure>
 
 Lice Ohara a longtemps incarné l'autorité du CERF. Son départ soudain après l'incident du barrage a nourri les rumeurs, d'autant qu'elle continue d'apparaître dans plusieurs dossiers restés incomplets.
 
