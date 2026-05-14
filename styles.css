@@ -3955,6 +3955,16 @@ a.highlight-blue {
     }
 }
 
+@media (min-width: 1280px) {
+    body.home-page .header-drawer-toggle {
+        position: fixed;
+        left: 8px;
+        top: 92px;
+        transform: none;
+        z-index: 1105;
+    }
+}
+
 /* ========================================
    MODE DYSLEXIE
    ======================================== */
