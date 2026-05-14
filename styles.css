@@ -2503,7 +2503,11 @@ a.highlight-blue {
 }
 
 .character-card-media-pierre {
-    background-image: linear-gradient(135deg, rgba(76, 53, 36, 0.88), rgba(26, 18, 11, 0.94)), radial-gradient(circle at center, rgba(210, 170, 111, 0.34), transparent 42%);
+    background-image: url('./images/personnages/pierredebrask/pierredebrask.png');
+    background-position: center 10%;
+    background-repeat: no-repeat;
+    background-size: 185%;
+    background-color: #f2f1ed;
 }
 
 .character-card-media-antoine {
