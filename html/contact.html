@@ -76,66 +76,84 @@
 
         <main class="main" id="main-content">
             <div class="container">
-                <div class="presentation">
-                    <div class="presentation-bg2 mentions-legales-content">
-                        <h1>Formulaire de contact</h1>
-                        
-                        <div class="section-content">
-                            <form id="contact-form">
-                            <!-- Configuration optionnelle -->
-                            <input type="hidden" name="subject" value="Nouveau message depuis Le Scribouill'art">
-                            <input type="hidden" name="from_name" value="Le Scribouill'art">
-                            
-                            <!-- Protection anti-spam (honeypot) -->
-                            <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off">
-                            
-                            <div class="form-group">
-                                <label for="nom">
-                                    Nom :
-                                    <img src="../images/info/infobulle.png" alt="Info" class="info-icon" aria-describedby="nom-help">
-                                </label>
-                                <p id="nom-help" class="sr-only">Indiquez votre nom complet ou pseudonyme</p>
-                                <input type="text" id="nom" name="name" aria-describedby="nom-help" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="email">
-                                    Email :
-                                    <img src="../images/info/infobulle.png" alt="Info" class="info-icon" aria-describedby="email-help">
-                                </label>
-                                <p id="email-help" class="sr-only">Indiquez une adresse email valide pour recevoir notre réponse</p>
-                                <input type="email" id="email" name="email" aria-describedby="email-help" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="message">
-                                    Message :
-                                    <img src="../images/info/infobulle.png" alt="Info" class="info-icon" aria-describedby="message-help">
-                                </label>
-                                <p id="message-help" class="sr-only">Utilisez la barre d'outils pour mettre en forme votre texte</p>
-                                <div class="editor-toolbar">
-                                    <button type="button" class="editor-btn" data-command="bold" title="Gras" aria-label="Mettre en gras"><strong>B</strong></button>
-                                    <button type="button" class="editor-btn" data-command="italic" title="Italique" aria-label="Mettre en italique"><em>I</em></button>
-                                    <button type="button" class="editor-btn" data-command="underline" title="Souligner" aria-label="Souligner le texte"><u>U</u></button>
-                                    <button type="button" class="editor-btn" data-command="strikeThrough" title="Barrer" aria-label="Barrer le texte"><s>S</s></button>
-                                    <span class="editor-separator"></span>
-                                    <button type="button" class="editor-btn" data-command="insertUnorderedList" title="Liste à puces" aria-label="Insérer une liste à puces">•</button>
-                                    <button type="button" class="editor-btn" data-command="insertOrderedList" title="Liste numérotée" aria-label="Insérer une liste numérotée">1.</button>
-                                    <span class="editor-separator"></span>
-                                    <button type="button" class="editor-btn" data-command="justifyLeft" title="Aligner à gauche" aria-label="Aligner le texte à gauche">≡</button>
-                                    <button type="button" class="editor-btn" data-command="justifyCenter" title="Centrer" aria-label="Centrer le texte">≣</button>
-                                    <button type="button" class="editor-btn" data-command="justifyRight" title="Aligner à droite" aria-label="Aligner le texte à droite">≡</button>
-                                </div>
-                                <div id="message-editor" class="text-editor" contenteditable="true"></div>
-                                <textarea id="message" name="message" style="display: none;" required></textarea>
-                            </div>
-                            <button type="submit">Envoyer</button>
-                            </form>
+                <div class="presentation-shell">
+                    <div class="presentation-rootline-clone presentation-rootline-clone-left" aria-hidden="true">
+                        <div class="presentation-rootline-clone-piece presentation-rootline-clone-piece-horizontal">
+                            <img class="presentation-rootline-horizontal" src="../images/header/racines-bas-header.svg" alt="">
                         </div>
+                        <div class="presentation-rootline-clone-piece presentation-rootline-clone-piece-vertical">
+                            <img class="presentation-rootline-vertical" src="../images/header/racines-bas-header.svg" alt="">
+                        </div>
+                    </div>
+                    <div class="presentation-rootline-clone presentation-rootline-clone-right" aria-hidden="true">
+                        <div class="presentation-rootline-clone-piece presentation-rootline-clone-piece-horizontal">
+                            <img class="presentation-rootline-horizontal" src="../images/header/racines-bas-header.svg" alt="">
+                        </div>
+                        <div class="presentation-rootline-clone-piece presentation-rootline-clone-piece-vertical">
+                            <img class="presentation-rootline-vertical" src="../images/header/racines-bas-header.svg" alt="">
+                        </div>
+                    </div>
+                    <div class="presentation">
+                        <div class="presentation-bg2 mentions-legales-content">
+                            <h1>Formulaire de contact</h1>
+                            
+                            <div class="section-content">
+                                <form id="contact-form">
+                                <!-- Configuration optionnelle -->
+                                <input type="hidden" name="subject" value="Nouveau message depuis Le Scribouill'art">
+                                <input type="hidden" name="from_name" value="Le Scribouill'art">
+                                
+                                <!-- Protection anti-spam (honeypot) -->
+                                <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off">
+                                
+                                <div class="form-group">
+                                    <label for="nom">
+                                        Nom :
+                                        <img src="../images/info/infobulle.png" alt="Info" class="info-icon" aria-describedby="nom-help">
+                                    </label>
+                                    <p id="nom-help" class="sr-only">Indiquez votre nom complet ou pseudonyme</p>
+                                    <input type="text" id="nom" name="name" aria-describedby="nom-help" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">
+                                        Email :
+                                        <img src="../images/info/infobulle.png" alt="Info" class="info-icon" aria-describedby="email-help">
+                                    </label>
+                                    <p id="email-help" class="sr-only">Indiquez une adresse email valide pour recevoir notre réponse</p>
+                                    <input type="email" id="email" name="email" aria-describedby="email-help" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="message">
+                                        Message :
+                                        <img src="../images/info/infobulle.png" alt="Info" class="info-icon" aria-describedby="message-help">
+                                    </label>
+                                    <p id="message-help" class="sr-only">Utilisez la barre d'outils pour mettre en forme votre texte</p>
+                                    <div class="editor-toolbar">
+                                        <button type="button" class="editor-btn" data-command="bold" title="Gras" aria-label="Mettre en gras"><strong>B</strong></button>
+                                        <button type="button" class="editor-btn" data-command="italic" title="Italique" aria-label="Mettre en italique"><em>I</em></button>
+                                        <button type="button" class="editor-btn" data-command="underline" title="Souligner" aria-label="Souligner le texte"><u>U</u></button>
+                                        <button type="button" class="editor-btn" data-command="strikeThrough" title="Barrer" aria-label="Barrer le texte"><s>S</s></button>
+                                        <span class="editor-separator"></span>
+                                        <button type="button" class="editor-btn" data-command="insertUnorderedList" title="Liste à puces" aria-label="Insérer une liste à puces">•</button>
+                                        <button type="button" class="editor-btn" data-command="insertOrderedList" title="Liste numérotée" aria-label="Insérer une liste numérotée">1.</button>
+                                        <span class="editor-separator"></span>
+                                        <button type="button" class="editor-btn" data-command="justifyLeft" title="Aligner à gauche" aria-label="Aligner le texte à gauche">≡</button>
+                                        <button type="button" class="editor-btn" data-command="justifyCenter" title="Centrer" aria-label="Centrer le texte">≣</button>
+                                        <button type="button" class="editor-btn" data-command="justifyRight" title="Aligner à droite" aria-label="Aligner le texte à droite">≡</button>
+                                    </div>
+                                    <div id="message-editor" class="text-editor" contenteditable="true"></div>
+                                    <textarea id="message" name="message" style="display: none;" required></textarea>
+                                </div>
+                                <button type="submit">Envoyer</button>
+                                </form>
+                            </div>
+                            
+                            <p class="last-update"></p> <!-- ligne grise -->
                         
-                        <p class="last-update"></p> <!-- ligne grise -->
-                    
-                        
-                        <div class="article-footer">
-                            <a href="../index.html" class="nav-link">- Accueil -</a>
+                            
+                            <div class="article-footer">
+                                <a href="../index.html" class="nav-link">- Accueil -</a>
+                            </div>
                         </div>
                     </div>
                 </div>
