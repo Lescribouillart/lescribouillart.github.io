@@ -1,0 +1,101 @@
+<svg width="220" height="220" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="barkBase" x1="22" y1="58" x2="1560" y2="58" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2a1d16"/>
+      <stop offset="0.18" stop-color="#4d3525"/>
+      <stop offset="0.46" stop-color="#7b5638"/>
+      <stop offset="0.7" stop-color="#8f6742"/>
+      <stop offset="0.86" stop-color="#60412b"/>
+      <stop offset="1" stop-color="#241813"/>
+    </linearGradient>
+    <linearGradient id="barkWarm" x1="90" y1="34" x2="1474" y2="40" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#d5ab73" stop-opacity="0.52"/>
+      <stop offset="0.2" stop-color="#eec48f" stop-opacity="0.8"/>
+      <stop offset="0.52" stop-color="#f7d6a7" stop-opacity="0.88"/>
+      <stop offset="0.78" stop-color="#d4a16c" stop-opacity="0.58"/>
+      <stop offset="1" stop-color="#b07d52" stop-opacity="0.34"/>
+    </linearGradient>
+    <linearGradient id="barkShadow" x1="112" y1="76" x2="1488" y2="82" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#17100d" stop-opacity="0.84"/>
+      <stop offset="0.4" stop-color="#2a1b14" stop-opacity="0.62"/>
+      <stop offset="1" stop-color="#130d0b" stop-opacity="0.82"/>
+    </linearGradient>
+    <linearGradient id="mossMain" x1="240" y1="18" x2="1270" y2="70" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#58791f"/>
+      <stop offset="0.4" stop-color="#7ea537"/>
+      <stop offset="0.72" stop-color="#98c14a"/>
+      <stop offset="1" stop-color="#4a6718"/>
+    </linearGradient>
+    <linearGradient id="mossShade" x1="246" y1="72" x2="1160" y2="24" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#294211" stop-opacity="0.95"/>
+      <stop offset="0.48" stop-color="#395a17" stop-opacity="0.84"/>
+      <stop offset="1" stop-color="#20310c" stop-opacity="0.9"/>
+    </linearGradient>
+    <filter id="shadow" x="0" y="0" width="1600" height="120" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="4" stdDeviation="3.5" flood-color="#090707" flood-opacity="0.36"/>
+    </filter>
+    <clipPath id="logClip">
+      <path d="M28 61C57 44 102 39 160 41C206 42 242 48 285 50C331 53 375 47 426 46C488 45 536 53 592 56C650 59 700 51 756 47C822 42 889 45 956 48C1015 50 1066 46 1119 44C1187 41 1239 47 1301 48C1364 49 1417 42 1474 43C1504 43 1528 46 1541 53C1554 60 1553 67 1541 73C1528 80 1501 83 1464 83C1407 84 1351 78 1291 78C1242 78 1200 83 1148 82C1084 80 1030 73 969 72C903 71 844 78 778 79C715 81 664 74 604 73C541 72 488 78 430 79C371 80 325 73 273 73C217 73 172 76 128 75C86 74 52 71 33 67C21 65 18 63 28 61Z"/>
+    </clipPath>
+    <clipPath id="cornerHorizontal">
+      <rect x="24" y="8" width="168" height="28" rx="14"/>
+    </clipPath>
+    <clipPath id="cornerVertical">
+      <rect x="8" y="24" width="28" height="168" rx="14"/>
+    </clipPath>
+    <clipPath id="cornerJoin">
+      <rect x="8" y="8" width="40" height="40" rx="14"/>
+    </clipPath>
+    <symbol id="rootSegment" viewBox="0 0 1600 120">
+      <g filter="url(#shadow)">
+        <path d="M28 61C57 44 102 39 160 41C206 42 242 48 285 50C331 53 375 47 426 46C488 45 536 53 592 56C650 59 700 51 756 47C822 42 889 45 956 48C1015 50 1066 46 1119 44C1187 41 1239 47 1301 48C1364 49 1417 42 1474 43C1504 43 1528 46 1541 53C1554 60 1553 67 1541 73C1528 80 1501 83 1464 83C1407 84 1351 78 1291 78C1242 78 1200 83 1148 82C1084 80 1030 73 969 72C903 71 844 78 778 79C715 81 664 74 604 73C541 72 488 78 430 79C371 80 325 73 273 73C217 73 172 76 128 75C86 74 52 71 33 67C21 65 18 63 28 61Z" fill="#17100d"/>
+        <path d="M34 59C61 45 105 41 161 42C205 43 242 48 286 51C331 54 375 49 425 47C487 46 535 54 591 57C649 60 699 52 755 48C821 43 888 46 955 49C1014 51 1065 47 1118 45C1186 42 1238 48 1300 49C1364 50 1417 43 1472 44C1500 44 1521 47 1533 53C1544 59 1544 65 1534 70C1523 76 1498 79 1461 79C1407 80 1350 75 1290 76C1241 76 1199 81 1149 80C1084 78 1031 71 970 70C904 69 845 76 779 77C716 78 665 72 605 71C542 70 488 76 430 77C371 78 325 71 273 71C217 71 173 74 130 73C92 72 60 69 41 65C33 63 30 61 34 59Z" fill="url(#barkBase)"/>
+        <path d="M54 51C171 50 262 53 372 54C478 56 575 53 684 52C812 50 925 52 1045 51C1162 50 1291 48 1491 47" stroke="url(#barkWarm)" stroke-width="5" stroke-linecap="round"/>
+        <path d="M54 72C160 72 245 70 347 70C465 70 586 72 715 73C872 74 995 74 1127 72C1240 71 1334 73 1492 73" stroke="url(#barkShadow)" stroke-width="8" stroke-linecap="round"/>
+        <g clip-path="url(#logClip)">
+          <path d="M44 51C120 38 178 35 263 37C345 39 423 44 512 45C602 46 692 42 788 41C900 40 1016 44 1130 42C1244 41 1354 35 1512 38L1512 26L42 30Z" fill="url(#mossMain)" fill-opacity="0.72"/>
+          <path d="M88 56C149 42 220 38 286 40C365 42 425 48 505 50C587 52 668 49 756 48C849 47 948 49 1034 48C1146 47 1260 42 1397 42L1395 34C1261 33 1145 37 1034 39C943 40 850 39 759 40C663 41 580 44 491 42C420 41 348 35 274 33C213 31 149 34 97 46Z" fill="url(#mossShade)" fill-opacity="0.82"/>
+          <path d="M82 54C116 51 147 50 181 50" stroke="#efc68f" stroke-opacity="0.36" stroke-width="3" stroke-linecap="round" stroke-dasharray="18 18 9 20"/>
+          <path d="M228 56C288 54 334 54 390 55" stroke="#5e3d27" stroke-opacity="0.52" stroke-width="4" stroke-linecap="round" stroke-dasharray="24 16 10 18 22 14"/>
+          <path d="M420 58C500 57 572 55 652 55" stroke="#e7bc87" stroke-opacity="0.3" stroke-width="3" stroke-linecap="round" stroke-dasharray="18 16 12 24 16 24"/>
+          <path d="M696 57C760 56 824 55 886 55" stroke="#472c1e" stroke-opacity="0.52" stroke-width="4" stroke-linecap="round" stroke-dasharray="20 14 9 17 23 17"/>
+          <path d="M948 55C1015 53 1088 53 1160 54" stroke="#e9c996" stroke-opacity="0.28" stroke-width="3" stroke-linecap="round" stroke-dasharray="16 22 10 18 24 17"/>
+          <path d="M1210 54C1270 53 1330 52 1398 52" stroke="#563625" stroke-opacity="0.48" stroke-width="4" stroke-linecap="round" stroke-dasharray="20 16 10 22 18 14"/>
+          <path d="M116 46C148 42 171 41 198 42" stroke="#a4cc4f" stroke-opacity="0.95" stroke-width="5" stroke-linecap="round" stroke-dasharray="12 18 10 22"/>
+          <path d="M268 44C309 41 347 42 390 44" stroke="#8eb442" stroke-opacity="0.9" stroke-width="5" stroke-linecap="round" stroke-dasharray="16 16 10 26 8 16"/>
+          <path d="M516 46C564 45 601 46 640 47" stroke="#6c962b" stroke-opacity="0.92" stroke-width="5" stroke-linecap="round" stroke-dasharray="12 24 12 18 10 22"/>
+          <path d="M724 43C770 42 813 43 854 45" stroke="#a8d159" stroke-opacity="0.88" stroke-width="4.6" stroke-linecap="round" stroke-dasharray="12 16 10 18 12 26"/>
+          <path d="M964 44C1010 43 1052 43 1098 44" stroke="#76a130" stroke-opacity="0.88" stroke-width="4.8" stroke-linecap="round" stroke-dasharray="18 20 10 18 10 24"/>
+          <path d="M1210 42C1250 41 1295 42 1338 44" stroke="#91b946" stroke-opacity="0.82" stroke-width="4.6" stroke-linecap="round" stroke-dasharray="14 20 12 18 10 20"/>
+          <path d="M118 69C167 52 205 48 245 51C287 55 313 65 353 67" stroke="#2f1d15" stroke-opacity="0.7" stroke-width="4.2" stroke-linecap="round"/>
+          <path d="M274 68C318 50 365 46 410 50C447 53 488 66 532 67" stroke="#1f1510" stroke-opacity="0.64" stroke-width="4.5" stroke-linecap="round"/>
+          <path d="M532 67C577 49 621 46 666 49C714 53 753 64 795 67" stroke="#2d1d15" stroke-opacity="0.68" stroke-width="4.6" stroke-linecap="round"/>
+          <path d="M806 65C855 47 904 44 949 47C989 50 1032 62 1074 68" stroke="#241813" stroke-opacity="0.7" stroke-width="4.6" stroke-linecap="round"/>
+          <path d="M1082 67C1128 51 1170 47 1216 49C1257 51 1301 61 1344 68" stroke="#2d1d15" stroke-opacity="0.7" stroke-width="4.4" stroke-linecap="round"/>
+          <path d="M194 45C217 53 226 62 217 71" stroke="#e8bf88" stroke-opacity="0.34" stroke-width="2.1" stroke-linecap="round"/>
+          <path d="M610 46C633 54 641 62 631 71" stroke="#efc992" stroke-opacity="0.28" stroke-width="2.1" stroke-linecap="round"/>
+          <path d="M1004 45C1027 53 1034 62 1024 70" stroke="#e7bf89" stroke-opacity="0.3" stroke-width="2.1" stroke-linecap="round"/>
+          <path d="M1314 46C1334 53 1341 61 1332 68" stroke="#dfb682" stroke-opacity="0.26" stroke-width="2" stroke-linecap="round"/>
+          <ellipse cx="166" cy="61" rx="38" ry="11" fill="#251712" fill-opacity="0.32"/>
+          <ellipse cx="438" cy="62" rx="28" ry="8" fill="#2a1a14" fill-opacity="0.26"/>
+          <ellipse cx="812" cy="60" rx="33" ry="9" fill="#1f140f" fill-opacity="0.28"/>
+          <ellipse cx="1112" cy="60" rx="25" ry="8" fill="#2c1b15" fill-opacity="0.24"/>
+          <ellipse cx="1360" cy="58" rx="32" ry="9" fill="#1e130f" fill-opacity="0.3"/>
+        </g>
+      </g>
+    </symbol>
+  </defs>
+
+  <g clip-path="url(#cornerHorizontal)">
+    <use href="#rootSegment" x="18" y="0" width="174" height="42"/>
+  </g>
+
+  <g clip-path="url(#cornerVertical)">
+    <use href="#rootSegment" x="8" y="198" width="174" height="42" transform="rotate(-90 8 198)"/>
+  </g>
+
+  <g clip-path="url(#cornerJoin)">
+    <use href="#rootSegment" x="4" y="8" width="56" height="32"/>
+    <use href="#rootSegment" x="8" y="60" width="56" height="32" transform="rotate(-90 8 60)" opacity="0.98"/>
+  </g>
+</svg>

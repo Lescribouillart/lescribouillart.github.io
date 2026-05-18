@@ -1461,6 +1461,121 @@ main {
 /* ========================================
    PRESENTATION (PAGE D'ACCUEIL)
    ======================================== */
+.presentation-shell {
+    position: relative;
+}
+
+.presentation-rootline {
+    position: absolute;
+    top: -11px;
+    left: 0;
+    width: 160px;
+    height: 160px;
+    z-index: 2;
+    pointer-events: none;
+    --presentation-rootline-horizontal-x: 680px;
+    --presentation-rootline-horizontal-y: 14px;
+    --presentation-rootline-vertical-x: 836px;
+    --presentation-rootline-vertical-y: 14px;
+}
+
+.presentation-rootline-clone {
+    position: absolute;
+    top: -11px;
+    left: 0;
+    width: 160px;
+    height: 160px;
+    z-index: 2;
+    pointer-events: auto;
+    cursor: grab;
+    touch-action: none;
+    --presentation-rootline-clone-x: 480px;
+    --presentation-rootline-clone-y: 180px;
+    --presentation-rootline-clone-rotation: 0deg;
+    transform: translate(
+        var(--presentation-rootline-clone-x),
+        var(--presentation-rootline-clone-y)
+    ) rotate(var(--presentation-rootline-clone-rotation)) scaleX(-1);
+    transform-origin: 80px 14px;
+}
+
+.presentation-rootline-clone.is-dragging {
+    cursor: grabbing;
+}
+
+.presentation-rootline-clone-piece {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.presentation-rootline-piece {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: auto;
+    cursor: grab;
+    touch-action: none;
+}
+
+.presentation-rootline-piece.is-dragging {
+    cursor: grabbing;
+}
+
+.presentation-rootline img,
+.presentation-rootline-clone img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    max-width: none;
+    height: auto;
+    display: block;
+    user-select: none;
+    pointer-events: none;
+}
+
+.presentation-rootline-piece-horizontal {
+    z-index: 2;
+    transform: translate(
+        var(--presentation-rootline-horizontal-x),
+        var(--presentation-rootline-horizontal-y)
+    );
+}
+
+.presentation-rootline-piece-vertical {
+    z-index: 1;
+    transform: translate(
+        var(--presentation-rootline-vertical-x),
+        var(--presentation-rootline-vertical-y)
+    );
+}
+
+.presentation-rootline-clone-piece-horizontal {
+    z-index: 2;
+    transform: translate(0, 14px);
+}
+
+.presentation-rootline-clone-piece-vertical {
+    z-index: 1;
+    transform: translate(156px, 14px);
+}
+
+.presentation-rootline-horizontal {
+    transform: scaleY(4);
+    transform-origin: left top;
+}
+
+.presentation-rootline-vertical {
+    transform: rotate(90deg) translateY(-100%) scaleY(4);
+    transform-origin: left top;
+}
+
 .presentation {
     max-width: 966px;
     margin: 0 auto 60px;
