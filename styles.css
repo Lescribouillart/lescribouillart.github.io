@@ -3035,7 +3035,7 @@ a.highlight-blue {
 .article-card {
     background: var(--bg-light);
     border-radius: 8px;
-    overflow: hidden;
+    overflow: visible;
     transition: box-shadow 0.3s ease, border-color 0.3s ease;
     border: 1px solid var(--border-color);
     cursor: pointer;
@@ -3045,9 +3045,86 @@ a.highlight-blue {
     text-decoration: none;
 }
 
+.article-card-eyelets {
+    position: relative;
+    --article-eyelet-size: 17px;
+    --article-eyelet-offset: 10px;
+    --article-eyelet-rope-width: calc(var(--article-eyelet-size) * 0.62);
+    --article-eyelet-rope-half: calc(var(--article-eyelet-rope-width) / 2);
+}
+
+.article-card-eyelet {
+    position: absolute;
+    width: var(--article-eyelet-size);
+    height: var(--article-eyelet-size);
+    border-radius: 50%;
+    overflow: visible;
+    background: radial-gradient(circle at center, transparent 0 24%, #b7aa94 25% 48%, #7a705f 49% 62%, #3A3944 63% 100%);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+    pointer-events: none;
+    z-index: 4;
+}
+
+.article-card-eyelet::before {
+    content: "";
+    position: absolute;
+    top: -22px;
+    left: 50%;
+    width: var(--article-eyelet-rope-width);
+    height: 32px;
+    transform: translateX(-50%);
+    border-radius: 999px 999px 10px 10px;
+    background: url('./images/textures/texturecorde.png') center / cover no-repeat;
+    box-shadow:
+        inset 1px 0 0 rgba(120, 128, 184, 0.28),
+        inset -1px 0 0 rgba(10, 11, 24, 0.78),
+        0 1px 2px rgba(0, 0, 0, 0.42);
+    z-index: 5;
+}
+
+.article-card-eyelet::after {
+    content: "";
+    position: absolute;
+    top: -7px;
+    left: 50%;
+    width: 10px;
+    height: 7px;
+    transform: translateX(-50%) rotate(24deg);
+    border-radius: 55% 45% 55% 45%;
+    background: url('./images/textures/texturecorde.png') center / cover no-repeat;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.38);
+    z-index: 2;
+}
+
+.article-card-eyelet-top-left {
+    top: var(--article-eyelet-offset);
+    left: var(--article-eyelet-offset);
+}
+
+.article-card-eyelet-top-right {
+    top: var(--article-eyelet-offset);
+    right: var(--article-eyelet-offset);
+}
+
+.article-card-eyelet-top-right::after {
+    transform: translateX(-50%) rotate(-24deg);
+}
+
+.article-card-eyelet-bottom-left {
+    bottom: 10px;
+    left: 10px;
+}
+
+.article-card-eyelet-bottom-right {
+    bottom: 10px;
+    right: 10px;
+}
+
 .article-image-wrapper {
     width: 100%;
     max-height: 220px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
     overflow: hidden;
 }
 
@@ -3074,6 +3151,8 @@ a.highlight-blue {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
 }
 
 .article-category {

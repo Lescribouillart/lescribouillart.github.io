@@ -22,7 +22,11 @@ function displayArticles(articles) {
     }
     
     container.innerHTML = articles.map(article => `
-        <a href="affichage-article.html?id=${article.id}" class="article-card">
+        <a href="affichage-article.html?id=${article.id}" class="article-card${article.id === 1 ? ' article-card-eyelets' : ''}">
+            ${article.id === 1 ? `
+            <span class="article-card-eyelet article-card-eyelet-top-left" aria-hidden="true"></span>
+            <span class="article-card-eyelet article-card-eyelet-top-right" aria-hidden="true"></span>
+            ` : ''}
             ${article.image ? `
             <div class="article-image-wrapper">
                 <img src="../${article.image}" alt="${article.title}" class="article-image">
