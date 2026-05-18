@@ -1465,16 +1465,6 @@ main {
     position: relative;
 }
 
-.presentation-rootline {
-    position: absolute;
-    top: -11px;
-    left: 0;
-    width: 160px;
-    height: 160px;
-    z-index: 2;
-    pointer-events: none;
-}
-
 .presentation-rootline-clone {
     position: absolute;
     top: -11px;
@@ -1508,7 +1498,6 @@ main {
     pointer-events: none;
 }
 
-.presentation-rootline img,
 .presentation-rootline-clone img {
     position: absolute;
     top: 0;
