@@ -1473,10 +1473,6 @@ main {
     height: 160px;
     z-index: 2;
     pointer-events: none;
-    --presentation-rootline-horizontal-x: 680px;
-    --presentation-rootline-horizontal-y: 14px;
-    --presentation-rootline-vertical-x: 836px;
-    --presentation-rootline-vertical-y: 14px;
 }
 
 .presentation-rootline-clone {
@@ -1512,21 +1508,6 @@ main {
     pointer-events: none;
 }
 
-.presentation-rootline-piece {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: auto;
-    cursor: grab;
-    touch-action: none;
-}
-
-.presentation-rootline-piece.is-dragging {
-    cursor: grabbing;
-}
-
 .presentation-rootline img,
 .presentation-rootline-clone img {
     position: absolute;
@@ -1540,20 +1521,22 @@ main {
     pointer-events: none;
 }
 
-.presentation-rootline-piece-horizontal {
+.presentation-rootline-horizontal {
+    position: absolute;
+    top: 0;
+    left: 0;
     z-index: 2;
-    transform: translate(
-        var(--presentation-rootline-horizontal-x),
-        var(--presentation-rootline-horizontal-y)
-    );
+    transform: translate(680px, 14px) scaleY(4);
+    transform-origin: left top;
 }
 
-.presentation-rootline-piece-vertical {
+.presentation-rootline-vertical {
+    position: absolute;
+    top: 0;
+    left: 0;
     z-index: 1;
-    transform: translate(
-        var(--presentation-rootline-vertical-x),
-        var(--presentation-rootline-vertical-y)
-    );
+    transform: translate(836px, 14px) rotate(90deg) translateY(-100%) scaleY(4);
+    transform-origin: left top;
 }
 
 .presentation-rootline-clone-piece-horizontal {
@@ -1564,16 +1547,6 @@ main {
 .presentation-rootline-clone-piece-vertical {
     z-index: 1;
     transform: translate(156px, 14px);
-}
-
-.presentation-rootline-horizontal {
-    transform: scaleY(4);
-    transform-origin: left top;
-}
-
-.presentation-rootline-vertical {
-    transform: rotate(90deg) translateY(-100%) scaleY(4);
-    transform-origin: left top;
 }
 
 .presentation {

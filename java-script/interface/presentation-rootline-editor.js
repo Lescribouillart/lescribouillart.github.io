@@ -2,7 +2,6 @@
     'use strict';
 
     document.addEventListener('DOMContentLoaded', function() {
-        const rootline = document.querySelector('.presentation-rootline');
         const cloneRootline = document.querySelector('[data-rootline-clone]');
         const cloneStorageKey = 'presentationRootlineCloneState';
         const defaultCloneState = {
@@ -11,7 +10,7 @@
             rotation: 0
         };
 
-        if (!rootline || !cloneRootline) {
+        if (!cloneRootline) {
             return;
         }
 
