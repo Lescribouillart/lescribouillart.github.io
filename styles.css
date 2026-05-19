@@ -3051,6 +3051,7 @@ a.highlight-blue {
     --article-eyelet-offset: 10px;
     --article-eyelet-rope-width: calc((var(--article-eyelet-size) * 0.62) + 1px);
     --article-eyelet-rope-half: calc(var(--article-eyelet-rope-width) / 2);
+    --article-eyelet-rope-texture-size: 19px 15px;
 }
 
 .article-card-eyelet {
@@ -3074,7 +3075,13 @@ a.highlight-blue {
     height: 37px;
     transform: translateX(-50%);
     border-radius: 999px;
-    background: url('./images/textures/texturecorde.png') center / cover no-repeat;
+    background-image:
+        linear-gradient(180deg, rgba(255, 250, 236, 0.26) 0%, rgba(255, 250, 236, 0.06) 34%, rgba(126, 96, 54, 0.1) 70%, rgba(67, 44, 23, 0.2) 100%),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.08) 28%, rgba(108, 83, 49, 0.12) 72%, rgba(43, 28, 15, 0.24) 100%),
+        url('./images/textures/texturecorde.png');
+    background-position: center, center, center top;
+    background-repeat: no-repeat, no-repeat, repeat-y;
+    background-size: 100% 100%, 100% 100%, var(--article-eyelet-rope-texture-size);
     box-shadow:
         inset 1px 0 0 rgba(120, 128, 184, 0.28),
         inset -1px 0 0 rgba(10, 11, 24, 0.78),
@@ -3091,7 +3098,13 @@ a.highlight-blue {
     height: calc(var(--article-eyelet-size) * 0.42);
     transform: translateX(-50%) rotate(24deg);
     border-radius: 999px 999px 60% 60%;
-    background: url('./images/textures/texturecorde.png') center / cover no-repeat;
+    background-image:
+        linear-gradient(180deg, rgba(255, 248, 232, 0.22) 0%, rgba(255, 248, 232, 0.04) 45%, rgba(66, 44, 24, 0.22) 100%),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.06) 30%, rgba(50, 34, 19, 0.2) 100%),
+        url('./images/textures/texturecorde.png');
+    background-position: center, center, center top;
+    background-repeat: no-repeat, no-repeat, repeat-y;
+    background-size: 100% 100%, 100% 100%, var(--article-eyelet-rope-texture-size);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.38);
     z-index: 2;
 }
