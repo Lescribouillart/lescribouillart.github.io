@@ -3069,7 +3069,7 @@ a.highlight-blue {
 .article-card-eyelet::before {
     content: "";
     position: absolute;
-    top: -23px;
+    top: -24px;
     left: calc(50% + 0.5px);
     width: var(--article-eyelet-rope-width);
     height: 37px;
@@ -3096,7 +3096,7 @@ a.highlight-blue {
 .article-card-eyelet::after {
     content: "";
     position: absolute;
-    top: -3px;
+    top: -4px;
     left: calc(50% + 0.5px);
     width: calc(var(--article-eyelet-rope-width) - 1px);
     height: calc(var(--article-eyelet-size) * 0.42);
@@ -3126,6 +3126,10 @@ a.highlight-blue {
 .article-card-eyelet-top-right {
     top: var(--article-eyelet-offset);
     right: var(--article-eyelet-offset);
+}
+
+.article-card-eyelet-top-right::before {
+    height: 38px;
 }
 
 .article-card-eyelet-top-right::after {
