@@ -3129,7 +3129,8 @@ a.highlight-blue {
 }
 
 .article-card-eyelet-top-right::before {
-    height: 38px;
+    top: -26px;
+    height: 40px;
 }
 
 .article-card-eyelet-top-right::after {
