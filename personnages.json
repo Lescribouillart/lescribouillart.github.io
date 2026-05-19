@@ -14,9 +14,7 @@
   {
     "id": 3,
     "title": "Pierre Debrask",
-    "category": "Personnage",
-    "role": "Architecte du barrage du Serre-Étoile",
-    "excerpt": "Concepteur du barrage d'Écluselac, Pierre reste associé à un ouvrage devenu le centre de toutes les suspicions.",
+    "role": "Architecte",
     "markdownFile": "textes/lespersonnages/pierredebrask.md"
   }
 ]
