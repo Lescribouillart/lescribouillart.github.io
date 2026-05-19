@@ -8,9 +8,7 @@
   {
     "id": 2,
     "title": "Lice Ohara",
-    "category": "Personnage",
     "role": "Ancienne présidente du CERF",
-    "excerpt": "Après sa démission, Lice tente de comprendre ce qui s'est réellement joué autour du barrage du Serre-Étoile.",
     "markdownFile": "textes/lespersonnages/liceohara.md"
   },
   {
