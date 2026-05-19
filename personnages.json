@@ -2,9 +2,7 @@
   {
     "id": 1,
     "title": "Antoine Debrizuela",
-    "category": "Personnage",
-    "role": "Botaniste et journaliste pour la revue Épopée",
-    "excerpt": "Chercheur indépendant, Antoine suit l'évolution des forêts et consigne chaque anomalie dans ses carnets de terrain.",
+    "role": "Journaliste pour la revue Épopée",
     "markdownFile": "textes/lespersonnages/antoinedebrizuela.md"
   },
   {
