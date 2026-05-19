@@ -3049,7 +3049,7 @@ a.highlight-blue {
     position: relative;
     --article-eyelet-size: 17px;
     --article-eyelet-offset: 10px;
-    --article-eyelet-rope-width: calc(var(--article-eyelet-size) * 0.62);
+    --article-eyelet-rope-width: calc((var(--article-eyelet-size) * 0.62) + 1px);
     --article-eyelet-rope-half: calc(var(--article-eyelet-rope-width) / 2);
 }
 
@@ -3068,12 +3068,12 @@ a.highlight-blue {
 .article-card-eyelet::before {
     content: "";
     position: absolute;
-    top: -22px;
-    left: 50%;
+    top: -23px;
+    left: calc(50% + 0.5px);
     width: var(--article-eyelet-rope-width);
-    height: 32px;
+    height: 37px;
     transform: translateX(-50%);
-    border-radius: 999px 999px 10px 10px;
+    border-radius: 999px;
     background: url('./images/textures/texturecorde.png') center / cover no-repeat;
     box-shadow:
         inset 1px 0 0 rgba(120, 128, 184, 0.28),
@@ -3085,12 +3085,12 @@ a.highlight-blue {
 .article-card-eyelet::after {
     content: "";
     position: absolute;
-    top: -7px;
-    left: 50%;
-    width: 10px;
-    height: 7px;
+    top: -3px;
+    left: calc(50% + 0.5px);
+    width: calc(var(--article-eyelet-rope-width) - 1px);
+    height: calc(var(--article-eyelet-size) * 0.42);
     transform: translateX(-50%) rotate(24deg);
-    border-radius: 55% 45% 55% 45%;
+    border-radius: 999px 999px 60% 60%;
     background: url('./images/textures/texturecorde.png') center / cover no-repeat;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.38);
     z-index: 2;
