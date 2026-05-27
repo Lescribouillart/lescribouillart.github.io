@@ -7,7 +7,7 @@ Le professeur Debrizuela est un journaliste/botaniste de terrain. C'est un cherc
 
 ## Les caractéristiques du personnages
 
-- Cheveux :brun
+- Cheveux :
 - Yeux : 
 - Taille :
 - Poids :
