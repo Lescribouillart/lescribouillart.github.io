@@ -3277,8 +3277,13 @@ a.highlight-blue {
     padding: 2.5rem 3rem;
 }
 
+.article-shell {
+    position: relative;
+}
+
 .article-header {
     text-align: center;
+    padding-top: 2rem;
     padding-bottom: 2rem;
     border-bottom: 1px solid var(--border-color);
     margin-bottom: 2rem;
