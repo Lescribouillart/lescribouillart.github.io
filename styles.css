@@ -1465,6 +1465,20 @@ main {
     position: relative;
 }
 
+.presentation-top-arrow {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 38px;
+    height: auto;
+    transform: translate(-50%, calc(-42% + 15px));
+    filter: brightness(0) saturate(100%) invert(91%) sepia(0%) saturate(0%) hue-rotate(149deg) brightness(97%) contrast(91%);
+    opacity: 0.7;
+    z-index: 4;
+    pointer-events: none;
+    user-select: none;
+}
+
 .presentation-rootline-clone {
     position: absolute;
     width: 160px;
@@ -3688,6 +3702,11 @@ a.highlight-blue {
     
     .logo-row {
         gap: 0.5rem;
+    }
+
+    .presentation-top-arrow {
+        width: 32px;
+        transform: translate(-50%, calc(-36% + 15px));
     }
     
     .nav {
