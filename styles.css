@@ -1470,11 +1470,18 @@ main {
     top: 0;
     left: 50%;
     width: 38px;
-    height: auto;
     transform: translate(-50%, calc(-42% + 15px));
+    display: block;
+    z-index: 4;
+    cursor: pointer;
+}
+
+.presentation-top-arrow-icon {
+    display: block;
+    width: 100%;
+    height: auto;
     filter: brightness(0) saturate(100%) invert(91%) sepia(0%) saturate(0%) hue-rotate(149deg) brightness(97%) contrast(91%);
     opacity: 0.7;
-    z-index: 4;
     pointer-events: none;
     user-select: none;
 }
