@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     const sitePagesFallback = [
-        { title: 'Accueil', url: '../index.html', keywords: ['accueil', 'home', 'bienvenue', 'index'], snippet: 'Bienvenue sur Le Scribouill\'art, le journal fictif aux articles bien réels.' }
+        { title: 'Accueil', url: 'accueil.html', keywords: ['accueil', 'home', 'bienvenue', 'index'], snippet: 'Bienvenue sur Le Scribouill\'art, le journal fictif aux articles bien réels.' }
     ];
     let cachedSitePages = null;
 
@@ -329,7 +329,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    if (window.location.pathname.endsWith('/index.html') || window.location.pathname.endsWith('/index') || !window.location.pathname.includes('/html/')) {
+    if (
+        window.location.pathname.endsWith('/index.html')
+        || window.location.pathname.endsWith('/index')
+        || window.location.pathname.endsWith('/accueil.html')
+        || window.location.pathname.endsWith('/accueil')
+        || !window.location.pathname.includes('/html/')
+    ) {
         const redirectToSearchPage = () => {
             window.location.href = buildSearchPageUrl(searchInput.value.trim());
         };
