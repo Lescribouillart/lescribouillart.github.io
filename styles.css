@@ -1432,6 +1432,7 @@ main {
 .intro-site-content .intro-site {
     margin: 0;
     flex: 1;
+    margin-left: -49px;
 }
 
 .intro-accessibility-btn {
@@ -2655,6 +2656,11 @@ a.highlight-blue {
     color: var(--text-light);
     border-top: 1px solid #e0e0e0;
     border-bottom: 1px solid var(--bg-color);
+}
+
+body.home-page .footer {
+    background: var(--bg-color);
+    border-top-color: var(--bg-color);
 }
 
 .footer.footer-accueil {
