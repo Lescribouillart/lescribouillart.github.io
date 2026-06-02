@@ -2000,7 +2000,13 @@ h2.titrelegal2 {
 .mentions-legales-content h1 {
     font-size: 1.8rem;
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
+}
+
+.mentions-legales-content .articletemp {
+    width: 100%;
+    margin: 0 auto 1.5rem;
+    text-align: center;
 }
 
 /* Icône d'information et infobulle */
