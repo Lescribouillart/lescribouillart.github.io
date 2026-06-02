@@ -3,11 +3,30 @@ let currentIndex = 0;
 let articles = [];
 let autoPlayInterval = null;
 const autoPlayDelay = 4000; // Délai entre chaque glissement (en ms)
+const isInHtmlFolder = window.location.pathname.includes('/html/');
+const assetPrefix = isInHtmlFolder ? '../' : './';
+
+function buildArticlesDataUrl() {
+    return `${assetPrefix}publication-articles.json`;
+}
+
+function buildArticlePageUrl(articleId) {
+    const basePath = isInHtmlFolder ? 'affichage-article.html' : 'html/affichage-article.html';
+    return `${basePath}?id=${articleId}`;
+}
+
+function normalizeAssetPath(path) {
+    if (!path) return '';
+    if (/^(https?:)?\/\//.test(path) || path.startsWith('/')) {
+        return path;
+    }
+    return `${assetPrefix}${path.replace(/^\.\//, '')}`;
+}
 
 async function initCarousel() {
     try {
         // Charger les articles
-        const response = await fetch('./publication-articles.json');
+        const response = await fetch(buildArticlesDataUrl());
         articles = await response.json();
         
         if (articles.length === 0) {
@@ -46,11 +65,13 @@ function renderCarousel() {
         // Carte d'article
         const articleCard = document.createElement('div');
         articleCard.className = 'carousel-item';
+        const articleUrl = buildArticlePageUrl(article.id);
+        const articleImage = normalizeAssetPath(article.image);
         articleCard.innerHTML = `
-            <a href="html/affichage-article.html?id=${article.id}" class="carousel-card">
+            <a href="${articleUrl}" class="carousel-card">
                 ${article.image ? `
                 <div class="carousel-image-wrapper">
-                    <img src="./${article.image}" alt="${article.title}" class="carousel-image">
+                    <img src="${articleImage}" alt="${article.title}" class="carousel-image">
                 </div>
                 ` : ''}
                 <div class="carousel-content">
