@@ -2687,7 +2687,7 @@ a.highlight-blue {
     border-bottom: 1px solid var(--bg-color);
 }
 
-body.home-page .footer {
+.footer.footer-index {
     background: var(--bg-color);
     border-top-color: var(--bg-color);
 }
