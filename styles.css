@@ -1466,6 +1466,35 @@ main {
     text-align: center;
 }
 
+.construction-dots {
+    display: inline-flex;
+    align-items: baseline;
+    min-width: 1.6em;
+}
+
+.construction-dot {
+    opacity: 0;
+    animation: construction-dot-fade 1.4s infinite;
+}
+
+.construction-dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.construction-dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes construction-dot-fade {
+    0%, 20% {
+        opacity: 0;
+    }
+
+    30%, 100% {
+        opacity: 1;
+    }
+}
+
 /* ========================================
    PRESENTATION (PAGE D'ACCUEIL)
    ======================================== */
