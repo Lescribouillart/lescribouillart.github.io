@@ -139,6 +139,7 @@ html, body {
     width: 100%;
     overflow-x: hidden;
     min-height: 100vh;
+    background-color: #2f2e3a;
 }
 
 * {
@@ -2641,6 +2642,7 @@ a.highlight-blue {
     text-align: center;
     color: var(--text-light);
     border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--bg-color);
 }
 
 .footer-nav {
