@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Scribouill'art</title>
+    
+    <!-- Préchargement des ressources critiques -->
+    <link rel="preload" href="../styles.css" as="style">
+    <link rel="preload" href="../images/logo/scribouillart.png" as="image">
+    
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="icon" href="../images/logo/scribouillart1024.png" type="image/png" sizes="1024x1024">
+    
+</head>
+<body class="home-page">
+    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+    <header class="header">
+        <div class="header-rootline" aria-hidden="true">
+            <img src="../images/header/racines-bas-header.svg" alt="">
+        </div>
+        <div class="header-rootline header-rootline-right" aria-hidden="true">
+            <img src="../images/header/racines-bas-header.svg" alt="">
+        </div>
+        <div class="container">
+            <button
+                class="header-drawer-toggle"
+                type="button"
+                aria-label="Ouvrir le volet latéral"
+                aria-controls="home-side-panel"
+                aria-expanded="false"
+            >
+                <span class="header-drawer-toggle-line"></span>
+                <span class="header-drawer-toggle-line"></span>
+                <span class="header-drawer-toggle-line"></span>
+            </button>
+            <a href="accueil.html" style="text-decoration: none; color: inherit;">
+                <div class="logo-row">
+                    <h1 class="logo">Le Scribouill'art</h1>
+                    <img src="../images/logo/scribouillart.png" alt="Logo Scribouill'art" class="logo-img">
+                </div>
+            </a>
+            <p class="tagline">Le journal fictif aux articles bien réels</p>
+            <nav class="nav">
+                <a href="accueil.html" class="nav-link active">Accueil</a>
+                <a href="listage-articles.html" class="nav-link">Publications</a>
+            </nav>
+        </div>
+    </header>
+    <div class="site-header-spacer" aria-hidden="true"></div>
+
+    <div class="home-drawer-backdrop" hidden></div>
+    <aside class="home-side-panel" id="home-side-panel" aria-hidden="true" hidden>
+        <div class="home-side-panel-inner">
+            <div class="side-panel-rootline" aria-hidden="true">
+                <img src="../images/header/racines-bas-header.svg" alt="racine décorative">
+            </div>
+            <h2 class="home-side-panel-title">Le feuillet</h2>
+            <a href="feuillet.html" class="home-side-panel-text">La chronologie</a>
+            <a href="../html2/lespersonnages.html" class="home-side-panel-text">Les personnages</a>
+            <a href="../html2/leslieux.html" class="home-side-panel-text">Les lieux</a>
+        </div>
+    </aside>
+
+    <div class="intro-site-bg">
+        <div class="intro-site-content">
+            <button class="accessibility-btn intro-accessibility-btn" aria-label="Mode dyslexie">
+                <img src="../images/inclusif/dislexie.png" alt="Icône dyslexie" title="dyslexie">
+            </button>
+            <p class="intro-site">
+                <strong>Le Scribouill'art</strong> est divisé en trois sous-parties : <strong>l'accueil</strong>, afin de connaître le fonctionnement du site ;
+                <strong>les articles</strong>, essentiellement des portraits et des reportages ; et le feuillet, qui rassemble toutes les informations
+                et la chronologie qui seront développées dans chaque article.
+            </p>
+            <div class="search-container intro-search-container">
+                <input type="text" id="search-input" placeholder="Rechercher..." autocomplete="off">
+            </div>
+        </div>
+    </div>
+
+    <main class="main home-main" id="main-content">
+        <aside class="left-body-carousel" aria-label="Dernieres publications">
+            <div class="left-body-carousel-inner">
+                <div class="carousel-wrapper-in-presentation">
+                    <button class="carousel-button carousel-button-prev" aria-label="Article precedent">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                    </button>
+
+                    <div class="carousel-container-in-presentation">
+                        <div class="carousel-track" id="carousel-track">
+                            <!-- Les articles seront inseres ici par JavaScript -->
+                        </div>
+                    </div>
+
+                    <button class="carousel-button carousel-button-next" aria-label="Article suivant">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </button>
+
+                    <div class="carousel-indicators-in-presentation" id="carousel-indicators">
+                        <!-- Les points seront inseres ici par JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <div class="container">
+            <div class="presentation-shell">
+                <a class="presentation-top-arrow" href="#page-bottom" aria-label="Aller en bas de la page">
+                    <img class="presentation-top-arrow-icon" src="../images/icons/flechebas.png" alt="" aria-hidden="true">
+                </a>
+                <div class="presentation-rootline-clone presentation-rootline-clone-left" aria-hidden="true">
+                    <div class="presentation-rootline-clone-piece presentation-rootline-clone-piece-horizontal">
+                        <img class="presentation-rootline-horizontal" src="../images/header/racines-bas-header.svg" alt="">
+                    </div>
+                    <div class="presentation-rootline-clone-piece presentation-rootline-clone-piece-vertical">
+                        <img class="presentation-rootline-vertical" src="../images/header/racines-bas-header.svg" alt="">
+                    </div>
+                </div>
+                <div class="presentation-rootline-clone presentation-rootline-clone-right" aria-hidden="true">
+                    <div class="presentation-rootline-clone-piece presentation-rootline-clone-piece-horizontal">
+                        <img class="presentation-rootline-horizontal" src="../images/header/racines-bas-header.svg" alt="">
+                    </div>
+                    <div class="presentation-rootline-clone-piece presentation-rootline-clone-piece-vertical">
+                        <img class="presentation-rootline-vertical" src="../images/header/racines-bas-header.svg" alt="">
+                    </div>
+                </div>
+                <div class="presentation">
+                    <div class="presentation-bg2">
+                        <div class="presentation-flex">
+                            <img src="../images/presentation/yeti.png" alt="Illustration representant l'evasion et l'imaginaire">
+
+                            <div class="presentation-texte">
+                                <p class="quote-mulder">
+    Comme le dirait si bien 
+    <a href="https://fr.wikipedia.org/wiki/Fox_Mulder" class="mulder-xfiles" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">Mulder</a> dans la série 
+    <a href="https://fr.wikipedia.org/wiki/X-Files_:_Aux_fronti%C3%A8res_du_r%C3%A9el" class="mulder-xfiles" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">X-Files</a> : « La vérité se trouve peut-être ailleurs… »
+</p>
+                                <p>
+    Une vérité qui échappe incroyablement bien au journal Le Scribouill'art ; sur ce site, vous ne trouverez que des articles romancés, inspirés du monde d’aujourd’hui et d’hier.
+</p>
+                                <p>
+    Comme 
+    <a href="https://fr.wikipedia.org/wiki/Louis_Pauwels" class="highlight-blue" target="_blank" rel="noopener noreferrer"><em>Louis Pauwels</em></a> et 
+    <a href="https://fr.wikipedia.org/wiki/Jacques_Bergier" class="highlight-blue" target="_blank" rel="noopener noreferrer"><em>Jacques Bergier</em></a> les diffusèrent dans leur revue 
+    <a href="https://fr.wikipedia.org/wiki/Plan%C3%A8te_(revue)" class="highlight-blue" target="_blank" rel="noopener noreferrer"><em>Planète</em></a>, je vous propose différentes rubriques offrant une lecture alternative du réel.
+</p>
+                            </div>
+                        </div>
+                        <p>Chacune vous attend derrière ces quelques frontières :</p>
+                        <p class="key-point">•  L'ésotérisme, le territoire qui se dissimule au-delà des limites de la science.</p>
+                        <p class="key-point">•  Le paranormal, flirtant par moments avec la science-fiction.</p>
+                        <p class="key-point">•  Le fantastique, car la magie prend bien des formes et nous emmène très loin dans notre imaginaire.</p>
+                        <p>C’est par ici que les amateurs d’histoires à dormir debout trouveront leur place. Au Scribouill'art, on ne vous juge pas, on s'évade le temps d'un instant.</p>
+                        <p>Sur ces quelques mots, je vous souhaite une agréable lecture, et je vous dis à bientôt pour de nouvelles parutions !</p>
+                        <p class="note"><strong>N.B. :</strong> Les articles que je vous présente ici s'inscrivent dans une trame principale.</p>
+                        <p style="text-align: right; font-style: italic;">Drelall</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer" id="page-bottom">
+        <div class="container">
+            <nav class="footer-nav">
+                <a href="a-propos.html" class="footer-link">À propos</a>
+                <a href="contact.html" class="footer-link">Contact</a>
+                <a href="auteur.html" class="footer-link">Scribes</a>
+                <a href="mentions-legales.html" class="footer-link">Mentions légales</a>
+                <a href="../feed.xml" class="footer-icon-link footer-rss-link" target="_blank" rel="noopener noreferrer" aria-label="Flux RSS" title="Flux RSS"><img src="../images/icons/fluxrss.png" alt="" width="20" height="20"></a>
+                <a href="accessibilite.html" class="footer-link footer-icon-link" aria-label="Accessibilité" title="Accessibilité">
+                    <img src="../images/icons/accessibilite.png" alt="Icône accessibilité" width="20" height="20">
+                </a>
+            </nav>
+            <p class="footer-copyright">© 2025 Le Scribouill'art - Tous droits réservés</p>
+        </div>
+    </footer>
+    
+    <!-- <script src="theme/noel/neige.js" defer></script> -->
+    <script src="../java-script/interface/home-drawer.js"></script>
+    <script src="../java-script/interface/dyslexic-mode.js"></script>
+    <script src="../java-script/interface/home-header-scroll.js"></script>
+    <script src="../java-script/interface/tagline-fireflies.js"></script>
+    <script src="../java-script/recherche/recherche.js"></script>
+    <script src="../java-script/articles/carousel.js" defer></script>
+</body>
+</html>
