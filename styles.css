@@ -2637,11 +2637,17 @@ a.highlight-blue {
    FOOTER
    ======================================== */
 .footer {
-    background: var(--bg-color);
+    background: linear-gradient(
+        to bottom,
+        #e0e0e0 0%,
+        #e0e0e0 50%,
+        var(--bg-color) 50%,
+        var(--bg-color) 100%
+    );
     padding: 2rem 0;
     text-align: center;
     color: var(--text-light);
-    border-top: 1px solid var(--border-color);
+    border-top: 1px solid #e0e0e0;
     border-bottom: 1px solid var(--bg-color);
 }
 
@@ -2654,7 +2660,7 @@ a.highlight-blue {
         var(--bg-color) 50%,
         var(--bg-color) 100%
     );
-    border-top: none;
+    border-top: 1px solid #e0e0e0;
 }
 
 .footer.footer-accueil::before {
@@ -2681,7 +2687,7 @@ a.highlight-blue {
 }
 
 .footer-link {
-    color: #e0e0e0;
+    color: #2f2e3a;
     text-decoration: none;
     transition: color 0.3s ease;
     font-size: 0.9rem;
