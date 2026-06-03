@@ -4,6 +4,17 @@
 
     const MOBILE_BREAKPOINT = 900;
 
+    function isLikelyMobileDevice() {
+        const mobileUserAgent = /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini|Mobile/i.test(
+            navigator.userAgent
+        );
+        const isTouchDevice = navigator.maxTouchPoints > 1;
+        const hasCoarsePointer = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+
+        // Combine plusieurs indices pour attraper les mobiles même en "version ordinateur".
+        return mobileUserAgent || (isTouchDevice && hasCoarsePointer);
+    }
+
     function getDesktopOnlyPath() {
         const currentPath = window.location.pathname;
 
@@ -24,7 +35,9 @@
             || window.location.pathname.endsWith('/bloquage.html')
             || window.location.pathname.endsWith('\\bloquage.html');
 
-        if (isBlockingPage || window.innerWidth > MOBILE_BREAKPOINT) {
+        const shouldBlockForMobile = isLikelyMobileDevice() || window.innerWidth <= MOBILE_BREAKPOINT;
+
+        if (isBlockingPage || !shouldBlockForMobile) {
             return;
         }
 
