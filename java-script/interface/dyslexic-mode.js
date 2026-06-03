@@ -1,6 +1,37 @@
 // Mode Dyslexie - Accessibilité
 (function() {
     'use strict';
+
+    const MOBILE_BREAKPOINT = 900;
+
+    function getDesktopOnlyPath() {
+        const currentPath = window.location.pathname;
+
+        if (currentPath.includes('/html2/')) {
+            return '../html/bloquage.html';
+        }
+
+        if (currentPath.includes('/html/')) {
+            return 'bloquage.html';
+        }
+
+        return 'html/bloquage.html';
+    }
+
+    function redirectMobileVisitors() {
+        const isBlockingPage = window.location.pathname.endsWith('/html/bloquage.html')
+            || window.location.pathname.endsWith('\\html\\bloquage.html')
+            || window.location.pathname.endsWith('/bloquage.html')
+            || window.location.pathname.endsWith('\\bloquage.html');
+
+        if (isBlockingPage || window.innerWidth > MOBILE_BREAKPOINT) {
+            return;
+        }
+
+        window.location.replace(getDesktopOnlyPath());
+    }
+
+    redirectMobileVisitors();
     
     // Vérifier si le mode dyslexie est activé dans le localStorage
     const isDyslexicMode = localStorage.getItem('dyslexicMode') === 'true';

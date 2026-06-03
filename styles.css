@@ -179,6 +179,57 @@ select {
     --spacing: 1.5rem;
     --font-body: 'Source Sans 3', 'Segoe UI', sans-serif;
     --font-title: 'Rozha One', serif;
+    --desktop-lock-breakpoint: 900px;
+}
+
+/* ========================================
+   PAGE BLOQUAGE (DESKTOP ONLY)
+   ======================================== */
+.desktop-lock-page {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+}
+
+.desktop-lock-main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: clamp(1rem, 3vw, 2rem);
+}
+
+.desktop-lock-card {
+    width: min(100%, 34rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(1rem, 2.5vw, 1.5rem);
+    text-align: center;
+    padding: clamp(1rem, 4vw, 2rem);
+}
+
+.desktop-lock-icon {
+    width: clamp(92px, 22vw, 142px);
+    height: auto;
+    opacity: 0.72;
+}
+
+.desktop-lock-text {
+    color: var(--primary-color);
+    font-size: clamp(1rem, 1.2vw + 0.75rem, 1.2rem);
+    line-height: 1.7;
+    max-width: 30ch;
+}
+
+@media (max-width: 480px) {
+    .desktop-lock-card {
+        padding: 1rem;
+    }
+
+    .desktop-lock-text {
+        line-height: 1.6;
+    }
 }
 
 /* ========================================
