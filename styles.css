@@ -1655,7 +1655,7 @@ main {
     border-radius: 8px;
     background-color: var(--bg-light);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    max-height: 1839px;
+    max-height: 1874px;
     overflow-y: auto;
     color: #e0e0e0;
 }
