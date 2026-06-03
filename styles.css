@@ -34,7 +34,7 @@
     user-select: none;
     transform: scaleY(2); /* 1.5 = 150% de la hauteur d’origine */
 }
-@media (max-width: 600px) {
+@media (max-width: 1024px) {
     footer, .footer-nav {
         box-sizing: border-box;
         padding-left: 8vw;
