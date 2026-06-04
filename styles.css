@@ -3606,7 +3606,20 @@ a.highlight-blue {
 }
 
 .article-body .character-description-column .character-row-main-dominante {
+    display: block;
     white-space: nowrap;
+    font-size: 0.94em;
+    letter-spacing: -0.01em;
+}
+
+.article-body .character-description-column .character-row-main-dominante .character-label {
+    padding-left: 1.4rem;
+}
+
+.article-body .character-description-column .character-row-main-dominante .character-label::before {
+    width: 1rem;
+    height: 1rem;
+    font-size: 0.58rem;
 }
 
 .article-body .article-placeholder {
