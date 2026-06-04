@@ -46,10 +46,15 @@
         </div>
     </div>
 
-    <main style="display: flex; justify-content: center; align-items: center;">
-        <a href="html/accueil.html" aria-label="Accéder à l'accueil">
-            <img src="images/icons/construction.png" alt="Illustration chantier du site" width="262" style="opacity: 0.85;">
-        </a>
+    <main class="index-construction-main">
+        <button
+            type="button"
+            class="index-unavailable-site-trigger"
+            aria-label="Site indisponible pour le moment"
+        >
+            <span class="index-unavailable-site-bubble" aria-hidden="true">Oups, le site n'est pas encore disponible</span>
+            <img src="images/icons/construction.png" alt="Illustration chantier du site" width="262">
+        </button>
     </main>
 
     <footer class="footer footer-index" id="page-bottom">
@@ -65,5 +70,24 @@
     <script src="java-script/interface/tagline-fireflies.js"></script>
     <script src="java-script/recherche/recherche.js"></script>
     <script src="java-script/articles/carousel.js" defer></script>
+    <script>
+        (function () {
+            const trigger = document.querySelector('.index-unavailable-site-trigger');
+
+            if (!trigger) {
+                return;
+            }
+
+            let hideTimer = null;
+
+            trigger.addEventListener('click', function () {
+                trigger.classList.add('is-bubble-visible');
+                window.clearTimeout(hideTimer);
+                hideTimer = window.setTimeout(function () {
+                    trigger.classList.remove('is-bubble-visible');
+                }, 2600);
+            });
+        })();
+    </script>
 </body>
 </html>
