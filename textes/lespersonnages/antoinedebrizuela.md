@@ -3,7 +3,7 @@
 	<figcaption></figcaption>
 </figure>
 
-Le professeur Debrizuela est un journaliste/botaniste de terrain. C'est un chercheur connu pour ses prises de positions en ce qui concerne l'exploitation intensive des forêts.Il travaille pour la revue Epopée.
+Le professeur Debrizuela est un journaliste/botaniste de terrain. C'est un chercheur connu pour ses prises de positions en ce qui concerne l'exploitation intensive des forêts. Il travaille pour la revue Epopée.
 
 ## Description
 <div class="character-description-columns">
