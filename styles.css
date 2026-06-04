@@ -3520,6 +3520,51 @@ a.highlight-blue {
     margin-top: 0.95rem;
 }
 
+.article-body .character-label {
+    position: relative;
+    display: inline-block;
+    padding-left: 1.55rem;
+    line-height: 1.2;
+}
+
+.article-body .character-label::before {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1.1rem;
+    height: 1.1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    border: 1px solid rgba(123, 163, 216, 0.42);
+    background: radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.02));
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+    font-size: 0.62rem;
+    font-weight: 700;
+    line-height: 1;
+    color: currentColor;
+    opacity: 0.9;
+}
+
+.article-body .character-label.label-age::before { content: '◷'; }
+.article-body .character-label.label-cheveux::before { content: '✂'; }
+.article-body .character-label.label-yeux::before { content: '◉'; }
+.article-body .character-label.label-taille::before { content: '↕'; }
+.article-body .character-label.label-poids::before { content: '⚖'; }
+.article-body .character-label.label-main::before { content: '☞'; }
+.article-body .character-label.label-allure::before { content: '◇'; }
+.article-body .character-label.label-demarche::before { content: '⋯'; }
+.article-body .character-label.label-personnalite::before { content: '✎'; }
+.article-body .character-label.label-style::before { content: '⌁'; }
+.article-body .character-label.label-qualite::before { content: '★'; }
+.article-body .character-label.label-defauts::before { content: '△'; }
+.article-body .character-label.label-premiere-approche::before { content: '◦'; }
+.article-body .character-label.label-comportement::before { content: '◎'; }
+.article-body .character-label.label-aime::before { content: '♡'; }
+.article-body .character-label.label-naime-pas::before { content: '⊘'; }
+
 .article-body .character-notes-panel .character-notes-separator {
     display: block;
     width: min(760px, 100%);
@@ -3558,6 +3603,10 @@ a.highlight-blue {
 
 .article-body .character-description-column p + p {
     margin-top: 0.85rem;
+}
+
+.article-body .character-description-column .character-row-main-dominante {
+    white-space: nowrap;
 }
 
 .article-body .article-placeholder {
@@ -4193,6 +4242,10 @@ a.highlight-blue {
 
     .article-body .character-description-column {
         padding: 0.85rem 0.9rem;
+    }
+
+    .article-body .character-description-column .character-row-main-dominante {
+        white-space: normal;
     }
 }
 
