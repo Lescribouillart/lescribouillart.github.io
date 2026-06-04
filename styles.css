@@ -3616,6 +3616,31 @@ a.highlight-blue {
     font-size: calc(0.58rem + 4px);
 }
 
+/* Ajustements spécifiques a la fiche Pierre Debrask */
+.article-body .character-description-columns-pierre .character-description-column p {
+    text-align: left;
+    text-justify: auto;
+    word-spacing: normal;
+    hyphens: none;
+}
+
+.article-body .character-description-columns-pierre .pierre-row-age {
+    text-align: left;
+    text-justify: auto;
+}
+
+.article-body .character-description-columns-pierre .pierre-nowrap-age {
+    white-space: nowrap;
+}
+
+.article-body .character-description-columns-pierre .pierre-row-demarche {
+    white-space: nowrap;
+}
+
+.article-body .character-description-columns-pierre .pierre-row-allure {
+    white-space: nowrap;
+}
+
 .article-body .article-placeholder {
     display: table;
     margin: 0 auto 1.5rem;

@@ -6,9 +6,9 @@
 Pierre Debrask est l'architecte du barrage le Serre-Étoile. 
 
 ## Description
-<div class="character-description-columns">
+<div class="character-description-columns character-description-columns-pierre">
 	<div class="character-description-column">
-		<p><a href="" class="highlight-blue character-label label-age">Age :</a> Pierre Debrask a vécu de 1918 à 1990. Les informations qui suivent correspondent à l'époque où il avait 45 ans.</p>
+		<p class="pierre-row-age"><a href="" class="highlight-blue character-label label-age">Age :</a> Pierre Debrask a vécu de 1918 à 1990. Les informations qui suivent <span class="pierre-nowrap-age">correspondent à l'époque</span> où il avait 45 ans.</p>
 		<p><a href="" class="highlight-blue character-label label-cheveux">Cheveux :</a> blonds.</p>
 		<p><a href="" class="highlight-blue character-label label-yeux">Yeux :</a> verts.</p>
 		<p><a href="" class="highlight-blue character-label label-taille">Taille :</a> 1m90.</p>
@@ -16,8 +16,8 @@ Pierre Debrask est l'architecte du barrage le Serre-Étoile.
 	<div class="character-description-column">
 		<p><a href="" class="highlight-blue character-label label-poids">Poids :</a> 95 kg.</p>
 		<p class="character-row-main-dominante"><a href="" class="highlight-blue character-label label-main">Main dominante :</a> droite.</p>
-		<p><a href="" class="highlight-blue character-label label-allure">Allure :</a> rigide et discrete.</p>
-		<p><a href="" class="highlight-blue character-label label-demarche">Démarche :</a> déterminé.</p>
+		<p class="pierre-row-allure"><a href="" class="highlight-blue character-label label-allure">Allure :</a> rigide et discrete.</p>
+		<p class="pierre-row-demarche"><a href="" class="highlight-blue character-label label-demarche">Démarche :</a> déterminé.</p>
 	</div>
 </div>
 
