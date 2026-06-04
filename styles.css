@@ -3514,6 +3514,13 @@ a.highlight-blue {
     margin-top: 0.95rem;
 }
 
+.article-body .character-notes-panel .character-notes-separator {
+    border: 0;
+    height: 1px;
+    margin: 1.05rem 0;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0));
+}
+
 .article-body .character-description-columns {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
