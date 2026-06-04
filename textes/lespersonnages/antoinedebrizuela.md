@@ -21,10 +21,9 @@ Le professeur Debrizuela est un journaliste/botaniste de terrain. C'est un cherc
 	</div>
 </div>
 
+<p class="character-personality-below-image">Personnalité: Antoine n'a pas la langue dans ça poche, il est aussi très curieux de nature. Il s'intéresse sincerement aux gens, c'est d'ailleurs  ce qui l'a poussé à devenir juornaliste. Son travaille de botaniste pouvait etre trop sédentaire à son goûts. Il se sentit liberé, quand le journal Epopée lui confia u première article.</p>
+
  Style vestimentaire : La plupart du temps il porte une tenue adapté aux sorties sur le terrain.
-
- Personnalité: Antoine n'a pas la langue dans ça poche, il est aussi très curieux de nature. Il s'intéresse sincerement aux gens, c'est d'ailleurs  ce qui l'a poussé à devenir juornaliste. Son travaille de botaniste pouvait etre trop sédentaire à son goûts. Il se sentit liberé, quand le journal Epopée lui confia u première article.
-
  Qualité : sa bonne humeur est contagieuse, il a le contact facile. C'est une personne très sociable. On peut compter sur lui, sauf quand il est question de ponctualité. Il ne rechigne pas à la tâche, il peut passer plusieurs jours sur le terrain avec des conditions difficile afin de dénicher des infos.
 
  Défauts : il est parfois trop direct quand il s'agit de poser des questions pour son travail. Ce qui a le don d'agacer ses interlocuteurs. Ils ne partagent jamais les informations qu'il récolte, même celles qui ne lui sont d'aucune utilité. Ca luivaut de ne pas être apprécié par ses collègues.

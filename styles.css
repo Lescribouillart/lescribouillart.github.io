@@ -3494,6 +3494,10 @@ a.highlight-blue {
     margin-bottom: 1.5rem;
 }
 
+.article-body .character-personality-below-image {
+    clear: left;
+}
+
 .article-body .character-description-columns {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
