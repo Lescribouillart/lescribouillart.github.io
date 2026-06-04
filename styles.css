@@ -3516,9 +3516,10 @@ a.highlight-blue {
 
 .article-body .character-notes-panel .character-notes-separator {
     border: 0;
-    height: 1px;
+    height: 14px;
     margin: 1.05rem 0;
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0));
+    background: url('images/header/racines-bas-header.svg') center / auto 100% no-repeat;
+    opacity: 0.55;
 }
 
 .article-body .character-description-columns {
