@@ -3498,6 +3498,22 @@ a.highlight-blue {
     clear: left;
 }
 
+.article-body .character-notes-panel {
+    background: #2f2e3a;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+    margin: 1rem 0 1.5rem;
+}
+
+.article-body .character-notes-panel p {
+    margin: 0;
+}
+
+.article-body .character-notes-panel p + p {
+    margin-top: 0.95rem;
+}
+
 .article-body .character-description-columns {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
