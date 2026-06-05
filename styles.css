@@ -3602,14 +3602,54 @@ a.highlight-blue {
     opacity: 0.9;
 }
 
-.article-body .character-label.label-age::before { content: '◷'; }
-.article-body .character-label.label-cheveux::before { content: '✂'; }
-.article-body .character-label.label-yeux::before { content: '◉'; }
-.article-body .character-label.label-taille::before { content: '↕'; }
-.article-body .character-label.label-poids::before { content: '⚖'; }
-.article-body .character-label.label-main::before { content: '☞'; }
-.article-body .character-label.label-allure::before { content: '◇'; }
-.article-body .character-label.label-demarche::before { content: '⋯'; }
+.article-body .character-label.label-age::before {
+    content: '';
+    width: 14px;
+    height: 14px;
+    background: url('./images/icons/iconesfiche/age.png') center / contain no-repeat;
+}
+.article-body .character-label.label-cheveux::before {
+    content: '';
+    width: 14px;
+    height: 14px;
+    background: url('./images/icons/iconesfiche/cheveux.png') center / contain no-repeat;
+}
+.article-body .character-label.label-yeux::before {
+    content: '';
+    width: 14px;
+    height: 14px;
+    background: url('./images/icons/iconesfiche/yeux.png') center / contain no-repeat;
+}
+.article-body .character-label.label-taille::before {
+    content: '';
+    width: 14px;
+    height: 14px;
+    background: url('./images/icons/iconesfiche/taille.png') center / contain no-repeat;
+}
+.article-body .character-label.label-poids::before {
+    content: '';
+    width: 14px;
+    height: 14px;
+    background: url('./images/icons/iconesfiche/poids.png') center / contain no-repeat;
+}
+.article-body .character-label.label-main::before {
+    content: '';
+    width: 14px;
+    height: 14px;
+    background: url('./images/icons/iconesfiche/main.png') center / contain no-repeat;
+}
+.article-body .character-label.label-allure::before {
+    content: '';
+    width: 14px;
+    height: 14px;
+    background: url('./images/icons/iconesfiche/masque.png') center / contain no-repeat;
+}
+.article-body .character-label.label-demarche::before {
+    content: '';
+    width: 14px;
+    height: 14px;
+    background: url('./images/icons/iconesfiche/demarche.png') center / contain no-repeat;
+}
 .article-body .character-label.label-personnalite::before { content: '✎'; }
 .article-body .character-label.label-style::before { content: '⌁'; }
 .article-body .character-label.label-qualite::before { content: '★'; }
@@ -3671,9 +3711,9 @@ a.highlight-blue {
 }
 
 .article-body .character-description-column .character-row-main-dominante .character-label::before {
-    width: auto;
-    height: auto;
-    font-size: calc(0.58rem + 4px);
+    width: 14px;
+    height: 14px;
+    font-size: 0;
 }
 
 /* Ajustements spécifiques a la fiche Pierre Debrask */
