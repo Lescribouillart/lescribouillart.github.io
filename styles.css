@@ -2063,38 +2063,20 @@ main {
     display: grid;
     place-items: center;
     padding: 0.8rem;
+    background: rgba(3, 10, 22, 0.42);
 }
 
 .saga-globe-viewer-panel[hidden] {
     display: none !important;
 }
 
-.saga-globe-viewer-panel-backdrop {
-    position: absolute;
-    inset: 0;
-    background: rgba(8, 12, 20, 0.72);
-    backdrop-filter: blur(2px);
-}
-
-.saga-globe-viewer-panel-dialog {
-    position: relative;
-    z-index: 1;
-    width: min(95%, 760px);
-    max-height: min(90%, 720px);
-    overflow: auto;
-    padding: 0.85rem 0.85rem 1rem;
-    border-radius: 14px;
-    border: 1px solid rgba(123, 163, 216, 0.28);
-    background: linear-gradient(180deg, rgba(10, 17, 29, 0.98), rgba(7, 13, 22, 0.98));
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.36);
-}
-
 .saga-globe-viewer-close {
     position: absolute;
-    top: 0.55rem;
-    right: 0.55rem;
+    top: 0.95rem;
+    right: 0.95rem;
     width: 34px;
     height: 34px;
+    z-index: 8;
     border: 1px solid rgba(232, 232, 232, 0.28);
     border-radius: 9px;
     background: rgba(224, 224, 224, 0.08);
@@ -2104,41 +2086,36 @@ main {
     cursor: pointer;
 }
 
-.saga-globe-viewer-title {
-    margin: 0 2.3rem 0.75rem 0;
-    color: #e8e8e8;
-    font-size: 1.12rem;
-}
-
-.saga-globe-viewer-media {
-    margin: 0;
-    position: relative;
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(123, 163, 216, 0.18);
-    padding: 0.7rem;
-}
-
-.saga-globe-viewer-media img {
+.saga-globe-viewer-image {
     display: block;
-    width: 100%;
+    width: min(88%, 760px);
     height: auto;
-    max-height: 68vh;
+    max-height: 78%;
     object-fit: contain;
     border-radius: 8px;
-    background: rgba(224, 224, 224, 0.06);
+    background: transparent;
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.34);
 }
 
 .saga-globe-viewer-fallback {
+    position: absolute;
+    left: 50%;
+    bottom: 1.1rem;
+    transform: translateX(-50%);
+    width: min(88%, 760px);
     margin: 0;
+    padding: 0.65rem 0.8rem;
+    border-radius: 10px;
+    background: rgba(7, 12, 20, 0.72);
+    border: 1px solid rgba(123, 163, 216, 0.24);
     color: var(--text-light);
     line-height: 1.55;
 }
 
 .saga-globe-viewer-fullscreen {
     position: absolute;
-    right: 1.05rem;
-    bottom: 1.05rem;
+    right: 0.95rem;
+    bottom: 0.95rem;
     z-index: 2;
     width: 42px;
     height: 42px;
@@ -2163,16 +2140,48 @@ main {
     outline: none;
 }
 
-.saga-globe-viewer-panel-dialog:fullscreen {
+.saga-globe-viewer-loader {
+    position: absolute;
+    z-index: 7;
+    width: min(320px, calc(100% - 3rem));
+    padding: 1.15rem 1.15rem 1rem;
+    border: 1px solid rgba(123, 163, 216, 0.24);
+    border-radius: 14px;
+    background: rgba(7, 12, 20, 0.82);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+    backdrop-filter: blur(10px);
+}
+
+.saga-globe-viewer-loader-track {
+    position: relative;
+    height: 10px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: rgba(122, 159, 214, 0.16);
+    box-shadow: inset 0 0 0 1px rgba(123, 163, 216, 0.08);
+}
+
+.saga-globe-viewer-loader-bar {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 180ms linear;
+    background: linear-gradient(90deg, #1f1e27, #2f2e3a, #5b596d);
+    box-shadow: 0 0 16px rgba(47, 46, 58, 0.34);
+}
+
+.saga-globe-viewer-panel:fullscreen {
     width: 100vw;
-    max-height: 100vh;
     height: 100vh;
-    border-radius: 0;
+    max-height: 100vh;
     padding: 1rem;
 }
 
-.saga-globe-viewer-panel-dialog:fullscreen .saga-globe-viewer-media img {
-    max-height: calc(100vh - 7.5rem);
+.saga-globe-viewer-panel:fullscreen .saga-globe-viewer-image {
+    width: min(92vw, 1200px);
+    max-height: calc(100vh - 6rem);
 }
 
 .titrelegal {

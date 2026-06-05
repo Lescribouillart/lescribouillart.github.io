@@ -292,10 +292,12 @@
 		const loaderBarNode = root.querySelector('[data-saga-globe-loader-bar]');
 		const statusNode = root.querySelector('[data-saga-globe-status]');
 		const viewerPanelNode = root.querySelector('[data-saga-viewer-panel]') || document.querySelector('[data-saga-viewer-panel]');
-		const viewerDialogNode = root.querySelector('.saga-globe-viewer-panel-dialog') || document.querySelector('.saga-globe-viewer-panel-dialog');
+		const viewerDialogNode = viewerPanelNode;
 		const viewerTitleNode = root.querySelector('[data-saga-viewer-title]') || document.querySelector('[data-saga-viewer-title]');
 		const viewerImageNode = root.querySelector('[data-saga-viewer-image]') || document.querySelector('[data-saga-viewer-image]');
 		const viewerFallbackNode = root.querySelector('[data-saga-viewer-fallback]') || document.querySelector('[data-saga-viewer-fallback]');
+		const viewerLoadingNode = root.querySelector('[data-saga-viewer-loading]') || document.querySelector('[data-saga-viewer-loading]');
+		const viewerLoadingBarNode = root.querySelector('[data-saga-viewer-loading-bar]') || document.querySelector('[data-saga-viewer-loading-bar]');
 		const viewerFullscreenButtonNode = root.querySelector('[data-saga-viewer-fullscreen]') || document.querySelector('[data-saga-viewer-fullscreen]');
 		const viewerCloseNodes = root.querySelectorAll('[data-saga-viewer-close]').length
 			? root.querySelectorAll('[data-saga-viewer-close]')
@@ -308,6 +310,41 @@
 		};
 		let progressAnimationFrameId = 0;
 		let currentLoadingProgress = 0;
+		let viewerLoadRequestId = 0;
+
+		function setViewerLoadingProgress(value) {
+			if (!viewerLoadingBarNode) {
+				return;
+			}
+
+			const clamped = Math.max(0, Math.min(100, value));
+			viewerLoadingBarNode.style.transform = `scaleX(${clamped / 100})`;
+		}
+
+		function animateViewerLoadingProgress(startValue, endValue, duration) {
+			if (!viewerLoadingBarNode || duration <= 0) {
+				setViewerLoadingProgress(endValue);
+				return Promise.resolve();
+			}
+
+			const startTime = window.performance.now();
+
+			return new Promise((resolve) => {
+				const tick = (now) => {
+					const ratio = Math.min(1, (now - startTime) / duration);
+					setViewerLoadingProgress(startValue + ((endValue - startValue) * ratio));
+
+					if (ratio < 1) {
+						window.requestAnimationFrame(tick);
+						return;
+					}
+
+					resolve();
+				};
+
+				window.requestAnimationFrame(tick);
+			});
+		}
 
 		function isViewerOpen() {
 			return Boolean(viewerPanelNode && !viewerPanelNode.hidden);
@@ -328,21 +365,35 @@
 				return;
 			}
 
+			viewerLoadRequestId += 1;
+
 			if (document.fullscreenElement === viewerDialogNode) {
 				document.exitFullscreen().catch(() => {});
 			}
 
 			viewerPanelNode.hidden = true;
 
+			if (viewerLoadingNode) {
+				viewerLoadingNode.hidden = true;
+			}
+
+			setViewerLoadingProgress(0);
+
 			if (viewerFallbackNode) {
 				viewerFallbackNode.hidden = true;
 			}
+
+			if (viewerImageNode) {
+				viewerImageNode.hidden = true;
+			}
 		}
 
-		function openViewerPanel(config) {
+		async function openViewerPanel(config) {
 			if (!viewerPanelNode) {
 				return;
 			}
+
+			const requestId = ++viewerLoadRequestId;
 
 			viewerPanelNode.hidden = false;
 			if (viewerFullscreenButtonNode) {
@@ -355,24 +406,52 @@
 			}
 
 			if (viewerImageNode) {
-				viewerImageNode.alt = config.alt;
-				viewerImageNode.hidden = false;
+				viewerImageNode.hidden = true;
+			}
 
-				viewerImageNode.onload = () => {
+			if (viewerFallbackNode) {
+				viewerFallbackNode.hidden = true;
+			}
+
+			if (viewerLoadingNode) {
+				viewerLoadingNode.hidden = false;
+			}
+
+			setViewerLoadingProgress(0);
+			const loadingStagePromise = animateViewerLoadingProgress(0, 65, 650);
+
+			if (viewerImageNode) {
+				viewerImageNode.alt = config.alt;
+				const imageLoadPromise = new Promise((resolve) => {
+					viewerImageNode.onload = () => resolve(true);
+					viewerImageNode.onerror = () => resolve(false);
+					viewerImageNode.src = config.imageSrc;
+				});
+
+				const [loaded] = await Promise.all([imageLoadPromise, loadingStagePromise]);
+
+				if (requestId !== viewerLoadRequestId) {
+					return;
+				}
+
+				await animateViewerLoadingProgress(65, 100, 280);
+
+				if (requestId !== viewerLoadRequestId) {
+					return;
+				}
+
+				if (viewerLoadingNode) {
+					viewerLoadingNode.hidden = true;
+				}
+
+				if (loaded) {
 					viewerImageNode.hidden = false;
 					if (viewerFallbackNode) {
 						viewerFallbackNode.hidden = true;
 					}
-				};
-
-				viewerImageNode.onerror = () => {
-					viewerImageNode.hidden = true;
-					if (viewerFallbackNode) {
-						viewerFallbackNode.hidden = false;
-					}
-				};
-
-				viewerImageNode.src = config.imageSrc;
+				} else if (viewerFallbackNode) {
+					viewerFallbackNode.hidden = false;
+				}
 			}
 		}
 
