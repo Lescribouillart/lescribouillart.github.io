@@ -2195,12 +2195,34 @@ main {
     width: 100vw;
     height: 100vh;
     max-height: 100vh;
-    padding: 1rem;
+    padding: 0;
+    background: #000;
+}
+
+.saga-globe-viewer-panel:fullscreen .saga-globe-viewer-stage {
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    display: grid;
+    place-items: center;
 }
 
 .saga-globe-viewer-panel:fullscreen .saga-globe-viewer-image {
-    width: min(92vw, 1200px);
-    max-height: calc(100vh - 6rem);
+    width: auto;
+    max-width: 100vw;
+    max-height: 100vh;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.saga-globe-viewer-panel:fullscreen .saga-globe-viewer-close {
+    top: 1rem;
+    right: 1rem;
+}
+
+.saga-globe-viewer-panel:fullscreen .saga-globe-viewer-fullscreen {
+    right: 1rem;
+    bottom: 1rem;
 }
 
 .titrelegal {
