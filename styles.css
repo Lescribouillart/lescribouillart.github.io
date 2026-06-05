@@ -2070,27 +2070,46 @@ main {
     display: none !important;
 }
 
+.saga-globe-viewer-stage {
+    position: relative;
+    width: min(88%, 760px);
+    max-height: 78%;
+}
+
 .saga-globe-viewer-close {
     position: absolute;
-    top: 0.95rem;
-    right: 0.95rem;
-    width: 34px;
-    height: 34px;
+    top: 0.6rem;
+    right: 0.6rem;
+    width: 30px;
+    height: 30px;
     z-index: 8;
-    border: 1px solid rgba(232, 232, 232, 0.28);
-    border-radius: 9px;
-    background: rgba(224, 224, 224, 0.08);
-    color: #e8e8e8;
-    font-size: 1.2rem;
+    border: 1px solid rgba(232, 232, 232, 0.2);
+    border-radius: 8px;
+    background: rgba(10, 17, 29, 0.42);
+    color: rgba(232, 232, 232, 0.82);
+    font-size: 1.05rem;
     line-height: 1;
     cursor: pointer;
+    backdrop-filter: blur(4px);
+    transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease;
+}
+
+.saga-globe-viewer-close:hover,
+.saga-globe-viewer-close:focus-visible {
+    background: rgba(10, 17, 29, 0.6);
+    color: rgba(232, 232, 232, 0.98);
+    border-color: rgba(232, 232, 232, 0.32);
+}
+
+.saga-globe-viewer-close:focus-visible {
+    outline: none;
 }
 
 .saga-globe-viewer-image {
     display: block;
-    width: min(88%, 760px);
+    width: 100%;
     height: auto;
-    max-height: 78%;
+    max-height: 78vh;
     object-fit: contain;
     border-radius: 8px;
     background: transparent;
@@ -2114,8 +2133,8 @@ main {
 
 .saga-globe-viewer-fullscreen {
     position: absolute;
-    right: 0.95rem;
-    bottom: 0.95rem;
+    right: 0.6rem;
+    bottom: 0.6rem;
     z-index: 2;
     width: 42px;
     height: 42px;
