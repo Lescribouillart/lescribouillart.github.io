@@ -2056,6 +2056,125 @@ main {
     backdrop-filter: blur(8px);
 }
 
+.saga-globe-viewer-panel {
+    position: absolute;
+    inset: 0;
+    z-index: 6;
+    display: grid;
+    place-items: center;
+    padding: 0.8rem;
+}
+
+.saga-globe-viewer-panel[hidden] {
+    display: none !important;
+}
+
+.saga-globe-viewer-panel-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(8, 12, 20, 0.72);
+    backdrop-filter: blur(2px);
+}
+
+.saga-globe-viewer-panel-dialog {
+    position: relative;
+    z-index: 1;
+    width: min(95%, 760px);
+    max-height: min(90%, 720px);
+    overflow: auto;
+    padding: 0.85rem 0.85rem 1rem;
+    border-radius: 14px;
+    border: 1px solid rgba(123, 163, 216, 0.28);
+    background: linear-gradient(180deg, rgba(10, 17, 29, 0.98), rgba(7, 13, 22, 0.98));
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.36);
+}
+
+.saga-globe-viewer-close {
+    position: absolute;
+    top: 0.55rem;
+    right: 0.55rem;
+    width: 34px;
+    height: 34px;
+    border: 1px solid rgba(232, 232, 232, 0.28);
+    border-radius: 9px;
+    background: rgba(224, 224, 224, 0.08);
+    color: #e8e8e8;
+    font-size: 1.2rem;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.saga-globe-viewer-title {
+    margin: 0 2.3rem 0.75rem 0;
+    color: #e8e8e8;
+    font-size: 1.12rem;
+}
+
+.saga-globe-viewer-media {
+    margin: 0;
+    position: relative;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(123, 163, 216, 0.18);
+    padding: 0.7rem;
+}
+
+.saga-globe-viewer-media img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 68vh;
+    object-fit: contain;
+    border-radius: 8px;
+    background: rgba(224, 224, 224, 0.06);
+}
+
+.saga-globe-viewer-fallback {
+    margin: 0;
+    color: var(--text-light);
+    line-height: 1.55;
+}
+
+.saga-globe-viewer-fullscreen {
+    position: absolute;
+    right: 1.05rem;
+    bottom: 1.05rem;
+    z-index: 2;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border: none;
+    border-radius: 12px;
+    background: rgba(232, 232, 232, 0.92) url('../images/icons/plein-ecran.png') center / 20px 20px no-repeat;
+    cursor: pointer;
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.28);
+    backdrop-filter: blur(8px);
+    transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+}
+
+.saga-globe-viewer-fullscreen:hover,
+.saga-globe-viewer-fullscreen:focus-visible {
+    transform: translateY(-1px);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.32);
+    filter: brightness(1.05);
+}
+
+.saga-globe-viewer-fullscreen:focus-visible {
+    outline: none;
+}
+
+.saga-globe-viewer-panel-dialog:fullscreen {
+    width: 100vw;
+    max-height: 100vh;
+    height: 100vh;
+    border-radius: 0;
+    padding: 1rem;
+}
+
+.saga-globe-viewer-panel-dialog:fullscreen .saga-globe-viewer-media img {
+    max-height: calc(100vh - 7.5rem);
+}
+
 .titrelegal {
     text-align: center;
     margin-bottom: 10px;

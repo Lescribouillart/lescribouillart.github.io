@@ -291,9 +291,130 @@
 		const fullscreenButtonNode = root.querySelector('[data-saga-globe-fullscreen]');
 		const loaderBarNode = root.querySelector('[data-saga-globe-loader-bar]');
 		const statusNode = root.querySelector('[data-saga-globe-status]');
+		const viewerPanelNode = root.querySelector('[data-saga-viewer-panel]') || document.querySelector('[data-saga-viewer-panel]');
+		const viewerDialogNode = root.querySelector('.saga-globe-viewer-panel-dialog') || document.querySelector('.saga-globe-viewer-panel-dialog');
+		const viewerTitleNode = root.querySelector('[data-saga-viewer-title]') || document.querySelector('[data-saga-viewer-title]');
+		const viewerImageNode = root.querySelector('[data-saga-viewer-image]') || document.querySelector('[data-saga-viewer-image]');
+		const viewerFallbackNode = root.querySelector('[data-saga-viewer-fallback]') || document.querySelector('[data-saga-viewer-fallback]');
+		const viewerFullscreenButtonNode = root.querySelector('[data-saga-viewer-fullscreen]') || document.querySelector('[data-saga-viewer-fullscreen]');
+		const viewerCloseNodes = root.querySelectorAll('[data-saga-viewer-close]').length
+			? root.querySelectorAll('[data-saga-viewer-close]')
+			: document.querySelectorAll('[data-saga-viewer-close]');
 		const updateStatus = createStatusUpdater(statusNode);
+		const franceView = {
+			title: 'Carte de la France',
+			imageSrc: '../images/Map/france/francefull.png',
+			alt: 'Carte de la France'
+		};
 		let progressAnimationFrameId = 0;
 		let currentLoadingProgress = 0;
+
+		function isViewerOpen() {
+			return Boolean(viewerPanelNode && !viewerPanelNode.hidden);
+		}
+
+		function updateViewerFullscreenButtonLabel() {
+			if (!viewerFullscreenButtonNode) {
+				return;
+			}
+
+			const label = document.fullscreenElement === viewerDialogNode ? 'Quitter plein ecran' : 'Plein ecran';
+			viewerFullscreenButtonNode.setAttribute('aria-label', label);
+			viewerFullscreenButtonNode.setAttribute('title', label);
+		}
+
+		function closeViewerPanel() {
+			if (!viewerPanelNode || viewerPanelNode.hidden) {
+				return;
+			}
+
+			if (document.fullscreenElement === viewerDialogNode) {
+				document.exitFullscreen().catch(() => {});
+			}
+
+			viewerPanelNode.hidden = true;
+
+			if (viewerFallbackNode) {
+				viewerFallbackNode.hidden = true;
+			}
+		}
+
+		function openViewerPanel(config) {
+			if (!viewerPanelNode) {
+				return;
+			}
+
+			viewerPanelNode.hidden = false;
+			if (viewerFullscreenButtonNode) {
+				viewerFullscreenButtonNode.hidden = !Boolean(document.fullscreenEnabled && viewerDialogNode);
+			}
+			updateViewerFullscreenButtonLabel();
+
+			if (viewerTitleNode) {
+				viewerTitleNode.textContent = config.title;
+			}
+
+			if (viewerImageNode) {
+				viewerImageNode.alt = config.alt;
+				viewerImageNode.hidden = false;
+
+				viewerImageNode.onload = () => {
+					viewerImageNode.hidden = false;
+					if (viewerFallbackNode) {
+						viewerFallbackNode.hidden = true;
+					}
+				};
+
+				viewerImageNode.onerror = () => {
+					viewerImageNode.hidden = true;
+					if (viewerFallbackNode) {
+						viewerFallbackNode.hidden = false;
+					}
+				};
+
+				viewerImageNode.src = config.imageSrc;
+			}
+		}
+
+		viewerCloseNodes.forEach((node) => {
+			node.addEventListener('click', closeViewerPanel);
+		});
+
+		if (viewerFullscreenButtonNode && viewerDialogNode && document.fullscreenEnabled) {
+			viewerFullscreenButtonNode.addEventListener('click', async () => {
+				try {
+					if (document.fullscreenElement === viewerDialogNode) {
+						await document.exitFullscreen();
+					} else {
+						await viewerDialogNode.requestFullscreen();
+					}
+					updateViewerFullscreenButtonLabel();
+				} catch (error) {
+					console.error(error);
+					updateStatus('Le mode plein ecran de la carte n\'est pas disponible.');
+				}
+			});
+
+			document.addEventListener('fullscreenchange', updateViewerFullscreenButtonLabel);
+		} else if (viewerFullscreenButtonNode) {
+			viewerFullscreenButtonNode.hidden = true;
+		}
+
+		document.addEventListener('keydown', (event) => {
+			if (event.key === 'Escape') {
+				closeViewerPanel();
+			}
+		});
+
+		if (viewerPanelNode) {
+			viewerPanelNode.hidden = true;
+		}
+
+		window.addEventListener('pageshow', () => {
+			if (viewerPanelNode) {
+				viewerPanelNode.hidden = true;
+			}
+		});
 
 		function setLoadingProgress(value) {
 			const nextProgress = Math.max(0, Math.min(100, value));
@@ -432,10 +553,13 @@
 			targetPitch: -0.22,
 			zoom: 1,
 			dragging: false,
-			markerDragging: false,
+			markerPressed: false,
+			pointerMoved: false,
 			markerLatitude: 30.62,
 			markerLongitude: 160.14,
 			pointerId: null,
+			startX: 0,
+			startY: 0,
 			lastX: 0,
 			lastY: 0
 		};
@@ -611,6 +735,10 @@
 		}
 
 		canvas.addEventListener('pointerdown', (event) => {
+			if (isViewerOpen()) {
+				return;
+			}
+
 			const markerProjection = getMarkerProjection(canvas.clientWidth, canvas.clientHeight);
 			const hitRadius = markerProjection ? Math.max(14, markerProjection.radius * 0.05) : 0;
 			const pointerX = event.clientX - canvas.getBoundingClientRect().left;
@@ -618,22 +746,32 @@
 			const markerHit = markerProjection && Math.hypot(pointerX - markerProjection.projectedMarker.x, pointerY - markerProjection.projectedMarker.y) <= hitRadius;
 
 			state.dragging = !markerHit;
-			state.markerDragging = Boolean(markerHit);
+			state.markerPressed = Boolean(markerHit);
+			state.pointerMoved = false;
 			state.pointerId = event.pointerId;
+			state.startX = event.clientX;
+			state.startY = event.clientY;
 			state.lastX = event.clientX;
 			state.lastY = event.clientY;
 			canvas.setPointerCapture(event.pointerId);
-
-			if (state.markerDragging) {
-				updateMarkerFromPointer(event);
-			}
 		});
 
 		canvas.addEventListener('pointermove', (event) => {
-			if (!state.dragging || state.pointerId !== event.pointerId) {
-				if (state.markerDragging && state.pointerId === event.pointerId) {
-					updateMarkerFromPointer(event);
+			if (state.pointerId !== event.pointerId) {
+				return;
+			}
+
+			if (state.markerPressed) {
+				const movedDistance = Math.hypot(event.clientX - state.startX, event.clientY - state.startY);
+
+				if (movedDistance > 6) {
+					state.pointerMoved = true;
 				}
+
+				return;
+			}
+
+			if (!state.dragging) {
 				return;
 			}
 
@@ -650,8 +788,13 @@
 				return;
 			}
 
+			if (event.type === 'pointerup' && state.markerPressed && !state.pointerMoved) {
+				openViewerPanel(franceView);
+			}
+
 			state.dragging = false;
-			state.markerDragging = false;
+			state.markerPressed = false;
+			state.pointerMoved = false;
 			canvas.releasePointerCapture(event.pointerId);
 			state.pointerId = null;
 		}
@@ -661,6 +804,10 @@
 		canvas.addEventListener('pointerleave', releasePointer);
 
 		canvas.addEventListener('wheel', (event) => {
+			if (isViewerOpen()) {
+				return;
+			}
+
 			event.preventDefault();
 			const direction = event.deltaY > 0 ? -0.08 : 0.08;
 			state.zoom = Math.max(0.72, Math.min(1.75, state.zoom + direction));
