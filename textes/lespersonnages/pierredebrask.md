@@ -8,7 +8,7 @@ Pierre Debrask est l'architecte du barrage le Serre-Étoile.
 ## Description
 <div class="character-description-columns character-description-columns-pierre">
 	<div class="character-description-column">
-		<p class="pierre-row-age"><a href="" class="highlight-blue character-label label-age">Age :</a> Pierre Debrask a vécu de 1918 à 1990. Les informations qui suivent <span class="pierre-nowrap-age">correspondent à l'époque</span> où il avait 45 ans.</p>
+		<p class="pierre-row-age"><a href="" class="highlight-blue character-label label-age">Age :</a> Pierre Debrask a vécu de 1918 à 1990. Les informations qui <span class="pierre-nowrap-age">suivent correspondent à l'époque</span> où il avait 45 ans.</p>
 		<p><a href="" class="highlight-blue character-label label-cheveux">Cheveux :</a> blonds.</p>
 		<p><a href="" class="highlight-blue character-label label-yeux">Yeux :</a> verts.</p>
 	</div>
