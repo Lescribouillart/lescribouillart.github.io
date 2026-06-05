@@ -3606,75 +3606,99 @@ a.highlight-blue {
     content: '';
     width: 14px;
     height: 14px;
-    background: url('./images/icons/iconesfiche/age.png') center / contain no-repeat;
+    padding: 2px;
+    box-sizing: content-box;
+    background: #e0e0e0 url('./images/icons/iconesfiche/age.png') center / 14px 14px no-repeat;
 }
 .article-body .character-label.label-cheveux::before {
     content: '';
     width: 14px;
     height: 14px;
-    background: url('./images/icons/iconesfiche/cheveux.png') center / contain no-repeat;
+    padding: 2px;
+    box-sizing: content-box;
+    background: #e0e0e0 url('./images/icons/iconesfiche/cheveux.png') center / 14px 14px no-repeat;
 }
 .article-body .character-label.label-yeux::before {
     content: '';
     width: 14px;
     height: 14px;
-    background: url('./images/icons/iconesfiche/yeux.png') center / contain no-repeat;
+    padding: 2px;
+    box-sizing: content-box;
+    background: #e0e0e0 url('./images/icons/iconesfiche/yeux.png') center / 14px 14px no-repeat;
 }
 .article-body .character-label.label-taille::before {
     content: '';
     width: 14px;
     height: 14px;
-    background: url('./images/icons/iconesfiche/taille.png') center / contain no-repeat;
+    padding: 2px;
+    box-sizing: content-box;
+    background: #e0e0e0 url('./images/icons/iconesfiche/taille.png') center / 14px 14px no-repeat;
 }
 .article-body .character-label.label-poids::before {
     content: '';
     width: 14px;
     height: 14px;
-    background: url('./images/icons/iconesfiche/poids.png') center / contain no-repeat;
+    padding: 2px;
+    box-sizing: content-box;
+    background: #e0e0e0 url('./images/icons/iconesfiche/poids.png') center / 14px 14px no-repeat;
 }
 .article-body .character-label.label-main::before {
     content: '';
     width: 14px;
     height: 14px;
-    background: url('./images/icons/iconesfiche/main.png') center / contain no-repeat;
+    padding: 2px;
+    box-sizing: content-box;
+    background: #e0e0e0 url('./images/icons/iconesfiche/main.png') center / 14px 14px no-repeat;
 }
 .article-body .character-label.label-allure::before {
     content: '';
     width: 14px;
     height: 14px;
-    background: url('./images/icons/iconesfiche/masque.png') center / contain no-repeat;
+    padding: 2px;
+    box-sizing: content-box;
+    background: #e0e0e0 url('./images/icons/iconesfiche/masque.png') center / 14px 14px no-repeat;
 }
 .article-body .character-label.label-demarche::before {
     content: '';
     width: 14px;
     height: 14px;
-    background: url('./images/icons/iconesfiche/demarche.png') center / contain no-repeat;
+    padding: 2px;
+    box-sizing: content-box;
+    background: #e0e0e0 url('./images/icons/iconesfiche/demarche.png') center / 14px 14px no-repeat;
 }
 .article-body .character-label.label-personnalite::before {
     content: '';
     width: 14px;
     height: 14px;
-    background: url('./images/icons/iconesfiche/personnalite.png') center / contain no-repeat;
+    padding: 2px;
+    box-sizing: content-box;
+    background: #e0e0e0 url('./images/icons/iconesfiche/personnalite.png') center / 14px 14px no-repeat;
 }
 
 .article-body .character-label.label-style::before {
     content: '';
     width: 14px;
     height: 14px;
-    background: url('./images/icons/iconesfiche/vetement.png') center / contain no-repeat;
+    padding: 2px;
+    box-sizing: content-box;
+    background: #e0e0e0 url('./images/icons/iconesfiche/vetement.png') center / 14px 14px no-repeat;
 }
 .article-body .character-label.label-qualite::before {
     content: '';
     width: 14px;
     height: 14px;
-    background: url('./images/icons/iconesfiche/qualite.png') center / contain no-repeat;
+    padding: 2px;
+    box-sizing: content-box;
+    background: #e0e0e0 url('./images/icons/iconesfiche/qualite.png') center / 14px 14px no-repeat;
 }
 
 .article-body .character-label.label-defauts::before {
     content: '';
     width: 14px;
     height: 14px;
-    background: url('./images/icons/iconesfiche/defaut.png') center / contain no-repeat;
+    padding: 2px;
+    box-sizing: content-box;
+    background: #e0e0e0 url('./images/icons/iconesfiche/defaut.png') center / 14px 14px no-repeat;
 }
 .article-body .character-label.label-premiere-approche::before { content: '◦'; }
 .article-body .character-label.label-comportement::before { content: '◎'; }
