@@ -3840,11 +3840,11 @@ a.highlight-blue {
 }
 
 .article-body .character-description-columns-pierre .pierre-row-demarche {
-    white-space: nowrap;
+    white-space: normal;
 }
 
 .article-body .character-description-columns-pierre .pierre-row-allure {
-    white-space: nowrap;
+    white-space: normal;
 }
 
 .article-body .article-placeholder {
