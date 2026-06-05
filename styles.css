@@ -3583,7 +3583,7 @@ a.highlight-blue {
 .article-body .character-label {
     position: relative;
     display: inline-block;
-    padding-left: 1.55rem;
+    padding-left: 1.7rem;
     line-height: 1.2;
     pointer-events: none;
     cursor: default;
@@ -3738,6 +3738,33 @@ a.highlight-blue {
     background: #e0e0e0 url('./images/icons/iconesfiche/jaimepas.png') center / 14px 14px no-repeat;
 }
 
+.article-body .character-label:is(
+    .label-age,
+    .label-cheveux,
+    .label-yeux,
+    .label-taille,
+    .label-poids,
+    .label-main,
+    .label-allure,
+    .label-demarche,
+    .label-personnalite,
+    .label-style,
+    .label-qualite,
+    .label-defauts,
+    .label-premiere-approche,
+    .label-comportement,
+    .label-aime,
+    .label-naime-pas
+)::before {
+    width: 16px;
+    height: 16px;
+    background-size: 16px 16px;
+    border: 1px solid rgba(47, 46, 58, 0.4);
+    border-radius: 3px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.22);
+    opacity: 1;
+}
+
 .article-body .character-notes-panel .character-notes-separator {
     display: block;
     width: min(760px, 100%);
@@ -3786,12 +3813,12 @@ a.highlight-blue {
 }
 
 .article-body .character-description-column .character-row-main-dominante .character-label {
-    padding-left: 1.4rem;
+    padding-left: 1.55rem;
 }
 
 .article-body .character-description-column .character-row-main-dominante .character-label::before {
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
     font-size: 0;
 }
 
