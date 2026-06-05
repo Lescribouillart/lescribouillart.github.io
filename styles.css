@@ -3650,10 +3650,32 @@ a.highlight-blue {
     height: 14px;
     background: url('./images/icons/iconesfiche/demarche.png') center / contain no-repeat;
 }
-.article-body .character-label.label-personnalite::before { content: '✎'; }
-.article-body .character-label.label-style::before { content: '⌁'; }
-.article-body .character-label.label-qualite::before { content: '★'; }
-.article-body .character-label.label-defauts::before { content: '△'; }
+.article-body .character-label.label-personnalite::before {
+    content: '';
+    width: 14px;
+    height: 14px;
+    background: url('./images/icons/iconesfiche/personnalite.png') center / contain no-repeat;
+}
+
+.article-body .character-label.label-style::before {
+    content: '';
+    width: 14px;
+    height: 14px;
+    background: url('./images/icons/iconesfiche/vetement.png') center / contain no-repeat;
+}
+.article-body .character-label.label-qualite::before {
+    content: '';
+    width: 14px;
+    height: 14px;
+    background: url('./images/icons/iconesfiche/qualite.png') center / contain no-repeat;
+}
+
+.article-body .character-label.label-defauts::before {
+    content: '';
+    width: 14px;
+    height: 14px;
+    background: url('./images/icons/iconesfiche/defaut.png') center / contain no-repeat;
+}
 .article-body .character-label.label-premiere-approche::before { content: '◦'; }
 .article-body .character-label.label-comportement::before { content: '◎'; }
 .article-body .character-label.label-aime::before { content: '♡'; }
