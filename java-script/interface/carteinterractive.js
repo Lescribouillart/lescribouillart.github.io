@@ -355,7 +355,8 @@
 				return;
 			}
 
-			const label = document.fullscreenElement === viewerDialogNode ? 'Quitter plein ecran' : 'Plein ecran';
+			const hasActiveFullscreen = Boolean(document.fullscreenElement);
+			const label = hasActiveFullscreen ? 'Quitter plein ecran' : 'Plein ecran';
 			viewerFullscreenButtonNode.setAttribute('aria-label', label);
 			viewerFullscreenButtonNode.setAttribute('title', label);
 		}
@@ -462,7 +463,7 @@
 		if (viewerFullscreenButtonNode && viewerDialogNode && document.fullscreenEnabled) {
 			viewerFullscreenButtonNode.addEventListener('click', async () => {
 				try {
-					if (document.fullscreenElement === viewerDialogNode) {
+					if (document.fullscreenElement) {
 						await document.exitFullscreen();
 					} else {
 						await viewerDialogNode.requestFullscreen();
