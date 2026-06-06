@@ -2178,9 +2178,9 @@ main {
 
 .saga-globe-viewer-fullscreen {
     position: absolute;
-    right: 0.6rem;
-    bottom: 0.6rem;
-    z-index: 2;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 8;
     width: 42px;
     height: 42px;
     padding: 0;
