@@ -2106,8 +2106,8 @@ main {
 
 .saga-globe-viewer-stage {
     position: relative;
-    width: min(88%, 760px);
-    max-height: 78%;
+    width: min(96%, 980px);
+    max-height: 86%;
 }
 
 .saga-globe-viewer-close {
@@ -2116,6 +2116,9 @@ main {
     right: 0.6rem;
     width: 30px;
     height: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     z-index: 8;
     border: 1px solid rgba(232, 232, 232, 0.2);
     border-radius: 8px;
@@ -2126,6 +2129,12 @@ main {
     cursor: pointer;
     backdrop-filter: blur(4px);
     transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease;
+}
+
+.saga-globe-viewer-close svg {
+    width: 16px;
+    height: 16px;
+    display: block;
 }
 
 .saga-globe-viewer-close:hover,
@@ -2143,7 +2152,7 @@ main {
     display: block;
     width: 100%;
     height: auto;
-    max-height: 78vh;
+    max-height: 86vh;
     object-fit: contain;
     border-radius: 8px;
     background: transparent;
