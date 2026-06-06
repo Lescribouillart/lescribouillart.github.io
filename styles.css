@@ -2186,10 +2186,10 @@ main {
     padding: 0;
     border: none;
     border-radius: 12px;
-    background: rgba(232, 232, 232, 0.92) url('../images/icons/plein-ecran.png') center / 20px 20px no-repeat;
+    background: rgba(232, 232, 232, 0.28) url('../images/icons/plein-ecran.png') center / 20px 20px no-repeat;
     cursor: pointer;
-    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.28);
-    backdrop-filter: blur(8px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
+    backdrop-filter: blur(2px);
     transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
 }
 
