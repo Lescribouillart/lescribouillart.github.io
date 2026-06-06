@@ -2112,8 +2112,10 @@ main {
 
 .saga-globe-viewer-close {
     position: absolute;
-    top: 0.6rem;
-    right: 0.6rem;
+    top: 50%;
+    left: 0.6rem;
+    right: auto;
+    transform: translateY(-50%);
     width: 30px;
     height: 30px;
     display: inline-flex;
@@ -2263,8 +2265,10 @@ main {
 
 .saga-globe-viewer-panel:fullscreen .saga-globe-viewer-close,
 .saga-globe-stage:fullscreen .saga-globe-viewer-panel .saga-globe-viewer-close {
-    top: 1rem;
-    right: 1rem;
+    top: 50%;
+    left: 1rem;
+    right: auto;
+    transform: translateY(-50%);
 }
 
 .saga-globe-viewer-panel:fullscreen .saga-globe-viewer-fullscreen,
