@@ -2097,7 +2097,7 @@ main {
     display: grid;
     place-items: center;
     padding: 0.8rem;
-    background: rgba(3, 10, 22, 0.42);
+    background: #020a18;
 }
 
 .saga-globe-viewer-panel[hidden] {
