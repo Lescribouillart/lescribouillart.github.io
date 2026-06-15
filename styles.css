@@ -455,7 +455,7 @@ body.has-scroll-header .header-drawer-toggle {
     left: 0;
     right: 0;
     bottom: 0;
-    height: calc(50% - 150px);
+    height: calc(50% - 50px);
     background: url('./images/textures/spray.jpg') center center / cover no-repeat;
     z-index: 0;
     pointer-events: none;
