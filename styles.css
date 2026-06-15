@@ -32,7 +32,7 @@
     display: block;
     pointer-events: none;
     user-select: none;
-    transform: scaleY(2); /* 1.5 = 150% de la hauteur d’origine */
+    transform: scaleY(2.6); /* augmenté encore de ~+5px visuels */
 }
 @media (max-width: 900px) {
     footer, .footer-nav {
