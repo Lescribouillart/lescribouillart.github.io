@@ -146,6 +146,7 @@ function displayError(message) {
     document.getElementById('character-content').innerHTML = `
         <div class="article-top-back">
             <a href="lespersonnages.html" class="back-link"><span class="back-icon" aria-hidden="true"></span><span class="sr-only">Retour</span></a>
+            <div class="article-top-band" aria-hidden="true"></div>
         </div>
         <p style="text-align: center; color: var(--text-light);">${message}</p>
     `;
@@ -163,6 +164,7 @@ function displayCharacter(character, characterContent) {
     container.innerHTML = `
         <div class="article-top-back">
             <a href="lespersonnages.html" class="back-link"><span class="back-icon" aria-hidden="true"></span><span class="sr-only">Retour</span></a>
+            <div class="article-top-band" aria-hidden="true"></div>
         </div>
         <div class="article-header">
             <h1 class="article-content-title">${character.title}</h1>
