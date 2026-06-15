@@ -166,6 +166,7 @@ function displayCharacter(character, characterContent) {
             <a href="lespersonnages.html" class="back-link"><span class="back-icon" aria-hidden="true"></span><span class="sr-only">Retour</span></a>
             <div class="article-top-band" aria-hidden="true"></div>
         </div>
+        <span class="article-category">${character.category || 'Reportage'}</span>
         <div class="article-header">
             <h1 class="article-content-title">${character.title}</h1>
             ${characterMeta ? `<p class="article-date">${characterMeta}</p>` : ''}
