@@ -456,7 +456,7 @@ body.has-scroll-header .header-drawer-toggle {
     right: 0;
     bottom: 0;
     height: calc(50% - 25px);
-    background: url('./images/textures/spray.jpg') center center / cover no-repeat;
+    background: url('./images/textures/spray_colored.png') center center / cover no-repeat;
     z-index: 0;
     pointer-events: none;
 }
