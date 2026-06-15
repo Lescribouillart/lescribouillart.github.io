@@ -4298,11 +4298,26 @@ a.highlight-blue {
     text-decoration: none !important;
 }
 
-.back-link img {
+.back-link .back-icon {
     width: 24px;
     height: 24px;
     display: inline-block;
     vertical-align: middle;
+    background-color: #e8e3d5;
+    -webkit-mask: url('images/icons/boutonretour.png') no-repeat center / contain;
+    mask: url('images/icons/boutonretour.png') no-repeat center / contain;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
 
 .back-link-mentions {
