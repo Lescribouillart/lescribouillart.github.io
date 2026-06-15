@@ -3621,6 +3621,14 @@ a.highlight-blue {
     align-self: flex-start;
 }
 
+/* Décalage spécifique du badge pour les fiches personnages */
+#character-content .article-category {
+    display: block; /* centrer en bloc */
+    width: max-content;
+    margin: 50px auto 0; /* 50px top, centré horizontalement */
+    text-align: center;
+}
+
 .article-title {
     font-size: 1.4rem;
     color: var(--primary-color);
