@@ -20,7 +20,7 @@
     justify-content: center;
     align-items: flex-start;
     position: absolute;
-    top: -11px; /* Remontée de 5px supplémentaires */
+    top: -35px; /* Remontée de 5px supplémentaires */
     left: 0;
     z-index: 1200;
     pointer-events: none;
