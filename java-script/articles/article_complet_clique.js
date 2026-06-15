@@ -184,7 +184,7 @@ function displayArticle(article, articleContent) {
     
     // Afficher le contenu de l'article
     const container = document.getElementById('article-content');
-    const backHTML = (article.id === 1) ? `<div class="article-top-back">\n            <a href="listage-articles.html" class="back-link"><span class="back-icon" aria-hidden="true"></span><span class="sr-only">Retour</span></a>\n        </div>` : '';
+    const backHTML = (article.id === 1 || article.category === 'À paraître') ? `<div class="article-top-back">\n            <a href="listage-articles.html" class="back-link"><span class="back-icon" aria-hidden="true"></span><span class="sr-only">Retour</span></a>\n        </div>` : '';
     const heroImage = article.heroImage || article.image;
     const heroImageCaption = article.heroImageCaption || article.imageCaption;
     const imageHTML = heroImage
