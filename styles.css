@@ -522,6 +522,12 @@ body.home-drawer-open .home-side-panel-inner {
     color: var(--text-color);
 }
 
+/* Déplace le titre et les sous-titres du volet Le feuillet vers le haut */
+.home-side-panel-title,
+.home-side-panel-text {
+    transform: translateY(-20px);
+}
+
 .home-side-panel-link {
     display: inline-flex;
     align-items: center;
