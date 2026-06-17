@@ -482,6 +482,37 @@ body.home-drawer-open .home-side-panel-inner {
     transform: translateX(0);
 }
 
+/* When drawer is open, ensure header sits above backdrop so the hamburger
+   stays visible in its normal place; only remove visual blurring on the
+   toggle without forcing left/top coordinates (prevents it from jumping). */
+body.home-drawer-open .header {
+    z-index: 1210; /* above backdrop (1090) and panel (1100) */
+}
+
+body.home-drawer-open .header-drawer-toggle {
+    /* keep layout/positioning defined by existing media queries
+       but ensure the button does not become visually blurred */
+    filter: none !important;
+    backdrop-filter: none !important;
+    opacity: 1 !important;
+    z-index: 1215 !important; /* slightly above header to ensure clickability */
+}
+
+/* Also ensure focus/active states don't reintroduce blur */
+body.home-drawer-open .header-drawer-toggle:active,
+body.home-drawer-open .header-drawer-toggle:focus {
+    filter: none !important;
+    backdrop-filter: none !important;
+    opacity: 1 !important;
+}
+
+/* Ensure the fixed search field stays visible above header/panel when drawer is open */
+body.home-drawer-open .intro-site-content .intro-search-container {
+    z-index: 1220 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
 .home-side-panel-header {
     display: flex;
     align-items: center;
