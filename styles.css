@@ -24,7 +24,7 @@
 .home-side-panel-text.blink-first {
     /* Only change visual fill/halo — do not alter padding or border-radius
        to avoid layout shifts when the menu opens. */
-    animation: blink-first 2.4s ease-in-out infinite;
+    animation: blink-first 1s ease-in-out infinite;
     background-color: transparent; /* controlled by keyframes */
     color: inherit;
     /* Ensure text remains readable when background becomes lighter */
@@ -74,7 +74,7 @@
 .home-side-panel-text.selected-bg::before {
     background: rgba(123,163,216,0.18);
     box-shadow: 0 6px 18px rgba(18,33,52,0.12) inset;
-    animation: blink-first 3s ease-in-out infinite;
+    animation: blink-first 1.5s ease-in-out infinite;
 }
 /* Racine suspendue pour le volet Le feuillet */
 .side-panel-rootline {
