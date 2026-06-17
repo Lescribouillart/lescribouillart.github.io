@@ -612,6 +612,20 @@ body.home-drawer-open .intro-site-content .intro-search-container {
     text-decoration: none;
 }
 
+/* Enlever tout liseré / bord blanc au survol pour les items du volet */
+.home-side-panel-text,
+.home-side-panel-text:hover,
+.home-side-panel-text:focus,
+.home-side-panel-text:active,
+.home-side-panel-text::before,
+.home-side-panel-text:hover::before,
+.home-side-panel-text:focus::before,
+.home-side-panel-text:active::before {
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
     .home-side-panel-text.active,
     .home-side-panel-text:focus,
