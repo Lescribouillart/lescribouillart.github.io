@@ -30,6 +30,28 @@
     /* Ensure text remains readable when background becomes lighter */
     transition: color 140ms ease, box-shadow 140ms ease, background-color 140ms ease;
 }
+
+/* Supprimer définitivement tout liseré/blanc autour du bouton clignotant
+   dans tous les états (normal, hover, active, focus) */
+.home-side-panel-text.blink-first::before,
+.home-side-panel-text.blink-pulse::before,
+.home-side-panel-text.selected-bg::before,
+.home-side-panel-text.blink-first,
+.home-side-panel-text.blink-first:hover,
+.home-side-panel-text.blink-first:active,
+.home-side-panel-text.blink-first:focus,
+.home-side-panel-text.blink-pulse,
+.home-side-panel-text.blink-pulse:hover,
+.home-side-panel-text.blink-pulse:active,
+.home-side-panel-text.blink-pulse:focus,
+.home-side-panel-text.selected-bg,
+.home-side-panel-text.selected-bg:hover,
+.home-side-panel-text.selected-bg:active,
+.home-side-panel-text.selected-bg:focus {
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
 /* Variante moins agressive : halo sans layout shift */
 .home-side-panel-text.blink-pulse {
     animation: blink-first 3s ease-in-out infinite;
