@@ -15,22 +15,24 @@
 }
 /* Animation clignotante pour la première mise en valeur de "La chronologie" */
 @keyframes blink-first {
-    0% { background-color: transparent; }
-    40% { background-color: #7ba3d8; }
-    80% { background-color: transparent; }
-    100% { background-color: transparent; }
+    0% { background-color: transparent; color: inherit; box-shadow: none; }
+    30% { background-color: rgba(123,163,216,0.16); color: inherit; box-shadow: 0 6px 18px rgba(18,33,52,0.06) inset; }
+    50% { background-color: rgba(123,163,216,0.28); color: #1f2230; box-shadow: 0 6px 22px rgba(18,33,52,0.12) inset; }
+    80% { background-color: rgba(123,163,216,0.12); color: inherit; box-shadow: 0 4px 12px rgba(18,33,52,0.06) inset; }
+    100% { background-color: transparent; color: inherit; box-shadow: none; }
 }
 .home-side-panel-text.blink-first {
     /* Only change visual fill/halo — do not alter padding or border-radius
        to avoid layout shifts when the menu opens. */
-    animation: blink-first 1.2s ease-in-out infinite;
+    animation: blink-first 2.4s ease-in-out infinite;
     background-color: transparent; /* controlled by keyframes */
     color: inherit;
-    box-shadow: 0 0 0 rgba(0,0,0,0) inset;
+    /* Ensure text remains readable when background becomes lighter */
+    transition: color 140ms ease, box-shadow 140ms ease, background-color 140ms ease;
 }
 /* Variante moins agressive : halo sans layout shift */
 .home-side-panel-text.blink-pulse {
-    animation: blink-first 1.6s ease-in-out infinite;
+    animation: blink-first 3s ease-in-out infinite;
     box-shadow: 0 0 18px rgba(123,163,216,0.28) inset;
 }
 /* Selector indicator: an independent highlight that moves between categories */
@@ -48,9 +50,9 @@
     transition: background 180ms ease, box-shadow 180ms ease;
 }
 .home-side-panel-text.selected-bg::before {
-    background: #7ba3d8;
+    background: rgba(123,163,216,0.18);
     box-shadow: 0 6px 18px rgba(18,33,52,0.12) inset;
-    animation: blink-first 1.6s ease-in-out infinite;
+    animation: blink-first 3s ease-in-out infinite;
 }
 /* Racine suspendue pour le volet Le feuillet */
 .side-panel-rootline {
