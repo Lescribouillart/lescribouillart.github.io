@@ -484,7 +484,8 @@ body.has-scroll-header .header-drawer-toggle {
     align-items: center;
     padding: 1.5rem;
     border-right: 1px solid rgba(232, 227, 213, 0.14);
-    background: var(--bg-color);
+    /* Deuxième fond : dégradé du gris plus clair (#3a3944) vers la couleur de base */
+    background: linear-gradient(180deg, var(--bg-light) 0%, var(--bg-color) 100%);
     box-shadow: 18px 0 32px rgba(0, 0, 0, 0.28);
     color: var(--text-color);
     transform: translateX(-110%);
