@@ -33,6 +33,25 @@
     animation: blink-first 1.6s ease-in-out infinite;
     box-shadow: 0 0 18px rgba(123,163,216,0.28) inset;
 }
+/* Selector indicator: an independent highlight that moves between categories */
+.home-side-panel-text { z-index: 1; position: relative; }
+
+/* Integrated background button for each category (selected) */
+.home-side-panel-text::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 8px;
+    background: transparent;
+    z-index: 0;
+    pointer-events: none;
+    transition: background 180ms ease, box-shadow 180ms ease;
+}
+.home-side-panel-text.selected-bg::before {
+    background: #7ba3d8;
+    box-shadow: 0 6px 18px rgba(18,33,52,0.12) inset;
+    animation: blink-first 1.6s ease-in-out infinite;
+}
 /* Racine suspendue pour le volet Le feuillet */
 .side-panel-rootline {
     width: 100%;

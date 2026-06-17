@@ -1,95 +1,84 @@
-// Navigation clavier pour le volet "Le feuillet"
-// Flèches gauche/droite ou haut/bas naviguent entre les liens du panneau
+// Navigation clavier + indicateur mobile pour le volet "Le feuillet"
+// Le sélecteur est un élément indépendant (.feuillet-selector) qui se déplace
+// et clignote pour indiquer l'élément sélectionné.
 document.addEventListener('DOMContentLoaded', () => {
     const panel = document.getElementById('home-side-panel');
     if (!panel) return;
 
-    const links = Array.from(panel.querySelectorAll('a.home-side-panel-text'));
+    const inner = panel.querySelector('.home-side-panel-inner') || panel;
+    const links = Array.from(inner.querySelectorAll('a.home-side-panel-text'));
     if (!links.length) return;
 
-    function currentIndex() {
-        const currentFile = window.location.pathname.split('/').pop();
-        const idx = links.findIndex(a => {
-            const hrefFile = a.getAttribute('href').split('/').pop();
-            return hrefFile === currentFile;
-        });
-        return idx >= 0 ? idx : 0;
+    // state
+    let selectedIndex = 0;
+
+    function normalize(i) {
+        return ((i % links.length) + links.length) % links.length;
     }
 
-    let idx = currentIndex();
+    function updateSelection(i, { focus = false } = {}) {
+        selectedIndex = normalize(i);
+        // mark selected link with integrated background
+        links.forEach((el, idx) => {
+            el.classList.toggle('selected-bg', idx === selectedIndex);
+        });
+
+        // accessibility attributes
+        links.forEach((el, idx) => {
+            el.setAttribute('aria-selected', idx === selectedIndex ? 'true' : 'false');
+            el.tabIndex = idx === selectedIndex ? 0 : -1;
+        });
+
+        if (focus && typeof links[selectedIndex].focus === 'function') links[selectedIndex].focus();
+    }
 
     function navigateTo(i) {
-        const next = (i + links.length) % links.length;
-        // Briefly show visual feedback before navigating to help debugging
-        setActive(next);
-        setTimeout(() => {
-            window.location.href = links[next].href;
-        }, 250);
-    }
-
-    function clearActive() {
-        links.forEach(l => l.classList.remove('active'));
-    }
-
-    function setActive(i) {
-        clearActive();
-        const link = links[(i + links.length) % links.length];
-        if (link) {
-            link.classList.add('active');
-            // remove after animation ends (in case navigation not happening)
-            setTimeout(() => link.classList.remove('active'), 1200);
+        const next = normalize(i);
+        if (links[next] && links[next].href) {
+            links[next].classList.add('active');
+            setTimeout(() => window.location.href = links[next].href, 200);
         }
     }
 
+    // keyboard navigation while panel is visible
     document.addEventListener('keydown', (ev) => {
-        // Only navigate when the side panel is visible/open
         if (panel.hidden || panel.getAttribute('aria-hidden') === 'true') return;
-
-        // Ignore when typing in inputs, textareas or contentEditable
         const active = document.activeElement;
         const tag = active && active.tagName ? active.tagName : '';
         if (tag === 'INPUT' || tag === 'TEXTAREA' || (active && active.isContentEditable)) return;
 
-        if (ev.key === 'ArrowLeft' || ev.key === 'ArrowUp') {
+        if (ev.key === 'ArrowUp' || ev.key === 'ArrowLeft') {
             ev.preventDefault();
-            idx = (idx - 1 + links.length) % links.length;
-            setActive(idx);
-            // move focus to the link so Enter will activate it
-            const link = links[idx];
-            if (link && typeof link.focus === 'function') link.focus();
-        } else if (ev.key === 'ArrowRight' || ev.key === 'ArrowDown') {
+            selectedIndex = normalize(selectedIndex - 1);
+            updateSelection(selectedIndex, { focus: true });
+        } else if (ev.key === 'ArrowDown' || ev.key === 'ArrowRight') {
             ev.preventDefault();
-            idx = (idx + 1) % links.length;
-            setActive(idx);
-            const link = links[idx];
-            if (link && typeof link.focus === 'function') link.focus();
+            selectedIndex = normalize(selectedIndex + 1);
+            updateSelection(selectedIndex, { focus: true });
         } else if (ev.key === 'Enter' || ev.key === ' ') {
-            // Activate current selection only on Enter or Space
             if (typeof ev.preventDefault === 'function') ev.preventDefault();
-            navigateTo(idx);
+            navigateTo(selectedIndex);
         }
     });
 
-    // Mouse/focus interactions: add active class for feedback (no navigation delay)
-    links.forEach((a, i) => {
-        a.addEventListener('focus', () => setActive(i));
-        a.addEventListener('mouseenter', () => a.classList.add('active'));
-        a.addEventListener('mouseleave', () => a.classList.remove('active'));
-        a.addEventListener('click', () => {
-            // ensure visible feedback on click (navigation will follow)
-            a.classList.add('active');
-        });
+    // mouse & focus interactions
+    links.forEach((el, idx) => {
+        el.addEventListener('click', () => updateSelection(idx));
+        el.addEventListener('focus', () => updateSelection(idx));
+        el.addEventListener('mouseenter', () => updateSelection(idx));
     });
 
-    // Observe visibility changes on the panel: when opened, flash/animate the "La chronologie" link
+    // Observe panel open/close to initialize or clear selector
     const mo = new MutationObserver(() => {
-        const chronol = panel.querySelector('a.home-side-panel-text[href$="feuillet.html"], a.home-side-panel-text[href$="/feuillet.html"]');
         if (!panel.hidden && panel.getAttribute('aria-hidden') === 'false') {
-            // Start indefinite blinking for "La chronologie" while panel is open
-            if (chronol) chronol.classList.add('blink-first');
+            // On open: select La chronologie by default if present
+            const chronol = inner.querySelector('a.home-side-panel-text[href$="feuillet.html"], a.home-side-panel-text[href$="/feuillet.html"]');
+            const found = chronol ? links.indexOf(chronol) : -1;
+            selectedIndex = found >= 0 ? found : 0;
+            updateSelection(selectedIndex);
         } else {
-            // When panel is hidden/closed, remove the blinking class
-            if (chronol) chronol.classList.remove('blink-first');
+            // On close: remove selection background from all
+            links.forEach(l => l.classList.remove('selected-bg'));
         }
     });
     mo.observe(panel, { attributes: true, attributeFilter: ['hidden', 'aria-hidden'] });
