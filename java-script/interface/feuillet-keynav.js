@@ -81,11 +81,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Observe visibility changes on the panel: when opened, flash current link
+    // Observe visibility changes on the panel: when opened, flash/animate the "La chronologie" link
     const mo = new MutationObserver(() => {
+        const chronol = panel.querySelector('a.home-side-panel-text[href$="feuillet.html"], a.home-side-panel-text[href$="/feuillet.html"]');
         if (!panel.hidden && panel.getAttribute('aria-hidden') === 'false') {
-            idx = currentIndex();
-            setActive(idx);
+            // Start indefinite blinking for "La chronologie" while panel is open
+            if (chronol) chronol.classList.add('blink-first');
+        } else {
+            // When panel is hidden/closed, remove the blinking class
+            if (chronol) chronol.classList.remove('blink-first');
         }
     });
     mo.observe(panel, { attributes: true, attributeFilter: ['hidden', 'aria-hidden'] });

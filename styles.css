@@ -13,6 +13,25 @@
     margin-left: 0;
     margin-right: 0;
 }
+/* Animation clignotante pour la première mise en valeur de "La chronologie" */
+@keyframes blink-first {
+    0% { background-color: transparent; }
+    40% { background-color: #7ba3d8; }
+    80% { background-color: transparent; }
+    100% { background-color: transparent; }
+}
+.home-side-panel-text.blink-first {
+    animation: blink-first 1.2s ease-in-out infinite;
+    background-color: #7ba3d8; /* fallback */
+    color: #102134; /* contraste pour texte */
+    border-radius: 4px;
+    padding: 0.12rem 0.36rem;
+}
+/* Variante moins agressive : pulsation + halo */
+.home-side-panel-text.blink-pulse {
+    animation: blink-first 1.6s ease-in-out infinite;
+    box-shadow: 0 0 18px rgba(123,163,216,0.45);
+}
 /* Racine suspendue pour le volet Le feuillet */
 .side-panel-rootline {
     width: 100%;
