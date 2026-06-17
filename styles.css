@@ -484,12 +484,26 @@ body.has-scroll-header .header-drawer-toggle {
     align-items: center;
     padding: 1.5rem;
     border-right: 1px solid rgba(232, 227, 213, 0.14);
-    /* Deuxième fond : dégradé du gris plus clair (#3a3944) vers la couleur de base */
-    background: linear-gradient(180deg, var(--bg-light) 0%, var(--bg-color) 100%);
+    /* Fond extérieur : couleur claire (contour) */
+    background: var(--bg-light);
     box-shadow: 18px 0 32px rgba(0, 0, 0, 0.28);
     color: var(--text-color);
     transform: translateX(-110%);
     transition: transform 0.28s ease;
+}
+
+.home-side-panel-inner::before {
+    content: "";
+    position: absolute;
+    inset: 12px 12px 12px 12px;
+    border-radius: 8px;
+    /* Intérieur sombre (#2f2e3a) */
+    background: var(--bg-color);
+    /* utiliser la teinte claire comme trait de contour intérieur */
+    border: 2px solid var(--bg-light);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    z-index: 0;
+    pointer-events: none;
 }
 
 .home-side-panel-inner > * {
