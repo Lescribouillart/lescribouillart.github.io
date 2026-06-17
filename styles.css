@@ -457,7 +457,7 @@ body.has-scroll-header .header-drawer-toggle {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    align-items: flex-start;
+    align-items: center;
     padding: 1.5rem;
     border-right: 1px solid rgba(232, 227, 213, 0.14);
     background: var(--bg-color);
@@ -543,8 +543,8 @@ body.home-drawer-open .home-side-panel-inner {
 }
 
 .home-side-panel-text {
-    display: block;
-    padding: 0.6rem 0.8rem;
+    display: inline-block;
+    padding: 0.6rem 0.9rem;
     border-radius: 8px;
 }
 
