@@ -296,6 +296,7 @@
 		const viewerTitleNode = root.querySelector('[data-saga-viewer-title]') || document.querySelector('[data-saga-viewer-title]');
 		const viewerImageNode = root.querySelector('[data-saga-viewer-image]') || document.querySelector('[data-saga-viewer-image]');
 		const viewerFallbackNode = root.querySelector('[data-saga-viewer-fallback]') || document.querySelector('[data-saga-viewer-fallback]');
+		const viewerDotNode = root.querySelector('.saga-globe-viewer-dot') || document.querySelector('.saga-globe-viewer-dot');
 		const viewerLoadingNode = root.querySelector('[data-saga-viewer-loading]') || document.querySelector('[data-saga-viewer-loading]');
 		const viewerLoadingBarNode = root.querySelector('[data-saga-viewer-loading-bar]') || document.querySelector('[data-saga-viewer-loading-bar]');
 		const viewerFullscreenButtonNode = root.querySelector('[data-saga-viewer-fullscreen]') || document.querySelector('[data-saga-viewer-fullscreen]');
@@ -387,6 +388,14 @@
 			if (viewerImageNode) {
 				viewerImageNode.hidden = true;
 			}
+
+			if (viewerDotNode) {
+				viewerDotNode.style.display = 'none';
+				if (viewerDotNode._positionHandler) {
+					window.removeEventListener('resize', viewerDotNode._positionHandler);
+					viewerDotNode._positionHandler = null;
+				}
+			}
 		}
 
 		async function openViewerPanel(config) {
@@ -449,6 +458,26 @@
 					viewerImageNode.hidden = false;
 					if (viewerFallbackNode) {
 						viewerFallbackNode.hidden = true;
+					}
+
+					// positionner le point rouge sur l'image pour correspondre au marqueur du globe
+					if (viewerDotNode) {
+						const positionDot = () => {
+							const markerProjection = getMarkerProjection(canvas.clientWidth, canvas.clientHeight);
+							if (!markerProjection || !markerProjection.projectedMarker) {
+								viewerDotNode.style.display = 'none';
+								return;
+							}
+							viewerDotNode.style.display = 'block';
+							const relX = (markerProjection.projectedMarker.x - markerProjection.centerX) / markerProjection.radius;
+							const relY = (markerProjection.projectedMarker.y - markerProjection.centerY) / markerProjection.radius;
+							viewerDotNode.style.left = `${50 + (relX * 50)}%`;
+							viewerDotNode.style.top = `${50 + (relY * 50)}%`;
+						};
+
+						positionDot();
+						viewerDotNode._positionHandler = positionDot;
+						window.addEventListener('resize', viewerDotNode._positionHandler);
 					}
 				} else if (viewerFallbackNode) {
 					viewerFallbackNode.hidden = false;
