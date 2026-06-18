@@ -424,11 +424,19 @@
 			}
 
 			if (viewerLoadingNode) {
-				viewerLoadingNode.hidden = false;
+				// Ne pas afficher la barre de chargement pour la carte de la France
+				if (config.imageSrc && config.imageSrc.indexOf('francefull.png') !== -1) {
+					viewerLoadingNode.hidden = true;
+					setViewerLoadingProgress(100);
+				} else {
+					viewerLoadingNode.hidden = false;
+				}
 			}
 
 			setViewerLoadingProgress(0);
-			const loadingStagePromise = animateViewerLoadingProgress(0, 65, 650);
+			const loadingStagePromise = (viewerLoadingNode && !viewerLoadingNode.hidden)
+				? animateViewerLoadingProgress(0, 65, 650)
+				: Promise.resolve();
 
 			if (viewerImageNode) {
 				viewerImageNode.alt = config.alt;
