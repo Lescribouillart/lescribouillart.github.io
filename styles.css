@@ -2320,28 +2320,7 @@ main {
 }
 
 /* Marqueur rouge sur l'image France */
-.saga-globe-viewer-dot {
-    position: absolute;
-    left: calc(50% + 100px);
-    top: calc(50% + 50px);
-    transform: translate(-50%, -50%);
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background: #ef2e3a;
-    z-index: 9999;
-    pointer-events: none;
-}
-
-.saga-globe-viewer-dot::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    box-shadow: 0 0 0 6px rgba(239, 46, 58, 0.14), 0 0 10px rgba(239,46,58,0.8);
-    border: 2px solid rgba(255,255,255,0.9);
-    animation: saga-dot-pulse 1100ms ease-in-out infinite;
-}
+/* point rouge supprimé */
 
 .saga-globe-viewer-fallback {
     position: absolute;
