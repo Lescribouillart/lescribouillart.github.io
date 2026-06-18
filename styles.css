@@ -2322,8 +2322,8 @@ main {
 /* Marqueur rouge sur l'image France */
 .saga-globe-viewer-dot {
     position: absolute;
-    left: 50%;
-    top: 50%;
+    left: calc(50% + 100px);
+    top: calc(50% + 50px);
     transform: translate(-50%, -50%);
     width: 14px;
     height: 14px;

@@ -479,8 +479,8 @@
 							viewerDotNode.style.display = 'block';
 							const relX = (markerProjection.projectedMarker.x - markerProjection.centerX) / markerProjection.radius;
 							const relY = (markerProjection.projectedMarker.y - markerProjection.centerY) / markerProjection.radius;
-							viewerDotNode.style.left = `${50 + (relX * 50)}%`;
-							viewerDotNode.style.top = `${50 + (relY * 50)}%`;
+							viewerDotNode.style.left = `calc(${50 + (relX * 50)}% + 100px)`;
+							viewerDotNode.style.top = `calc(${50 + (relY * 50)}% + 50px)`;
 						};
 
 						positionDot();
