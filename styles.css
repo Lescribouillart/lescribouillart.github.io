@@ -2319,6 +2319,23 @@ main {
     width: 100%;
 }
 
+/* Point rouge superposé sur l'image : cursor et interaction */
+.saga-globe-viewer-dot {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #ef2e3a;
+    border: 2px solid #fff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.35);
+    transform: translate(-50%, -50%);
+    display: none; /* affiché par le JS */
+    z-index: 9;
+    /* allow selection (clickable) but not draggable */
+    pointer-events: auto;
+    cursor: pointer;
+}
+
 /* Marqueur rouge sur l'image France */
 /* point rouge supprimé */
 

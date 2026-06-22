@@ -470,22 +470,102 @@
 
 					// positionner le point rouge sur l'image pour correspondre au marqueur du globe
 					if (viewerDotNode) {
+						const findRedPixelInImage = (img) => {
+							try {
+								const w = img.naturalWidth;
+								const h = img.naturalHeight;
+								if (!w || !h) return null;
+								const c = document.createElement('canvas');
+								c.width = w;
+								c.height = h;
+								const cx = c.getContext('2d');
+								cx.drawImage(img, 0, 0, w, h);
+								const data = cx.getImageData(0, 0, w, h).data;
+								let count = 0;
+								let sumX = 0;
+								let sumY = 0;
+								for (let y = 0; y < h; y++) {
+									for (let x = 0; x < w; x++) {
+										const i = (y * w + x) * 4;
+										const r = data[i];
+										const g = data[i + 1];
+										const b = data[i + 2];
+										const a = data[i + 3];
+										// red-ish pixel threshold (tuned)
+										if (a > 64 && r > 200 && g < 120 && b < 120) {
+											sumX += x;
+											sumY += y;
+											count += 1;
+										}
+									}
+								}
+								if (count === 0) return null;
+								return { x: sumX / count, y: sumY / count };
+							} catch (e) {
+								return null;
+							}
+						};
+
 						const positionDot = () => {
-							const markerProjection = getMarkerProjection(canvas.clientWidth, canvas.clientHeight);
-							if (!markerProjection || !markerProjection.projectedMarker) {
+							// Ensure image is present and has natural size
+							if (!viewerImageNode || !viewerImageNode.naturalWidth || !viewerImageNode.naturalHeight) {
 								viewerDotNode.style.display = 'none';
 								return;
 							}
+
+							// Try to find a red pixel drawn on the image itself (user-drawn marker)
+							if (!viewerDotNode._detectedSrcXY) {
+								const found = findRedPixelInImage(viewerImageNode);
+								if (found) {
+									viewerDotNode._detectedSrcXY = found; // {x,y} in image pixels
+								}
+							}
+
+							const imgW = viewerImageNode.naturalWidth;
+							const imgH = viewerImageNode.naturalHeight;
+							let srcX, srcY;
+
+							if (viewerDotNode._detectedSrcXY) {
+								srcX = viewerDotNode._detectedSrcXY.x;
+								srcY = viewerDotNode._detectedSrcXY.y;
+							} else {
+								// fallback to using marker lat/lon mapping
+								const lat = state.markerLatitude;
+								const lon = state.markerLongitude;
+								const u = (1 - (((lon / (Math.PI * 2)) + 1) % 1)) % 1;
+								const v = (0.5 - (lat / Math.PI));
+								srcX = u * imgW;
+								srcY = v * imgH;
+							}
+
+							// displayed (rendered) rect inside the image element (object-fit: contain)
+							const rect = viewerImageNode.getBoundingClientRect();
+							const scale = Math.min(rect.width / imgW, rect.height / imgH);
+							const dispW = imgW * scale;
+							const dispH = imgH * scale;
+							const offsetX = (rect.width - dispW) * 0.5;
+							const offsetY = (rect.height - dispH) * 0.5;
+
+							const dispX = offsetX + (srcX * scale);
+							const dispY = offsetY + (srcY * scale);
+
+							const leftPercent = (dispX / rect.width) * 100;
+							const topPercent = (dispY / rect.height) * 100;
+
 							viewerDotNode.style.display = 'block';
-							const relX = (markerProjection.projectedMarker.x - markerProjection.centerX) / markerProjection.radius;
-							const relY = (markerProjection.projectedMarker.y - markerProjection.centerY) / markerProjection.radius;
-							viewerDotNode.style.left = `calc(${50 + (relX * 50)}% + 100px)`;
-							viewerDotNode.style.top = `calc(${50 + (relY * 50)}% + 50px)`;
+							viewerDotNode.style.left = `${leftPercent}%`;
+							viewerDotNode.style.top = `${topPercent}%`;
+
+							// enable pointer events to allow selection
+							viewerDotNode.style.pointerEvents = 'auto';
+							viewerDotNode.style.cursor = 'pointer';
 						};
 
 						positionDot();
 						viewerDotNode._positionHandler = positionDot;
 						window.addEventListener('resize', viewerDotNode._positionHandler);
+
+						// image click-to-place handler removed to keep marker fixed
 					}
 				} else if (viewerFallbackNode) {
 					viewerFallbackNode.hidden = false;
