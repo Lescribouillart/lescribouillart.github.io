@@ -470,20 +470,20 @@
 
 					// positionner le point rouge sur l'image pour correspondre au marqueur du globe
 					if (viewerDotNode) {
-						const findRedPixelInImage = (img) => {
+						const findRedClustersInImage = (img) => {
 							try {
 								const w = img.naturalWidth;
 								const h = img.naturalHeight;
-								if (!w || !h) return null;
+								if (!w || !h) return [];
 								const c = document.createElement('canvas');
 								c.width = w;
 								c.height = h;
 								const cx = c.getContext('2d');
 								cx.drawImage(img, 0, 0, w, h);
 								const data = cx.getImageData(0, 0, w, h).data;
-								let count = 0;
-								let sumX = 0;
-								let sumY = 0;
+								const clusters = [];
+								const threshold = 8; // pixels for clustering
+
 								for (let y = 0; y < h; y++) {
 									for (let x = 0; x < w; x++) {
 										const i = (y * w + x) * 4;
@@ -491,18 +491,34 @@
 										const g = data[i + 1];
 										const b = data[i + 2];
 										const a = data[i + 3];
-										// red-ish pixel threshold (tuned)
-										if (a > 64 && r > 200 && g < 120 && b < 120) {
-											sumX += x;
-											sumY += y;
-											count += 1;
+										// red-ish pixel threshold
+										if (a > 64 && r > 190 && g < 140 && b < 140) {
+											// try to add to an existing cluster
+											let added = false;
+											for (let ci = 0; ci < clusters.length; ci++) {
+												const cl = clusters[ci];
+												const dx = (cl.sumX / cl.count) - x;
+												const dy = (cl.sumY / cl.count) - y;
+												if ((dx * dx + dy * dy) <= (threshold * threshold)) {
+													cl.sumX += x;
+													cl.sumY += y;
+													cl.count += 1;
+													added = true;
+													break;
+												}
+											}
+											if (!added) {
+												clusters.push({ sumX: x, sumY: y, count: 1 });
+											}
 										}
 									}
 								}
-								if (count === 0) return null;
-								return { x: sumX / count, y: sumY / count };
+
+								// compute centers
+								const centers = clusters.map(cl => ({ x: cl.sumX / cl.count, y: cl.sumY / cl.count, count: cl.count }));
+								return centers;
 							} catch (e) {
-								return null;
+								return [];
 							}
 						};
 
@@ -513,11 +529,13 @@
 								return;
 							}
 
-							// Try to find a red pixel drawn on the image itself (user-drawn marker)
+							// Try to find red clusters drawn on the image itself (user-drawn marker)
 							if (!viewerDotNode._detectedSrcXY) {
-								const found = findRedPixelInImage(viewerImageNode);
-								if (found) {
-									viewerDotNode._detectedSrcXY = found; // {x,y} in image pixels
+								const clusters = findRedClustersInImage(viewerImageNode);
+								if (clusters && clusters.length) {
+									// choose primary cluster (largest)
+									clusters.sort((a, b) => b.count - a.count);
+									viewerDotNode._detectedSrcXY = { x: clusters[0].x, y: clusters[0].y };
 								}
 							}
 
@@ -546,8 +564,16 @@
 							const offsetX = (rect.width - dispW) * 0.5;
 							const offsetY = (rect.height - dispH) * 0.5;
 
-							const dispX = offsetX + (srcX * scale);
-							const dispY = offsetY + (srcY * scale);
+							let dispX = offsetX + (srcX * scale);
+							let dispY = offsetY + (srcY * scale);
+
+							// Apply fullscreen-specific horizontal offset (move left by 100px)
+							const isFullscreenForViewer = document.fullscreenElement === viewerDialogNode;
+							// Move left by 300px when in fullscreen (adjusted +100px to the right)
+							const fullscreenOffsetPx = isFullscreenForViewer ? -187 : 0;
+							dispX = dispX + fullscreenOffsetPx;
+							// Clamp to image rect bounds
+							dispX = Math.max(0, Math.min(rect.width, dispX));
 
 							const leftPercent = (dispX / rect.width) * 100;
 							const topPercent = (dispY / rect.height) * 100;
@@ -596,6 +622,24 @@
 		} else if (viewerFullscreenButtonNode) {
 			viewerFullscreenButtonNode.hidden = true;
 		}
+
+		// When entering fullscreen, attempt to locate the user-drawn red pixel clusters
+		// and position the interactive dot on the leftmost detected cluster.
+		document.addEventListener('fullscreenchange', () => {
+			const isFs = document.fullscreenElement === viewerDialogNode;
+			updateViewerFullscreenButtonLabel();
+			if (!isFs) return;
+			if (!viewerImageNode || !viewerDotNode) return;
+			const clusters = findRedClustersInImage(viewerImageNode);
+			if (clusters && clusters.length) {
+				// choose the leftmost cluster (user indicated the desired pixel is left)
+				clusters.sort((a, b) => a.x - b.x);
+				viewerDotNode._detectedSrcXY = { x: clusters[0].x, y: clusters[0].y };
+				if (viewerDotNode._positionHandler) {
+					viewerDotNode._positionHandler();
+				}
+			}
+		});
 
 		document.addEventListener('keydown', (event) => {
 			if (event.key === 'Escape') {
