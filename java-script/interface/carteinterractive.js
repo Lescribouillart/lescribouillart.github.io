@@ -585,6 +585,13 @@
 							// enable pointer events to allow selection
 							viewerDotNode.style.pointerEvents = 'auto';
 							viewerDotNode.style.cursor = 'pointer';
+							// Afficher une info-bulle native avec le nom de la ville
+							try {
+								viewerDotNode.setAttribute('title', 'Écluselac');
+								viewerDotNode.setAttribute('aria-label', 'Écluselac');
+							} catch (e) {
+								// ignore si l'élément n'accepte pas les attributs
+							}
 						};
 
 						positionDot();
