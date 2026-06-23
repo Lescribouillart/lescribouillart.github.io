@@ -2319,7 +2319,9 @@ main {
 
 .saga-globe-viewer-image-wrap {
     position: relative;
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
 }
 
