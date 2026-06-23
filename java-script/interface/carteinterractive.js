@@ -649,16 +649,20 @@
 							let dispX = offsetX + (srcX * scale);
 							let dispY = offsetY + (srcY * scale);
 
-							// Apply fullscreen-specific horizontal offset (move left by 100px)
-							const isFullscreenForViewer = document.fullscreenElement === viewerDialogNode;
-							// Move left by 300px when in fullscreen (adjusted +100px to the right)
-							const fullscreenOffsetPx = isFullscreenForViewer ? -187 : 0;
-							dispX = dispX + fullscreenOffsetPx;
 							// Clamp to image rect bounds
 							dispX = Math.max(0, Math.min(rect.width, dispX));
+							dispY = Math.max(0, Math.min(rect.height, dispY));
 
-							const leftPercent = (dispX / rect.width) * 100;
-							const topPercent = (dispY / rect.height) * 100;
+							// Compute position in pixels relative to the dot's container.
+							// Using pixel coordinates (instead of percentages) prevents
+							// mismatches when the image element and its wrapper have
+							// different sizes (notably in fullscreen where CSS alters
+							// image sizing rules).
+							const containerRect = (viewerDotNode && viewerDotNode.parentElement)
+								? viewerDotNode.parentElement.getBoundingClientRect()
+								: rect;
+							const leftPx = rect.left + dispX - containerRect.left;
+							const topPx = rect.top + dispY - containerRect.top;
 
 							// Masquer le point rouge si la visionneuse affiche le plan d'Écluselac
 							if (config && config.imageSrc && config.imageSrc.indexOf('ecluselac') !== -1) {
@@ -667,8 +671,8 @@
 							}
 
 							viewerDotNode.style.display = 'block';
-							viewerDotNode.style.left = `${leftPercent}%`;
-							viewerDotNode.style.top = `${topPercent}%`;
+							viewerDotNode.style.left = `${Math.round(leftPx)}px`;
+							viewerDotNode.style.top = `${Math.round(topPx)}px`;
 
 							// enable pointer events to allow selection
 							viewerDotNode.style.pointerEvents = 'auto';
@@ -682,6 +686,20 @@
 							}
 						};
 
+						// Si la vue affichée est la carte de France, forcer la position du point
+						// (coordonnées fournies en pourcentage : 59.96615% / 47.4805%)
+						try {
+							if (config && config.imageSrc && config.imageSrc.indexOf('francefull.png') !== -1) {
+								if (viewerImageNode && viewerImageNode.naturalWidth && viewerImageNode.naturalHeight) {
+									viewerDotNode._detectedSrcXY = {
+										x: Math.round(viewerImageNode.naturalWidth * 0.5996615),
+										y: Math.round(viewerImageNode.naturalHeight * 0.474805)
+									};
+								}
+							}
+						} catch (e) {
+							// noop
+						}
 						positionDot();
 						viewerDotNode._positionHandler = positionDot;
 						window.addEventListener('resize', viewerDotNode._positionHandler);
