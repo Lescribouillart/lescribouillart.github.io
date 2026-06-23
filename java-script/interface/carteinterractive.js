@@ -431,8 +431,8 @@
 			}
 
 			if (viewerLoadingNode) {
-				// Ne pas afficher la barre de chargement pour la carte de la France
-				if (config.imageSrc && config.imageSrc.indexOf('francefull.png') !== -1) {
+				// Ne pas afficher la barre de chargement pour certaines images (France, Ecluselac)
+				if (config.imageSrc && (config.imageSrc.indexOf('francefull.png') !== -1 || config.imageSrc.indexOf('ecluselac') !== -1)) {
 					viewerLoadingNode.hidden = true;
 					setViewerLoadingProgress(100);
 				} else {
@@ -584,6 +584,12 @@
 
 							const leftPercent = (dispX / rect.width) * 100;
 							const topPercent = (dispY / rect.height) * 100;
+
+							// Masquer le point rouge si la visionneuse affiche le plan d'Écluselac
+							if (config && config.imageSrc && config.imageSrc.indexOf('ecluselac') !== -1) {
+								viewerDotNode.style.display = 'none';
+								return;
+							}
 
 							viewerDotNode.style.display = 'block';
 							viewerDotNode.style.left = `${leftPercent}%`;
