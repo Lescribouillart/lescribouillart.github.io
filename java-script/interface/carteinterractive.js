@@ -374,6 +374,12 @@
 				return;
 			}
 
+			// Si la vue courante est le plan d'Ecluselac, revenir à la carte de la France
+			if (viewerPanelNode && viewerPanelNode._currentView && viewerPanelNode._currentView.imageSrc && viewerPanelNode._currentView.imageSrc.indexOf('ecluselac') !== -1) {
+				openViewerPanel(franceView);
+				return;
+			}
+
 			viewerLoadRequestId += 1;
 
 			if (document.fullscreenElement === viewerDialogNode) {
@@ -403,12 +409,18 @@
 					viewerDotNode._positionHandler = null;
 				}
 			}
+			if (viewerPanelNode) {
+				viewerPanelNode._currentView = null;
+			}
 		}
 
 		async function openViewerPanel(config) {
 			if (!viewerPanelNode) {
 				return;
 			}
+
+			// marquer la vue courante (utile pour décider du comportement du bouton retour)
+			if (viewerPanelNode) viewerPanelNode._currentView = config;
 
 			const requestId = ++viewerLoadRequestId;
 
