@@ -437,6 +437,8 @@
 				btn.style.top = `${top}px`;
 				btn.style.left = `${left}px`;
 				btn.style.right = 'auto';
+				// rendre visible après positionnement
+				btn.style.opacity = '1';
 			});
 		}
 
@@ -448,6 +450,7 @@
 				btn.style.top = '';
 				btn.style.left = '';
 				btn.style.right = '';
+				btn.style.opacity = '';
 			});
 			if (_closeButtonPositionHandler) {
 				window.removeEventListener('resize', _closeButtonPositionHandler);
