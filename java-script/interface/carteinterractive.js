@@ -412,6 +412,48 @@
 			if (viewerPanelNode) {
 				viewerPanelNode._currentView = null;
 			}
+
+			// reset position overrides when fully closing
+			resetCloseButtonPosition();
+		}
+
+		// Positionnement dynamique du bouton retour par rapport à la section principale
+		let _closeButtonPositionHandler = null;
+
+		function setCloseButtonPositionToSection() {
+			if (!viewerPanelNode) return;
+			// Ne pas repositionner en plein écran (CSS gère la position en fullscreen)
+			if (document.fullscreenElement === viewerDialogNode) return;
+			const section = document.querySelector('#main-content > div > section');
+			if (!section) return;
+			const rect = section.getBoundingClientRect();
+			const closeButtons = viewerPanelNode.querySelectorAll('[data-saga-viewer-close]');
+			closeButtons.forEach(btn => {
+				btn.style.position = 'fixed';
+				const btnW = btn.offsetWidth || 36;
+				const btnH = btn.offsetHeight || 36;
+				const top = Math.max(8, Math.round(rect.top + (rect.height / 2) - (btnH / 2)));
+				const left = Math.round(rect.left - (btnW / 2));
+				btn.style.top = `${top}px`;
+				btn.style.left = `${left}px`;
+				btn.style.right = 'auto';
+			});
+		}
+
+		function resetCloseButtonPosition() {
+			if (!viewerPanelNode) return;
+			const closeButtons = viewerPanelNode.querySelectorAll('[data-saga-viewer-close]');
+			closeButtons.forEach(btn => {
+				btn.style.position = '';
+				btn.style.top = '';
+				btn.style.left = '';
+				btn.style.right = '';
+			});
+			if (_closeButtonPositionHandler) {
+				window.removeEventListener('resize', _closeButtonPositionHandler);
+				window.removeEventListener('scroll', _closeButtonPositionHandler);
+				_closeButtonPositionHandler = null;
+			}
 		}
 
 		async function openViewerPanel(config) {
@@ -425,6 +467,17 @@
 			const requestId = ++viewerLoadRequestId;
 
 			viewerPanelNode.hidden = false;
+
+			// positionner le bouton retour par rapport à la section principale
+			// (appliquer après affichage pour que getBoundingClientRect soit correct)
+			setTimeout(() => {
+				setCloseButtonPositionToSection();
+				if (!_closeButtonPositionHandler) {
+					_closeButtonPositionHandler = () => setCloseButtonPositionToSection();
+					window.addEventListener('resize', _closeButtonPositionHandler);
+					window.addEventListener('scroll', _closeButtonPositionHandler, { passive: true });
+				}
+			}, 50);
 			if (viewerFullscreenButtonNode) {
 				viewerFullscreenButtonNode.hidden = !Boolean(document.fullscreenEnabled && viewerDialogNode);
 			}
