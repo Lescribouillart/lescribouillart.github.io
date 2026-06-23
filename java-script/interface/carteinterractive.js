@@ -471,6 +471,13 @@
 
 			viewerPanelNode.hidden = false;
 
+			// Si on ouvre le plan d'Ecluselac, s'assurer que le point rouge reste masqué
+			if (viewerDotNode && config && config.imageSrc && config.imageSrc.indexOf('ecluselac') !== -1) {
+				viewerDotNode.style.display = 'none';
+				// retirer toute détection précédente
+				viewerDotNode._detectedSrcXY = null;
+			}
+
 			// positionner le bouton retour par rapport à la section principale
 			// (appliquer après affichage pour que getBoundingClientRect soit correct)
 			setTimeout(() => {
