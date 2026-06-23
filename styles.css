@@ -2264,7 +2264,7 @@ main {
 
 .saga-globe-viewer-close {
     position: absolute;
-    top: 50%;
+    top: 32%;
     left: 0.6rem;
     right: auto;
     transform: translateY(-50%);
