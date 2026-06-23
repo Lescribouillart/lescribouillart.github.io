@@ -309,6 +309,13 @@
 			imageSrc: '../images/Map/france/francefull.png',
 			alt: 'Carte de la France'
 		};
+
+		// Vue du plan de la ville d'Écluselac (ouverte depuis le point rouge sur la carte de France)
+		const ecluselacView = {
+			title: 'Plan d\'Écluselac',
+			imageSrc: '../images/Map/ecluselac/carte-ecluselac.png',
+			alt: 'Plan d\'Écluselac'
+		};
 		let progressAnimationFrameId = 0;
 		let currentLoadingProgress = 0;
 		let viewerLoadRequestId = 0;
@@ -597,6 +604,15 @@
 						positionDot();
 						viewerDotNode._positionHandler = positionDot;
 						window.addEventListener('resize', viewerDotNode._positionHandler);
+
+						// ajouter un gestionnaire de clic sur le point rouge de la vue (ouvrir plan d'Écluselac)
+						if (!viewerDotNode._clickHandler) {
+							viewerDotNode._clickHandler = (ev) => {
+								ev.stopPropagation();
+								openViewerPanel(ecluselacView);
+							};
+							viewerDotNode.addEventListener('click', viewerDotNode._clickHandler);
+						}
 
 						// image click-to-place handler removed to keep marker fixed
 					}
