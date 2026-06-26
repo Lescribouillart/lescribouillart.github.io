@@ -2392,20 +2392,19 @@ main {
     position: absolute;
     right: calc(1rem + 48px + 0.5rem); /* à gauche du bouton fullscreen */
     bottom: 1rem;
-    z-index: 8;
+    z-index: 9;
     width: 42px;
     height: 42px;
     padding: 0;
     border: none;
     border-radius: 12px;
     background-color: rgba(255,255,255,0.96);
-    background-image: url('../images/icons/back-arrow.png');
-    background-position: center;
-    background-size: 18px 18px;
-    background-repeat: no-repeat;
     cursor: pointer;
     box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
     transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .saga-globe-viewer-back { z-index: 9; }
@@ -2428,6 +2427,13 @@ main {
     line-height: 42px;
     padding-left: 6px;
     padding-right: 6px;
+}
+
+.saga-globe-viewer-back-img {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
 }
 
 .saga-globe-viewer-fullscreen:hover,
