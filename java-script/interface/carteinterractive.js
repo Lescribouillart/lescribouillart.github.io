@@ -434,6 +434,10 @@
 			const rect = section.getBoundingClientRect();
 			const closeButtons = viewerPanelNode.querySelectorAll('[data-saga-viewer-close]');
 			closeButtons.forEach(btn => {
+				// conserver la position CSS pour le bouton Retour (placé à côté du plein écran)
+				if (btn.classList && btn.classList.contains('saga-globe-viewer-back')) {
+					return;
+				}
 				btn.style.position = 'fixed';
 				const btnW = btn.offsetWidth || 36;
 				const btnH = btn.offsetHeight || 36;
@@ -475,6 +479,18 @@
 			const requestId = ++viewerLoadRequestId;
 
 			viewerPanelNode.hidden = false;
+
+			// Montrer/masquer immédiatement le bouton Retour selon la vue demandée
+			try {
+				const backBtn = viewerPanelNode.querySelector('.saga-globe-viewer-back') || document.querySelector('.saga-globe-viewer-back');
+				if (backBtn) {
+					if (config && config.imageSrc && config.imageSrc.indexOf('ecluselac') !== -1) {
+						backBtn.hidden = false;
+					} else {
+						backBtn.hidden = true;
+					}
+				}
+			} catch (e) {}
 
 			// Si on ouvre le plan d'Ecluselac, s'assurer que le point rouge reste masqué
 			if (viewerDotNode && config && config.imageSrc && config.imageSrc.indexOf('ecluselac') !== -1) {
@@ -551,6 +567,22 @@
 
 				if (loaded) {
 					viewerImageNode.hidden = false;
+
+					// Afficher le bouton retour uniquement pour le plan d'Ecluselac
+					try {
+						const backBtn = (viewerPanelNode && viewerPanelNode.querySelector)
+							? viewerPanelNode.querySelector('.saga-globe-viewer-back') || document.querySelector('.saga-globe-viewer-back')
+							: document.querySelector('.saga-globe-viewer-back');
+						if (backBtn) {
+							if (viewerPanelNode._currentView && viewerPanelNode._currentView.imageSrc && viewerPanelNode._currentView.imageSrc.indexOf('ecluselac') !== -1) {
+								backBtn.hidden = false;
+							} else {
+								backBtn.hidden = true;
+							}
+						}
+					} catch (e) {
+						// noop
+					}
 
 					// Mettre à jour la miniature active si la fonction est disponible
 					if (typeof setActiveThumb === 'function') {
@@ -737,6 +769,8 @@
 					viewerFallbackNode.hidden = false;
 				}
 			}
+
+
 		}
 
 		viewerCloseNodes.forEach((node) => {

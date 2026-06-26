@@ -2320,8 +2320,10 @@ main {
 .saga-globe-viewer-image-wrap {
     position: relative;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 0.6rem;
     width: 100%;
 }
 
@@ -2383,6 +2385,49 @@ main {
     box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
     backdrop-filter: blur(2px);
     transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+}
+
+/* Bouton Retour placé à gauche du bouton plein écran */
+.saga-globe-viewer-back {
+    position: absolute;
+    right: calc(1rem + 48px + 0.5rem); /* à gauche du bouton fullscreen */
+    bottom: 1rem;
+    z-index: 8;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border: none;
+    border-radius: 12px;
+    background-color: rgba(255,255,255,0.96);
+    background-image: url('../images/icons/back-arrow.png');
+    background-position: center;
+    background-size: 18px 18px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
+    transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+}
+
+.saga-globe-viewer-back { z-index: 9; }
+
+.saga-globe-viewer-back[hidden] { display: none; }
+
+.saga-globe-viewer-back:hover,
+.saga-globe-viewer-back:focus-visible {
+    transform: translateY(-1px);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.32);
+    filter: brightness(0.98);
+}
+
+.saga-globe-viewer-back:focus-visible { outline: none; }
+
+.saga-globe-viewer-back-label {
+    display: inline-block;
+    font-size: 0.82rem;
+    color: #111;
+    line-height: 42px;
+    padding-left: 6px;
+    padding-right: 6px;
 }
 
 .saga-globe-viewer-fullscreen:hover,
