@@ -866,12 +866,13 @@
 			return;
 		}
 
-		setLoaderVisible(true);
-		setLoadingState(true);
-		setAccessState(false);
+		// Ne pas afficher la barre de chargement : afficher directement le bouton d'accès
+		setLoaderVisible(false);
+		setLoadingState(false);
+		setAccessState(true);
 		setFullscreenButtonVisible(false);
 		setLoadingProgress(0);
-		const firstLoadingStep = animateLoadingProgress(50, firstLoadingStepDuration);
+		const firstLoadingStep = Promise.resolve();
 
 		const canvas = createCanvas(canvasHost);
 		const context = canvas.getContext('2d');
