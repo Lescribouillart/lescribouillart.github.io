@@ -9,6 +9,15 @@
     <link rel="preload" href="../images/logo/scribouillart.png" as="image">
 
     <link rel="stylesheet" href="../styles.css">
+    <style>
+        /* Miniatures visionneuse : limiter taille et apparence */
+        .saga-globe-viewer-stage { display: flex; flex-direction: column; align-items: center; }
+        .saga-globe-viewer-thumbs { display: flex; gap: 0.5rem; justify-content: center; margin-top: 0.75rem; }
+        .saga-globe-thumb { border: none; background: transparent; padding: 0; display: inline-flex; align-items: center; justify-content: center; width: 72px; height: 72px; border-radius: 6px; overflow: hidden; cursor: pointer; }
+        .saga-globe-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .saga-globe-thumb span { display: inline-block; color: var(--primary-color); font-size: 0.85rem; }
+        .saga-globe-thumb.active { box-shadow: 0 0 0 3px rgba(123,163,216,0.28); transform: none; }
+    </style>
 </head>
 <body>
     <a href="#main-content" class="skip-link">Aller au contenu principal</a>
@@ -101,7 +110,18 @@
                                     <img class="saga-globe-viewer-image" data-saga-viewer-image alt="Carte de la France" loading="lazy" hidden>
                                     <div class="saga-globe-viewer-dot" aria-hidden="true"></div>
                                 </div>
-                                <!-- Bouton retour supprimé volontairement -->
+                                <!-- Miniatures pour navigation entre vues : France / Écluselac / Globe -->
+                                <div class="saga-globe-viewer-thumbs" aria-label="Miniatures de navigation">
+                                    <button type="button" class="saga-globe-thumb" data-saga-thumb="france" aria-label="Afficher la carte de France">
+                                        <img src="../images/Map/france/francefull.png" alt="Miniature carte de France" loading="lazy">
+                                    </button>
+                                    <button type="button" class="saga-globe-thumb" data-saga-thumb="ecluselac" aria-label="Afficher le plan d'Écluselac">
+                                        <img src="../images/Map/ecluselac/carte-ecluselac.png" alt="Miniature plan d'Écluselac" loading="lazy">
+                                    </button>
+                                    <button type="button" class="saga-globe-thumb" data-saga-thumb="globe" aria-label="Afficher le globe">
+                                        <span>Globe</span>
+                                    </button>
+                                </div>
                             </div>
                         <button
                             class="saga-globe-viewer-fullscreen"

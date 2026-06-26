@@ -413,6 +413,11 @@
 				viewerPanelNode._currentView = null;
 			}
 
+			// Marquer la miniature active comme globe quand on ferme la visionneuse
+			if (typeof setActiveThumb === 'function') {
+				setActiveThumb('globe');
+			}
+
 			// reset position overrides when fully closing
 			resetCloseButtonPosition();
 		}
@@ -546,6 +551,19 @@
 
 				if (loaded) {
 					viewerImageNode.hidden = false;
+
+					// Mettre à jour la miniature active si la fonction est disponible
+					if (typeof setActiveThumb === 'function') {
+						try {
+							if (viewerPanelNode._currentView && viewerPanelNode._currentView.imageSrc.indexOf('francefull.png') !== -1) {
+								setActiveThumb('france');
+							} else if (viewerPanelNode._currentView && viewerPanelNode._currentView.imageSrc.indexOf('ecluselac') !== -1) {
+								setActiveThumb('ecluselac');
+							}
+						} catch (e) {
+							// noop
+						}
+					}
 					if (viewerFallbackNode) {
 						viewerFallbackNode.hidden = true;
 					}
@@ -1228,6 +1246,50 @@
 		} else {
 			revealMap();
 		}
+
+		// --- Miniatures de navigation (France / Écluselac / Globe)
+		(function attachViewerThumbs() {
+			function setActiveThumb(name) {
+				const thumbs = document.querySelectorAll('.saga-globe-thumb');
+				thumbs.forEach(t => t.classList.toggle('active', t.getAttribute('data-saga-thumb') === name));
+			}
+
+			// rendre disponible globalement pour d'autres fonctions
+			try { window.sagaSetActiveThumb = setActiveThumb; } catch (e) {}
+
+			const thumbFrance = root.querySelector('[data-saga-thumb="france"]') || document.querySelector('[data-saga-thumb="france"]');
+			const thumbEcluselac = root.querySelector('[data-saga-thumb="ecluselac"]') || document.querySelector('[data-saga-thumb="ecluselac"]');
+			const thumbGlobe = root.querySelector('[data-saga-thumb="globe"]') || document.querySelector('[data-saga-thumb="globe"]');
+
+			if (thumbFrance) {
+				thumbFrance.addEventListener('click', (ev) => {
+					ev.stopPropagation();
+					openViewerPanel(franceView);
+					setActiveThumb('france');
+				});
+			}
+
+			if (thumbEcluselac) {
+				thumbEcluselac.addEventListener('click', (ev) => {
+					ev.stopPropagation();
+					openViewerPanel(ecluselacView);
+					setActiveThumb('ecluselac');
+				});
+			}
+
+			if (thumbGlobe) {
+				thumbGlobe.addEventListener('click', (ev) => {
+					ev.stopPropagation();
+					closeViewerPanel();
+					// afficher le globe et relancer l'animation
+					revealMap();
+					setActiveThumb('globe');
+				});
+			}
+
+			// exposer pour les autres fonctions (closeViewerPanel utilise setActiveThumb via typeof check)
+			try { window.setActiveThumb = setActiveThumb; } catch (e) {}
+		})();
 
 		window.addEventListener('beforeunload', () => {
 			window.cancelAnimationFrame(animationFrameId);
