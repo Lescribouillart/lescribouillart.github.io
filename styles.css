@@ -2140,16 +2140,71 @@ main {
     width: 100%;
     height: 100%;
     max-height: none;
-    display: grid;
-    place-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
 }
 
 .saga-globe-stage:fullscreen .saga-globe-viewer-image {
     width: auto;
     max-width: 100vw;
-    max-height: 100vh;
+    /* leave space for thumbnails and controls when fullscreen */
+    max-height: calc(100vh - 120px);
     border-radius: 0;
     box-shadow: none;
+}
+.saga-globe-stage:fullscreen .saga-globe-viewer-image,
+.saga-globe-viewer-panel:fullscreen .saga-globe-viewer-image {
+    width: auto;
+    max-width: 100vw;
+    /* leave space for thumbnails and controls when fullscreen */
+    max-height: calc(100vh - 120px);
+    border-radius: 0;
+    box-shadow: none;
+}
+
+/* Ensure thumbnails are visible above background in fullscreen */
+.saga-globe-stage:fullscreen .saga-globe-viewer-thumbs {
+    z-index: 12;
+    margin-top: 0.5rem;
+}
+
+/* Forcer les miniatures en bas de l'écran en fullscreen pour éviter le débordement */
+.saga-globe-stage:fullscreen .saga-globe-viewer-thumbs {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 1.25rem;
+    margin-top: 0;
+    z-index: 30;
+    max-width: calc(100vw - 2rem);
+    padding: 0 0.5rem;
+    justify-content: center;
+}
+.saga-globe-stage:fullscreen .saga-globe-viewer-thumbs,
+.saga-globe-viewer-panel:fullscreen .saga-globe-viewer-thumbs {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 1.25rem;
+    margin-top: 0;
+    z-index: 30;
+    max-width: calc(100vw - 2rem);
+    padding: 0 0.5rem;
+    justify-content: center;
+}
+
+.saga-globe-stage:fullscreen .saga-globe-viewer-stage,
+.saga-globe-viewer-panel:fullscreen .saga-globe-viewer-stage {
+    /* allow the thumbs to overlay without shifting layout */
+    align-items: stretch;
+}
+
+.saga-globe-stage:fullscreen .saga-globe-viewer-stage {
+    /* allow the thumbs to overlay without shifting layout */
+    align-items: stretch;
 }
 
 .saga-globe-stage:fullscreen .saga-globe-viewer-close {
