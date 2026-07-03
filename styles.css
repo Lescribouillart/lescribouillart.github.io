@@ -4635,7 +4635,7 @@ a.highlight-blue {
 .article-top-back .article-category.center-window {
     position: absolute;
     left: 50%;
-    top: calc(100% - 46px); /* moved up 42px (extra 2px) */
+    top: calc(100% + 4px); /* moved down 50px from previous position */
     transform: translate(-50%, -50%);
     z-index: 132;
     display: inline-block;
@@ -4651,7 +4651,7 @@ a.highlight-blue {
 
 @media (max-width: 900px) {
     .article-top-back .article-category.center-window {
-        top: calc(100% - 48px);
+        top: calc(100% + 2px);
         font-size: 0.75rem;
         padding: 0.28rem 0.6rem;
     }
