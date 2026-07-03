@@ -1,5 +1,5 @@
 <figure class="article-figure-left">
-	<img src="../images/personnages/antoine debrizuela/antoinedebrizuela.png" alt="Portrait d'Antoine Debrizuela">
+	<img src="../images/personnages/antoine-debrizuela/antoinedebrizuela.png" alt="Portrait d'Antoine Debrizuela">
 	<figcaption></figcaption>
 </figure>
 
