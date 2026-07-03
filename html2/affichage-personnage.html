@@ -116,24 +116,13 @@
     <script src="../java-script/interface/tagline-fireflies.js"></script>
     <script src="../java-script/recherche/recherche.js"></script>
     <script>
-    // Scroll smooth to the top of the fiche (account for header height)
-    document.addEventListener('DOMContentLoaded', function () {
-        const link = document.querySelector('.article-shell .scroll-top-link');
+    // Scroll smooth to top of page for the character sheet leaf icon.
+    // Use event delegation so it works even if the link is injected dynamically.
+    document.addEventListener('click', function (e) {
+        const link = e.target.closest && e.target.closest('.scroll-top-link');
         if (!link) return;
-        link.addEventListener('click', function (e) {
-            e.preventDefault();
-            const shell = document.querySelector('.article-shell');
-            if (!shell) return;
-            const root = document.documentElement;
-            let headerHeight = parseFloat(getComputedStyle(root).getPropertyValue('--site-header-height')) || 0;
-            if (!headerHeight) {
-                const headerEl = document.querySelector('.header');
-                headerHeight = headerEl ? headerEl.offsetHeight : 0;
-            }
-            const rect = shell.getBoundingClientRect();
-            const target = window.scrollY + rect.top - headerHeight;
-            window.scrollTo({ top: Math.max(0, Math.floor(target)), behavior: 'smooth' });
-        });
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     });
     </script>
 </body>
