@@ -213,6 +213,14 @@ function displayArticle(article, articleContent) {
         <div class="article-body">
             ${articleContent}
         </div>
+        <div class="article-separator" aria-hidden="true">
+            <hr class="decorative-hr">
+        </div>
+        <div class="character-scroll-link" aria-hidden="false">
+            <a href="#article-content" class="scroll-top-link" aria-label="Remonter au début de l'article">
+                <img src="../images/icons/feuilleautomrouge.png" alt="Remonter" width="44" height="44">
+            </a>
+        </div>
     `;
 }
 

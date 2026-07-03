@@ -4002,10 +4002,8 @@ a.highlight-blue {
 
 /* Bouton feuille pour remonter au début de la fiche personnage */
 .article-shell .character-scroll-link {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 12px; /* descendu de 5px par rapport à 17px */
+    display: flex;
+    justify-content: center;
     z-index: 130;
     pointer-events: auto;
 }
@@ -4021,31 +4019,29 @@ a.highlight-blue {
 }
 
 .article-separator {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: calc(44px + 12px); /* place la ligne au-dessus de l'icône feuille */
     width: 100%;
     display: flex;
     justify-content: center;
-    padding: 0;
     pointer-events: none;
-    z-index: 10; /* derrière l'icône mais devant le fond */
 }
 .article-separator .decorative-hr {
-    /* Correspond exactement à la largeur intérieure du bloc #article-content
-       en soustrayant les 3rem de padding gauche/droite. */
+    /* width matches inner content width (container max-width 1100px minus article padding 3rem each side) */
     width: calc(100% - 6rem);
-    max-width: none;
+    max-width: calc(1100px - 6rem);
     height: 1px;
     border: none;
     background: rgba(255,255,255,0.06);
-    margin: 0;
+    margin: 0 auto;
 }
+
+/* If the separator and icon are injected inside #article-content (recommended),
+   use these selectors to control spacing easily. */
+#article-content > .article-separator { margin-top: 10px; margin-bottom: 10px; }
+#article-content > .character-scroll-link { margin-top: 10px; }
 
 @media (max-width: 900px) {
     .article-shell .character-scroll-link {
-        bottom: 18px; /* descendu de 5px par rapport à 23px */
+        margin-top: 14px;
     }
     .article-shell .character-scroll-link .scroll-top-link {
         width: 36px;
