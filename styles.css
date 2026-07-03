@@ -4614,6 +4614,49 @@ a.highlight-blue {
     position: relative; /* contexte pour positionner la bande */
 }
 
+/* Positionner le badge (span.article-category) à côté de la flèche retour (fallback) */
+.article-top-back + .article-category {
+    position: absolute;
+    left: 56px;
+    top: 6px;
+    z-index: 132;
+    display: inline-block;
+    background: var(--secondary-color);
+    color: var(--bg-color);
+    padding: 0.35rem 0.7rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+
+/* When the badge has `center-window`, position it ON the dark band (inside .article-top-back) */
+.article-top-back .article-category.center-window {
+    position: absolute;
+    left: 50%;
+    top: calc(100% - 46px); /* moved up 42px (extra 2px) */
+    transform: translate(-50%, -50%);
+    z-index: 132;
+    display: inline-block;
+    background: var(--secondary-color);
+    color: var(--bg-color);
+    padding: 0.35rem 0.7rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+
+@media (max-width: 900px) {
+    .article-top-back .article-category.center-window {
+        top: calc(100% - 48px);
+        font-size: 0.75rem;
+        padding: 0.28rem 0.6rem;
+    }
+}
+
 .article-footer .nav-link {
     text-decoration: none;
     color: #e0e0e0 !important;
