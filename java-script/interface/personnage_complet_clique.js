@@ -175,6 +175,14 @@ function displayCharacter(character, characterContent) {
         <div class="article-body">
             ${characterContent}
         </div>
+        <div class="article-separator" aria-hidden="true">
+            <hr class="decorative-hr">
+        </div>
+        <div class="character-scroll-link" aria-hidden="false">
+            <a href="#character-content" class="scroll-top-link" aria-label="Remonter au début de la fiche">
+                <img src="../images/icons/feuilleautomrouge.png" alt="Remonter" width="44" height="44">
+            </a>
+        </div>
     `;
 }
 

@@ -4039,6 +4039,11 @@ a.highlight-blue {
 #article-content > .article-separator { margin-top: 10px; margin-bottom: 10px; }
 #article-content > .character-scroll-link { margin-top: 10px; }
 
+/* Fiche personnage : règle distincte pour éviter les conflits avec les articles */
+#character-content > .character-scroll-link {
+    margin-top: 12px; /* ajustez cette valeur pour la fiche personnage */
+}
+
 @media (max-width: 900px) {
     .article-shell .character-scroll-link {
         margin-top: 14px;
