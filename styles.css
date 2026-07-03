@@ -4020,6 +4020,27 @@ a.highlight-blue {
     display: block;
 }
 
+.article-separator {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: calc(44px + 12px); /* place la ligne au-dessus de l'icône feuille */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    pointer-events: none;
+    z-index: 10; /* derrière l'icône mais devant le fond */
+}
+.article-separator .decorative-hr {
+    width: 80%;
+    max-width: 760px;
+    height: 1px;
+    border: none;
+    background: rgba(255,255,255,0.06);
+    margin: 0;
+}
+
 @media (max-width: 900px) {
     .article-shell .character-scroll-link {
         bottom: 18px; /* descendu de 5px par rapport à 23px */
