@@ -3088,7 +3088,7 @@ h2.titrelegal2 {
     margin: 1.2rem 0;
 }
 
-.feuillet-flex img[src*="Nocthériga.png"] {
+.feuillet-flex img[src*="Noctheriga.png"] {
     display: block;
     max-width: 300px;
     width: 40vw;
@@ -3278,7 +3278,7 @@ a.highlight-blue {
 }
 
 .character-card-media-antoine {
-    background-image: url('./images/personnages/antoine debrizuela/antoinedebrizuela.png');
+    background-image: url('./images/personnages/antoine-debrizuela/antoinedebrizuela.png');
     background-position: center calc(8% + 20px);
     background-repeat: no-repeat;
     background-size: 185%;
@@ -4918,7 +4918,7 @@ a.highlight-blue {
     }
     
     .presentation-flex > img,
-    .feuillet-flex img[src*="Nocthériga.png"] {
+    .feuillet-flex img[src*="Noctheriga.png"] {
         max-width: 100%;
         width: 80%;
         min-width: auto;
@@ -5063,7 +5063,7 @@ a.highlight-blue {
     }
     
     .presentation-flex > img,
-    .feuillet-flex img[src*="Nocthériga.png"] {
+    .feuillet-flex img[src*="Noctheriga.png"] {
         width: 90%;
         height: auto;
     }
