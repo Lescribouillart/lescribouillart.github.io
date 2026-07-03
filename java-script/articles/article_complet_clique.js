@@ -201,7 +201,7 @@ function displayArticle(article, articleContent) {
         : '';
     const articleMeta = [
         article.date ? `<span class="article-meta-date">${article.date}</span>` : '',
-        article.author ? `<span class="article-meta-author">Article rédigé par ${article.author}</span>` : ''
+        article.author ? `<span class="article-meta-author">par ${article.author}</span>` : ''
     ].filter(Boolean).join(' - ');
     container.innerHTML = `
         ${backHTML}
