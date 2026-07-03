@@ -85,6 +85,11 @@
                 <article id="article-content">
                     <p>Chargement de l'article...</p>
                 </article>
+                <div class="character-scroll-link" aria-hidden="false">
+                    <a href="#article-content" class="scroll-top-link" aria-label="Remonter au début de l'article">
+                        <img src="../images/icons/feuilleautomrouge.png" alt="Remonter" width="44" height="44">
+                    </a>
+                </div>
             </div>
         </div>
     </main>
@@ -112,5 +117,26 @@
     <script src="../java-script/interface/home-header-scroll.js"></script>
     <script src="../java-script/interface/tagline-fireflies.js"></script>
     <script src="../java-script/recherche/recherche.js"></script>
+    <script>
+    // Scroll smooth to the top of the article (account for header height)
+    document.addEventListener('DOMContentLoaded', function () {
+        const link = document.querySelector('.article-shell .scroll-top-link');
+        if (!link) return;
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            const shell = document.querySelector('.article-shell');
+            if (!shell) return;
+            const root = document.documentElement;
+            let headerHeight = parseFloat(getComputedStyle(root).getPropertyValue('--site-header-height')) || 0;
+            if (!headerHeight) {
+                const headerEl = document.querySelector('.header');
+                headerHeight = headerEl ? headerEl.offsetHeight : 0;
+            }
+            const rect = shell.getBoundingClientRect();
+            const target = window.scrollY + rect.top - headerHeight;
+            window.scrollTo({ top: Math.max(0, Math.floor(target)), behavior: 'smooth' });
+        });
+    });
+    </script>
 </body>
 </html>
