@@ -4000,6 +4000,36 @@ a.highlight-blue {
     position: relative;
 }
 
+/* Bouton feuille pour remonter au début de la fiche personnage */
+.article-shell .character-scroll-link {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 12px; /* descendu de 5px par rapport à 17px */
+    z-index: 130;
+    pointer-events: auto;
+}
+.article-shell .character-scroll-link .scroll-top-link {
+    display: block;
+    width: 44px;
+    height: 44px;
+}
+.article-shell .character-scroll-link img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+@media (max-width: 900px) {
+    .article-shell .character-scroll-link {
+        bottom: 18px; /* descendu de 5px par rapport à 23px */
+    }
+    .article-shell .character-scroll-link .scroll-top-link {
+        width: 36px;
+        height: 36px;
+    }
+}
+
 /* Bande sous la flèche retour, alignée sur la largeur du conteneur d'article */
 .article-top-band {
     position: absolute;
