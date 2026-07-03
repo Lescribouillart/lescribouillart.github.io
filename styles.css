@@ -4033,8 +4033,10 @@ a.highlight-blue {
     z-index: 10; /* derrière l'icône mais devant le fond */
 }
 .article-separator .decorative-hr {
-    width: 80%;
-    max-width: 760px;
+    /* Correspond exactement à la largeur intérieure du bloc #article-content
+       en soustrayant les 3rem de padding gauche/droite. */
+    width: calc(100% - 6rem);
+    max-width: none;
     height: 1px;
     border: none;
     background: rgba(255,255,255,0.06);
