@@ -52,8 +52,10 @@
             class="index-unavailable-site-trigger"
             aria-label="Site indisponible pour le moment"
         >
-            <span class="index-unavailable-site-bubble" aria-hidden="true">Oups, le site n'est pas encore disponible</span>
-            <img src="images/icons/construction.png" alt="Illustration chantier du site" width="262">
+            <video autoplay muted loop playsinline>
+                <source src="videos/vidaccueil.mp4" type="video/mp4">
+                <img src="images/icons/construction.png" alt="Illustration chantier du site" width="262">
+            </video>
         </button>
     </main>
 
@@ -70,24 +72,6 @@
     <script src="java-script/interface/tagline-fireflies.js"></script>
     <script src="java-script/recherche/recherche.js"></script>
     <script src="java-script/articles/carousel.js" defer></script>
-    <script>
-        (function () {
-            const trigger = document.querySelector('.index-unavailable-site-trigger');
-
-            if (!trigger) {
-                return;
-            }
-
-            let hideTimer = null;
-
-            trigger.addEventListener('click', function () {
-                trigger.classList.add('is-bubble-visible');
-                window.clearTimeout(hideTimer);
-                hideTimer = window.setTimeout(function () {
-                    trigger.classList.remove('is-bubble-visible');
-                }, 2600);
-            });
-        })();
-    </script>
+    <!-- Bulle d'information supprimée -->
 </body>
 </html>
