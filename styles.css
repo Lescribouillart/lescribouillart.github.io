@@ -678,31 +678,31 @@ body.home-drawer-open .intro-site-content .intro-search-container {
 }
 
 .accessibility-btn {
-    position: absolute;
-    left: -450px;
-    top: calc(0.7rem + 15px);
-    background: transparent;
-    border: none;
+    position: fixed;
+    bottom: 18px;
+    left: 18px;
+    background: #fff;
+    border: 2px solid #2f2e3a;
+    border-radius: 50%;
+    width: 46px;
+    height: 46px;
     padding: 0;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 10;
+    z-index: 1200;
+    box-shadow: 0 4px 14px rgba(21,20,30,0.18);
 }
 
 .accessibility-btn img {
-    width: 39px;
-    height: 39px;
+    width: 28px;
+    height: 28px;
     display: block;
 }
 
 .accessibility-btn:hover {
-    transform: none;
-}
-
-.intro-accessibility-btn:hover {
-    transform: translateY(-50%);
+    background: #f0f0f0;
 }
 
 .accessibility-btn:hover img {
@@ -1637,22 +1637,17 @@ main {
     flex: 1;
 }
 
+/* .intro-accessibility-btn suit le positionnement fixed de .accessibility-btn */
 .intro-accessibility-btn {
-    position: absolute;
-    /* place at the left edge of the intro block so it's aligned with the text */
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    flex-shrink: 0;
+    /* hérite du fixed, rien à surcharger */
 }
 
-/* Désactiver toute animation/transitions sur le bouton dyslexie */
+/* Désactiver toute animation sur le bouton dyslexie */
 .accessibility-btn,
 .intro-accessibility-btn,
 .accessibility-btn img {
     animation: none !important;
     transition: none !important;
-    transform: none !important;
 }
 
 .intro-site {
@@ -4957,6 +4952,7 @@ a.highlight-blue {
         padding: 0;
     }
 
+    /* Le bouton d'accessibilité est fixed — pas de surcharge ici */
     .intro-site-content .intro-search-container {
         width: 100%;
         margin-left: 0;
