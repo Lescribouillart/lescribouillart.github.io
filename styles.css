@@ -1719,7 +1719,8 @@ main {
 .index-video-close {
     position: absolute;
     top: 12px;
-    right: 12px;
+    /* position inside the video area: account for container horizontal padding (100px) and video border (6px) */
+    right: calc(12px + 100px + 6px);
     z-index: 4;
     background: #fff;
     color: #2f2e3a;
