@@ -1645,6 +1645,15 @@ main {
     flex-shrink: 0;
 }
 
+/* Désactiver toute animation/transitions sur le bouton dyslexie */
+.accessibility-btn,
+.intro-accessibility-btn,
+.accessibility-btn img {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+}
+
 .intro-site-content .intro-search-container {
     position: absolute;
     right: -450px;
