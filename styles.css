@@ -1637,10 +1637,8 @@ main {
     flex: 1;
 }
 
-/* .intro-accessibility-btn suit le positionnement fixed de .accessibility-btn */
-.intro-accessibility-btn {
-    /* hérite du fixed, rien à surcharger */
-}
+/* .intro-accessibility-btn suit le positionnement fixed de .accessibility-btn
+   (hérite du fixed, rien à surcharger) */
 
 /* Désactiver toute animation sur le bouton dyslexie */
 .accessibility-btn,
