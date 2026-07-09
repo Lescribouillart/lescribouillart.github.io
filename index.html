@@ -47,8 +47,7 @@
     </div>
 
     <main class="index-construction-main">
-        <button
-            type="button"
+        <div
             class="index-unavailable-site-trigger"
             aria-label="Site indisponible pour le moment"
         >
@@ -56,7 +55,8 @@
                 <source src="videos/vidaccueil.mp4" type="video/mp4">
                 <img src="images/icons/construction.png" alt="Illustration chantier du site" width="262">
             </video>
-        </button>
+            <button class="index-video-close" type="button" aria-label="Fermer la vidéo">Fermer</button>
+        </div>
     </main>
 
     <footer class="footer footer-index" id="page-bottom">
@@ -72,6 +72,20 @@
     <script src="java-script/interface/tagline-fireflies.js"></script>
     <script src="java-script/recherche/recherche.js"></script>
     <script src="java-script/articles/carousel.js" defer></script>
-    <!-- Bulle d'information supprimée -->
+    <!-- Script pour le bouton fermer la vidéo -->
+    <script>
+        (function () {
+            const closeBtn = document.querySelector('.index-video-close');
+            if (!closeBtn) return;
+
+            closeBtn.addEventListener('click', function (e) {
+                // pause video si présent
+                const v = document.querySelector('.index-unavailable-site-trigger video');
+                if (v && typeof v.pause === 'function') v.pause();
+                // redirection vers la page d'accueil
+                window.location.href = 'html/accueil.html';
+            });
+        })();
+    </script>
 </body>
 </html>
