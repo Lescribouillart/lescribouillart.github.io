@@ -1639,7 +1639,8 @@ main {
 
 .intro-accessibility-btn {
     position: absolute;
-    left: -450px;
+    /* place at the left edge of the intro block so it's aligned with the text */
+    left: 0;
     top: 50%;
     transform: translateY(-50%);
     flex-shrink: 0;
@@ -1652,15 +1653,6 @@ main {
     animation: none !important;
     transition: none !important;
     transform: none !important;
-}
-
-.intro-site-content .intro-search-container {
-    position: absolute;
-    right: -450px;
-    top: 50%;
-    transform: translateY(-50%);
-    margin-left: 0;
-    padding-right: 0;
 }
 
 .intro-site {
