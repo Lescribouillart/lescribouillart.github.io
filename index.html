@@ -55,7 +55,7 @@
                 <source src="videos/vidaccueil.mp4" type="video/mp4">
                 <img src="images/icons/construction.png" alt="Illustration chantier du site" width="262">
             </video>
-            <button class="index-video-close" type="button" aria-label="Fermer la vidéo">Fermer</button>
+            <button class="index-video-close" type="button" aria-label="Fermer la vidéo">Acceder au site</button>
         </div>
     </main>
 
@@ -72,20 +72,6 @@
     <script src="java-script/interface/tagline-fireflies.js"></script>
     <script src="java-script/recherche/recherche.js"></script>
     <script src="java-script/articles/carousel.js" defer></script>
-    <!-- Script pour le bouton fermer la vidéo -->
-    <script>
-        (function () {
-            const closeBtn = document.querySelector('.index-video-close');
-            if (!closeBtn) return;
-
-            closeBtn.addEventListener('click', function (e) {
-                // pause video si présent
-                const v = document.querySelector('.index-unavailable-site-trigger video');
-                if (v && typeof v.pause === 'function') v.pause();
-                // redirection vers la page d'accueil
-                window.location.href = 'html/accueil.html';
-            });
-        })();
-    </script>
+    <!-- Le code JS a été déplacé vers java-script/interface/home-drawer.js -->
 </body>
 </html>

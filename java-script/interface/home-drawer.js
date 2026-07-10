@@ -47,3 +47,24 @@
         });
     });
 })();
+// Gestion du bouton "Fermer la vidéo" depuis index.html
+(function () {
+    'use strict';
+
+    function initIndexVideoClose() {
+        const closeBtn = document.querySelector('.index-video-close');
+        if (!closeBtn) return;
+
+        closeBtn.addEventListener('click', function () {
+            const v = document.querySelector('.index-unavailable-site-trigger video');
+            if (v && typeof v.pause === 'function') v.pause();
+            window.location.href = 'html/accueil.html';
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initIndexVideoClose);
+    } else {
+        initIndexVideoClose();
+    }
+})();
