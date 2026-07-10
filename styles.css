@@ -223,6 +223,8 @@ select {
     /* Couleurs principales */
     --primary-color: #e8e3d5;
     --secondary-color: #7ba3d8;
+    /* Couleur spécifique pour l'en-tête de la page d'accueil */
+    --index-header-bg: #2f2e3a;
     --text-color: #e0e0e0;
     --text-light: #a8a8a8;
     --bg-color: #2f2e3a;
@@ -294,6 +296,19 @@ select {
     overflow: visible;
     isolation: isolate;
     z-index: 1000;
+}
+
+/* Header spécifique pour la page d'accueil (index.html)
+   Utilisez la variable --index-header-bg pour personnaliser la couleur
+   sans impacter les autres en-têtes du site. */
+.header.header--index {
+    background: var(--index-header-bg, #39506a);
+}
+
+/* Ensure index header color wins over other rules (higher specificity) */
+body.index-page .header.header--index,
+body.has-scroll-header .header.header--index {
+    background: var(--index-header-bg, #39506a) !important;
 }
 
 body.has-scroll-header .header {
@@ -1621,6 +1636,23 @@ main {
     margin-bottom: 0;
     margin-top: 0;
     background-color: #e0e0e0;
+}
+
+/* === Overrides pour la page d'accueil (index.html) ===
+   Masque le bandeau intro (texte + bande claire) et retire
+   l'image d'arrière-plan ajoutée via .header .container::before
+   afin que l'en-tête d'accueil n'affiche que son fond (--index-header-bg). */
+body.index-page .intro-site-bg {
+    display: none;
+}
+
+.header.header--index {
+    z-index: 2000; /* s'assurer que le header reste au-dessus */
+}
+
+.header.header--index .container::before {
+    display: none !important;
+    background: none !important;
 }
 
 .intro-site-content {
