@@ -93,7 +93,11 @@
                 function showButtonAndBlur() {
                     if (shownAfterFirst) return;
                     shownAfterFirst = true;
+                    // Apply blur
                     video.classList.add('blurred');
+                    // Stop looping and pause playback so the blurred frame remains
+                    try { video.loop = false; } catch(e){}
+                    try { video.pause(); } catch(e){}
                     btn.style.display = 'block';
                     btn.removeAttribute('aria-hidden');
                     try { btn.focus(); } catch(e){}
