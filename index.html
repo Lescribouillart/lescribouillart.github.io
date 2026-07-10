@@ -60,7 +60,8 @@
                 <source src="videos/vidaccueil.mp4" type="video/mp4">
                 <img src="images/icons/construction.png" alt="Illustration chantier du site" width="262">
             </video>
-            <button id="index-video-close" class="index-video-close" type="button" aria-label="Fermer la vidéo" style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); display:none; z-index:2;">Accéder au site</button>
+            <div class="video-overlay" aria-hidden="true"></div>
+            <button id="index-video-close" class="index-video-close" type="button" aria-label="Fermer la vidéo" style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); display:none;">Accéder au site</button>
         </div>
     </main>
 
@@ -93,8 +94,8 @@
                 function showButtonAndBlur() {
                     if (shownAfterFirst) return;
                     shownAfterFirst = true;
-                    // Apply blur
-                    video.classList.add('blurred');
+                    // Apply blur overlay to the container (so the video frame/border stays visible)
+                    try { container.classList.add('blurred'); } catch(e){}
                     // Stop looping and pause playback so the blurred frame remains
                     try { video.loop = false; } catch(e){}
                     try { video.pause(); } catch(e){}
@@ -125,7 +126,7 @@
 
                 // Click: close the overlay and remove blur
                 btn.addEventListener('click', function(){
-                    try{ video.classList.remove('blurred'); } catch(e){}
+                    try{ container.classList.remove('blurred'); } catch(e){}
                     if (container) container.style.display = 'none';
                 });
             }

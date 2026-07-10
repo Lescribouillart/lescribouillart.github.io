@@ -523,29 +523,64 @@ body.has-scroll-header .header-drawer-toggle {
 }
 
 /* Video intro: blur state and layout helpers */
-.index-unavailable-site-trigger {
-    position: relative; /* already set inline but ensure CSS fallback */
-    overflow: hidden;
-}
-#intro-video {
-    display: block;
-    width: 100%;
-    height: auto;
-    max-height: 80vh;
-    object-fit: cover;
-    transition: filter 280ms ease, transform 280ms ease;
-    z-index: 1;
-}
-#intro-video.blurred {
-    filter: blur(6px) brightness(0.7);
-}
-
 #index-video-close {
     transition: opacity 220ms ease, transform 220ms ease;
     opacity: 1;
     z-index: 6;
     display: none; /* hidden by default, shown by script */
     width: 200px;
+    padding: 0.35rem 0.4rem;
+    font-size: 0.95rem;
+    background: rgba(255,255,255,0.96);
+    border-radius: 8px;
+    border: 1px solid rgba(0,0,0,0.12);
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(2,6,23,0.18);
+}
+
+/* Fallback: when inline style sets display:none the button stays invisible */
+#index-video-close[style*="display:none"] {
+    opacity: 0;
+}
+
+/* Video container and internal blur overlay (uses backdrop-filter to blur the video only)
+   The pseudo-element sits above the <video> but inside the frame so the frame/border
+   remains visible while the content is blurred. */
+.index-unavailable-site-trigger {
+    position: relative; /* ensure positioned ancestor for the overlay */
+    overflow: hidden;
+}
+
+/* Dedicated overlay element that sits exactly inside the video border.
+   It uses backdrop-filter so only the video content is blurred while the
+   video's border (the frame) remains visible. */
+.video-overlay {
+    position: absolute;
+    /* account for container horizontal padding (100px) and video border (6px) */
+    top: 6px;
+    left: calc(100px + 6px);
+    right: calc(100px + 6px);
+    bottom: 6px;
+    pointer-events: none;
+    z-index: 3; /* above video (1) but below button (6) */
+    background: transparent;
+    transition: backdrop-filter 280ms ease, background-color 280ms ease, opacity 220ms ease;
+    opacity: 0;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+}
+.index-unavailable-site-trigger.blurred .video-overlay {
+    opacity: 1;
+    background: rgba(6,10,18,0.12);
+    -webkit-backdrop-filter: blur(6px) brightness(0.78);
+    backdrop-filter: blur(6px) brightness(0.78);
+}
+
+#index-video-close {
+    transition: opacity 220ms ease, transform 220ms ease;
+    opacity: 1;
+/* removed generic overlay; use a dedicated .video-overlay element positioned exactly inside the video border so the frame remains visible when blurred */
     padding: 0.35rem 0.4rem;
     font-size: 0.95rem;
     background: rgba(255,255,255,0.96);
