@@ -522,6 +522,43 @@ body.has-scroll-header .header-drawer-toggle {
     pointer-events: none;
 }
 
+/* Video intro: blur state and layout helpers */
+.index-unavailable-site-trigger {
+    position: relative; /* already set inline but ensure CSS fallback */
+    overflow: hidden;
+}
+#intro-video {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 80vh;
+    object-fit: cover;
+    transition: filter 280ms ease, transform 280ms ease;
+    z-index: 1;
+}
+#intro-video.blurred {
+    filter: blur(6px) brightness(0.7);
+}
+#index-video-close {
+    transition: opacity 220ms ease, transform 220ms ease;
+    opacity: 1;
+    z-index: 6;
+    display: none; /* hidden by default, shown by script */
+    min-width: 260px;
+    padding: 0.55rem 1rem;
+    background: rgba(255,255,255,0.95);
+    border-radius: 8px;
+    border: 1px solid rgba(0,0,0,0.12);
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(2,6,23,0.18);
+}
+
+/* Fallback: when inline style sets display:none the button stays invisible */
+#index-video-close[style*="display:none"] {
+    opacity: 0;
+}
+
 .home-side-panel-inner > * {
     position: relative;
     z-index: 1;

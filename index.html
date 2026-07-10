@@ -54,12 +54,13 @@
         <div
             class="index-unavailable-site-trigger"
             aria-label="Site indisponible pour le moment"
+            style="position:relative;"
         >
-            <video autoplay muted loop playsinline>
+            <video id="intro-video" autoplay muted playsinline loop>
                 <source src="videos/vidaccueil.mp4" type="video/mp4">
                 <img src="images/icons/construction.png" alt="Illustration chantier du site" width="262">
             </video>
-            <button class="index-video-close" type="button" aria-label="Fermer la vidéo">Acceder au site</button>
+            <button id="index-video-close" class="index-video-close" type="button" aria-label="Fermer la vidéo" style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); display:none; z-index:2;">Accéder au site</button>
         </div>
     </main>
 
@@ -77,5 +78,60 @@
     <script src="java-script/recherche/recherche.js"></script>
     <script src="java-script/articles/carousel.js" defer></script>
     <!-- Le code JS a été déplacé vers java-script/interface/home-drawer.js -->
+        <script>
+        (function(){
+            'use strict';
+            function initIndexVideoBehavior(){
+                const video = document.getElementById('intro-video');
+                const btn = document.getElementById('index-video-close');
+                const container = document.querySelector('.index-unavailable-site-trigger');
+                if (!video || !btn) return;
+
+                let shownAfterFirst = false;
+                let durationKnown = false;
+
+                function showButtonAndBlur() {
+                    if (shownAfterFirst) return;
+                    shownAfterFirst = true;
+                    video.classList.add('blurred');
+                    btn.style.display = 'block';
+                    btn.removeAttribute('aria-hidden');
+                    try { btn.focus(); } catch(e){}
+                }
+
+                // If ended fires (reliable), use it
+                video.addEventListener('ended', function(){
+                    showButtonAndBlur();
+                });
+
+                // If duration is available, use timeupdate near the end (safer with loop)
+                video.addEventListener('loadedmetadata', function(){
+                    durationKnown = true;
+                });
+
+                video.addEventListener('timeupdate', function(){
+                    if (shownAfterFirst) return;
+                    const d = video.duration;
+                    if (!durationKnown || !d || isNaN(d) || d === Infinity) return;
+                    // If we are within the last 0.2s of the first playback, trigger
+                    if (video.currentTime >= d - 0.2) {
+                        showButtonAndBlur();
+                    }
+                });
+
+                // Click: close the overlay and remove blur
+                btn.addEventListener('click', function(){
+                    try{ video.classList.remove('blurred'); } catch(e){}
+                    if (container) container.style.display = 'none';
+                });
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initIndexVideoBehavior);
+            } else {
+                initIndexVideoBehavior();
+            }
+        })();
+        </script>
 </body>
 </html>
