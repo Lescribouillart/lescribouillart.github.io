@@ -31,12 +31,26 @@
         syncHeaderHeight();
     };
 
-    syncHeaderHeight();
-    syncScrollState();
+    const suppressTransitions = (fn) => {
+        body.classList.add('header-no-anim');
+        fn();
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                body.classList.remove('header-no-anim');
+            });
+        });
+    };
 
-    window.addEventListener('load', () => {
+    suppressTransitions(() => {
         syncHeaderHeight();
         syncScrollState();
+    });
+
+    window.addEventListener('load', () => {
+        suppressTransitions(() => {
+            syncHeaderHeight();
+            syncScrollState();
+        });
     });
 
     window.addEventListener('resize', () => {
