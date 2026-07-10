@@ -539,14 +539,16 @@ body.has-scroll-header .header-drawer-toggle {
 #intro-video.blurred {
     filter: blur(6px) brightness(0.7);
 }
+
 #index-video-close {
     transition: opacity 220ms ease, transform 220ms ease;
     opacity: 1;
     z-index: 6;
     display: none; /* hidden by default, shown by script */
-    min-width: 260px;
-    padding: 0.55rem 1rem;
-    background: rgba(255,255,255,0.95);
+    width: 200px;
+    padding: 0.35rem 0.4rem;
+    font-size: 0.95rem;
+    background: rgba(255,255,255,0.96);
     border-radius: 8px;
     border: 1px solid rgba(0,0,0,0.12);
     text-align: center;
