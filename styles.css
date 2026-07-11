@@ -376,7 +376,7 @@ body.has-scroll-header .site-header-spacer {
     flex-direction: column;
     /* align-items: flex-start pour aligner les liens à gauche */
     align-items: center;
-    padding: 3.5rem 2rem 1rem;
+    padding: 2.5rem 2rem 1rem;
     max-width: 1200px;
     margin: 0 auto;
     position: relative;
