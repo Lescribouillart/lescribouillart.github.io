@@ -419,7 +419,8 @@ body.has-scroll-header .site-header-spacer {
 .header-drawer-toggle {
     position: absolute;
     left: calc(-273px - 2rem);
-    top: 50%;
+    /* déplacé de 40px vers le haut (ajout de 10px vers le bas demandé) */
+    top: calc(50% - 40px);
     transform: translateY(-50%);
     width: 52px;
     height: 52px;
@@ -5337,7 +5338,8 @@ a.highlight-blue {
     .header-drawer-toggle {
         position: fixed;
         left: 8px;
-        top: calc(var(--site-header-height, 230px) * 0.7);
+        /* déplacé de 40px vers le haut par rapport à l'origine (10px vers le bas) */
+        top: calc((var(--site-header-height, 230px) * 0.7) - 40px);
         transform: none;
         z-index: 1105;
     }
@@ -5362,9 +5364,11 @@ a.highlight-blue {
 
     .intro-site-content .intro-search-container {
         position: fixed;
-        top: calc(var(--site-header-height, 230px) * 0.7 + 10px);
+        /* aligner verticalement sur le centre du bouton hamburger */
+        top: calc((var(--site-header-height, 230px) * 0.7) - 14px);
         right: 37px;
-        transform: none;
+        /* centrer le conteneur sur ce point */
+        transform: translateY(-50%);
         margin: 0;
         padding-right: 0;
         z-index: 1105;
@@ -5390,11 +5394,13 @@ a.highlight-blue {
     }
 
     body.has-scroll-header.header-scrolled .header-drawer-toggle {
-        top: 96px;
+        /* ajusté de -40px pour rester cohérent avec le déplacement global */
+        top: calc(96px - 40px);
     }
 
     body.has-scroll-header.header-scrolled .intro-site-content .intro-search-container {
-        top: 106px;
+        /* centré sur le bouton hamburger en état compact */
+        top: 82px; /* équivalent à calc(96px - 14px) */
         transition: top 0.25s ease;
     }
 }
