@@ -287,8 +287,9 @@ select {
    HEADER & NAVIGATION
    ======================================== */
 .header {
-    background: var(--bg-color);
-    border-bottom: 1px solid var(--border-color);
+    /* Fond uni demandé par l'utilisateur */
+    background: #2f2e3a !important;
+    border-bottom: none !important;
     position: relative;
     overflow: visible;
     isolation: isolate;
@@ -337,12 +338,8 @@ body.has-scroll-header .site-header-spacer {
 }
 
 .header::after {
-    inset: 0;
-    background:
-        radial-gradient(circle at 50% 0%, rgba(155, 191, 231, 0.08), transparent 38%),
-        linear-gradient(180deg, rgba(18, 18, 24, 0.08) 0%, rgba(18, 18, 24, 0) 36%, rgba(18, 18, 24, 0.12) 100%);
-    opacity: 0.62;
-    z-index: 0;
+    /* Supprimer overlay gradient pour fond totalement uni */
+    display: none !important;
 }
 
 .header-rootline {
@@ -395,13 +392,14 @@ body.has-scroll-header .site-header-spacer {
     transform: translateX(-50%);
     width: min(760px, 78vw);
     height: 180px;
-    background:
-        linear-gradient(180deg, rgba(12, 16, 22, 0.12), rgba(12, 16, 22, 0.05)),
-        url('images/fondmain/arbremonde2.png') center 75% / 100% auto no-repeat;
-    opacity: 0.66;
+    /* Illustration restaurée sans gradients ni ombres pour éviter les lignes
+       - on affiche uniquement l'image, centrée et redimensionnée */
+    background-image: url('images/fondmain/arbremonde2.png');
+    background-position: center 75%;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    opacity: 0.9;
     border-radius: 22px;
-    filter: saturate(1.12) contrast(1.07) brightness(1.02);
-    box-shadow: 0 18px 34px rgba(18, 18, 24, 0.14);
     pointer-events: none;
     z-index: 0;
 }
