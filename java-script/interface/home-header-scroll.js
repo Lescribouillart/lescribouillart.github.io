@@ -6,29 +6,11 @@
         return;
     }
 
-    const scrolledClassName = 'header-scrolled';
+    // Active le header fixe via CSS (position: fixed)
     body.classList.add('has-scroll-header');
-    const enterThreshold = 48;
-    const exitThreshold = 6;
-    let isCompact = false;
 
     const syncHeaderHeight = () => {
         body.style.setProperty('--site-header-height', `${header.offsetHeight}px`);
-    };
-
-    const syncScrollState = () => {
-        const scrollTop = window.scrollY;
-        const shouldCompact = isCompact
-            ? scrollTop > exitThreshold
-            : scrollTop > enterThreshold;
-
-        if (shouldCompact === isCompact) {
-            return;
-        }
-
-        isCompact = shouldCompact;
-        body.classList.toggle(scrolledClassName, isCompact);
-        syncHeaderHeight();
     };
 
     const suppressTransitions = (fn) => {
@@ -41,30 +23,13 @@
         });
     };
 
-    suppressTransitions(() => {
-        syncHeaderHeight();
-        syncScrollState();
-    });
+    suppressTransitions(syncHeaderHeight);
 
     window.addEventListener('load', () => {
-        suppressTransitions(() => {
-            syncHeaderHeight();
-            syncScrollState();
-        });
+        suppressTransitions(syncHeaderHeight);
     });
 
-    window.addEventListener('resize', () => {
-        syncHeaderHeight();
-        syncScrollState();
-    });
-
-    window.addEventListener('scroll', syncScrollState, { passive: true });
-
-    header.addEventListener('transitionend', (event) => {
-        if (event.propertyName === 'padding' || event.propertyName === 'font-size' || event.propertyName === 'height' || event.propertyName === 'opacity') {
-            syncHeaderHeight();
-        }
-    });
+    window.addEventListener('resize', syncHeaderHeight);
 
     if ('ResizeObserver' in window) {
         const resizeObserver = new ResizeObserver(syncHeaderHeight);
