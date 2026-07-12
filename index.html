@@ -67,7 +67,7 @@
 
     <footer class="footer footer-index" id="page-bottom">
         <div class="container">
-            <p class="footer-copyright">© 2025 Le Scribouill'art - Tous droits réservés</p>
+            <p class="footer-copyright">Le Scribouill'art - Tous droits réservés <br>© 2025-2026</p>
         </div>
     </footer>
     
@@ -78,65 +78,5 @@
     <script src="java-script/interface/tagline-fireflies.js"></script>
     <script src="java-script/recherche/recherche.js"></script>
     <script src="java-script/articles/carousel.js" defer></script>
-    <!-- Le code JS a été déplacé vers java-script/interface/home-drawer.js -->
-        <script>
-        (function(){
-            'use strict';
-            function initIndexVideoBehavior(){
-                const video = document.getElementById('intro-video');
-                const btn = document.getElementById('index-video-close');
-                const container = document.querySelector('.index-unavailable-site-trigger');
-                if (!video || !btn) return;
-
-                let shownAfterFirst = false;
-                let durationKnown = false;
-
-                function showButtonAndBlur() {
-                    if (shownAfterFirst) return;
-                    shownAfterFirst = true;
-                    // Apply blur overlay to the container (so the video frame/border stays visible)
-                    try { container.classList.add('blurred'); } catch(e){}
-                    // Stop looping and pause playback so the blurred frame remains
-                    try { video.loop = false; } catch(e){}
-                    try { video.pause(); } catch(e){}
-                    btn.style.display = 'block';
-                    btn.removeAttribute('aria-hidden');
-                    try { btn.focus(); } catch(e){}
-                }
-
-                // If ended fires (reliable), use it
-                video.addEventListener('ended', function(){
-                    showButtonAndBlur();
-                });
-
-                // If duration is available, use timeupdate near the end (safer with loop)
-                video.addEventListener('loadedmetadata', function(){
-                    durationKnown = true;
-                });
-
-                video.addEventListener('timeupdate', function(){
-                    if (shownAfterFirst) return;
-                    const d = video.duration;
-                    if (!durationKnown || !d || isNaN(d) || d === Infinity) return;
-                    // If we are within the last 0.2s of the first playback, trigger
-                    if (video.currentTime >= d - 0.2) {
-                        showButtonAndBlur();
-                    }
-                });
-
-                // Click: close the overlay and remove blur
-                btn.addEventListener('click', function(){
-                    try{ container.classList.remove('blurred'); } catch(e){}
-                    if (container) container.style.display = 'none';
-                });
-            }
-
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', initIndexVideoBehavior);
-            } else {
-                initIndexVideoBehavior();
-            }
-        })();
-        </script>
 </body>
 </html>

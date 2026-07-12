@@ -47,24 +47,57 @@
         });
     });
 })();
-// Gestion du bouton "Fermer la vidéo" depuis index.html
+// Gestion du comportement vidéo depuis index.html
 (function () {
     'use strict';
 
-    function initIndexVideoClose() {
-        const closeBtn = document.querySelector('.index-video-close');
-        if (!closeBtn) return;
+    function initIndexVideoBehavior() {
+        const video = document.getElementById('intro-video');
+        const btn = document.getElementById('index-video-close');
+        const container = document.querySelector('.index-unavailable-site-trigger');
+        if (!video || !btn) return;
 
-        closeBtn.addEventListener('click', function () {
-            const v = document.querySelector('.index-unavailable-site-trigger video');
-            if (v && typeof v.pause === 'function') v.pause();
+        let shownAfterFirst = false;
+        let durationKnown = false;
+
+        function showButtonAndBlur() {
+            if (shownAfterFirst) return;
+            shownAfterFirst = true;
+            try { container.classList.add('blurred'); } catch (e) {}
+            try { video.loop = false; } catch (e) {}
+            try { video.pause(); } catch (e) {}
+            btn.style.display = 'block';
+            btn.removeAttribute('aria-hidden');
+            try { btn.focus(); } catch (e) {}
+        }
+
+        video.addEventListener('ended', function () {
+            showButtonAndBlur();
+        });
+
+        video.addEventListener('loadedmetadata', function () {
+            durationKnown = true;
+        });
+
+        video.addEventListener('timeupdate', function () {
+            if (shownAfterFirst) return;
+            const d = video.duration;
+            if (!durationKnown || !d || isNaN(d) || d === Infinity) return;
+            if (video.currentTime >= d - 0.2) {
+                showButtonAndBlur();
+            }
+        });
+
+        btn.addEventListener('click', function () {
+            try { container.classList.remove('blurred'); } catch (e) {}
+            if (container) container.style.display = 'none';
             window.location.href = 'html/accueil.html';
         });
     }
 
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initIndexVideoClose);
+        document.addEventListener('DOMContentLoaded', initIndexVideoBehavior);
     } else {
-        initIndexVideoClose();
+        initIndexVideoBehavior();
     }
 })();
