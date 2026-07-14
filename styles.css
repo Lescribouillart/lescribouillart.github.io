@@ -3193,7 +3193,7 @@ h2.titrelegal2 {
     margin: 1.2rem 0;
 }
 
-.feuillet-flex img[src*="Noctheriga.png"] {
+.feuillet-flex img[src*="noctheriga.png"] {
     display: block;
     max-width: 300px;
     width: 40vw;
@@ -5023,7 +5023,7 @@ a.highlight-blue {
     }
     
     .presentation-flex > img,
-    .feuillet-flex img[src*="Noctheriga.png"] {
+    .feuillet-flex img[src*="noctheriga.png"] {
         max-width: 100%;
         width: 80%;
         min-width: auto;
@@ -5169,7 +5169,7 @@ a.highlight-blue {
     }
     
     .presentation-flex > img,
-    .feuillet-flex img[src*="Noctheriga.png"] {
+    .feuillet-flex img[src*="noctheriga.png"] {
         width: 90%;
         height: auto;
     }
