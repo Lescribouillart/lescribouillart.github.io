@@ -2181,6 +2181,71 @@ body.index-page .intro-site-bg {
     outline: none;
 }
 
+.book-modal {
+    position: fixed;
+    inset: 0;
+    width: min(92vw, 1100px);
+    height: min(88dvh, 850px);
+    max-width: none;
+    max-height: none;
+    margin: auto;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    border-radius: 12px;
+    background: #16362a;
+    color: #f4efe2;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.58);
+    overflow: hidden;
+}
+
+.book-modal::backdrop {
+    background: rgba(18, 18, 24, 0.62);
+    backdrop-filter: blur(3px);
+}
+
+.book-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 52px;
+    padding: 0.65rem 0.85rem 0.65rem 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.book-modal-header h2 {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.book-modal-close {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    place-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font: 2rem/1 sans-serif;
+    cursor: pointer;
+}
+
+.book-modal-close:hover,
+.book-modal-close:focus-visible {
+    background: rgba(255, 255, 255, 0.2);
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+}
+
+.book-modal-frame {
+    display: block;
+    width: 100%;
+    height: calc(100% - 52px);
+    border: 0;
+    background: #16362a;
+}
+
 .book-page {
     min-height: 100vh;
     margin: 0;
@@ -2200,6 +2265,40 @@ body.index-page .intro-site-bg {
 .book-main h1 {
     margin-bottom: 16px;
     font-size: 1.25rem;
+}
+
+.book-embedded > .skip-link,
+.book-embedded .book-back-link {
+    display: none;
+}
+
+.book-embedded {
+    height: 100vh;
+    min-height: 0;
+    padding: 8px 16px;
+    overflow: hidden;
+}
+
+.book-embedded .book-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    overflow: hidden;
+}
+
+.book-embedded .book-main h1 {
+    flex: 0 0 auto;
+    margin-bottom: 8px;
+}
+
+.book-embedded .book-frame {
+    flex: 0 0 auto;
+    margin-bottom: 8px;
+}
+
+.book-embedded .controls {
+    flex: 0 0 auto;
 }
 
 .book-back-link {
@@ -2355,6 +2454,11 @@ body.index-page .intro-site-bg {
 }
 
 @media (max-width: 800px) {
+    .book-modal {
+        width: calc(100vw - 20px);
+        height: calc(100dvh - 40px);
+    }
+
     .book {
         width: 92vw;
     }

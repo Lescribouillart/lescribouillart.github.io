@@ -1,3 +1,7 @@
+if (window.self !== window.top) {
+  document.body.classList.add('book-embedded');
+}
+
 const pages = Array.from(document.querySelectorAll('.page'));
 const total = pages.length;
 let current = -1;
@@ -34,6 +38,9 @@ update();
   if(!img) return;
   const book = document.getElementById('book');
   const spine = document.getElementById('spine');
+  const main = document.querySelector('.book-main');
+  const heading = main?.querySelector('h1');
+  const controls = main?.querySelector('.controls');
   const SPINE_RATIO = 0.09;
   let aspect = null;
 
@@ -87,8 +94,16 @@ update();
   function setBookSizeFromAspect(imgW, imgH){
     if(!imgW || !imgH) return;
     aspect = imgH / imgW;
+    const embedded = window.self !== window.top;
+    const verticalSpace = embedded
+      ? window.innerHeight
+        - (heading?.offsetHeight || 0)
+        - (controls?.offsetHeight || 0)
+        - 40
+      : window.innerHeight - 120;
+    const maxHeight = Math.max(200, verticalSpace);
     const maxPageWidth = Math.min(window.innerWidth * 0.92, 900) / (1 + SPINE_RATIO);
-    const w = Math.min(imgW, maxPageWidth);
+    const w = Math.min(imgW, maxPageWidth, maxHeight / aspect);
     const h = Math.round(w * aspect);
     book.style.width = w + 'px';
     book.style.height = h + 'px';
@@ -97,12 +112,7 @@ update();
 
   window.addEventListener('resize', () => {
     if(!aspect) return;
-    const maxPageWidth = Math.min(window.innerWidth * 0.92, 900) / (1 + SPINE_RATIO);
-    const w = Math.min(book.clientWidth || maxPageWidth, maxPageWidth);
-    const h = Math.round(w * aspect);
-    book.style.width = w + 'px';
-    book.style.height = h + 'px';
-    applySpineSize(w, h);
+    setBookSizeFromAspect(img.naturalWidth, img.naturalHeight);
   });
 
   function initializeCover() {

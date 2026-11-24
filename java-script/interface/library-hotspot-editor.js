@@ -12,6 +12,9 @@
     const columns = Number.parseInt(editor.dataset.columns, 10);
     const rows = Number.parseInt(editor.dataset.rows, 10);
     const target = editor.dataset.target;
+    const bookModal = document.getElementById('book-modal');
+    const bookFrame = bookModal?.querySelector('[data-book-modal-frame]');
+    const closeModalButton = bookModal?.querySelector('.book-modal-close');
     const storageKey = `library-hotspots:${columns}x${rows}`;
     const localHosts = new Set(['localhost', '127.0.0.1', '::1']);
     const isLocalEditor = window.location.protocol === 'file:' || localHosts.has(window.location.hostname);
@@ -24,6 +27,21 @@
         console.error('La configuration de la zone cliquable de la bibliothèque est invalide.');
         return;
     }
+
+    function openBook() {
+        if (!bookModal || !bookFrame || typeof bookModal.showModal !== 'function') {
+            window.location.href = target;
+            return;
+        }
+
+        if (!bookFrame.getAttribute('src')) bookFrame.src = target;
+        bookModal.showModal();
+    }
+
+    closeModalButton?.addEventListener('click', () => bookModal.close());
+    bookModal?.addEventListener('click', (event) => {
+        if (event.target === bookModal) bookModal.close();
+    });
 
     function parseCells(value, source) {
         try {
@@ -43,9 +61,13 @@
 
     if (isLocalEditor) {
         try {
-            selectedCells = parseCells(localStorage.getItem(storageKey), 'enregistrée localement');
+            const savedSelection = localStorage.getItem(storageKey);
+            selectedCells = savedSelection
+                ? parseCells(savedSelection, 'enregistrée localement')
+                : parseCells(editor.dataset.publishedCells, 'publiée');
         } catch (error) {
             console.warn('Le stockage local n’est pas disponible pour cette page.', error);
+            selectedCells = parseCells(editor.dataset.publishedCells, 'publiée');
         }
         editor.classList.add('is-local-editor');
     } else {
@@ -92,7 +114,7 @@
         setCellState(cell, isSelected);
         cell.addEventListener('click', () => {
             if (!gridIsVisible) {
-                window.location.href = target;
+                openBook();
                 return;
             }
 
