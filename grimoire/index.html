@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Livre - Effet de tournement de page</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main>
+    <h1>Livre interactif — clic pour tourner</h1>
+    <div class="book-frame" id="book-frame">
+      <div class="spine" id="spine" aria-hidden="true"></div>
+      <div class="book" id="book">
+        <div class="page" data-index="0">
+          <div class="face front">
+            <img id="cover" alt="grimnoelpass">
+          </div>
+          <div class="face back">Page 2</div>
+        </div>
+        <div class="page" data-index="1">
+          <div class="face front">Page 3</div>
+          <div class="face back">Page 4</div>
+        </div>
+        <div class="page" data-index="2">
+          <div class="face front">Page 5</div>
+          <div class="face back">Page 6</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button id="prev">Précédent</button>
+      <button id="next">Suivant</button>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

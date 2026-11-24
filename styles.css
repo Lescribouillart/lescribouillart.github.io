@@ -698,6 +698,17 @@ body.home-drawer-open .intro-site-content .intro-search-container {
     text-decoration: none;
 }
 
+.home-side-panel-text--unavailable {
+    cursor: default;
+}
+
+.home-side-panel-text--unavailable:hover,
+.home-side-panel-text--unavailable:hover::before {
+    animation: none;
+    background: transparent;
+    box-shadow: none;
+}
+
 /* Animation de test: clignotement visible quand une catégorie est sélectionnée */
 @keyframes panel-flash {
     0% { background-color: transparent; color: var(--text-color); }
