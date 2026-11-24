@@ -7,30 +7,50 @@
     const grid = editor.querySelector('.bibliotheque-hotspot-grid');
     const toggleButton = editor.querySelector('.bibliotheque-editor-toggle');
     const clearButton = editor.querySelector('.bibliotheque-editor-clear');
+    const copyButton = editor.querySelector('.bibliotheque-editor-copy');
     const status = editor.querySelector('.bibliotheque-editor-status');
     const columns = Number.parseInt(editor.dataset.columns, 10);
     const rows = Number.parseInt(editor.dataset.rows, 10);
     const target = editor.dataset.target;
     const storageKey = `library-hotspots:${columns}x${rows}`;
-    let gridIsVisible = true;
+    const localHosts = new Set(['localhost', '127.0.0.1', '::1']);
+    const isLocalEditor = window.location.protocol === 'file:' || localHosts.has(window.location.hostname);
+    let gridIsVisible = isLocalEditor;
     let selectedCells = new Set();
 
-    if (!grid || !toggleButton || !clearButton || !status ||
+    if (!grid || !toggleButton || !clearButton || !copyButton || !status ||
         !Number.isInteger(columns) || columns <= 0 ||
         !Number.isInteger(rows) || rows <= 0 || !target) {
         console.error('La configuration de la zone cliquable de la bibliothèque est invalide.');
         return;
     }
 
-    try {
-        const savedCells = JSON.parse(localStorage.getItem(storageKey) || '[]');
-        if (Array.isArray(savedCells)) {
-            selectedCells = new Set(savedCells.filter(Number.isInteger));
-        } else {
-            console.warn('La sélection enregistrée de la bibliothèque a été ignorée car son format est invalide.');
+    function parseCells(value, source) {
+        try {
+            const cells = JSON.parse(value || '[]');
+            if (!Array.isArray(cells)) {
+                console.warn(`La sélection ${source} a été ignorée car son format est invalide.`);
+                return new Set();
+            }
+            return new Set(cells.filter((index) =>
+                Number.isInteger(index) && index >= 0 && index < columns * rows
+            ));
+        } catch (error) {
+            console.warn(`Impossible de lire la sélection ${source}.`, error);
+            return new Set();
         }
-    } catch (error) {
-        console.warn('Impossible de lire la sélection enregistrée de la bibliothèque.', error);
+    }
+
+    if (isLocalEditor) {
+        try {
+            selectedCells = parseCells(localStorage.getItem(storageKey), 'enregistrée localement');
+        } catch (error) {
+            console.warn('Le stockage local n’est pas disponible pour cette page.', error);
+        }
+        editor.classList.add('is-local-editor');
+    } else {
+        selectedCells = parseCells(editor.dataset.publishedCells, 'publiée');
+        editor.classList.add('is-grid-hidden');
     }
 
     function updateStatus() {
@@ -56,6 +76,8 @@
 
     const cells = document.createDocumentFragment();
     for (let index = 0; index < columns * rows; index += 1) {
+        if (!isLocalEditor && !selectedCells.has(index)) continue;
+
         const cell = document.createElement('button');
         const row = Math.floor(index / columns) + 1;
         const column = (index % columns) + 1;
@@ -88,6 +110,7 @@
     grid.appendChild(cells);
 
     toggleButton.addEventListener('click', () => {
+        if (!isLocalEditor) return;
         gridIsVisible = !gridIsVisible;
         editor.classList.toggle('is-grid-hidden', !gridIsVisible);
         toggleButton.textContent = gridIsVisible ? 'Masquer la grille' : 'Afficher la grille';
@@ -95,12 +118,26 @@
     });
 
     clearButton.addEventListener('click', () => {
+        if (!isLocalEditor) return;
         selectedCells.clear();
         grid.querySelectorAll('.bibliotheque-hotspot-cell.is-selected').forEach((cell) => {
             setCellState(cell, false);
         });
         saveSelection();
         updateStatus();
+    });
+
+    copyButton.addEventListener('click', async () => {
+        if (!isLocalEditor) return;
+        const publishedCells = JSON.stringify([...selectedCells].sort((a, b) => a - b));
+
+        try {
+            await navigator.clipboard.writeText(publishedCells);
+            status.textContent = 'Liste copiée dans le presse-papiers.';
+        } catch (error) {
+            console.error('Impossible de copier la zone publiée.', error);
+            status.textContent = 'Copie impossible : autorisez l’accès au presse-papiers.';
+        }
     });
 
     updateStatus();
