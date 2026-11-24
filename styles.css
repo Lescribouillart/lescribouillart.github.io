@@ -2253,6 +2253,7 @@ body.index-page .intro-site-bg {
     min-height: 0;
     padding: 8px 16px;
     background: transparent;
+    cursor: pointer;
     overflow: hidden;
 }
 
@@ -2276,6 +2277,7 @@ body.index-page .intro-site-bg {
     margin-bottom: 8px;
     transition: transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
     transform: translateX(-25%);
+    cursor: default;
 }
 
 .book-embedded .book-frame.is-open {
@@ -2295,6 +2297,10 @@ body.index-page .intro-site-bg {
 
 .book-embedded .book {
     left: 50%;
+}
+
+.book-embedded .page {
+    cursor: pointer;
 }
 
 .book-back-link {

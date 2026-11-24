@@ -1,6 +1,11 @@
 if (window.self !== window.top) {
   document.documentElement.classList.add('book-embedded-root');
   document.body.classList.add('book-embedded');
+
+  document.addEventListener('click', (event) => {
+    if (event.target.closest('#book-frame')) return;
+    window.parent.postMessage({ type: 'close-book-modal' }, window.location.origin);
+  });
 }
 
 const pages = Array.from(document.querySelectorAll('.page'));

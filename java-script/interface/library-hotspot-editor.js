@@ -41,6 +41,11 @@
         if (event.target === bookModal) bookModal.close();
     });
 
+    window.addEventListener('message', (event) => {
+        if (event.origin !== window.location.origin || event.data?.type !== 'close-book-modal') return;
+        bookModal?.close();
+    });
+
     function parseCells(value, source) {
         try {
             const cells = JSON.parse(value || '[]');
