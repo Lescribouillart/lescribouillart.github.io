@@ -1,4 +1,5 @@
 if (window.self !== window.top) {
+  document.documentElement.classList.add('book-embedded-root');
   document.body.classList.add('book-embedded');
 }
 

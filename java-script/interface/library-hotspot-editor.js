@@ -14,7 +14,6 @@
     const target = editor.dataset.target;
     const bookModal = document.getElementById('book-modal');
     const bookFrame = bookModal?.querySelector('[data-book-modal-frame]');
-    const closeModalButton = bookModal?.querySelector('.book-modal-close');
     const storageKey = `library-hotspots:${columns}x${rows}`;
     const localHosts = new Set(['localhost', '127.0.0.1', '::1']);
     const isLocalEditor = window.location.protocol === 'file:' || localHosts.has(window.location.hostname);
@@ -38,7 +37,6 @@
         bookModal.showModal();
     }
 
-    closeModalButton?.addEventListener('click', () => bookModal.close());
     bookModal?.addEventListener('click', (event) => {
         if (event.target === bookModal) bookModal.close();
     });

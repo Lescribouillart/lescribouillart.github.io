@@ -2190,11 +2190,11 @@ body.index-page .intro-site-bg {
     max-height: none;
     margin: auto;
     padding: 0;
-    border: 1px solid rgba(255, 255, 255, 0.24);
-    border-radius: 12px;
-    background: #16362a;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
     color: #f4efe2;
-    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.58);
+    box-shadow: none;
     overflow: hidden;
 }
 
@@ -2203,47 +2203,12 @@ body.index-page .intro-site-bg {
     backdrop-filter: blur(3px);
 }
 
-.book-modal-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    min-height: 52px;
-    padding: 0.65rem 0.85rem 0.65rem 1rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
-}
-
-.book-modal-header h2 {
-    margin: 0;
-    font-size: 1.1rem;
-}
-
-.book-modal-close {
-    display: grid;
-    width: 38px;
-    height: 38px;
-    padding: 0;
-    border: 0;
-    border-radius: 50%;
-    place-items: center;
-    background: rgba(255, 255, 255, 0.1);
-    color: #fff;
-    font: 2rem/1 sans-serif;
-    cursor: pointer;
-}
-
-.book-modal-close:hover,
-.book-modal-close:focus-visible {
-    background: rgba(255, 255, 255, 0.2);
-    outline: 2px solid #fff;
-    outline-offset: 2px;
-}
-
 .book-modal-frame {
     display: block;
     width: 100%;
-    height: calc(100% - 52px);
+    height: 100%;
     border: 0;
-    background: #16362a;
+    background: transparent;
 }
 
 .book-page {
@@ -2272,10 +2237,22 @@ body.index-page .intro-site-bg {
     display: none;
 }
 
+.book-embedded-root,
+.book-embedded-root body,
+.book-embedded-root main,
+.book-embedded .book-main {
+    background: transparent !important;
+}
+
+.book-embedded-root {
+    overflow: hidden;
+}
+
 .book-embedded {
     height: 100vh;
     min-height: 0;
     padding: 8px 16px;
+    background: transparent;
     overflow: hidden;
 }
 
@@ -2288,8 +2265,7 @@ body.index-page .intro-site-bg {
 }
 
 .book-embedded .book-main h1 {
-    flex: 0 0 auto;
-    margin-bottom: 8px;
+    display: none;
 }
 
 .book-embedded .book-frame {
