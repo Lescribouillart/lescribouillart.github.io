@@ -4,25 +4,17 @@ if (window.self !== window.top) {
 }
 
 const pages = Array.from(document.querySelectorAll('.page'));
+const bookFrame = document.getElementById('book-frame');
 const total = pages.length;
 let current = -1;
 
 function update() {
+  bookFrame?.classList.toggle('is-open', current >= 0);
   pages.forEach((p, i) => {
     if (i <= current) p.classList.add('flipped'); else p.classList.remove('flipped');
     p.style.zIndex = total - i;
   });
 }
-
-document.getElementById('next').addEventListener('click', () => {
-  if (current < total - 1) current++;
-  update();
-});
-
-document.getElementById('prev').addEventListener('click', () => {
-  if (current >= 0) current--;
-  update();
-});
 
 pages.forEach((p, i) => {
   p.addEventListener('click', () => {
@@ -41,14 +33,15 @@ update();
   const spine = document.getElementById('spine');
   const main = document.querySelector('.book-main');
   const heading = main?.querySelector('h1');
-  const controls = main?.querySelector('.controls');
   const SPINE_RATIO = 0.09;
   let aspect = null;
 
   function applySpineSize(w, h){
     if(!spine) return;
-    spine.style.width = Math.round(w * SPINE_RATIO) + 'px';
+    const spineWidth = Math.round(w * SPINE_RATIO);
+    spine.style.width = spineWidth + 'px';
     spine.style.height = h + 'px';
+    bookFrame.style.setProperty('--spine-width', spineWidth + 'px');
   }
 
   function clamp(v){ return Math.max(0, Math.min(255, Math.round(v))); }
@@ -99,15 +92,18 @@ update();
     const verticalSpace = embedded
       ? window.innerHeight
         - (heading?.offsetHeight || 0)
-        - (controls?.offsetHeight || 0)
         - 40
       : window.innerHeight - 120;
     const maxHeight = Math.max(200, verticalSpace);
-    const maxPageWidth = Math.min(window.innerWidth * 0.92, 900) / (1 + SPINE_RATIO);
+    const maxPageWidth = (embedded
+      ? window.innerWidth / 2.15
+      : Math.min(window.innerWidth * 0.92, 900)) / (1 + SPINE_RATIO);
     const w = Math.min(imgW, maxPageWidth, maxHeight / aspect);
     const h = Math.round(w * aspect);
     book.style.width = w + 'px';
     book.style.height = h + 'px';
+    bookFrame.style.width = `${Math.round((w + w * SPINE_RATIO) * 2)}px`;
+    bookFrame.style.height = h + 'px';
     applySpineSize(w, h);
   }
 

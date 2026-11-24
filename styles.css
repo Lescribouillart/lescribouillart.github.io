@@ -2184,7 +2184,7 @@ body.index-page .intro-site-bg {
 .book-modal {
     position: fixed;
     inset: 0;
-    width: min(92vw, 1100px);
+    width: min(98vw, 1500px);
     height: min(88dvh, 850px);
     max-width: none;
     max-height: none;
@@ -2260,6 +2260,8 @@ body.index-page .intro-site-bg {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
+    max-width: none;
     height: 100%;
     overflow: hidden;
 }
@@ -2270,11 +2272,29 @@ body.index-page .intro-site-bg {
 
 .book-embedded .book-frame {
     flex: 0 0 auto;
+    max-width: none;
     margin-bottom: 8px;
+    transition: transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+    transform: translateX(-25%);
 }
 
-.book-embedded .controls {
-    flex: 0 0 auto;
+.book-embedded .book-frame.is-open {
+    transform: translateX(0);
+}
+
+.book-embedded .spine,
+.book-embedded .book {
+    position: absolute;
+    top: 0;
+}
+
+.book-embedded .spine {
+    right: calc(50% - 1px);
+    border-radius: 10px 0 0 10px;
+}
+
+.book-embedded .book {
+    left: 50%;
 }
 
 .book-back-link {
@@ -2284,6 +2304,7 @@ body.index-page .intro-site-bg {
 }
 
 .book-frame {
+    position: relative;
     display: flex;
     align-items: stretch;
     justify-content: center;
@@ -2409,24 +2430,6 @@ body.index-page .intro-site-bg {
 
 .book .book-text-page p {
     margin: 0;
-}
-
-.book-page .controls {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-}
-
-.book-page .controls button {
-    padding: 8px 12px;
-    border: 1px solid #bbb;
-    border-radius: 6px;
-    background: #fff;
-    cursor: pointer;
-}
-
-.book-page .controls button:active {
-    transform: translateY(1px);
 }
 
 @media (max-width: 800px) {
