@@ -86,6 +86,8 @@
         cell.type = 'button';
         cell.className = 'bibliotheque-hotspot-cell';
         cell.dataset.index = String(index);
+        cell.style.gridColumn = String(column);
+        cell.style.gridRow = String(row);
         cell.setAttribute('aria-label', `Case ligne ${row}, colonne ${column}`);
         setCellState(cell, isSelected);
         cell.addEventListener('click', () => {
