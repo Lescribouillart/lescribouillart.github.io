@@ -6,6 +6,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchStats = document.getElementById('search-stats');
     const searchTabButtons = Array.from(document.querySelectorAll('[data-search-tab]'));
     const defaultSearchTab = 'all';
+    const currentPath = window.location.pathname;
+    const isInHtmlFolder = currentPath.includes('/html/');
+    const isInHtml2Folder = currentPath.includes('/html2/');
+    const isInPageFolder = isInHtmlFolder || isInHtml2Folder;
     
     if (!searchInput) {
         return; // Si l'élément n'existe pas, on sort
@@ -57,9 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let cachedSitePages = null;
 
     function getPagesIndexUrl() {
-        const currentPath = window.location.pathname;
-        const isInHtmlFolder = currentPath.includes('/html/');
-        return isInHtmlFolder ? '../pages.json' : 'pages.json';
+        return isInPageFolder ? '../pages.json' : 'pages.json';
     }
 
     async function loadSitePages() {
@@ -83,12 +85,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function buildSearchPageUrl(searchTerm = '') {
-        const currentPath = window.location.pathname;
-        const isInHtmlFolder = currentPath.includes('/html/');
         const activeTab = getActiveSearchTab();
         const baseUrl = isInHtmlFolder
             ? 'moteurderecherche.html'
-            : 'html/moteurderecherche.html';
+            : isInHtml2Folder
+                ? '../html/moteurderecherche.html'
+                : 'html/moteurderecherche.html';
 
         if (!searchTerm) {
             return `${baseUrl}?tab=${encodeURIComponent(activeTab)}`;
@@ -106,18 +108,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Rediriger vers la page moteur de recherche avec le terme de recherche
-        const currentPath = window.location.pathname;
-        const isInHtmlFolder = currentPath.includes('/html/');
-        
-        // Construire l'URL en fonction de l'emplacement actuel
-        let targetUrl;
-        const activeTab = getActiveSearchTab();
-        if (isInHtmlFolder) {
-            targetUrl = `moteurderecherche.html?search=${encodeURIComponent(searchTerm)}&tab=${encodeURIComponent(activeTab)}`;
-        } else {
-            targetUrl = `html/moteurderecherche.html?search=${encodeURIComponent(searchTerm)}&tab=${encodeURIComponent(activeTab)}`;
-        }
-        
         window.location.href = buildSearchPageUrl(searchTerm);
     }
 
@@ -158,9 +148,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return path;
         }
 
-        const currentPath = window.location.pathname;
-        const isInHtmlFolder = currentPath.includes('/html/');
-        return isInHtmlFolder ? `../${path}` : path;
+        return isInPageFolder ? `../${path}` : path;
     }
 
     function escapeHtml(value) {
@@ -334,7 +322,7 @@ document.addEventListener('DOMContentLoaded', function() {
         || window.location.pathname.endsWith('/index')
         || window.location.pathname.endsWith('/accueil.html')
         || window.location.pathname.endsWith('/accueil')
-        || !window.location.pathname.includes('/html/')
+        || !isInPageFolder
     ) {
         const redirectToSearchPage = () => {
             window.location.href = buildSearchPageUrl(searchInput.value.trim());
