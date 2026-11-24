@@ -2079,6 +2079,19 @@ body.index-page .intro-site-bg {
     line-height: 1.4;
 }
 
+.bibliotheque-panel {
+    overflow: hidden;
+}
+
+.bibliotheque-image {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: inherit;
+    object-fit: contain;
+}
+
 .presentation-bg2 p,
 .presentation-bg2 .key-point,
 .presentation-bg2 .alternative-intro,
