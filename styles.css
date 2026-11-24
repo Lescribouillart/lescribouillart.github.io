@@ -2083,6 +2083,43 @@ body.index-page .intro-site-bg {
     overflow: hidden;
 }
 
+.bibliotheque-editor-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.bibliotheque-editor-toolbar button {
+    padding: 0.55rem 0.85rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 6px;
+    background: rgba(123, 163, 216, 0.18);
+    color: #f0f0f0;
+    font: inherit;
+    cursor: pointer;
+}
+
+.bibliotheque-editor-toolbar button:hover,
+.bibliotheque-editor-toolbar button:focus-visible {
+    background: rgba(123, 163, 216, 0.32);
+    outline: 2px solid #7ba3d8;
+    outline-offset: 2px;
+}
+
+.bibliotheque-editor-status {
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 0.9rem;
+}
+
+.bibliotheque-image-stage {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    line-height: 0;
+}
+
 .bibliotheque-image {
     display: block;
     width: 100%;
@@ -2090,6 +2127,54 @@ body.index-page .intro-site-bg {
     height: auto;
     border-radius: inherit;
     object-fit: contain;
+}
+
+.bibliotheque-hotspot-grid {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: repeat(var(--hotspot-columns), minmax(0, 1fr));
+    grid-template-rows: repeat(var(--hotspot-rows), minmax(0, 1fr));
+    line-height: normal;
+}
+
+.bibliotheque-hotspot-cell {
+    min-width: 0;
+    min-height: 0;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 0;
+    background: transparent;
+    cursor: crosshair;
+}
+
+.bibliotheque-hotspot-cell:hover,
+.bibliotheque-hotspot-cell:focus-visible {
+    background: rgba(123, 163, 216, 0.25);
+    outline: 2px solid #7ba3d8;
+    outline-offset: -2px;
+}
+
+.bibliotheque-hotspot-cell.is-selected {
+    background: rgba(123, 163, 216, 0.58);
+    border-color: rgba(207, 228, 255, 0.8);
+}
+
+.bibliotheque-panel.is-grid-hidden .bibliotheque-hotspot-cell {
+    border-color: transparent;
+    background: transparent;
+    pointer-events: none;
+}
+
+.bibliotheque-panel.is-grid-hidden .bibliotheque-hotspot-cell.is-selected {
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.bibliotheque-panel.is-grid-hidden .bibliotheque-hotspot-cell.is-selected:hover,
+.bibliotheque-panel.is-grid-hidden .bibliotheque-hotspot-cell.is-selected:focus-visible {
+    background: transparent;
+    outline: none;
 }
 
 .presentation-bg2 p,

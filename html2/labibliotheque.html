@@ -74,8 +74,16 @@
     <main class="main" id="main-content" style="padding-bottom: 40px;">
         <div class="container">
             <div class="presentation feuillet-presentation characters-presentation">
-                <div class="presentation-bg2 bibliotheque-panel">
-                    <img class="bibliotheque-image" src="../images/fondmain/bibliotheque.png" alt="Bibliothèque" title="Bibliothèque">
+                <div class="presentation-bg2 bibliotheque-panel" data-library-hotspot-editor data-target="../grimoire/index.html" data-columns="48" data-rows="64">
+                    <div class="bibliotheque-editor-toolbar">
+                        <button class="bibliotheque-editor-toggle" type="button" aria-pressed="true">Masquer la grille</button>
+                        <button class="bibliotheque-editor-clear" type="button">Effacer la zone</button>
+                        <span class="bibliotheque-editor-status" role="status" aria-live="polite">0 case sélectionnée</span>
+                    </div>
+                    <div class="bibliotheque-image-stage">
+                        <img class="bibliotheque-image" src="../images/fondmain/bibliotheque.png" alt="Bibliothèque" title="Bibliothèque">
+                        <div class="bibliotheque-hotspot-grid" aria-label="Grille de délimitation de la zone cliquable"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -103,6 +111,7 @@
     <script src="../java-script/interface/tagline-fireflies.js"></script>
     <script src="../java-script/interface/feuillet-personnages.js"></script>
     <script src="../java-script/interface/feuillet-keynav.js"></script>
+    <script src="../java-script/interface/library-hotspot-editor.js"></script>
     <script src="../java-script/recherche/recherche.js"></script>
 </body>
 </html>
