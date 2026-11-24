@@ -1,12 +1,10 @@
-// Contrôle simple pour tourner les pages
 const pages = Array.from(document.querySelectorAll('.page'));
 const total = pages.length;
-let current = -1; // index de la dernière page tournée
+let current = -1;
 
 function update() {
   pages.forEach((p, i) => {
     if (i <= current) p.classList.add('flipped'); else p.classList.remove('flipped');
-    // empilement : page 0 au-dessus
     p.style.zIndex = total - i;
   });
 }
@@ -22,24 +20,21 @@ document.getElementById('prev').addEventListener('click', () => {
 });
 
 pages.forEach((p, i) => {
-  p.addEventListener('click', (e) => {
-    // si on clique sur une page non tournée -> tourner jusqu'à cette page
+  p.addEventListener('click', () => {
     if (i > current) current = i;
     else if (i <= current) current = i - 1;
     update();
   });
 });
 
-// init
 update();
 
-// Essayer plusieurs chemins pour la couverture (pratique si le fichier est à la racine ou dans images/)
 ;(function loadCover(){
   const img = document.getElementById('cover');
   if(!img) return;
   const book = document.getElementById('book');
   const spine = document.getElementById('spine');
-  const SPINE_RATIO = 0.09; // largeur de la reliure, en proportion de la largeur du livre
+  const SPINE_RATIO = 0.09;
   let aspect = null;
 
   function applySpineSize(w, h){
@@ -51,14 +46,10 @@ update();
   function clamp(v){ return Math.max(0, Math.min(255, Math.round(v))); }
 
   function shade(rgb, percent){
-    // percent négatif = assombrit, positif = éclaircit
     const amt = 2.55 * percent;
     return `rgb(${clamp(rgb[0] + amt)}, ${clamp(rgb[1] + amt)}, ${clamp(rgb[2] + amt)})`;
   }
 
-  // Récupère la couleur moyenne du bord gauche de la couverture, pour que la
-  // reliure adopte exactement le même ton que l'illustration (plutôt qu'une
-  // couleur arbitraire qui ne correspond pas au livre).
   function sampleEdgeColor(image){
     try {
       const h = image.naturalHeight || 100;
@@ -75,7 +66,7 @@ update();
       if(!count) return null;
       return [r / count, g / count, b / count];
     } catch(e){
-      return null; // canvas "tainted" ou image indisponible : on garde le style CSS par défaut
+      return null;
     }
   }
 
@@ -114,29 +105,42 @@ update();
     applySpineSize(w, h);
   });
 
-  img.onload = () => {
+  function initializeCover() {
     setBookSizeFromAspect(img.naturalWidth, img.naturalHeight);
     applySpineColor(img);
-  };
-
-  const candidates = [
-    'images/grimnoelpass.png',       // ancien nom/dossier
-    'images/grimnoelpasse.png',      // variante avec 'e'
-    'grimnoelpasse.png',             // fichier à la racine du projet
-    'grimnoelpass.png'               // autre variante à la racine
-  ];
-
-  let i = 0;
-  function tryNext(){
-    if(i >= candidates.length){
-      img.alt = 'Image introuvable: grimnoelpasse.png';
-      return;
-    }
-    const testSrc = candidates[i++];
-    const tester = new Image();
-    tester.onload = () => { img.src = testSrc; /* déclenche img.onload qui ajuste la taille */ };
-    tester.onerror = () => { tryNext(); };
-    tester.src = testSrc;
   }
-  tryNext();
+
+  img.addEventListener('load', initializeCover);
+  if (img.complete && img.naturalWidth) initializeCover();
+})();
+
+(async function loadStory() {
+  const storyPage = document.querySelector('[data-book-story]');
+  if (!storyPage) return;
+
+  try {
+    const response = await fetch('../textes/luneeternelle.txt');
+    if (!response.ok) throw new Error(`Chargement du récit impossible (${response.status})`);
+
+    const [title, ...paragraphs] = (await response.text()).split(/\r?\n/);
+    storyPage.replaceChildren();
+
+    const heading = document.createElement('h2');
+    heading.textContent = title.trim();
+    storyPage.appendChild(heading);
+
+    paragraphs.forEach((paragraph) => {
+      const text = paragraph.trim();
+      if (!text) return;
+      const element = document.createElement('p');
+      element.textContent = text;
+      storyPage.appendChild(element);
+    });
+  } catch (error) {
+    console.error('Impossible de charger le récit de la lune éternelle.', error);
+    storyPage.replaceChildren();
+    const message = document.createElement('p');
+    message.textContent = 'Le récit est momentanément indisponible.';
+    storyPage.appendChild(message);
+  }
 })();

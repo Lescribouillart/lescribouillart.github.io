@@ -2181,6 +2181,189 @@ body.index-page .intro-site-bg {
     outline: none;
 }
 
+.book-page {
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    background: linear-gradient(160deg, #1f4d38 0%, #16362a 100%);
+    color: #f4efe2;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.book-main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0;
+    text-align: center;
+}
+
+.book-main h1 {
+    margin-bottom: 16px;
+    font-size: 1.25rem;
+}
+
+.book-back-link {
+    display: inline-block;
+    margin-bottom: 1rem;
+    color: #f4efe2;
+}
+
+.book-frame {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    max-width: 92vw;
+    margin: 0 auto 16px;
+}
+
+.spine {
+    position: relative;
+    flex: 0 0 auto;
+    overflow: hidden;
+    border-radius: 10px 0 0 10px;
+    background: linear-gradient(90deg, #cfc8ba 0%, #9d8d71 30%, #826b47 55%, #ae9874 100%);
+    box-shadow:
+        -6px 0 14px rgba(0, 0, 0, 0.22),
+        inset 2px 0 4px rgba(255, 255, 255, 0.45),
+        inset -8px 0 14px rgba(70, 49, 24, 0.28);
+}
+
+.spine::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.42) 0%,
+        rgba(255, 255, 255, 0.12) 22%,
+        rgba(0, 0, 0, 0.16) 68%,
+        rgba(255, 255, 255, 0.26) 100%
+    );
+    mix-blend-mode: screen;
+    pointer-events: none;
+}
+
+.spine::after {
+    content: "";
+    position: absolute;
+    top: 4%;
+    bottom: 4%;
+    left: 32%;
+    width: 16%;
+    border-radius: 999px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.02));
+    filter: blur(1px);
+    opacity: 0.65;
+    pointer-events: none;
+}
+
+.book {
+    position: relative;
+    width: 720px;
+    max-width: 92vw;
+    height: auto;
+    perspective: 2200px;
+}
+
+.book .page {
+    position: absolute;
+    inset: 0;
+    transform-origin: left center;
+    transform-style: preserve-3d;
+    transition: transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.book .page.flipped {
+    transform: rotateY(-180deg);
+}
+
+.book .page::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    transition: opacity 0.3s;
+}
+
+.book .page:hover::after {
+    opacity: 1;
+}
+
+.book .face {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    background: #fff;
+    backface-visibility: hidden;
+    color: #29271f;
+    font-size: 48px;
+}
+
+.book .back {
+    transform: rotateY(180deg);
+    background: #fafafa;
+}
+
+.book .face > img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.book .book-text-page {
+    display: block;
+    overflow-y: auto;
+    padding: 12%;
+    text-align: left;
+    font-family: var(--font-body);
+    font-size: clamp(0.75rem, 1.5vw, 1rem);
+    line-height: 1.6;
+}
+
+.book .book-text-page h2 {
+    margin-bottom: 1em;
+    text-align: center;
+    font-size: 1.35em;
+}
+
+.book .book-text-page p {
+    margin: 0;
+}
+
+.book-page .controls {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.book-page .controls button {
+    padding: 8px 12px;
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+}
+
+.book-page .controls button:active {
+    transform: translateY(1px);
+}
+
+@media (max-width: 800px) {
+    .book {
+        width: 92vw;
+    }
+
+    .book .face {
+        font-size: 8vw;
+    }
+}
+
 .presentation-bg2 p,
 .presentation-bg2 .key-point,
 .presentation-bg2 .alternative-intro,
