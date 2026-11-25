@@ -170,13 +170,11 @@ function parseStoryMarkdown(markdown) {
   let paragraph = [];
   let list = [];
   let listType = null;
-  let bodyStarted = false;
 
   function flushParagraph() {
     if (paragraph.length === 0) return;
     blocks.push(`<p>${parseInlineMarkdown(paragraph.join(' '))}</p>`);
     paragraph = [];
-    bodyStarted = true;
   }
 
   function flushList() {
@@ -184,7 +182,6 @@ function parseStoryMarkdown(markdown) {
     blocks.push(`<${listType}>${list.map((item) => `<li>${parseInlineMarkdown(item)}</li>`).join('')}</${listType}>`);
     list = [];
     listType = null;
-    bodyStarted = true;
   }
 
   for (const line of lines) {
@@ -193,7 +190,7 @@ function parseStoryMarkdown(markdown) {
     if (!trimmed) {
       flushParagraph();
       flushList();
-      if (bodyStarted) blocks.push('<div class="book-spacer" aria-hidden="true"></div>');
+      if (blocks.length > 0) blocks.push('<div class="book-spacer" aria-hidden="true"></div>');
       continue;
     }
 
