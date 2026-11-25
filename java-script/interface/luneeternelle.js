@@ -165,16 +165,18 @@ function parseInlineMarkdown(text) {
 }
 
 function parseStoryMarkdown(markdown) {
-  const lines = markdown.replace(/\r\n/g, '\n').split('\n');
+  const lines = markdown.replace(/\r\n/g, '\n').replace(/\n+$/, '').split('\n');
   const blocks = [];
   let paragraph = [];
   let list = [];
   let listType = null;
+  let bodyStarted = false;
 
   function flushParagraph() {
     if (paragraph.length === 0) return;
     blocks.push(`<p>${parseInlineMarkdown(paragraph.join(' '))}</p>`);
     paragraph = [];
+    bodyStarted = true;
   }
 
   function flushList() {
@@ -182,6 +184,7 @@ function parseStoryMarkdown(markdown) {
     blocks.push(`<${listType}>${list.map((item) => `<li>${parseInlineMarkdown(item)}</li>`).join('')}</${listType}>`);
     list = [];
     listType = null;
+    bodyStarted = true;
   }
 
   for (const line of lines) {
@@ -190,6 +193,7 @@ function parseStoryMarkdown(markdown) {
     if (!trimmed) {
       flushParagraph();
       flushList();
+      if (bodyStarted) blocks.push('<div class="book-spacer" aria-hidden="true"></div>');
       continue;
     }
 
@@ -285,6 +289,12 @@ function paginateBlocks(blocks) {
     template.innerHTML = markup;
     const block = template.content.firstElementChild;
     if (!block) continue;
+
+    if (!block.textContent) {
+      if (!fits(block.cloneNode(true))) finishPage();
+      content.appendChild(block);
+      continue;
+    }
 
     const textLength = block.textContent.length;
     let start = 0;

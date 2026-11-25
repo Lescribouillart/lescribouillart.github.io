@@ -2482,6 +2482,10 @@ body.index-page .intro-site-bg {
     margin: 0;
 }
 
+.book .book-spacer {
+    height: 1.6em;
+}
+
 .book-page-number {
     position: absolute;
     right: 50%;
