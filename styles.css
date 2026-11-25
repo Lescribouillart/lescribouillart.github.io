@@ -2458,7 +2458,10 @@ body.index-page .intro-site-bg {
     margin-bottom: 1em;
     text-align: center;
     text-align-last: center;
-    font-size: 1.35em;
+    font-size: 1.25em;
+    font-weight: 700;
+    line-height: 1.3;
+    text-wrap: balance;
 }
 
 .book .book-text-page p {
@@ -2474,8 +2477,8 @@ body.index-page .intro-site-bg {
 .book .book-page-content > h2:first-child {
     position: absolute;
     top: 0;
-    right: 0;
-    left: 0;
+    right: 5%;
+    left: 5%;
     margin: 0;
 }
 
