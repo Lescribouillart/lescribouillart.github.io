@@ -1,5 +1,5 @@
 <figure class="article-figure-left">
-	<img src="../images/personnages/pierredebrask/pierredebrask.png" alt="Portrait de Pierre Debrask">
+	<img src="../images/personnages/pierredebrask/pierredebrask.webp" alt="Portrait de Pierre Debrask">
 	<figcaption></figcaption>
 </figure>
 

@@ -11,11 +11,11 @@
         const script = document.currentScript || document.querySelector('script[src*="tagline-fireflies.js"]');
         const leafImageUrls = script
             ? [
-                new URL('../../images/icons/feuille.png', script.src).href,
-                new URL('../../images/icons/feuilleautomne.png', script.src).href,
-                new URL('../../images/icons/feuilleautomrouge.png', script.src).href
+                new URL('../../images/icons/feuille.webp', script.src).href,
+                new URL('../../images/icons/feuilleautomne.webp', script.src).href,
+                new URL('../../images/icons/feuilleautomrouge.webp', script.src).href
             ]
-            : ['images/icons/feuille.png', 'images/icons/feuilleautomne.png', 'images/icons/feuilleautomrouge.png'];
+            : ['images/icons/feuille.webp', 'images/icons/feuilleautomne.webp', 'images/icons/feuilleautomrouge.webp'];
 
         if (!taglines.length) {
             return;

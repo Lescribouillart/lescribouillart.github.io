@@ -6,7 +6,7 @@ Néanmoins, il est important de se pencher sur l'histoire des fondateurs du CERF
 
 <div class="article-para-with-image">
   <figure class="article-figure-img article-figure-fun">
-    <img src="../images/lesarticles/1/lefun.png" alt="Réserve naturelle aménagée par le FUN">
+    <img src="../images/lesarticles/1/lefun.webp" alt="Réserve naturelle aménagée par le FUN">
     <figcaption>Des membres du FUN le 13 juin 1935</figcaption>
   </figure>
   <p>En 1935, une communauté de chercheurs permit l'aménagement de nombreuses réserves sur des kilomètres autour du barrage. <em>« Réintroduire et préserver »</em> se trouvait être leur slogan. Car à l'époque, la constitution de cette équipe de scientifiques fut sélectionnée par les membres activistes qui se faisaient appeler le FUN (le Front uni pour la nature). Leur mission principale était la restauration de l'écosystème dans les forêts d'Écluselac. Cette démarche n'avait probablement rien d'officiel, car l'essentiel de ses membres aménagèrent des zones illégales servant de refuges pour la faune et la flore.</p>
@@ -17,7 +17,7 @@ Une démarche associative qui était perçue comme marginale, en faisant partie 
 <div class="article-para-with-image article-para-with-machine-room">
   <p>Lors de cette catastrophe majeure, des experts mandatés par les compagnies d'assurances examinèrent la structure restante du barrage. Ils commencèrent par l'analyse rigoureuse des matériaux qui constituaient le corps de l'édifice. Officiellement, aucune anomalie ne permit d'identifier la cause exacte de cet incident. Ces derniers temps, le lac avait atteint sa capacité maximale à cause des fortes précipitations des deux derniers mois. Les conclusions de chaque rapport penchèrent dans ce sens-là, ciblant une surcharge exercée sur des parois en béton déjà très vétustes. Des travaux conséquents qui ont été maintes fois reportés par le vote du conseil municipal de la ville.</p>
   <figure class="article-figure-img article-figure-machine-room">
-    <img src="../images/lesarticles/1/salledesmachines.png" alt="Salle des machines du barrage">
+    <img src="../images/lesarticles/1/salledesmachines.webp" alt="Salle des machines du barrage">
     <figcaption>La salle des machines du barrage d'Écluselac.</figcaption>
   </figure>
 </div>

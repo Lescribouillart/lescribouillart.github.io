@@ -180,7 +180,7 @@ function displayCharacter(character, characterContent) {
         </div>
         <div class="character-scroll-link" aria-hidden="false">
             <a href="#character-content" class="scroll-top-link" aria-label="Remonter au début de la fiche">
-                <img src="../images/icons/feuilleautomrouge.png" alt="Remonter" width="44" height="44">
+                <img src="../images/icons/feuilleautomrouge.webp" alt="Remonter" width="44" height="44">
             </a>
         </div>
     `;

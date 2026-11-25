@@ -21,8 +21,8 @@
 		return new Promise((resolve, reject) => {
 			const image = new Image();
 			image.onload = () => resolve(image);
-			image.onerror = () => reject(new Error('Impossible de charger planete.png'));
-			image.src = '../images/Map/planete.png';
+			image.onerror = () => reject(new Error('Impossible de charger planete.webp'));
+			image.src = '../images/Map/planete.webp';
 		});
 	}
 
@@ -306,14 +306,14 @@
 		const updateStatus = createStatusUpdater(statusNode);
 		const franceView = {
 			title: 'Carte de la France',
-			imageSrc: '../images/Map/france/francefull.png',
+			imageSrc: '../images/Map/france/francefull.webp',
 			alt: 'Carte de la France'
 		};
 
 		// Vue du plan de la ville d'Écluselac (ouverte depuis le point rouge sur la carte de France)
 		const ecluselacView = {
 			title: 'Plan d\'Écluselac',
-			imageSrc: '../images/Map/ecluselac/carte-ecluselac.png',
+			imageSrc: '../images/Map/ecluselac/carte-ecluselac.webp',
 			alt: 'Plan d\'Écluselac'
 		};
 		let progressAnimationFrameId = 0;
@@ -528,7 +528,7 @@
 
 			if (viewerLoadingNode) {
 				// Ne pas afficher la barre de chargement pour certaines images (France, Ecluselac)
-				if (config.imageSrc && (config.imageSrc.indexOf('francefull.png') !== -1 || config.imageSrc.indexOf('ecluselac') !== -1)) {
+				if (config.imageSrc && (config.imageSrc.indexOf('francefull.webp') !== -1 || config.imageSrc.indexOf('ecluselac') !== -1)) {
 					viewerLoadingNode.hidden = true;
 					setViewerLoadingProgress(100);
 				} else {
@@ -587,7 +587,7 @@
 					// Mettre à jour la miniature active si la fonction est disponible
 					if (typeof setActiveThumb === 'function') {
 						try {
-							if (viewerPanelNode._currentView && viewerPanelNode._currentView.imageSrc.indexOf('francefull.png') !== -1) {
+							if (viewerPanelNode._currentView && viewerPanelNode._currentView.imageSrc.indexOf('francefull.webp') !== -1) {
 								setActiveThumb('france');
 							} else if (viewerPanelNode._currentView && viewerPanelNode._currentView.imageSrc.indexOf('ecluselac') !== -1) {
 								setActiveThumb('ecluselac');
@@ -739,7 +739,7 @@
 						// Si la vue affichée est la carte de France, forcer la position du point
 						// (coordonnées fournies en pourcentage : 59.96615% / 47.4805%)
 						try {
-							if (config && config.imageSrc && config.imageSrc.indexOf('francefull.png') !== -1) {
+							if (config && config.imageSrc && config.imageSrc.indexOf('francefull.webp') !== -1) {
 								if (viewerImageNode && viewerImageNode.naturalWidth && viewerImageNode.naturalHeight) {
 									viewerDotNode._detectedSrcXY = {
 										x: Math.round(viewerImageNode.naturalWidth * 0.5996615),

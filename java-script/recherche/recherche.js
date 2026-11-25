@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', function() {
             'images/inclusif/',
             'images/info/',
             'racines-bas-header',
-            'scribouillart.png',
+            'scribouillart.webp',
             'dislexie'
         ].some(fragment => normalizedSrc.includes(fragment));
     }
