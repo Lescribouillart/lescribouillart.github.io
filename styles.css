@@ -2316,6 +2316,28 @@ body.index-page .intro-site-bg {
     justify-content: center;
     max-width: 92vw;
     margin: 0 auto 16px;
+    cursor: pointer;
+}
+
+.book-frame::before,
+.book-frame::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 100;
+    width: 12%;
+    pointer-events: none;
+}
+
+.book-frame::before {
+    left: 0;
+    cursor: w-resize;
+}
+
+.book-frame::after {
+    right: 0;
+    cursor: e-resize;
 }
 
 .spine {

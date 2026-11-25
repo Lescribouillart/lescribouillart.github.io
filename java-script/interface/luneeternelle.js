@@ -10,6 +10,7 @@ if (window.self !== window.top) {
 
 const bookFrame = document.getElementById('book-frame');
 const book = document.getElementById('book');
+const MIN_STORY_PAGES = 10;
 let pages = [];
 let current = -1;
 let storyMarkdown = '';
@@ -19,25 +20,36 @@ let coverMarkup = document.getElementById('cover')?.outerHTML || '';
 function update() {
   bookFrame?.classList.toggle('is-open', current >= 0);
   pages.forEach((p, i) => {
-    if (i <= current) p.classList.add('flipped'); else p.classList.remove('flipped');
-    p.style.zIndex = pages.length - i;
+    const flipped = i <= current;
+    p.classList.toggle('flipped', flipped);
+    p.style.zIndex = flipped ? i + 1 : pages.length - i;
   });
 }
 
 function bindPages() {
   pages = Array.from(document.querySelectorAll('.book .page'));
-  pages.forEach((p, i) => {
-    p.addEventListener('click', () => {
-      if (i > current) current = i;
-      else if (i <= current) current = i - 1;
-      update();
-    });
-  });
   current = -1;
   update();
 }
 
 bindPages();
+
+function goToAdjacentPage(direction) {
+  current = Math.max(-1, Math.min(pages.length - 1, current + direction));
+  update();
+}
+
+bookFrame?.addEventListener('click', (event) => {
+  if (event.target.closest('a, button')) return;
+  const bounds = bookFrame.getBoundingClientRect();
+  const direction = event.clientX < bounds.left + bounds.width / 2 ? -1 : 1;
+  goToAdjacentPage(direction);
+});
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'ArrowRight') goToAdjacentPage(1);
+  if (event.key === 'ArrowLeft') goToAdjacentPage(-1);
+});
 
 ;(function loadCover(){
   const img = document.getElementById('cover');
@@ -348,6 +360,7 @@ function paginateStory() {
   if (!storyMarkdown || !book || !book.clientWidth || !book.clientHeight) return;
 
   const storyPages = paginateBlocks(parseStoryMarkdown(storyMarkdown));
+  while (storyPages.length < MIN_STORY_PAGES) storyPages.push('');
   const sheetCount = Math.max(1, Math.ceil((storyPages.length + 1) / 2));
   const fragment = document.createDocumentFragment();
 
@@ -363,14 +376,14 @@ function paginateStory() {
       sheet.appendChild(front);
     } else {
       const frontPage = storyPages[2 * index - 1];
-      sheet.appendChild(frontPage
+      sheet.appendChild(frontPage !== undefined
         ? createStoryFace(frontPage, 2 * index)
         : document.createElement('div'));
     }
 
     const firstStoryFace = 2 * index;
     const backContent = storyPages[firstStoryFace];
-    if (backContent) {
+    if (backContent !== undefined) {
       const back = createStoryFace(backContent, firstStoryFace + 1);
       back.classList.add('back');
       sheet.appendChild(back);
