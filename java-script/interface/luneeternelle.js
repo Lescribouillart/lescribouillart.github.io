@@ -8,33 +8,40 @@ if (window.self !== window.top) {
   });
 }
 
-const pages = Array.from(document.querySelectorAll('.page'));
 const bookFrame = document.getElementById('book-frame');
-const total = pages.length;
+const book = document.getElementById('book');
+let pages = [];
 let current = -1;
+let storyMarkdown = '';
+let paginationTimer = 0;
+let coverMarkup = document.getElementById('cover')?.outerHTML || '';
 
 function update() {
   bookFrame?.classList.toggle('is-open', current >= 0);
   pages.forEach((p, i) => {
     if (i <= current) p.classList.add('flipped'); else p.classList.remove('flipped');
-    p.style.zIndex = total - i;
+    p.style.zIndex = pages.length - i;
   });
 }
 
-pages.forEach((p, i) => {
-  p.addEventListener('click', () => {
-    if (i > current) current = i;
-    else if (i <= current) current = i - 1;
-    update();
+function bindPages() {
+  pages = Array.from(document.querySelectorAll('.book .page'));
+  pages.forEach((p, i) => {
+    p.addEventListener('click', () => {
+      if (i > current) current = i;
+      else if (i <= current) current = i - 1;
+      update();
+    });
   });
-});
+  current = -1;
+  update();
+}
 
-update();
+bindPages();
 
 ;(function loadCover(){
   const img = document.getElementById('cover');
   if(!img) return;
-  const book = document.getElementById('book');
   const spine = document.getElementById('spine');
   const main = document.querySelector('.book-main');
   const heading = main?.querySelector('h1');
@@ -115,11 +122,14 @@ update();
   window.addEventListener('resize', () => {
     if(!aspect) return;
     setBookSizeFromAspect(img.naturalWidth, img.naturalHeight);
+    window.clearTimeout(paginationTimer);
+    paginationTimer = window.setTimeout(paginateStory, 100);
   });
 
   function initializeCover() {
     setBookSizeFromAspect(img.naturalWidth, img.naturalHeight);
     applySpineColor(img);
+    paginateStory();
   }
 
   img.addEventListener('load', initializeCover);
@@ -142,22 +152,22 @@ function parseInlineMarkdown(text) {
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
 }
 
-function renderStoryMarkdown(markdown) {
+function parseStoryMarkdown(markdown) {
   const lines = markdown.replace(/\r\n/g, '\n').split('\n');
-  const html = [];
+  const blocks = [];
   let paragraph = [];
   let list = [];
   let listType = null;
 
   function flushParagraph() {
     if (paragraph.length === 0) return;
-    html.push(`<p>${parseInlineMarkdown(paragraph.join(' '))}</p>`);
+    blocks.push(`<p>${parseInlineMarkdown(paragraph.join(' '))}</p>`);
     paragraph = [];
   }
 
   function flushList() {
     if (list.length === 0 || !listType) return;
-    html.push(`<${listType}>${list.map((item) => `<li>${parseInlineMarkdown(item)}</li>`).join('')}</${listType}>`);
+    blocks.push(`<${listType}>${list.map((item) => `<li>${parseInlineMarkdown(item)}</li>`).join('')}</${listType}>`);
     list = [];
     listType = null;
   }
@@ -176,7 +186,7 @@ function renderStoryMarkdown(markdown) {
       flushParagraph();
       flushList();
       const level = heading[1].length;
-      html.push(`<h${level}>${parseInlineMarkdown(heading[2])}</h${level}>`);
+      blocks.push(`<h${level}>${parseInlineMarkdown(heading[2])}</h${level}>`);
       continue;
     }
 
@@ -197,7 +207,186 @@ function renderStoryMarkdown(markdown) {
 
   flushParagraph();
   flushList();
-  return html.join('\n');
+  return blocks;
+}
+
+function getTextPoint(root, offset) {
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+  let remaining = offset;
+  let node = walker.nextNode();
+
+  while (node) {
+    if (remaining <= node.textContent.length) {
+      return [node, remaining];
+    }
+    remaining -= node.textContent.length;
+    node = walker.nextNode();
+  }
+
+  return [root, root.childNodes.length];
+}
+
+function cloneBlockPart(block, start, end) {
+  if (!block.textContent) return block.cloneNode(true);
+
+  const range = document.createRange();
+  const startPoint = getTextPoint(block, start);
+  const endPoint = getTextPoint(block, end);
+  range.setStart(startPoint[0], startPoint[1]);
+  range.setEnd(endPoint[0], endPoint[1]);
+
+  const part = block.cloneNode(false);
+  part.appendChild(range.cloneContents());
+  return part;
+}
+
+function paginateBlocks(blocks) {
+  if (!book || !book.clientWidth || !book.clientHeight) return [];
+
+  const measurer = document.createElement('div');
+  measurer.className = 'face back book-text-page pagination-measurer';
+  const content = document.createElement('div');
+  content.className = 'book-page-content';
+  measurer.appendChild(content);
+  book.appendChild(measurer);
+
+  const styles = window.getComputedStyle(measurer);
+  const availableHeight = measurer.clientHeight
+    - parseFloat(styles.paddingTop)
+    - parseFloat(styles.paddingBottom);
+  const renderedPages = [];
+
+  function fits(candidate) {
+    content.appendChild(candidate);
+    const result = content.scrollHeight <= availableHeight;
+    candidate.remove();
+    return result;
+  }
+
+  function finishPage() {
+    renderedPages.push(content.innerHTML);
+    content.replaceChildren();
+  }
+
+  for (const markup of blocks) {
+    const template = document.createElement('template');
+    template.innerHTML = markup;
+    const block = template.content.firstElementChild;
+    if (!block) continue;
+
+    const textLength = block.textContent.length;
+    let start = 0;
+
+    while (start < textLength) {
+      while (start < textLength && /\s/.test(block.textContent[start])) start++;
+      if (start >= textLength) break;
+
+      const remaining = cloneBlockPart(block, start, textLength);
+      if (fits(remaining)) {
+        content.appendChild(remaining);
+        start = textLength;
+        break;
+      }
+
+      let low = start + 1;
+      let high = textLength;
+      let best = start;
+
+      while (low <= high) {
+        const middle = Math.floor((low + high) / 2);
+        const part = cloneBlockPart(block, start, middle);
+
+        if (fits(part)) {
+          best = Math.max(best, middle);
+          low = middle + 1;
+        } else {
+          high = middle - 1;
+        }
+      }
+
+      if (best > start) {
+        const text = block.textContent;
+        const space = text.lastIndexOf(' ', best);
+        if (space > start && best < textLength) best = space;
+        content.appendChild(cloneBlockPart(block, start, best));
+        start = best;
+
+        if (start < textLength) finishPage();
+        continue;
+      }
+
+      if (content.childNodes.length > 0) {
+        finishPage();
+        continue;
+      }
+
+      content.appendChild(block.cloneNode(true));
+      break;
+    }
+  }
+
+  if (content.childNodes.length > 0) finishPage();
+  measurer.remove();
+  return renderedPages;
+}
+
+function createStoryFace(content, pageNumber) {
+  const face = document.createElement('div');
+  face.className = 'face book-text-page';
+  const pageContent = document.createElement('div');
+  pageContent.className = 'book-page-content';
+  pageContent.innerHTML = content;
+  const number = document.createElement('span');
+  number.className = 'book-page-number';
+  number.textContent = pageNumber;
+  number.setAttribute('aria-label', `Page ${pageNumber}`);
+  face.append(pageContent, number);
+  return face;
+}
+
+function paginateStory() {
+  if (!storyMarkdown || !book || !book.clientWidth || !book.clientHeight) return;
+
+  const storyPages = paginateBlocks(parseStoryMarkdown(storyMarkdown));
+  const sheetCount = Math.max(1, Math.ceil((storyPages.length + 1) / 2));
+  const fragment = document.createDocumentFragment();
+
+  for (let index = 0; index < sheetCount; index++) {
+    const sheet = document.createElement('div');
+    sheet.className = 'page';
+    sheet.dataset.index = index;
+
+    if (index === 0) {
+      const front = document.createElement('div');
+      front.className = 'face front';
+      front.innerHTML = coverMarkup;
+      sheet.appendChild(front);
+    } else {
+      const frontPage = storyPages[2 * index - 1];
+      sheet.appendChild(frontPage
+        ? createStoryFace(frontPage, 2 * index)
+        : document.createElement('div'));
+    }
+
+    const firstStoryFace = 2 * index;
+    const backContent = storyPages[firstStoryFace];
+    if (backContent) {
+      const back = createStoryFace(backContent, firstStoryFace + 1);
+      back.classList.add('back');
+      sheet.appendChild(back);
+    } else {
+      const back = document.createElement('div');
+      back.className = 'face back';
+      sheet.appendChild(back);
+    }
+
+    sheet.children[0].classList.add('face');
+    if (index > 0) sheet.children[0].classList.add('front');
+    fragment.appendChild(sheet);
+  }
+
+  book.replaceChildren(fragment);
+  bindPages();
 }
 
 (async function loadStory() {
@@ -208,7 +397,8 @@ function renderStoryMarkdown(markdown) {
     const response = await fetch('../textes/luneeternelle.md');
     if (!response.ok) throw new Error(`Chargement du récit impossible (${response.status})`);
 
-    storyPage.innerHTML = renderStoryMarkdown(await response.text());
+    storyMarkdown = await response.text();
+    paginateStory();
   } catch (error) {
     console.error('Impossible de charger le récit de la lune éternelle.', error);
     storyPage.replaceChildren();
