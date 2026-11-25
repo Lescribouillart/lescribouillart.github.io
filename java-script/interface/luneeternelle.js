@@ -380,7 +380,7 @@ function paginateStory() {
 
     if (index === 0) {
       const front = document.createElement('div');
-      front.className = 'face front';
+      front.className = 'face front book-cover-face';
       front.innerHTML = coverMarkup;
       sheet.appendChild(front);
     } else {

@@ -2428,6 +2428,11 @@ body.index-page .intro-site-bg {
     font-size: 48px;
 }
 
+.book .book-cover-face {
+    border-color: #0b0c0b;
+    background: #000;
+}
+
 .book .back {
     transform: rotateY(180deg);
     background: #f3f0e8;
