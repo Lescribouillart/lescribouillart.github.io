@@ -2466,7 +2466,17 @@ body.index-page .intro-site-bg {
 }
 
 .book .book-page-content {
+    position: relative;
     overflow: hidden;
+    padding-top: 4em;
+}
+
+.book .book-page-content > h2:first-child {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    margin: 0;
 }
 
 .book-page-number {
