@@ -126,28 +126,89 @@ update();
   if (img.complete && img.naturalWidth) initializeCover();
 })();
 
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function parseInlineMarkdown(text) {
+  return escapeHtml(text)
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*([^*]+)\*/g, '<em>$1</em>')
+    .replace(/_([^_]+)_/g, '<em>$1</em>')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
+}
+
+function renderStoryMarkdown(markdown) {
+  const lines = markdown.replace(/\r\n/g, '\n').split('\n');
+  const html = [];
+  let paragraph = [];
+  let list = [];
+  let listType = null;
+
+  function flushParagraph() {
+    if (paragraph.length === 0) return;
+    html.push(`<p>${parseInlineMarkdown(paragraph.join(' '))}</p>`);
+    paragraph = [];
+  }
+
+  function flushList() {
+    if (list.length === 0 || !listType) return;
+    html.push(`<${listType}>${list.map((item) => `<li>${parseInlineMarkdown(item)}</li>`).join('')}</${listType}>`);
+    list = [];
+    listType = null;
+  }
+
+  for (const line of lines) {
+    const trimmed = line.trim();
+
+    if (!trimmed) {
+      flushParagraph();
+      flushList();
+      continue;
+    }
+
+    const heading = trimmed.match(/^(#{1,6})\s+(.*)$/);
+    if (heading) {
+      flushParagraph();
+      flushList();
+      const level = heading[1].length;
+      html.push(`<h${level}>${parseInlineMarkdown(heading[2])}</h${level}>`);
+      continue;
+    }
+
+    const unordered = trimmed.match(/^[-*+]\s+(.*)$/);
+    const ordered = trimmed.match(/^\d+\.\s+(.*)$/);
+    if (unordered || ordered) {
+      flushParagraph();
+      const nextListType = unordered ? 'ul' : 'ol';
+      if (listType && listType !== nextListType) flushList();
+      listType = nextListType;
+      list.push((unordered || ordered)[1]);
+      continue;
+    }
+
+    flushList();
+    paragraph.push(trimmed);
+  }
+
+  flushParagraph();
+  flushList();
+  return html.join('\n');
+}
+
 (async function loadStory() {
   const storyPage = document.querySelector('[data-book-story]');
   if (!storyPage) return;
 
   try {
-    const response = await fetch('../textes/luneeternelle.txt');
+    const response = await fetch('../textes/luneeternelle.md');
     if (!response.ok) throw new Error(`Chargement du récit impossible (${response.status})`);
 
-    const [title, ...paragraphs] = (await response.text()).split(/\r?\n/);
-    storyPage.replaceChildren();
-
-    const heading = document.createElement('h2');
-    heading.textContent = title.trim();
-    storyPage.appendChild(heading);
-
-    paragraphs.forEach((paragraph) => {
-      const text = paragraph.trim();
-      if (!text) return;
-      const element = document.createElement('p');
-      element.textContent = text;
-      storyPage.appendChild(element);
-    });
+    storyPage.innerHTML = renderStoryMarkdown(await response.text());
   } catch (error) {
     console.error('Impossible de charger le récit de la lune éternelle.', error);
     storyPage.replaceChildren();
