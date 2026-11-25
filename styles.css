@@ -2457,6 +2457,7 @@ body.index-page .intro-site-bg {
 .book .book-text-page h2 {
     margin-bottom: 1em;
     text-align: center;
+    text-align-last: center;
     font-size: 1.35em;
 }
 
