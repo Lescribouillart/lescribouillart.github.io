@@ -116,7 +116,7 @@ document.addEventListener('keydown', (event) => {
     const verticalSpace = embedded
       ? window.innerHeight
         - (heading?.offsetHeight || 0)
-        - 40
+        - 64
       : window.innerHeight - 120;
     const maxHeight = Math.max(200, verticalSpace);
     const maxPageWidth = (embedded

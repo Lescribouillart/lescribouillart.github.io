@@ -2195,7 +2195,17 @@ body.index-page .intro-site-bg {
     background: transparent;
     color: #f4efe2;
     box-shadow: none;
-    overflow: hidden;
+    overflow: clip;
+    scrollbar-width: none;
+}
+
+.book-modal::-webkit-scrollbar,
+.book-modal-frame::-webkit-scrollbar,
+.book-embedded-root::-webkit-scrollbar,
+.book-embedded::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
 }
 
 .book-modal::backdrop {
@@ -2245,16 +2255,23 @@ body.index-page .intro-site-bg {
 }
 
 .book-embedded-root {
-    overflow: hidden;
+    overflow: visible;
+    scrollbar-width: none;
+}
+
+.book-embedded-root body {
+    overflow: visible;
+    scrollbar-width: none;
 }
 
 .book-embedded {
     height: 100vh;
     min-height: 0;
-    padding: 8px 16px;
+    padding: 62px 16px 8px;
     background: transparent;
     cursor: pointer;
-    overflow: hidden;
+    overflow: visible;
+    scrollbar-width: none;
 }
 
 .book-embedded .book-main {
@@ -2264,7 +2281,8 @@ body.index-page .intro-site-bg {
     width: 100%;
     max-width: none;
     height: 100%;
-    overflow: hidden;
+    overflow: visible;
+    scrollbar-width: none;
 }
 
 .book-embedded .book-main h1 {
@@ -2275,6 +2293,7 @@ body.index-page .intro-site-bg {
     flex: 0 0 auto;
     max-width: none;
     margin-bottom: 8px;
+    margin-top: 0;
     transition: transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
     transform: translateX(-25%);
     cursor: default;
@@ -2395,6 +2414,7 @@ body.index-page .intro-site-bg {
     transform-origin: left center;
     transform-style: preserve-3d;
     transition: transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+    will-change: transform;
 }
 
 .book .page.flipped {
@@ -2402,16 +2422,11 @@ body.index-page .intro-site-bg {
 }
 
 .book .page::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-    transition: opacity 0.3s;
+    content: none;
 }
 
 .book .page:hover::after {
-    opacity: 1;
+    content: none;
 }
 
 .book .face {
