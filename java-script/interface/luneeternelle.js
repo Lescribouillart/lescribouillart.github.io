@@ -257,7 +257,7 @@ function paginateBlocks(blocks) {
   if (!book || !book.clientWidth || !book.clientHeight) return [];
 
   const measurer = document.createElement('div');
-  measurer.className = 'face back book-text-page pagination-measurer';
+  measurer.className = 'face back book-text-page pagination-measurer book-opening-page';
   const content = document.createElement('div');
   content.className = 'book-page-content';
   measurer.appendChild(content);
@@ -279,6 +279,7 @@ function paginateBlocks(blocks) {
   function finishPage() {
     renderedPages.push(content.innerHTML);
     content.replaceChildren();
+    if (renderedPages.length === 1) measurer.classList.remove('book-opening-page');
   }
 
   for (const markup of blocks) {
@@ -352,6 +353,7 @@ function paginateBlocks(blocks) {
 function createStoryFace(content, pageNumber) {
   const face = document.createElement('div');
   face.className = 'face book-text-page';
+  if (pageNumber === 1) face.classList.add('book-opening-page');
   const pageContent = document.createElement('div');
   pageContent.className = 'book-page-content';
   pageContent.innerHTML = content;

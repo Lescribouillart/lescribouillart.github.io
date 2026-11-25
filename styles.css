@@ -2471,10 +2471,13 @@ body.index-page .intro-site-bg {
 .book .book-page-content {
     position: relative;
     overflow: hidden;
-    padding-top: 4em;
 }
 
-.book .book-page-content > h2:first-child {
+.book .book-opening-page .book-page-content {
+    padding-top: 4.5em;
+}
+
+.book .book-opening-page .book-page-content > h2:first-child {
     position: absolute;
     top: 0;
     right: 5%;
