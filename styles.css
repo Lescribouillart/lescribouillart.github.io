@@ -4381,9 +4381,8 @@ a.highlight-blue {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    min-height: 56px;
     margin-bottom: 0;
-    padding: 0 2.25rem;
+    padding: 0.9rem 2.25rem;
     border: 1px solid var(--border-color);
     border-radius: 8px 8px 0 0;
     background: rgba(47, 46, 58, 0.78);
@@ -4396,8 +4395,7 @@ a.highlight-blue {
 
 .news-entry {
     display: block;
-    min-height: 150px;
-    padding: 1.2rem 2.25rem;
+    padding: 1rem 2.25rem;
     border: 1px solid var(--border-color);
     border-top: 0;
     background: rgba(47, 46, 58, 0.86);
