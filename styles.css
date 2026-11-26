@@ -2221,11 +2221,32 @@ body.index-page .intro-site-bg {
     background: transparent;
 }
 
+html.book-loading body,
+html.book-loading main,
+html.book-loading .book-main,
+html.book-loading .book-back-link,
+html.book-loading .skip-link,
+html.book-loading .book-frame {
+    background: transparent !important;
+    background-image: none !important;
+}
+
+html.book-loading .book-main {
+    visibility: hidden;
+    opacity: 0;
+}
+
+html.book-ready .book-main {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.15s ease;
+}
+
 .book-page {
     min-height: 100vh;
     margin: 0;
     padding: 20px;
-    background: linear-gradient(160deg, #1f4d38 0%, #16362a 100%);
+    background: transparent;
     color: #f4efe2;
     font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
 }

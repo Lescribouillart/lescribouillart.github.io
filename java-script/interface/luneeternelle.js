@@ -421,11 +421,15 @@ function paginateStory() {
 
     storyMarkdown = await response.text();
     paginateStory();
+    document.documentElement.classList.remove('book-loading');
+    document.documentElement.classList.add('book-ready');
   } catch (error) {
     console.error('Impossible de charger le récit de la lune éternelle.', error);
     storyPage.replaceChildren();
     const message = document.createElement('p');
     message.textContent = 'Le récit est momentanément indisponible.';
     storyPage.appendChild(message);
+    document.documentElement.classList.remove('book-loading');
+    document.documentElement.classList.add('book-ready');
   }
 })();
