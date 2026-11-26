@@ -73,19 +73,30 @@
         </div>
     </div>
 
-    <main class="main" id="main-content" style="padding-bottom: 40px;">
+    <main class="main news-main" id="main-content" style="padding-bottom: 40px;">
         <div class="container">
-            <div class="presentation feuillet-presentation characters-presentation">
-                <div class="presentation-bg2 bibliotheque-panel" data-library-hotspot-editor data-target="luneeternelle.html" data-columns="48" data-rows="64" data-published-cells="[145,146,193,194,241,242,289,290,337,338,385,386,433,434,481,482,529,530,577,578,625,626,673,674]">
+            <section class="news-feature" aria-label="Liste des nouveautés">
+                <header class="news-feature-header">
+                    <h1>Quoi de neuf</h1>
+                </header>
 
-                    
-                </div>
+                <article class="news-entry">
+                    <div class="news-entry-content">
+                        <h2>Création de l’onglet « Bibliothèque »</h2>
+                        <ul>
+                            <li>Un nouvel onglet <strong>Bibliothèque</strong> rejoint le menu « Le feuillet ».</li>
+                            <li>Il ouvre un espace consacré aux livres imaginaires du Scribouill'art.</li>
+                            <li>Cette première bibliothèque contient actuellement <strong>Les sentiers de la lune éternelle</strong>.</li>
+                        </ul>
+                        <div class="news-entry-links">
+                            <a class="news-feature-link" href="../html2/labibliotheque.html">Visiter la bibliothèque</a>
+                            <a class="news-feature-link" href="../html2/luneeternelle.html">Découvrir le livre</a>
+                        </div>
+                    </div>
+                </article>
+            </section>
         </div>
     </main>
-
-    <dialog class="book-modal" id="book-modal" aria-label="Les sentiers de la lune éternelle">
-        <iframe class="book-modal-frame" title="Les sentiers de la lune éternelle" data-book-modal-frame allowtransparency="true"></iframe>
-    </dialog>
 
     <footer class="footer">
         <div class="container">
@@ -109,7 +120,6 @@
     <script src="../java-script/interface/tagline-fireflies.js"></script>
     <script src="../java-script/interface/feuillet-personnages.js"></script>
     <script src="../java-script/interface/feuillet-keynav.js"></script>
-    <script src="../java-script/interface/library-hotspot-editor.js"></script>
     <script src="../java-script/recherche/recherche.js"></script>
 </body>
 </html>

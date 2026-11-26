@@ -4363,6 +4363,106 @@ a.highlight-blue {
     margin-top: 2rem;
 }
 
+.news-main .container {
+    max-width: 1100px;
+}
+
+.news-feature {
+    width: 100%;
+    margin-top: 2rem;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: var(--text-color);
+}
+
+.news-feature-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 56px;
+    margin-bottom: 0;
+    padding: 0 2.25rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px 8px 0 0;
+    background: rgba(47, 46, 58, 0.78);
+}
+
+.news-feature-header h1 {
+    color: var(--primary-color);
+    font-size: 1.25rem;
+}
+
+.news-entry {
+    display: block;
+    min-height: 150px;
+    padding: 1.5rem 2.25rem;
+    border: 1px solid var(--border-color);
+    border-top: 0;
+    background: rgba(47, 46, 58, 0.86);
+}
+
+.news-entry:last-child {
+    border-radius: 0 0 8px 8px;
+}
+
+.news-entry-content h2 {
+    margin: 0 0 0.75rem;
+    color: var(--primary-color);
+    font-size: 1.05rem;
+    text-align: left;
+}
+
+.news-entry-content ul {
+    margin: 0;
+    padding-left: 1.1rem;
+}
+
+.news-entry-content li {
+    margin: 0.25rem 0;
+    color: var(--text-color);
+    line-height: 1.55;
+}
+
+.news-entry-content li::marker {
+    color: var(--secondary-color);
+}
+
+.news-entry-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 0.8rem;
+}
+
+.news-feature-link {
+    width: fit-content;
+    color: var(--secondary-color);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.news-feature-link:hover,
+.news-feature-link:focus-visible {
+    color: var(--primary-color);
+}
+
+@media (max-width: 700px) {
+    .news-feature-header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 1rem 1.25rem;
+    }
+
+    .news-entry {
+        grid-template-columns: 1fr;
+        padding: 1.25rem;
+    }
+}
+
 .publications-main .container {
     max-width: 1640px;
 }
