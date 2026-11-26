@@ -423,6 +423,9 @@ function paginateStory() {
     paginateStory();
     document.documentElement.classList.remove('book-loading');
     document.documentElement.classList.add('book-ready');
+    if (window.self !== window.top) {
+      window.parent.postMessage({ type: 'book-ready' }, window.location.origin);
+    }
   } catch (error) {
     console.error('Impossible de charger le récit de la lune éternelle.', error);
     storyPage.replaceChildren();
@@ -431,5 +434,8 @@ function paginateStory() {
     storyPage.appendChild(message);
     document.documentElement.classList.remove('book-loading');
     document.documentElement.classList.add('book-ready');
+    if (window.self !== window.top) {
+      window.parent.postMessage({ type: 'book-ready' }, window.location.origin);
+    }
   }
 })();

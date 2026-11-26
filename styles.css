@@ -194,6 +194,11 @@ html, body {
     background-color: #2f2e3a;
 }
 
+html.book-loading {
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -2197,6 +2202,14 @@ body.index-page .intro-site-bg {
     box-shadow: none;
     overflow: clip;
     scrollbar-width: none;
+}
+
+.book-modal.is-loading {
+    visibility: hidden;
+}
+
+.book-modal.is-loading .book-modal-frame {
+    visibility: hidden;
 }
 
 .book-modal::-webkit-scrollbar,

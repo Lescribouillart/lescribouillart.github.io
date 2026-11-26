@@ -19,6 +19,7 @@
     const isLocalEditor = window.location.protocol === 'file:' || localHosts.has(window.location.hostname);
     let gridIsVisible = isLocalEditor;
     let selectedCells = new Set();
+    let bookReady = false;
 
     if (!grid || !toggleButton || !clearButton || !copyButton || !status ||
         !Number.isInteger(columns) || columns <= 0 ||
@@ -33,17 +34,27 @@
             return;
         }
 
-        if (!bookFrame.getAttribute('src')) bookFrame.src = target;
+        bookReady = false;
+        bookModal.classList.add('is-loading');
         bookModal.showModal();
+        bookFrame.src = target;
     }
 
-    bookModal?.addEventListener('click', (event) => {
-        if (event.target === bookModal) bookModal.close();
+    bookFrame?.addEventListener('load', () => {
+        bookReady = false;
     });
 
     window.addEventListener('message', (event) => {
-        if (event.origin !== window.location.origin || event.data?.type !== 'close-book-modal') return;
-        bookModal?.close();
+        if (event.origin !== window.location.origin) return;
+        if (event.data?.type === 'book-ready' && bookModal?.open && !bookReady) {
+            bookReady = true;
+            bookModal.classList.remove('is-loading');
+        }
+        if (event.data?.type === 'close-book-modal') bookModal?.close();
+    });
+
+    bookModal?.addEventListener('click', (event) => {
+        if (event.target === bookModal) bookModal.close();
     });
 
     function parseCells(value, source) {
