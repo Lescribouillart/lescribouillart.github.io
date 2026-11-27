@@ -145,9 +145,7 @@
         order: 3;
     }
 }
-@import url('https://fonts.googleapis.com/css2?family=Rozha+One&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=OpenDyslexic&display=swap');
+/* Les polices sont chargées dans le HTML via preconnect + display=swap pour éviter un ralentissement au chargement. */
 
 /* ========================================
    ACCESSIBILITÉ - SKIP NAVIGATION
