@@ -1879,6 +1879,17 @@ body.index-page .intro-site-bg {
     outline: none;
 }
 
+.google-translate-container,
+.goog-te-banner-frame,
+.goog-te-balloon-frame,
+.skiptranslate {
+    display: none !important;
+}
+
+body {
+    top: 0 !important;
+}
+
 .intro-site-content {
     max-width: 900px;
     margin: 0 auto;
