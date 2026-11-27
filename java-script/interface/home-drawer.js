@@ -2,7 +2,7 @@
     'use strict';
 
     document.addEventListener('DOMContentLoaded', function() {
-        const toggleButtons = document.querySelectorAll('.header-drawer-toggle');
+        const toggleButtons = document.querySelectorAll('button.header-drawer-toggle');
         const sidePanel = document.getElementById('home-side-panel');
         const backdrop = document.querySelector('.home-drawer-backdrop');
         const closeButton = document.querySelector('.home-side-panel-close');
