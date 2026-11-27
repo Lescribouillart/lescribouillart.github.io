@@ -1878,14 +1878,24 @@ body.index-page .intro-site-bg {
 }
 
 .google-translate-container,
+#google-translate-container,
 .goog-te-banner-frame,
 .goog-te-balloon-frame,
+.goog-te-combo,
+.goog-te-menu-frame,
+#goog-gt-tt,
+.VIpgJd-ZVi9od-ORHb-OEVmcd,
+.VIpgJd-ZVi9od-aZ2wEe-wOHMyf,
 .skiptranslate {
     display: none !important;
 }
 
 body {
     top: 0 !important;
+}
+
+body > iframe.goog-te-banner-frame {
+    visibility: hidden !important;
 }
 
 .intro-site-content {

@@ -116,6 +116,7 @@
     const container = document.createElement('div');
     container.id = 'google-translate-container';
     container.className = 'google-translate-container notranslate';
+    container.setAttribute('aria-hidden', 'true');
     document.body.appendChild(container);
 
     window.googleTranslateElementInit = initializeGoogleTranslate;
