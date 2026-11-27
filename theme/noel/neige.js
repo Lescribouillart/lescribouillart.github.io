@@ -25,8 +25,10 @@
         if (getComputedStyle(header).position === 'static') {
             header.style.position = 'relative';
         }
-        
-        header.style.overflow = 'hidden';
+
+        // Le menu déroulant du sélecteur de langue doit rester visible.
+        // Le conteneur de neige garde son propre masquage pour éviter les débordements de flocons.
+        header.style.overflow = 'visible';
         header.appendChild(snowContainer);
 
         function createSnowflake() {
