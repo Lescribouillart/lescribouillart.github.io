@@ -1783,6 +1783,102 @@ body.index-page .intro-site-bg {
     outline: none;
 }
 
+.index-language-picker {
+    position: absolute;
+    top: 50%;
+    left: 1.5rem;
+    z-index: 2;
+    transform: translateY(-50%);
+}
+
+.index-language-picker summary {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-width: 70px;
+    padding: 0.55rem 0.75rem;
+    border: 1px solid transparent;
+    border-radius: 18px;
+    color: var(--primary-color);
+    font-weight: 700;
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+}
+
+.index-language-picker summary::-webkit-details-marker {
+    display: none;
+}
+
+.index-language-picker summary svg {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.index-language-picker summary:hover,
+.index-language-picker summary:focus-visible,
+.index-language-picker[open] summary {
+    border-color: rgba(232, 227, 213, 0.32);
+    background: rgba(47, 46, 58, 0.45);
+    outline: none;
+}
+
+.index-language-chevron {
+    width: 0;
+    height: 0;
+    margin-left: 0.1rem;
+    border-top: 5px solid currentColor;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+    transition: transform 0.2s ease;
+}
+
+.index-language-picker[open] .index-language-chevron {
+    transform: rotate(180deg);
+}
+
+.index-language-menu {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 0;
+    min-width: 155px;
+    padding: 0.35rem;
+    border: 1px solid rgba(232, 227, 213, 0.25);
+    border-radius: 12px;
+    background: #2f2e3a;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.index-language-menu button {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    width: 100%;
+    padding: 0.55rem 0.65rem;
+    border: 0;
+    border-radius: 8px;
+    color: var(--primary-color);
+    background: transparent;
+    text-align: left;
+    cursor: pointer;
+}
+
+.index-language-menu button span {
+    min-width: 1.6rem;
+    color: var(--secondary-color);
+    font-weight: 700;
+}
+
+.index-language-menu button:hover,
+.index-language-menu button:focus-visible,
+.index-language-menu button[aria-pressed="true"] {
+    background: rgba(123, 163, 216, 0.18);
+    outline: none;
+}
+
 .intro-site-content {
     max-width: 900px;
     margin: 0 auto;

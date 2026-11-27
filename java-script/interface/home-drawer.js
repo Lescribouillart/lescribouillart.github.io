@@ -56,6 +56,18 @@
     });
 })();
 
+(function() {
+    'use strict';
+
+    if (document.body.classList.contains('index-page')) {
+        return;
+    }
+
+    const script = document.createElement('script');
+    script.src = new URL('index-language.js', document.currentScript.src).href;
+    document.head.appendChild(script);
+})();
+
 // Gestion de la fin de vidéo sur index.html
 (function () {
     'use strict';

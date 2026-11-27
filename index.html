@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="notranslate" translate="no">
 <head>
     <meta charset="UTF-8">
+    <meta name="google" content="notranslate">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Présentation — Le Scribouill'art</title>
     
@@ -14,10 +15,26 @@
     
 </head>
 <body class="home-page index-page header-no-anim">
-    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+    <a href="#main-content" class="skip-link" data-i18n="skip">Aller au contenu principal</a>
     <header class="header header--index">
         <div class="container">
-            <a href="html/accueil.html" class="index-login-button">Connexion</a>
+            <details class="index-language-picker">
+                <summary aria-label="Choisir la langue" data-i18n-aria="chooseLanguage">
+                    <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18">
+                        <circle cx="12" cy="12" r="9"></circle>
+                        <path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9S14.5 18.4 12 21M12 3c-2.5 2.6-3.8 5.6-3.8 9S9.5 18.4 12 21"></path>
+                    </svg>
+                    <span data-language-current>FR</span>
+                    <span class="index-language-chevron" aria-hidden="true"></span>
+                </summary>
+                <div class="index-language-menu" role="menu" aria-label="Langues disponibles">
+                    <button type="button" data-language="fr" role="menuitem"><span>FR</span> Français</button>
+                    <button type="button" data-language="en" role="menuitem"><span>EN</span> English</button>
+                    <button type="button" data-language="es" role="menuitem"><span>ES</span> Español</button>
+                    <button type="button" data-language="de" role="menuitem"><span>DE</span> Deutsch</button>
+                </div>
+            </details>
+            <a href="html/accueil.html" class="index-login-button" data-i18n="login">Connexion</a>
         </div>
     </header>
     <div class="site-header-spacer" aria-hidden="true"></div>
@@ -26,20 +43,20 @@
     <aside class="home-side-panel" id="home-side-panel" aria-hidden="true" hidden>
         <div class="home-side-panel-inner">
             <div class="side-panel-rootline" aria-hidden="true">
-                <img src="images/header/racines-bas-header.svg" alt="racine décorative">
+                <img src="images/header/racines-bas-header.svg" alt="racine décorative" data-i18n-alt="root">
             </div>
-            <h2 class="home-side-panel-title">Le feuillet</h2>
-            <a href="html/feuillet.html" class="home-side-panel-text">La chronologie</a>
-            <a href="html2/lespersonnages.html" class="home-side-panel-text">Les personnages</a>
-            <a href="html2/labibliotheque.html" class="home-side-panel-text">La bibliothèque</a>
-            <a href="html2/leslieux.html" class="home-side-panel-text">Les lieux</a>
+            <h2 class="home-side-panel-title" data-i18n="folio">Le feuillet</h2>
+            <a href="html/feuillet.html" class="home-side-panel-text" data-i18n="chronology">La chronologie</a>
+            <a href="html2/lespersonnages.html" class="home-side-panel-text" data-i18n="characters">Les personnages</a>
+            <a href="html2/labibliotheque.html" class="home-side-panel-text" data-i18n="library">La bibliothèque</a>
+            <a href="html2/leslieux.html" class="home-side-panel-text" data-i18n="places">Les lieux</a>
         </div>
     </aside>
 
     <div class="intro-site-bg">
         <div class="intro-site-content">
             <p class="intro-site centered">
-                <strong>Le Scribouill'art</strong> est en construction<span class="construction-dots" aria-hidden="true">
+                <strong>Le Scribouill'art</strong> <span data-i18n="construction">est en construction</span><span class="construction-dots" aria-hidden="true">
                     <span class="construction-dot">.</span>
                     <span class="construction-dot">.</span>
                     <span class="construction-dot">.</span>
@@ -53,12 +70,13 @@
         <div
             class="index-unavailable-site-trigger"
             aria-label="Site indisponible pour le moment"
+            data-i18n-aria="unavailable"
             style="position:relative;"
         >
             <video id="intro-video" autoplay muted playsinline>
                 <source src="videos/vidaccueil.webm" type="video/webm">
                 <source src="videos/vidaccueil.mp4" type="video/mp4">
-                <img src="images/icons/construction.webp" alt="Illustration chantier du site" width="262">
+                <img src="images/icons/construction.webp" alt="Illustration chantier du site" width="262" data-i18n-alt="constructionArt">
             </video>
             <div class="video-overlay" aria-hidden="true"></div>
         </div>
@@ -66,7 +84,7 @@
 
     <footer class="footer footer-index" id="page-bottom">
         <div class="container">
-            <p class="footer-copyright">Le Scribouill'art - Tous droits réservés <br>© 2025-2026</p>
+            <p class="footer-copyright">Le Scribouill'art - <span data-i18n="rights">Tous droits réservés</span> <br>© 2025-2026</p>
         </div>
     </footer>
     
@@ -75,6 +93,7 @@
     <script src="java-script/interface/dyslexic-mode.js"></script>
     <script src="java-script/interface/home-header-scroll.js"></script>
     <script src="java-script/interface/tagline-fireflies.js"></script>
+    <script src="java-script/interface/index-language.js"></script>
     <script src="java-script/recherche/recherche.js"></script>
     <script src="java-script/articles/carousel.js" defer></script>
 </body>
