@@ -2,18 +2,21 @@
     'use strict';
 
     document.addEventListener('DOMContentLoaded', function() {
-        const toggleButton = document.querySelector('.header-drawer-toggle');
+        const toggleButtons = document.querySelectorAll('.header-drawer-toggle');
         const sidePanel = document.getElementById('home-side-panel');
         const backdrop = document.querySelector('.home-drawer-backdrop');
         const closeButton = document.querySelector('.home-side-panel-close');
+        let activeToggleButton = toggleButtons[0];
 
-        if (!toggleButton || !sidePanel || !backdrop) {
+        if (!toggleButtons.length || !sidePanel || !backdrop) {
             return;
         }
 
         function setDrawerState(isOpen) {
             document.body.classList.toggle('home-drawer-open', isOpen);
-            toggleButton.setAttribute('aria-expanded', String(isOpen));
+            toggleButtons.forEach(function(toggleButton) {
+                toggleButton.setAttribute('aria-expanded', String(isOpen));
+            });
             sidePanel.setAttribute('aria-hidden', String(!isOpen));
             sidePanel.hidden = !isOpen;
             backdrop.hidden = !isOpen;
@@ -22,12 +25,17 @@
                 return;
             }
 
-            toggleButton.focus();
+            if (activeToggleButton) {
+                activeToggleButton.focus();
+            }
         }
 
-        toggleButton.addEventListener('click', function() {
-            const isOpen = toggleButton.getAttribute('aria-expanded') === 'true';
-            setDrawerState(!isOpen);
+        toggleButtons.forEach(function(toggleButton) {
+            toggleButton.addEventListener('click', function() {
+                activeToggleButton = toggleButton;
+                const isOpen = toggleButton.getAttribute('aria-expanded') === 'true';
+                setDrawerState(!isOpen);
+            });
         });
 
         if (closeButton) {
@@ -41,7 +49,7 @@
         });
 
         document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape' && toggleButton.getAttribute('aria-expanded') === 'true') {
+            if (event.key === 'Escape' && activeToggleButton.getAttribute('aria-expanded') === 'true') {
                 setDrawerState(false);
             }
         });

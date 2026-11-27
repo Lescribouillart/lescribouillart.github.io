@@ -442,6 +442,10 @@ body.has-scroll-header .site-header-spacer {
     transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
+.header-drawer-toggle--second {
+    left: calc(-273px - 2rem + 68px);
+}
+
 body.has-scroll-header .header-drawer-toggle {
     transition: top 0.25s ease, transform 0.25s ease, background-color 0.2s ease, border-color 0.2s ease;
 }
@@ -5568,6 +5572,10 @@ a.highlight-blue {
         padding: 0 0.8rem;
     }
 
+    .header-drawer-toggle--second {
+        left: calc(-185px - 1rem + 60px);
+    }
+
     .intro-drawer-toggle {
         position: relative;
         left: auto;
@@ -5958,6 +5966,10 @@ a.highlight-blue {
         top: calc((var(--site-header-height, 230px) * 0.7) - 40px);
         transform: none;
         z-index: 1105;
+    }
+
+    .header-drawer-toggle--second {
+        left: 76px;
     }
 
     .intro-site-content {
